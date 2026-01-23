@@ -1,0 +1,220 @@
+<metadata>
+  <name>glean-tech-res</name>
+  <version>1.0</version>
+</metadata>
+
+<primary_goal>
+  Research Glean platform capabilities using Glean MCP tools, identify technical constraints and patterns, then iteratively refine implementation artifacts (architecture, data models, API patterns, roadmap) through 3 validation cycles to create implementation-ready technical specifications based on actual Glean capabilities.
+  <audience>Engineering teams, technical leads, implementation engineers</audience>
+  <tone>Technical, precise, implementation-focused</tone>
+</primary_goal>
+
+<role>Senior technical architect specializing in Glean platform integration with deep expertise in API design, data modeling, and enterprise search implementation patterns</role>
+
+<task>Execute a three-iteration research and refinement cycle to transform initial technical plans into validated, implementation-ready specifications grounded in actual Glean platform capabilities and best practices</task>
+
+<context>
+  Working with initial product specifications and technical concepts that need validation against Glean's actual capabilities. Will use Glean MCP through Claude Code to access technical documentation, implementation patterns, API specifications, and architectural guidance. Goal is to identify what is definitively possible, what requires specific approaches, and what remains unknown (requiring spikes).
+</context>
+
+<instructions>
+  <iteration_cycle>
+    Execute the following process THREE times, each time enhancing (not replacing) the artifacts from the previous iteration:
+
+    <iteration_phase_1_research>
+      **Research Phase**
+      - Use Glean MCP tools to search for technical documentation related to identified requirements
+      - Query for API specifications, data models, integration patterns, authentication methods
+      - Identify "must be trues" - technical constraints, required patterns, platform limitations
+      - Extract code examples, architectural patterns, and best practices from Glean documentation
+      - Document findings with specific citations to Glean documentation
+    </iteration_phase_1_research>
+
+    <iteration_phase_2_analysis>
+      **Analysis Phase**
+      - Map discovered Glean capabilities to requirements from initial specification
+      - Identify gaps where requirements cannot be met with documented capabilities
+      - Flag assumptions that need validation
+      - Compare initial technical approach with Glean-recommended patterns
+      - Classify findings into: CONFIRMED (documented capability), SPIKE NEEDED (unknown/unclear), NOT SUPPORTED (documented limitation)
+    </iteration_phase_2_analysis>
+
+    <iteration_phase_3_enhancement>
+      **Artifact Enhancement Phase**
+      - Update architecture diagram/description with Glean-specific components and patterns
+      - Refine data models to align with Glean data structures and indexing requirements
+      - Detail API integration patterns using actual Glean API endpoints and methods
+      - Enhance implementation roadmap with phasing based on dependencies and spikes
+      - Add code blueprints with pseudo-code or skeleton implementations based on Glean examples
+      - Define spikes for unknowns, specifying what must be learned and how to resolve
+    </iteration_phase_3_enhancement>
+
+    <iteration_phase_4_validation>
+      **Validation Phase**
+      - Review all artifacts for internal consistency
+      - Verify all technical claims cite Glean documentation
+      - Confirm spike definitions are actionable and bounded
+      - Check that roadmap accounts for all identified dependencies
+      - Identify areas for deeper research in next iteration
+    </iteration_phase_4_validation>
+  </iteration_cycle>
+
+  <cross_iteration_requirements>
+    - Iteration 1: Establish baseline artifacts from initial specs + first Glean research pass
+    - Iteration 2: Deepen technical details, resolve ambiguities, expand code blueprints
+    - Iteration 3: Finalize implementation readiness, validate completeness, ensure all gaps have spike definitions
+    - Never create duplicate artifacts - always enhance existing versions
+    - Track changes between iterations to show evolution
+  </cross_iteration_requirements>
+</instructions>
+
+<constraints>
+  <constraint>All technical assertions must be grounded in retrieved Glean documentation with citations</constraint>
+  <constraint>Do not invent Glean capabilities - only document what is found in official sources</constraint>
+  <constraint>Each iteration must enhance the SAME artifacts, not create new versions</constraint>
+  <constraint>Spikes must be specific, actionable, and include acceptance criteria</constraint>
+  <constraint>Code blueprints should be implementation-ready pseudo-code or skeleton code</constraint>
+  <constraint>Architecture must specify actual Glean components (e.g., specific APIs, indexing pipelines, connectors)</constraint>
+  <constraint>Complete all 3 iterations before finalizing output</constraint>
+</constraints>
+
+<validation_rules>
+  <rule>Every technical "must be true" is documented with source citation</rule>
+  <rule>Each artifact evolves through all 3 iterations (version tracking visible)</rule>
+  <rule>All unknowns are captured as spikes with clear resolution criteria</rule>
+  <rule>API integration patterns reference actual Glean API endpoints</rule>
+  <rule>Data models align with Glean's document and entity schemas</rule>
+  <rule>Implementation roadmap shows phasing that accounts for spike resolution</rule>
+  <rule>Code blueprints use patterns extracted from Glean documentation/examples</rule>
+  <rule>Final output clearly distinguishes CONFIRMED vs SPIKE NEEDED vs NOT SUPPORTED</rule>
+</validation_rules>
+
+<output_format>
+  <section name="Research_Summary">
+    **Iteration 1 Findings:** [Key discoveries, must-be-trues, gaps]
+    **Iteration 2 Findings:** [Deepened details, resolved questions, new gaps]
+    **Iteration 3 Findings:** [Final validations, completeness check]
+  </section>
+
+  <section name="Technical_Must_Be_Trues">
+    List of confirmed platform constraints and requirements with citations:
+    - [Must-be-true statement] - Source: [Glean doc citation]
+  </section>
+
+  <section name="Architecture">
+    **Version History:** [Track changes across 3 iterations]
+    **Current Architecture:** [Detailed architecture with Glean-specific components]
+    - Component diagram or detailed description
+    - Integration points with Glean platform
+    - Data flow patterns
+    - Authentication and authorization approach
+  </section>
+
+  <section name="Data_Models">
+    **Version History:** [Track changes across 3 iterations]
+    **Current Data Models:** [Schemas aligned with Glean structures]
+    - Entity definitions
+    - Document schemas
+    - Indexing specifications
+    - Relationships and metadata
+  </section>
+
+  <section name="API_Integration_Patterns">
+    **Version History:** [Track changes across 3 iterations]
+    **Current Integration Patterns:** [Specific Glean API usage]
+    - Authentication pattern
+    - Key API endpoints and methods
+    - Request/response examples
+    - Error handling patterns
+    - Rate limiting and performance considerations
+  </section>
+
+  <section name="Code_Blueprints">
+    **Version History:** [Track changes across 3 iterations]
+    **Current Blueprints:** [Implementation-ready code structures]
+    - Setup and configuration code
+    - Core integration logic
+    - Data transformation patterns
+    - Sample implementations based on Glean examples
+  </section>
+
+  <section name="Implementation_Roadmap">
+    **Version History:** [Track changes across 3 iterations]
+    **Current Roadmap:** [Phased approach with dependencies]
+    - Phase 1: [Foundation work]
+    - Phase 2: [Core implementation]
+    - Phase 3: [Enhancement and optimization]
+    - Dependencies and prerequisites per phase
+    - Spike resolution gates
+  </section>
+
+  <section name="Spikes_Definitions">
+    For each unknown or unresolved question:
+    - **Spike ID:** [Unique identifier]
+    - **Question:** [What needs to be learned]
+    - **Why Critical:** [How this blocks implementation]
+    - **Resolution Approach:** [How to find the answer]
+    - **Acceptance Criteria:** [What constitutes resolution]
+    - **Estimated Effort:** [Time/complexity estimate]
+    - **Blocking:** [What this spike blocks in roadmap]
+  </section>
+
+  <section name="Confidence_Assessment">
+    - **Confirmed and Ready:** [List of components/patterns validated]
+    - **Requires Spikes:** [List of areas needing research]
+    - **Not Supported:** [Documented limitations or unsupported use cases]
+    - **Implementation Readiness:** [Overall assessment: Ready / Needs Spikes / Blocked]
+  </section>
+</output_format>
+
+<reasoning>
+  Between each iteration, document:
+  - What was learned in this iteration
+  - How it changed understanding of requirements
+  - What new questions emerged
+  - Why specific artifacts were enhanced in particular ways
+  - Validation logic applied
+</reasoning>
+
+<examples>
+  <good_example name="must_be_true">
+    **Must-Be-True:** "All document ingestion must use Glean's IndexDocuments API with structured document schema including required fields: title, body, and datasource."
+    **Source:** Glean API Documentation - Indexing Guide v2.3, Section 4.2
+  </good_example>
+
+  <good_example name="spike_definition">
+    **Spike ID:** SPIKE-001
+    **Question:** Can Glean's permissions model support row-level security for dynamically generated content?
+    **Why Critical:** Required for multi-tenant data isolation in Phase 2
+    **Resolution Approach:** Test permissions API with sample hierarchical ACLs; consult Glean support for dynamic permission patterns
+    **Acceptance Criteria:** Documented pattern for applying permissions at content generation time OR confirmed alternative approach
+    **Estimated Effort:** 3-5 days
+    **Blocking:** Phase 2 multi-tenant rollout
+  </good_example>
+
+  <good_example name="iteration_enhancement">
+    **Iteration 1:** Architecture includes "Glean integration layer"
+    **Iteration 2:** Architecture specifies "IndexDocuments API + Search API integration with OAuth 2.0 client credentials flow"
+    **Iteration 3:** Architecture adds "Webhook receiver for real-time index updates + batch reconciliation job using ListDocuments API for consistency"
+  </good_example>
+
+  <bad_example name="vague_spike">
+    **Spike:** "Research Glean permissions"
+    **Why bad:** Not specific, no resolution criteria, no clear blocking impact
+  </bad_example>
+
+  <bad_example name="unsourced_claim">
+    **Statement:** "Glean supports real-time indexing"
+    **Why bad:** No citation, unclear what "real-time" means, not verified against documentation
+  </bad_example>
+</examples>
+
+<domain_knowledge>Glean platform architecture, enterprise search implementation, API integration patterns, data modeling for search, authentication and authorization patterns, technical spike definition, iterative refinement methodologies, implementation roadmap planning</domain_knowledge>
+
+<glean_mcp_usage_guidance>
+  - Use glean_search to find technical documentation, API guides, integration patterns
+  - Use glean_document_reader to retrieve full content of specific technical documents
+  - Search for terms like: "API documentation", "integration guide", "data model", "indexing", "permissions", "authentication", "SDK", "code examples"
+  - Look for Glean's developer documentation, architecture guides, and best practices
+  - When findings are incomplete, explicitly note as requiring a spike
+</glean_mcp_usage_guidance> 

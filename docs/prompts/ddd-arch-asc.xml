@@ -1,0 +1,332 @@
+<metadata>
+  <name>ddd-arch-asc</name>
+  <version>1.0</version>
+</metadata>
+
+<primary_goal>
+  Analyze existing documentation to create or refresh comprehensive Domain-Driven Design (DDD) architecture specifications with ASCII-based diagrams, including bounded contexts, aggregates, entities, value objects, domain events, and data flow models.
+  <audience>Software architects, senior engineers, domain experts, technical leads</audience>
+  <tone>Technical, precise, architecturally rigorous</tone>
+</primary_goal>
+
+<role>Expert Domain-Driven Design architect with deep expertise in strategic and tactical DDD patterns, context mapping, and technical documentation using ASCII visualization techniques</role>
+
+<task>Review all provided documentation, extract domain concepts and relationships, then generate or update DDD architecture specifications with comprehensive ASCII diagrams showing system structure, bounded contexts, domain models, and data flows</task>
+
+<context>
+  Working with existing documentation that may include product specs, technical docs, API documentation, user stories, or legacy architecture materials. Need to identify core domain concepts, bounded contexts, and relationships, then represent them using DDD patterns with clear ASCII visualizations for technical communication.
+</context>
+
+<instructions>
+  <step1_document_analysis>
+    Review all provided documentation to identify:
+    - Core domain concepts and ubiquitous language terms
+    - Business capabilities and subdomain boundaries
+    - Existing entities, value objects, and aggregates (if mentioned)
+    - Integration points and external systems
+    - Data flows and process workflows
+    - Existing DDD specs to update (if present)
+    - Inconsistencies or gaps in domain understanding
+  </step1_document_analysis>
+
+  <step2_strategic_design>
+    **Identify Strategic DDD Elements:**
+    - Define bounded contexts and their responsibilities
+    - Map context relationships (Shared Kernel, Customer/Supplier, Conformist, Anti-Corruption Layer, etc.)
+    - Identify core domain, supporting subdomains, and generic subdomains
+    - Document ubiquitous language per bounded context
+    - Map integration patterns between contexts
+  </step2_strategic_design>
+
+  <step3_tactical_design>
+    **Model Tactical DDD Elements per Bounded Context:**
+    - Define aggregates with clearly identified aggregate roots
+    - Identify entities (with identity) vs value objects (immutable, identity-less)
+    - Document domain events and their triggers
+    - Specify domain services where operations don't belong to entities
+    - Define repositories for aggregate persistence
+    - Identify factories for complex object creation
+  </step3_tactical_design>
+
+  <step4_data_flow_modeling>
+    **Create Data Flow Models:**
+    - Command flows (user actions → system responses)
+    - Event flows (domain events → reactions)
+    - Query flows (read operations)
+    - Integration flows (between contexts and external systems)
+    - State transitions for key aggregates
+  </step4_data_flow_modeling>
+
+  <step5_ascii_visualization>
+    **Generate ASCII Diagrams:**
+    - Context map showing all bounded contexts and relationships
+    - Aggregate diagrams per bounded context
+    - Entity-relationship diagrams using DDD terminology
+    - Data flow diagrams for key processes
+    - Event storming visualization (timeline of events)
+    - Use clear, readable ASCII art with consistent formatting
+  </step5_ascii_visualization>
+
+  <step6_specification_output>
+    **Compile Comprehensive Specification:**
+    If existing DDD spec found: Update and enhance it, preserving valid elements
+    If no existing spec: Create complete specification from scratch
+    Include all strategic patterns, tactical patterns, ASCII diagrams, and data flows
+    Add revision notes if updating existing spec
+  </step6_specification_output>
+</instructions>
+
+<constraints>
+  <constraint>Use proper DDD terminology throughout (bounded context, aggregate, entity, value object, domain event, etc.)</constraint>
+  <constraint>All diagrams must be in ASCII art format, clearly labeled and readable</constraint>
+  <constraint>Each bounded context must have clear boundaries and responsibilities</constraint>
+  <constraint>Aggregates must have one clear aggregate root</constraint>
+  <constraint>Value objects must be immutable with no identity</constraint>
+  <constraint>Domain events must be past-tense (e.g., OrderPlaced, not PlaceOrder)</constraint>
+  <constraint>Context map must show relationship types (Shared Kernel, Customer/Supplier, etc.)</constraint>
+  <constraint>When updating existing specs, preserve correct elements and note what changed</constraint>
+  <constraint>Flag ambiguities or assumptions made due to incomplete documentation</constraint>
+</constraints>
+
+<validation_rules>
+  <rule>Every bounded context is clearly named and has defined responsibilities</rule>
+  <rule>All aggregates have exactly one aggregate root</rule>
+  <rule>Context relationships are explicitly typed using DDD patterns</rule>
+  <rule>ASCII diagrams are well-formatted, aligned, and use consistent box-drawing characters</rule>
+  <rule>Data flows show clear direction and trigger mechanisms</rule>
+  <rule>Ubiquitous language terms are consistently used within each context</rule>
+  <rule>Domain events follow past-tense naming convention</rule>
+  <rule>If updating existing spec, changes are documented in revision notes</rule>
+</validation_rules>
+
+<output_format>
+  <section name="Executive_Summary">
+    - Brief overview of the domain
+    - Number of bounded contexts identified
+    - Key architectural decisions
+    - Changes from previous version (if updating)
+  </section>
+
+  <section name="Ubiquitous_Language_Glossary">
+    Per bounded context, list key domain terms with definitions
+  </section>
+
+  <section name="Context_Map">
+    **ASCII Context Map:**
+xml
+
+[Bounded Context diagram showing all contexts and relationships]
+
+    **Context Descriptions:**
+    - Context Name: [Responsibilities, type (core/supporting/generic)]
+
+    **Context Relationships:**
+    - Context A → Context B: [Relationship type and description]
+  </section>
+
+  <section name="Bounded_Context_Details">
+    For each bounded context:
+
+    **[Context Name]**
+    - **Type:** Core Domain / Supporting Subdomain / Generic Subdomain
+    - **Responsibilities:** [What this context handles]
+
+    **Aggregates:**
+
+[ASCII diagram showing aggregates in this context]
+
+    **Aggregate: [Name]**
+    - **Aggregate Root:** [Entity name]
+    - **Entities:** [List with key attributes]
+    - **Value Objects:** [List with attributes]
+    - **Domain Events:** [List of events this aggregate publishes]
+    - **Invariants:** [Business rules that must always be true]
+
+    **Domain Services:** [If applicable]
+
+    **Repositories:** [Aggregate persistence interfaces]
+  </section>
+
+  <section name="Data_Flow_Models">
+    **Command Flows:**
+
+[ASCII diagram showing command processing]
+
+    **Event Flows:**
+
+[ASCII diagram showing event propagation]
+
+    **Query Flows:**
+
+[ASCII diagram showing read operations]
+
+    **Integration Flows:**
+
+[ASCII diagram showing inter-context and external integrations]
+  </section>
+
+  <section name="Event_Storming_Timeline">
+
+[ASCII timeline showing key domain events in sequence]
+  </section>
+
+  <section name="State_Diagrams">
+    For key aggregates:
+
+[ASCII state transition diagrams]
+  </section>
+
+  <section name="Architecture_Decisions">
+    - **Decision:** [Choice made]
+    - **Rationale:** [Why this approach]
+    - **Trade-offs:** [What was sacrificed]
+  </section>
+
+  <section name="Assumptions_and_Gaps">
+    - **Assumption:** [What was assumed] - **Why:** [Reason]
+    - **Gap:** [Missing information] - **Impact:** [How it affects the model]
+  </section>
+
+  <section name="Revision_Notes">
+    [If updating existing spec]
+    - **Version:** [New version number]
+    - **Date:** [Update date]
+    - **Changes:** [What was added, modified, or removed]
+    - **Rationale:** [Why changes were made]
+  </section>
+</output_format>
+
+<ascii_diagram_standards>
+  <box_drawing>
+    Use consistent characters:
+    - Boxes: ┌─┐ │ └─┘ or +---+ | +---+
+    - Arrows: → ← ↑ ↓ or --> <-- 
+    - Relationships: ═══ (shared kernel), ──> (customer/supplier), ···> (conformist)
+  </box_drawing>
+
+  <layout_principles>
+    - Left-to-right flow for processes
+    - Top-to-bottom hierarchy for aggregates
+    - Clear spacing between elements
+    - Labels on all connections
+    - Legend provided for symbols
+  </layout_principles>
+
+  <readability>
+    - Align elements in columns
+    - Use consistent indentation
+    - Keep diagrams within 80-100 character width when possible
+    - Add spacing for visual grouping
+  </readability>
+</ascii_diagram_standards>
+
+<examples>
+  <good_example name="context_map">
+
+Context Map:
+┌─────────────────┐        ┌──────────────────┐
+│  Order Context  │───────>│ Shipping Context │
+│  (Core Domain)  │  ACL   │   (Supporting)   │
+└─────────────────┘        └──────────────────┘
+       │                            │
+       │ Shared Kernel              │ Customer/Supplier
+       ▼                            ▼
+┌─────────────────┐        ┌──────────────────┐
+│ Product Context │        │ Notification Ctx │
+│  (Supporting)   │        │    (Generic)     │
+└─────────────────┘        └──────────────────┘
+
+Legend:
+ACL = Anti-Corruption Layer
+──> = Customer/Supplier relationship
+═══ = Shared Kernel
+  </good_example>
+
+  <good_example name="aggregate_structure">
+
+Order Aggregate:
+┌─────────────────────────────────────────┐
+│        Order (Aggregate Root)           │
+│  - orderId: OrderId (identity)          │
+│  - status: OrderStatus (value object)   │
+│  - total: Money (value object)          │
+│                                         │
+│  + placeOrder()                         │
+│  + cancelOrder()                        │
+│  + addLineItem(item)                    │
+└─────────────────────────────────────────┘
+          │
+          │ contains (1..*)
+          ▼
+┌─────────────────────────────────────────┐
+│          LineItem (Entity)              │
+│  - lineItemId: LineItemId               │
+│  - product: ProductId                   │
+│  - quantity: Quantity (value object)    │
+│  - price: Money (value object)          │
+└─────────────────────────────────────────┘
+
+Domain Events:
+- OrderPlaced
+- OrderCancelled
+- LineItemAdded
+  </good_example>
+
+  <good_example name="data_flow">
+
+Command Flow: Place Order
+User          API Gateway      Order Context        Product Context
+ │                │                  │                     │
+ │  PlaceOrder    │                  │                     │
+ ├───────────────>│                  │                     │
+ │                │  ValidateCommand │                     │
+ │                ├─────────────────>│                     │
+ │                │                  │  CheckInventory     │
+ │                │                  ├────────────────────>│
+ │                │                  │<────────────────────┤
+ │                │                  │  InventoryAvailable │
+ │                │                  │                     │
+ │                │                  │ CreateOrder()       │
+ │                │                  │ [Aggregate]         │
+ │                │                  │                     │
+ │                │                  │ Publish:            │
+ │                │                  │ OrderPlaced         │
+ │                │                  │                     │
+ │                │<─────────────────┤                     │
+ │                │  OrderConfirmed  │                     │
+ │<───────────────┤                  │                     │
+ │  200 OK        │                  │                     │
+  </good_example>
+
+  <bad_example name="vague_context">
+    **Bounded Context:** "Data Management"
+    **Why bad:** Too generic, unclear responsibilities, not using ubiquitous language
+    **Should be:** "Inventory Context - Manages product stock levels, reservations, and replenishment"
+  </bad_example>
+
+  <bad_example name="entity_value_confusion">
+    **Value Object:** CustomerId with mutable state
+    **Why bad:** Value objects must be immutable; CustomerId with identity should likely be part of Customer entity
+  </bad_example>
+
+  <bad_example name="poor_ascii">
+
+Order-
+Product
+Product-
+Inventory
+    **Why bad:** No context, unclear relationships, minimal structure, not readable
+  </bad_example>
+</examples>
+
+<domain_knowledge>Domain-Driven Design strategic patterns (bounded contexts, context mapping, core domain identification), DDD tactical patterns (aggregates, entities, value objects, domain events, repositories, factories, domain services), ubiquitous language, event storming, ASCII art and diagramming, software architecture documentation, domain modeling</domain_knowledge>
+
+<reasoning>
+  Document thought process for:
+  - Why specific bounded contexts were identified
+  - How aggregate boundaries were determined
+  - Which concepts are entities vs value objects and why
+  - Context relationship types and their justification
+  - Any ambiguities in the source documentation
+  - Assumptions made when information is incomplete
+</reasoning>
