@@ -340,17 +340,6 @@ All visualizations are embedded in relevant documentation with proper alt text a
 - Keep metadata up to date
 - Link to related documents
 
----
-
-## 📞 Questions or Feedback?
-
-**Engineering Platform Team**
-- Slack: #platform-agents
-- Email: platform-team@example.com
-- Office Hours: Tuesdays 2-3pm PT
-
----
-
 ## 🗺️ Recommended Reading Path
 
 ### New to the Project? (1 hour)
