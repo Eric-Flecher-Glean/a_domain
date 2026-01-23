@@ -33,6 +33,9 @@ Current Glean agent development faces critical challenges:
 3. **Composition Problem:** Building multi-agent workflows requires deep technical knowledge and brittle point-to-point integrations
 4. **Scalability Problem:** As agent count grows (100+ templates), maintaining coherence becomes impossible without domain structure
 
+![DDD Registry Value Proposition](../images/executive/ddd-registry-value-proposition-executives-v1.png)
+*Visual overview: Current state challenges vs. DDD Registry solution approach*
+
 ### Solution Overview
 A DDD Domain Registry and Unified Agent Interface Layer that provides:
 
@@ -56,6 +59,9 @@ A DDD Domain Registry and Unified Agent Interface Layer that provides:
 - **Network effects:** Each new agent increases the value of the entire ecosystem
 - **Knowledge capture:** Domain models become living documentation
 - **Future-proof:** Extensible architecture supports 1000+ agents
+
+![Self-Bootstrapping System Concept](../images/executive/ddd-registry-self-bootstrapping-executives-v1.png)
+*Strategic advantage: Each agent accelerates development of subsequent agents, creating compounding velocity gains*
 
 ---
 
@@ -211,6 +217,9 @@ A DDD Domain Registry and Unified Agent Interface Layer that provides:
 > As an Agent Developer
 > I want to compose multiple agents into a workflow
 > So that I can solve complex problems spanning multiple domains
+
+![Journey Orchestration Value Chain Example](../images/executive/ddd-registry-journey-use-case-business-v1.png)
+*Example value chain: Customer support journey orchestration showing multi-system coordination and automatic breadcrumb tracking*
 
 **Acceptance Criteria:**
 - ✓ Define value chains with sequential and parallel steps

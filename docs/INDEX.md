@@ -183,6 +183,98 @@ All documentation includes XML metadata headers with:
 
 ---
 
+## 🎨 Visual Assets Library
+
+The platform includes 15 professional visualizations organized by audience and purpose.
+
+### Executive Visualizations
+Located in `/docs/images/executive/`
+
+1. **[Value Proposition Overview](./images/executive/ddd-registry-value-proposition-executives-v1.png)** - Current challenges vs. DDD solution
+   - Used in: [README](../README.md), [PRD Executive Summary](./product/prd.md#executive-summary)
+   - Audience: Executives, Product Managers, Business Leaders
+
+2. **[Journey Orchestration Use Case](./images/executive/ddd-registry-journey-use-case-business-v1.png)** - Customer support workflow example
+   - Used in: [README Use Cases](../README.md#use-cases), [PRD Value Chain](./product/prd.md)
+   - Audience: Business Stakeholders, Product Managers
+
+3. **[Self-Bootstrapping System](./images/executive/ddd-registry-self-bootstrapping-executives-v1.png)** - Compounding velocity concept
+   - Used in: [README](../README.md), [PRD Strategic Value](./product/prd.md#strategic-value)
+   - Audience: Executives, Engineering Leadership
+
+### Architecture Visualizations
+Located in `/docs/images/architecture/`
+
+4. **[Bounded Context Landscape Map](./images/architecture/ddd-registry-context-map-architects-v1.png)** - 15 contexts with relationships
+   - Used in: [DDD Specification Context Map](./architecture/ddd-specification.md#context-map)
+   - Audience: Platform Architects, Technical Leads
+
+5. **[Domain Event Flow](./images/architecture/ddd-registry-event-flow-technical-v1.png)** - Event-driven architecture
+   - Used in: [DDD Specification Event Flow](./architecture/ddd-specification.md#event-flow-sdlc-value-chain)
+   - Audience: Platform Architects, Technical Teams
+
+6. **[Aggregate Design Patterns](./images/architecture/ddd-registry-aggregate-design-technical-v1.png)** - DDD tactical patterns
+   - Used in: [DDD Specification Aggregates](./architecture/ddd-specification.md)
+   - Audience: Technical Teams, Platform Architects
+
+7. **[Anti-Corruption Layer Pattern](./images/architecture/ddd-registry-acl-pattern-architects-v1.png)** - Glean integration isolation
+   - Used in: [DDD Specification ADR-004](./architecture/ddd-specification.md#adr-004-anti-corruption-layer-for-glean-integration)
+   - Audience: Platform Architects, Integration Engineers
+
+### Developer Visualizations
+Located in `/docs/images/developer/`
+
+8. **[Agent Lifecycle Journey](./images/developer/ddd-registry-agent-lifecycle-developers-v1.png)** - Complete SDLC process
+   - Used in: [Implementation Spec Agent Builder](./product/implementation-specification.md)
+   - Audience: Agent Developers, Platform Engineers
+
+9. **[Intent Discovery Flow](./images/developer/ddd-registry-discovery-flow-developers-v1.png)** - Discovery mechanism
+   - Used in: [Implementation Spec Discovery](./product/implementation-specification.md)
+   - Audience: Agent Developers, Technical Teams
+
+10. **[Orchestration Patterns](./images/developer/ddd-registry-orchestration-patterns-developers-v1.png)** - Sequential/Parallel/Conditional
+    - Used in: [Implementation Spec Orchestration](./product/implementation-specification.md)
+    - Audience: Agent Developers, Platform Architects
+
+11. **[Saga Pattern with Compensation](./images/developer/ddd-registry-saga-pattern-technical-v1.png)** - Distributed transactions
+    - Used in: [Implementation Spec](./product/implementation-specification.md)
+    - Audience: Technical Teams, Platform Engineers
+
+12. **[Developer Onboarding](./images/developer/ddd-registry-onboarding-developers-v1.png)** - Quick start guide
+    - Used in: [README Quick Start](../README.md#quick-start)
+    - Audience: New Developers, Agent Developers
+
+13. **[Configuration Management Use Case](./images/developer/ddd-registry-config-use-case-developers-v1.png)** - Real-world workflow
+    - Used in: [README Use Cases](../README.md#use-cases)
+    - Audience: Developers, Product Managers
+
+### Educational Visualizations
+Located in `/docs/images/educational/`
+
+14. **[Context Relationship Types](./images/educational/ddd-registry-context-patterns-reference-v1.png)** - DDD pattern reference
+    - Used in: [DDD Specification Context Relationships](./architecture/ddd-specification.md#context-relationship-details)
+    - Audience: Platform Architects, Domain Experts
+
+15. **[System-Wide Observability](./images/educational/ddd-registry-observability-devops-v1.png)** - Monitoring architecture
+    - Used in: [Implementation Spec Observability](./product/implementation-specification.md#6-observability-stack)
+    - Audience: Platform Engineers, DevOps, SREs
+
+### Using Visualizations
+
+**For Presentations:**
+- Executive deck: Use #1, #3, #2
+- Architecture review: Use #4, #5, #7, #14
+- Developer training: Use #8, #9, #10, #12
+- Product marketing: Use #1, #2, #3, #13
+
+**For Documentation:**
+All visualizations are embedded in relevant documentation with proper alt text and contextual captions.
+
+**File Naming Convention:**
+`ddd-registry-{topic}-{audience}-v{version}.png`
+
+---
+
 ## 🔖 Key Concepts & Glossary
 
 ### Domain-Driven Design (DDD)

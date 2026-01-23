@@ -125,6 +125,9 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 
 ## Context Map
 
+![Professional Bounded Context Landscape Map](../images/architecture/ddd-registry-context-map-architects-v1.png)
+*Bounded Context Landscape Map showing all 15 contexts organized by subdomain (Platform Core, SDLC Automation, Domain Agents) with relationship patterns*
+
 ### Strategic Context Map
 
 ```
@@ -220,6 +223,9 @@ Legend:
 
 ### Context Relationship Details
 
+![Context Relationship Types Reference](../images/educational/ddd-registry-context-patterns-reference-v1.png)
+*DDD context relationship patterns: Shared Kernel, Customer/Supplier, Anti-Corruption Layer, Published Language, and Conformist - with usage guidelines and trade-offs*
+
 | From Context | To Context | Relationship Type | Description |
 |--------------|------------|-------------------|-------------|
 | Platform.Registry | Platform.Discovery | Shared Kernel | Share AgentCapability and IntentContract models |
@@ -247,6 +253,9 @@ Legend:
 - Validate intent contracts
 - Provide search interface for capabilities
 - Version control for domain models
+
+![Aggregate Design Patterns](../images/architecture/ddd-registry-aggregate-design-technical-v1.png)
+*DDD aggregate design patterns showing root entities, value objects, invariants, and domain events for the platform*
 
 #### Aggregate Map
 
@@ -1112,6 +1121,9 @@ Developer      CLI/API        Platform.Registry    Platform.Events
 
 ### Event Flow: SDLC Value Chain
 
+![Domain Event Flow Architecture](../images/architecture/ddd-registry-event-flow-technical-v1.png)
+*Complete event-driven architecture showing domain agents publishing to event bus (Redis Streams/Kafka) with SDLC agents subscribing to domain events for automated workflows*
+
 ```
 Schema Agent   Story Agent    Code Agent     PR Agent      Event Bus
     │              │              │              │              │
@@ -1508,6 +1520,9 @@ SLA Target: 95% resolved within 24 hours
 ---
 
 ### ADR-004: Anti-Corruption Layer for Glean Integration
+
+![Anti-Corruption Layer Pattern](../images/architecture/ddd-registry-acl-pattern-architects-v1.png)
+*Anti-Corruption Layer (ACL) pattern showing translation and isolation between internal domain model and external Glean platform APIs*
 
 **Decision:** Implement ACL to isolate platform from Glean API changes
 

@@ -20,6 +20,9 @@
 
 Building AI agents is complex. Discovering existing capabilities is time-consuming. Composing agents into workflows is error-prone. Maintaining consistency across teams is nearly impossible. The DDD Domain Registry solves these challenges by treating agents as first-class domain concepts with discoverable capabilities, enforceable contracts, and composable value chains.
 
+![DDD Registry Value Proposition](./docs/images/executive/ddd-registry-value-proposition-executives-v1.png)
+*Current state challenges vs. DDD Registry solution benefits*
+
 **The Result:** Engineering teams build agents 6-8x faster while maintaining consistency, reliability, and compliance across your entire agent ecosystem.
 
 ---
@@ -35,12 +38,18 @@ Standardized contracts for agent communication enabling seamless composition. Ag
 ### Self-Bootstrapping SDLC Agents
 Meta-agents that improve the system itself: Schema Validation Agent ensures contract compliance, Story Generator Agent creates requirements from domain models, Code Generator Agent scaffolds implementations, and Deployment Agent manages the entire lifecycle.
 
+![Self-Bootstrapping System](./docs/images/executive/ddd-registry-self-bootstrapping-executives-v1.png)
+*Each new agent makes building the next agent easier - creating a compounding velocity effect*
+
 ### Event-Driven Orchestration
 Choreograph complex workflows across agents with both orchestrated sagas and event-driven choreography. Built-in compensation handling, distributed tracing, and automatic rollback ensure reliability.
 
 ---
 
 ## Quick Start
+
+![Developer Onboarding Journey](./docs/images/developer/ddd-registry-onboarding-developers-v1.png)
+*Step-by-step developer onboarding: From "I need an agent" to production deployment in minutes*
 
 ### 1. Install the Registry
 ```bash
@@ -106,8 +115,14 @@ Schema validation, story generation, code scaffolding, PR review, deployment
 ### Journey Orchestration
 Multi-system customer support workflows with breadcrumb tracking
 
+![Journey Orchestration Use Case](./docs/images/executive/ddd-registry-journey-use-case-business-v1.png)
+*Example: Customer support journey orchestration across multiple systems with automatic breadcrumb tracking*
+
 ### Configuration Management
 Flag discovery, expert finding, documentation generation
+
+![Configuration Management Use Case](./docs/images/developer/ddd-registry-config-use-case-developers-v1.png)
+*Real-world use case: Developer workflow for finding feature flags, locating subject matter experts, and accessing documentation through unified agent interface*
 
 ### Knowledge Management
 Article effectiveness tracking, KB search, automated updates
@@ -181,19 +196,6 @@ This platform follows Domain-Driven Design principles. All contributions should:
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
----
-
-## License
-
-Internal use only - Property of [Organization Name]
-
----
-
-## Contact
-
-**Engineering Platform Team**
-Slack: #platform-agents
-Email: platform-team@example.com
 
 ---
 
