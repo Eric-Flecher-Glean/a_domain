@@ -19,6 +19,8 @@ capabilities:
   - Generate actionable feedback
   - Compare against good/bad example patterns
   - Track validation across multiple attempts
+  - Validate input specifications and context requirements (NEW)
+  - Verify Glean integration specifications (NEW)
 
 input_contract:
   xml_prompt:
@@ -101,6 +103,18 @@ output_contract:
       bad_examples_found: {type: integer}
       examples_quality_score: {type: number}
 
+  contextValidation:
+    type: object
+    required: false
+    description: "Validation of input/context specifications (NEW)"
+    properties:
+      input_specification_present: {type: boolean}
+      context_requirements_present: {type: boolean}
+      required_inputs_count: {type: integer}
+      context_sources_count: {type: integer}
+      glean_integrations: {type: array}
+      validation_issues: {type: array}
+
 glean_integrations:
   - type: mcp_server
     server_path: "prompt-engineering"
@@ -134,16 +148,31 @@ configuration:
   system_instructions: |
     You are a prompt quality validator specializing in XML-structured prompts.
 
-    Your task is to validate the provided XML prompt against quality standards
-    and provide actionable feedback for improvement.
+    VALIDATION PHASES:
+    1. Structural Validation (35%)
+       - XML well-formed, required sections, tag hierarchy, naming
 
-    Follow the validation criteria from: {validation_rules_source}
+    2. Completeness Validation (30%)
+       - Section content, examples quality, instructions
+       - Input specification present (if applicable)
+       - Context requirements present (if applicable)
+
+    3. Quality Validation (25%)
+       - Clarity, examples effectiveness, constraints, coherence
+
+    4. Context Quality Validation (10%) [NEW]
+       - Required inputs defined with descriptions
+       - Input types and sources specified
+       - Glean queries valid and accessible
+       - Context sources appropriate for task
+
+    Follow validation criteria from: {validation_rules_source}
     Compare against examples from: {examples_source} and {global_examples_source}
 
-    Calculate a quality score (0-100) and provide specific recommendations
-    if the score is below the success threshold (90).
+    Calculate weighted quality score (0-100) and provide specific recommendations
+    if score is below threshold (90).
 
-    Output a ValidationResult object with all required fields.
+    Output a ValidationResult object with all required fields including contextValidation.
 
 scoring:
   success_threshold: 90
@@ -156,9 +185,16 @@ scoring:
   max_total_bonus: 10
 
   weights:
-    structural: 0.4
-    completeness: 0.3
-    quality: 0.3
+    structural: 0.35
+    completeness: 0.30
+    quality: 0.25
+    context_quality: 0.10
+
+  context_penalties:
+    missing_input_specification: -15
+    no_required_inputs: -5
+    invalid_glean_queries: -10
+    missing_input_descriptions: -5
 
 validation_checks:
   structural:
@@ -171,12 +207,20 @@ validation_checks:
     - section_content
     - examples_quality
     - instructions_structure
+    - input_specification_present
+    - context_requirements_present
 
   quality:
     - clarity_and_specificity
     - examples_effectiveness
     - constraints_and_validation
     - overall_coherence
+
+  context_quality:
+    - required_inputs_defined
+    - input_descriptions_clear
+    - glean_queries_valid
+    - context_sources_accessible
 
 retry_policy:
   max_attempts: 3

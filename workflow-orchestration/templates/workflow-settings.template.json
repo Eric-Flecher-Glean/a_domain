@@ -1,0 +1,41 @@
+{
+  "workflow_settings_version": "1.0.0",
+  "description": "{{description}}",
+
+  "execution_overrides": {
+    "timeout_seconds": {{timeout_seconds}},
+    "enable_debug_logs": {{enable_debug}}
+  },
+
+  "validation_overrides": {
+    "success_threshold": {{success_threshold}},
+    "quality_score_weight": {
+      "structural": {{structural_weight}},
+      "completeness": {{completeness_weight}},
+      "quality": {{quality_weight}}
+    }
+  },
+
+  "stage_specific_settings": {{{#each stages}}
+    "{{stage_id}}": {
+      "temperature": {{temperature}},
+      "model": "{{model}}",
+      "max_tokens": {{max_tokens}}{{#if strict_mode}},
+      "strict_mode": true{{/if}}{{#if examples_to_load}},
+      "examples_to_load": "{{examples_to_load}}"{{/if}}
+    }{{#unless @last}},{{/unless}}{{/each}}
+  },
+
+  "retry_behavior": {
+    "incremental_feedback": {{incremental_feedback}},
+    "preserve_previous_attempts": {{preserve_previous_attempts}},
+    "max_feedback_items": {{max_feedback_items}}
+  },
+
+  "output_configuration": {
+    "include_all_attempts": {{include_all_attempts}},
+    "include_best_attempt_on_failure": {{include_best_on_failure}},
+    "include_validation_details": {{include_validation_details}},
+    "include_execution_metrics": {{include_execution_metrics}}
+  }
+}

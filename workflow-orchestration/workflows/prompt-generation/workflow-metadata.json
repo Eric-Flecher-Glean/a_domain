@@ -1,9 +1,11 @@
 {
   "workflow_id": "prompt-generation",
   "version": "1.0.0",
+  "name": "XML Prompt Generation Workflow",
   "description": "Generate and validate XML-structured prompts using 2-agent collaboration",
   "pattern": "stg-val-wkf",
   "created": "2026-01-25",
+  "updated": "2026-01-26",
   "status": "active",
 
   "stages": [

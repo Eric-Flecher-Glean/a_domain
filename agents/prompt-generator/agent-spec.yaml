@@ -18,6 +18,9 @@ capabilities:
   - Refine prompts based on validation feedback
   - Generate unique prompt names (xxx-xxx-xxx format)
   - Handle multi-attempt refinement loops
+  - Analyze tasks to identify required inputs (NEW)
+  - Identify context sources from Glean (NEW)
+  - Generate input specifications and context requirements (NEW)
 
 input_contract:
   user_request:
@@ -25,6 +28,12 @@ input_contract:
     required: true
     description: "Natural language prompt request"
     min_length: 10
+
+  analyze_context:
+    type: boolean
+    required: false
+    default: true
+    description: "Enable context analysis to identify inputs and context sources"
 
   feedback:
     type: array
@@ -73,6 +82,40 @@ output_contract:
       constraints: {type: array}
       output_format: {type: string}
 
+  input_analysis:
+    type: object
+    required: false
+    description: "Analysis of required inputs and context sources (if analyze_context=true)"
+    properties:
+      required_inputs:
+        type: array
+        description: "Inputs that must be provided by user"
+        items:
+          type: object
+          properties:
+            name: {type: string}
+            type: {type: string}
+            source: {type: string}
+            description: {type: string}
+      optional_inputs:
+        type: array
+        description: "Optional inputs with defaults"
+        items:
+          type: object
+      context_sources:
+        type: array
+        description: "Context that can be retrieved from Glean"
+        items:
+          type: object
+          properties:
+            name: {type: string}
+            source: {type: string}
+            query: {type: string}
+      glean_integrations:
+        type: array
+        description: "Glean MCP tools needed"
+        items: {type: string}
+
   generation_metadata:
     type: object
     required: false
@@ -81,6 +124,7 @@ output_contract:
       refinements_applied: {type: array}
       timestamp: {type: string}
       feedback_addressed: {type: array}
+      context_analysis_performed: {type: boolean}
 
 glean_integrations:
   - type: mcp_server
@@ -111,15 +155,32 @@ configuration:
   system_instructions: |
     You are an expert prompt engineer specializing in XML-structured prompts.
 
-    Your task is to transform natural language requests into well-formed XML
-    prompts using Anthropic's hierarchical methodology.
+    PHASE 1: CONTEXT ANALYSIS (if analyze_context=true)
+    Analyze the user_request to identify:
+    1. Required inputs (what user must provide)
+       - Meeting tasks → meeting_transcript, attendee_list
+       - Code tasks → code_content, language
+       - Customer feedback → feedback_text, product_name
+    2. Context sources (what to retrieve from Glean)
+       - glean_search → semantic search
+       - glean_meeting_lookup → calendar/meetings
+       - glean_code_search → code repositories
+       - glean_document → specific documents
+    3. Glean MCP tools needed
 
-    Follow the instructions loaded from: {instruction_source}
+    PHASE 2: XML GENERATION
+    Transform the request into well-formed XML using Anthropic's methodology.
+
+    Required sections:
+    - <metadata>, <primary_goal>, <role>, <task>
+    - <input_specification> (if analyze_context=true)
+    - <context_requirements> (if analyze_context=true)
+    - <instructions>, <output_format>, <examples>
+
+    Follow instructions from: {instruction_source}
     Reference examples from: {examples_source} and {global_examples_source}
 
-    If feedback is provided (attempt_number > 1), apply it to refine the
-    previous attempt. Preserve what worked and fix what failed.
-
+    If feedback is provided (attempt_number > 1), apply it to refine.
     Output a complete, valid XML prompt that will pass validation.
 
 retry_policy:

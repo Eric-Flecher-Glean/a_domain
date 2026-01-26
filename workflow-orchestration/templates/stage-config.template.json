@@ -1,0 +1,92 @@
+{
+  "stage_id": "{{stage_id}}",
+  "stage_name": "{{stage_name}}",
+  "version": "1.0.0",
+
+  "agent_configuration": {
+    "agent_id": "{{agent_id}}",
+    "model": "{{model}}",
+    "temperature": {{temperature}},
+    "max_tokens": {{max_tokens}},
+    "top_p": {{top_p}}
+  },
+
+  "execution": {
+    "timeout_seconds": {{timeout_seconds}},
+    "max_retries": 0,
+    "retry_on_errors": false{{#if strict_mode}},
+    "strict_mode": true{{/if}}
+  },
+
+  "input_schema": {
+    "type": "object",
+    "required": [{{#each required_inputs}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}}],
+    "properties": {{{#each input_properties}}
+      "{{name}}": {
+        "type": "{{type}}",
+        "description": "{{description}}"{{#if min_length}},
+        "min_length": {{min_length}}{{/if}}{{#if minimum}},
+        "minimum": {{minimum}}{{/if}}{{#if maximum}},
+        "maximum": {{maximum}}{{/if}}{{#if pattern}},
+        "pattern": "{{pattern}}"{{/if}}{{#if items}},
+        "items": {{json items}}{{/if}}
+      }{{#unless @last}},{{/unless}}{{/each}}
+    }
+  },
+
+  "output_schema": {
+    "type": "object",
+    "required": [{{#each required_outputs}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}}],
+    "properties": {{{#each output_properties}}
+      "{{name}}": {
+        "type": "{{type}}",
+        "description": "{{description}}"{{#if minimum}},
+        "minimum": {{minimum}}{{/if}}{{#if maximum}},
+        "maximum": {{maximum}}{{/if}}{{#if pattern}},
+        "pattern": "{{pattern}}"{{/if}}{{#if items}},
+        "items": {{json items}}{{/if}}{{#if properties}},
+        "properties": {{json properties}}{{/if}}
+      }{{#unless @last}},{{/unless}}{{/each}}
+    }
+  },
+
+  "resources": {
+    "instructions_path": "instructions.md",
+    "validation_rules_path": "validation-rules.json",
+    "examples_path": "examples/",
+    "load_global_examples": true,
+    "global_examples_path": "../../../global/examples/"{{#if additional_resources}}{{#each additional_resources}},
+    "{{key}}": "{{value}}"{{/each}}{{/if}}
+  },
+
+  "validation": {{{#if validation_enabled}}
+    "run_structural_validation": true,
+    "validation_rules_source": "validation-rules.json",
+    "fail_on_errors": true,
+    "fail_on_warnings": false{{#if success_threshold}},
+    "success_threshold": {{success_threshold}}{{/if}}{{#if require_zero_errors}},
+    "require_zero_errors": true{{/if}}{{#if generate_feedback_on_failure}},
+    "generate_feedback_on_failure": true{{/if}}{{#if max_feedback_items}},
+    "max_feedback_items": {{max_feedback_items}}{{/if}}{{#if prioritize_by_severity}},
+    "prioritize_by_severity": true{{/if}}{{/if}}
+  },{{#if feedback_handling}}
+
+  "feedback_handling": {{{#each feedback_handling}}
+    "{{key}}": {{value}}{{#unless @last}},{{/unless}}{{/each}}
+  },{{/if}}{{#if scoring}}
+
+  "scoring": {{{#each scoring}}
+    "{{key}}": {{value}}{{#unless @last}},{{/unless}}{{/each}}
+  },{{/if}}{{#if loop_handling}}
+
+  "loop_handling": {{{#each loop_handling}}
+    "{{key}}": {{value}}{{#unless @last}},{{/unless}}{{/each}}
+  },{{/if}}
+
+  "output_handling": {
+    "save_to_state": true,
+    "include_metadata": true,
+    "format": "json"{{#if include_full_details}},
+    "include_full_details": true{{/if}}
+  }
+}

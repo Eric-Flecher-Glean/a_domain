@@ -1,0 +1,133 @@
+{
+  "stage_id": "{{stage_id}}",
+  "validation_type": "{{validation_type}}",
+  "version": "1.0.0",
+  "success_threshold": {{success_threshold}},
+
+  "rules": [
+    {
+      "rule_id": "overall-quality-score",
+      "description": "Overall quality score must be ≥ {{success_threshold}}",
+      "check_type": "threshold",
+      "threshold": {{success_threshold}},
+      "severity": "error",
+      "weight": 100,
+      "validation_method": "score_comparison",
+      "error_message": "Quality score below threshold. Address feedback items to improve score."
+    },
+    {
+      "rule_id": "no-structural-errors",
+      "description": "No structural errors from validation",
+      "check_type": "error_count",
+      "max_errors": 0,
+      "severity": "error",
+      "validation_method": "count_severity_level",
+      "error_message": "Structural errors detected. Fix all error-level issues before proceeding."
+    },
+    {
+      "rule_id": "actionable-feedback",
+      "description": "If validation fails, feedback must be actionable",
+      "check_type": "feedback_quality",
+      "min_feedback_items": 1,
+      "severity": "error",
+      "validation_method": "feedback_check",
+      "error_message": "Validation failed but no feedback provided. This is a system error."
+    }{{#if structural_min}},
+    {
+      "rule_id": "structural-score-minimum",
+      "description": "Structural validation score must be ≥ {{structural_min}}/{{structural_max}}",
+      "check_type": "subscore",
+      "subscore_name": "structural",
+      "min_value": {{structural_min}},
+      "max_value": {{structural_max}},
+      "severity": "error",
+      "validation_method": "subscore_check",
+      "error_message": "Critical structural issues detected. Fix structure and required sections."
+    }{{/if}}{{#if completeness_min}},
+    {
+      "rule_id": "completeness-score-minimum",
+      "description": "Completeness validation score must be ≥ {{completeness_min}}/{{completeness_max}}",
+      "check_type": "subscore",
+      "subscore_name": "completeness",
+      "min_value": {{completeness_min}},
+      "max_value": {{completeness_max}},
+      "severity": "warning",
+      "validation_method": "subscore_check",
+      "error_message": "Missing or incomplete sections detected. Add substantive content to all required sections."
+    }{{/if}}{{#if quality_min}},
+    {
+      "rule_id": "quality-score-minimum",
+      "description": "Quality validation score must be ≥ {{quality_min}}/{{quality_max}}",
+      "check_type": "subscore",
+      "subscore_name": "quality",
+      "min_value": {{quality_min}},
+      "max_value": {{quality_max}},
+      "severity": "warning",
+      "validation_method": "subscore_check",
+      "error_message": "Quality issues detected. Improve clarity and effectiveness."
+    }{{/if}}{{#if track_feedback}},
+    {
+      "rule_id": "feedback-addressed",
+      "description": "On retry attempts, previous feedback should be addressed",
+      "check_type": "feedback_tracking",
+      "applies_to_attempts": [2, 3],
+      "severity": "warning",
+      "validation_method": "compare_attempts",
+      "error_message": "Previous feedback not fully addressed. Ensure all error-level items are fixed."
+    }{{/if}}
+  ],
+
+  "loop_logic": {
+    "on_failure": {
+      "max_attempts": {{max_attempts}},
+      "feedback_mode": "incremental",
+      "enrichment_strategy": "append_previous_feedback",
+      "escalation_threshold": {{max_attempts}}
+    },
+    "feedback_prioritization": [
+      "error",
+      "warning",
+      "info"
+    ],
+    "max_feedback_items_per_attempt": 10
+  },
+
+  "scoring_weights": {{{#each scoring_weights}}
+    "{{dimension}}": {{weight}}{{#unless @last}},{{/unless}}{{/each}}
+  },
+
+  {{#if structural_checks}}"structural_checks": {{{#each structural_checks}}
+    "{{check_id}}": {
+      "points": {{points}},
+      "severity": "{{severity}}",
+      "description": "{{description}}"
+    }{{#unless @last}},{{/unless}}{{/each}}
+  },
+  {{/if}}
+  {{#if completeness_checks}}"completeness_checks": {{{#each completeness_checks}}
+    "{{check_id}}": {
+      "points": {{points}},
+      "severity": "{{severity}}",
+      "description": "{{description}}"
+    }{{#unless @last}},{{/unless}}{{/each}}
+  },
+  {{/if}}
+  {{#if quality_checks}}"quality_checks": {{{#each quality_checks}}
+    "{{check_id}}": {
+      "points": {{points}},
+      "severity": "{{severity}}",
+      "description": "{{description}}"
+    }{{#unless @last}},{{/unless}}{{/each}}
+  },
+  {{/if}}
+  "bonuses": {
+    "max_total_bonus": 10{{#if bonus_rules}}{{#each bonus_rules}},
+    "{{bonus_id}}": {{points}}{{/each}}{{/if}}
+  },
+
+  "feedback_templates": {
+    "error_template": "ERROR [{rule_id}] {section}: {problem} → {fix}",
+    "warning_template": "WARNING [{rule_id}] {section}: {issue} → {suggestion}",
+    "recommendation_template": "{priority}. {improvement} (See: {example_reference})"
+  }
+}

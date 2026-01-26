@@ -1,0 +1,68 @@
+{
+  "workflow_id": "{{workflow_id}}",
+  "version": "{{version}}",
+  "name": "{{name}}",
+  "description": "{{description}}",
+  "pattern": "{{pattern}}",
+  "created": "{{created_date}}",
+  "updated": "{{updated_date}}",
+  "status": "active",
+
+  "stages": [{{#each stages}}
+    {
+      "stage_id": "{{stage_id}}",
+      "name": "{{name}}",
+      "path": "stages/{{stage_id}}",
+      "max_attempts": {{max_attempts}},
+      "required": true,
+      "agent_id": "{{agent_id}}",{{#if success_threshold}}
+      "success_threshold": {{success_threshold}},{{/if}}
+      "description": "{{description}}"
+    }{{#unless @last}},{{/unless}}{{/each}}
+  ],
+
+  "orchestration": {
+    "pattern": "{{orchestration_pattern}}",{{#if loop_logic}}
+    "loop_logic": {
+      "on_validation_failure": "{{loop_target}}",
+      "max_total_attempts": {{max_total_attempts}},
+      "feedback_enrichment": "{{feedback_strategy}}"
+    },{{/if}}
+    "escalation": {
+      "on_max_attempts": "notify_user_with_best_attempt",
+      "include_outputs": true,
+      "include_metrics": true
+    }
+  },
+
+  "data_passing": {
+    "stage_1_output": "{{primary_output}}",{{#if data_mappings}}{{#each data_mappings}}
+    "{{mapping_id}}": {{{#each fields}}
+      "{{source}}": "{{target}}"{{#unless @last}},{{/unless}}{{/each}}
+    }{{#unless @last}},{{/unless}}{{/each}}{{/if}}
+  },
+
+  "compensation": {
+    "enabled": false,
+    "reason": "{{compensation_reason}}"
+  },
+
+  "global_config_overrides": {
+    "timeout_seconds": {{timeout_seconds}},
+    "enable_debug_logs": {{enable_debug}},
+    "success_threshold": {{global_success_threshold}}
+  },
+
+  "metrics": {
+    "track_execution_time": true,
+    "track_attempt_count": true,
+    "track_quality_scores": true,
+    "track_feedback_effectiveness": true
+  },
+
+  "documentation": {
+    "readme_path": "README.md",
+    "architecture_diagram": "docs/architecture.md",
+    "examples_path": "examples/"
+  }
+}

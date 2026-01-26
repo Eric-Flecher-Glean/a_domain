@@ -1,0 +1,90 @@
+agent_id: {{agent_id}}
+agent_name: "{{agent_name}}"
+version: 1.0.0
+created: "{{created_date}}"
+status: active
+
+description: |
+  {{description}}
+
+bounded_context: "{{bounded_context}}"
+
+capabilities:{{#each capabilities}}
+  - {{this}}{{/each}}
+
+input_contract:{{#each input_contract}}
+  {{name}}:
+    type: {{type}}
+    required: {{required}}
+    description: "{{description}}"{{#if min_length}}
+    min_length: {{min_length}}{{/if}}{{#if minimum}}
+    minimum: {{minimum}}{{/if}}{{#if maximum}}
+    maximum: {{maximum}}{{/if}}{{#if default}}
+    default: {{default}}{{/if}}{{#if items}}
+    items:
+      type: {{items.type}}{{/if}}{{#if properties}}
+    properties:{{#each properties}}
+      {{name}}: {type: {{type}}}{{/each}}{{/if}}
+{{/each}}
+output_contract:{{#each output_contract}}
+  {{name}}:
+    type: {{type}}
+    required: {{required}}
+    description: "{{description}}"{{#if minimum}}
+    minimum: {{minimum}}{{/if}}{{#if maximum}}
+    maximum: {{maximum}}{{/if}}{{#if pattern}}
+    pattern: "{{pattern}}"{{/if}}{{#if items}}
+    items:
+      type: {{items.type}}{{#if items.properties}}
+      properties:{{#each items.properties}}
+        {{name}}: {type: {{type}}}{{/each}}{{/if}}{{/if}}{{#if properties}}
+    properties:{{#each properties}}
+      {{name}}: {type: {{type}}}{{/each}}{{/if}}
+{{/each}}
+{{#if glean_integrations}}glean_integrations:{{#each glean_integrations}}
+  - type: {{type}}{{#if server_path}}
+    server_path: "{{server_path}}"{{/if}}{{#if tool_name}}
+    tool_name: "{{tool_name}}"{{/if}}{{#if usage}}
+    usage: "{{usage}}"{{/if}}{{#if query}}
+    query: "{{query}}"{{/if}}{{#if filter}}
+    filter: "{{filter}}"{{/if}}
+    description: "{{description}}"{{/each}}
+{{/if}}
+configuration:
+  model:
+    name: "{{model}}"
+    temperature: {{temperature}}
+    max_tokens: {{max_tokens}}
+    top_p: {{top_p}}
+
+  instruction_source: "../../workflow-orchestration/workflows/{{workflow_id}}/stages/{{stage_id}}/instructions.md"
+
+  examples_source: "../../workflow-orchestration/workflows/{{workflow_id}}/stages/{{stage_id}}/examples/"
+
+  global_examples_source: "../../workflow-orchestration/global/examples/"
+{{#if core_prompt_template}}
+  core_prompt_template: "{{core_prompt_template}}"
+{{/if}}
+  system_instructions: |
+    {{system_instructions}}
+
+retry_policy:
+  max_attempts: {{max_attempts}}
+  backoff_strategy: "none"
+  note: "Retry handled by workflow orchestration, not agent"
+
+validation:
+  pre_validation: false
+  post_validation: false
+  note: "{{validation_note}}"
+
+constraints:{{#each constraints}}
+  - {{this}}{{/each}}
+
+performance:
+  expected_latency_ms: {{expected_latency}}
+  max_latency_ms: {{max_latency}}
+  cache_enabled: false
+
+tags:{{#each tags}}
+  - {{this}}{{/each}}
