@@ -1,0 +1,149 @@
+agent_id: prompt-generator-001
+agent_name: "XML Prompt Generator"
+version: 1.0.0
+created: "2026-01-25"
+status: active
+
+description: |
+  Transforms natural language requests into well-structured XML prompts
+  following Anthropic's hierarchical methodology. Supports iterative
+  refinement based on validation feedback.
+
+bounded_context: "PromptEngineering"
+
+capabilities:
+  - Parse semantic requests into structured components
+  - Generate XML with proper tag hierarchy
+  - Apply cognitive containerization for examples
+  - Refine prompts based on validation feedback
+  - Generate unique prompt names (xxx-xxx-xxx format)
+  - Handle multi-attempt refinement loops
+
+input_contract:
+  user_request:
+    type: string
+    required: true
+    description: "Natural language prompt request"
+    min_length: 10
+
+  feedback:
+    type: array
+    required: false
+    items:
+      type: string
+    description: "Validation feedback from previous attempt"
+
+  previous_attempt:
+    type: object
+    required: false
+    description: "Previous generation attempt for refinement"
+    properties:
+      xml_prompt: {type: string}
+      prompt_name: {type: string}
+
+  attempt_number:
+    type: integer
+    required: false
+    minimum: 1
+    maximum: 3
+    default: 1
+    description: "Current attempt number in validation loop"
+
+output_contract:
+  xml_prompt:
+    type: string
+    required: true
+    description: "Complete XML-structured prompt"
+
+  prompt_name:
+    type: string
+    required: true
+    pattern: "^[a-z0-9]{3}-[a-z0-9]{3}-[a-z0-9]{3}$"
+    description: "Unique prompt identifier"
+
+  components_extracted:
+    type: object
+    required: false
+    description: "Parsed components from user request"
+    properties:
+      primary_goal: {type: string}
+      role: {type: string}
+      task: {type: string}
+      context: {type: string}
+      constraints: {type: array}
+      output_format: {type: string}
+
+  generation_metadata:
+    type: object
+    required: false
+    properties:
+      attempt: {type: integer}
+      refinements_applied: {type: array}
+      timestamp: {type: string}
+      feedback_addressed: {type: array}
+
+glean_integrations:
+  - type: mcp_server
+    server_path: "prompt-engineering"
+    tool_name: "generate_xml_prompt"
+    description: "MCP tool binding for this agent"
+
+  - type: document_store
+    usage: "Load examples and templates from workflow configs"
+    query: "app:workflow-orchestration type:PROMPT_EXAMPLE"
+    filter: "good_example OR template"
+
+configuration:
+  model:
+    name: "claude-sonnet-4"
+    temperature: 0.3
+    max_tokens: 4000
+    top_p: 0.9
+
+  instruction_source: "../../workflow-orchestration/workflows/prompt-generation/stages/01-generate-prompt/instructions.md"
+
+  examples_source: "../../workflow-orchestration/workflows/prompt-generation/stages/01-generate-prompt/examples/"
+
+  global_examples_source: "../../workflow-orchestration/global/examples/"
+
+  core_prompt_template: "prompt-template.xml"
+
+  system_instructions: |
+    You are an expert prompt engineer specializing in XML-structured prompts.
+
+    Your task is to transform natural language requests into well-formed XML
+    prompts using Anthropic's hierarchical methodology.
+
+    Follow the instructions loaded from: {instruction_source}
+    Reference examples from: {examples_source} and {global_examples_source}
+
+    If feedback is provided (attempt_number > 1), apply it to refine the
+    previous attempt. Preserve what worked and fix what failed.
+
+    Output a complete, valid XML prompt that will pass validation.
+
+retry_policy:
+  max_attempts: 3
+  backoff_strategy: "none"
+  note: "Retry handled by workflow orchestration, not agent"
+
+validation:
+  pre_validation: false
+  post_validation: false
+  note: "Validation performed by separate agent (prompt-validator-001)"
+
+constraints:
+  - no_write_actions
+  - no_hitl
+  - read_only_operations
+
+performance:
+  expected_latency_ms: 3000
+  max_latency_ms: 120000
+  cache_enabled: false
+
+tags:
+  - prompt-engineering
+  - xml-generation
+  - staged-validation
+  - agent-collaboration

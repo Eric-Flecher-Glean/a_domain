@@ -1,0 +1,103 @@
+{
+  "stage_id": "01-generate-prompt",
+  "stage_name": "Prompt Generation",
+  "version": "1.0.0",
+
+  "agent_configuration": {
+    "agent_id": "prompt-generator-001",
+    "model": "claude-sonnet-4",
+    "temperature": 0.3,
+    "max_tokens": 4000,
+    "top_p": 0.9
+  },
+
+  "execution": {
+    "timeout_seconds": 120,
+    "max_retries": 0,
+    "retry_on_errors": false
+  },
+
+  "input_schema": {
+    "type": "object",
+    "required": ["user_request"],
+    "properties": {
+      "user_request": {
+        "type": "string",
+        "description": "Natural language description of desired prompt",
+        "min_length": 10
+      },
+      "feedback": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Feedback from previous validation attempt (if any)"
+      },
+      "previous_attempt": {
+        "type": "object",
+        "description": "Previous prompt generation attempt (for refinement)"
+      },
+      "attempt_number": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3,
+        "description": "Current attempt number in validation loop"
+      }
+    }
+  },
+
+  "output_schema": {
+    "type": "object",
+    "required": ["xml_prompt", "prompt_name"],
+    "properties": {
+      "xml_prompt": {
+        "type": "string",
+        "description": "Complete XML-structured prompt"
+      },
+      "prompt_name": {
+        "type": "string",
+        "pattern": "^[a-z0-9]{3}-[a-z0-9]{3}-[a-z0-9]{3}$",
+        "description": "Unique prompt identifier"
+      },
+      "components_extracted": {
+        "type": "object",
+        "description": "Parsed components from user request"
+      },
+      "generation_metadata": {
+        "type": "object",
+        "properties": {
+          "attempt": {"type": "integer"},
+          "refinements_applied": {"type": "array"},
+          "timestamp": {"type": "string"},
+          "feedback_addressed": {"type": "array"}
+        }
+      }
+    }
+  },
+
+  "resources": {
+    "instructions_path": "instructions.md",
+    "validation_rules_path": "validation-rules.json",
+    "examples_path": "examples/",
+    "load_global_examples": true,
+    "global_examples_path": "../../../global/examples/"
+  },
+
+  "validation": {
+    "run_structural_validation": true,
+    "validation_rules_source": "validation-rules.json",
+    "fail_on_errors": true,
+    "fail_on_warnings": false
+  },
+
+  "feedback_handling": {
+    "parse_feedback_items": true,
+    "prioritize_errors": true,
+    "preserve_working_sections": true,
+    "incremental_refinement": true
+  },
+
+  "output_handling": {
+    "save_to_state": true,
+    "include_metadata": true,
+    "format": "json"
+  }
+}

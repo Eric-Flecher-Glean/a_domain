@@ -1,0 +1,7 @@
+<metadata><name>bad-ex1</name><version>1.0</version></metadata>
+<goal>Do analysis on data</goal>
+<role>Analyst</role>
+<task>Analyze the data</task>
+<output>Results of analysis</output>
+<example>Input: data, Output: analysis</example>
+<example>Input: more data, Output: more analysis</example>

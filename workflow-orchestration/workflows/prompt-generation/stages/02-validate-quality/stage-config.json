@@ -1,0 +1,157 @@
+{
+  "stage_id": "02-validate-quality",
+  "stage_name": "Quality Validation",
+  "version": "1.0.0",
+
+  "agent_configuration": {
+    "agent_id": "prompt-validator-001",
+    "model": "claude-sonnet-4",
+    "temperature": 0,
+    "max_tokens": 2000,
+    "top_p": 1.0
+  },
+
+  "execution": {
+    "timeout_seconds": 60,
+    "max_retries": 0,
+    "retry_on_errors": false,
+    "strict_mode": true
+  },
+
+  "input_schema": {
+    "type": "object",
+    "required": ["xml_prompt"],
+    "properties": {
+      "xml_prompt": {
+        "type": "string",
+        "description": "XML prompt to validate",
+        "min_length": 50
+      },
+      "previous_validation_results": {
+        "type": "array",
+        "description": "Results from previous validation attempts (for tracking)"
+      },
+      "attempt_number": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3,
+        "description": "Current validation attempt number"
+      }
+    }
+  },
+
+  "output_schema": {
+    "type": "object",
+    "required": ["isValid", "qualityScore", "checks", "feedback"],
+    "properties": {
+      "isValid": {
+        "type": "boolean",
+        "description": "Overall validation result (score >= threshold AND no errors)"
+      },
+      "qualityScore": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Calculated quality score"
+      },
+      "checks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["rule_id", "status", "message", "severity"],
+          "properties": {
+            "rule_id": {"type": "string"},
+            "status": {"enum": ["pass", "fail"]},
+            "message": {"type": "string"},
+            "severity": {"enum": ["error", "warning", "info"]},
+            "section": {"type": "string"},
+            "score_impact": {"type": "number"}
+          }
+        },
+        "description": "Individual validation check results"
+      },
+      "feedback": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Actionable feedback for refinement"
+      },
+      "recommendations": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Specific improvement suggestions"
+      },
+      "scoreBreakdown": {
+        "type": "object",
+        "properties": {
+          "structural": {"type": "number"},
+          "completeness": {"type": "number"},
+          "quality": {"type": "number"},
+          "bonuses": {"type": "number"},
+          "penalties": {"type": "number"}
+        }
+      },
+      "examplesAnalysis": {
+        "type": "object",
+        "properties": {
+          "good_examples_found": {"type": "integer"},
+          "bad_examples_found": {"type": "integer"},
+          "examples_quality_score": {"type": "number"}
+        }
+      }
+    }
+  },
+
+  "resources": {
+    "instructions_path": "instructions.md",
+    "validation_rules_path": "validation-rules.json",
+    "examples_path": "examples/",
+    "load_global_examples": true,
+    "global_examples_path": "../../../global/examples/",
+    "global_standards_path": "../../../global/config/validation-standards.json"
+  },
+
+  "validation": {
+    "success_threshold": 90,
+    "require_zero_errors": true,
+    "generate_feedback_on_failure": true,
+    "max_feedback_items": 10,
+    "prioritize_by_severity": true
+  },
+
+  "scoring": {
+    "base_score": 100,
+    "error_penalty": 20,
+    "warning_penalty": 5,
+    "info_penalty": 0,
+    "bonus_per_extra_good_example": 2,
+    "bonus_per_extra_bad_example": 2,
+    "max_total_bonus": 10,
+    "weights": {
+      "structural": 0.4,
+      "completeness": 0.3,
+      "quality": 0.3
+    }
+  },
+
+  "feedback_generation": {
+    "enabled": true,
+    "include_error_fixes": true,
+    "include_warning_improvements": true,
+    "include_recommendations": true,
+    "reference_examples": true,
+    "template_based": true
+  },
+
+  "loop_handling": {
+    "track_previous_attempts": true,
+    "verify_feedback_addressed": true,
+    "escalate_on_no_improvement": true,
+    "improvement_threshold": 5
+  },
+
+  "output_handling": {
+    "save_to_state": true,
+    "include_full_details": true,
+    "format": "json"
+  }
+}

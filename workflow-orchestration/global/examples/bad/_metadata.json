@@ -1,0 +1,79 @@
+{
+  "example_set_name": "Anti-Patterns (Bad Examples)",
+  "description": "Poorly structured prompts demonstrating what to avoid",
+  "version": "1.0.0",
+  "total_examples": 2,
+
+  "examples": [
+    {
+      "file": "anti-patterns/example-001-flat-structure.xml",
+      "name": "bad-ex1",
+      "description": "Flat structure with no hierarchy or detail",
+      "anti_patterns": [
+        "All tags at same level (no hierarchy)",
+        "Extremely vague content (generic placeholders)",
+        "No proper instructions section",
+        "Examples lack structure (no good_example/bad_example tags)",
+        "No output_format specification",
+        "No constraints or validation rules",
+        "Poor naming convention (doesn't match xxx-xxx-xxx pattern)",
+        "Missing required sections"
+      ],
+      "quality_score": 25,
+      "why_its_bad": [
+        "Impossible to understand what the prompt should do",
+        "Examples don't demonstrate anything useful",
+        "No clear output expectations",
+        "Too generic to be actionable"
+      ],
+      "how_to_fix": [
+        "Add proper tag hierarchy (nest contextual details)",
+        "Replace vague content with specific descriptions",
+        "Add numbered instruction steps",
+        "Create structured examples with input/output",
+        "Define clear output format",
+        "Add explicit constraints"
+      ]
+    },
+    {
+      "file": "anti-patterns/example-002-missing-sections.xml",
+      "name": "incomplete-prompt",
+      "description": "Missing critical required sections",
+      "anti_patterns": [
+        "No <instructions> section",
+        "No <output_format> section",
+        "No <examples> section",
+        "No <constraints> section",
+        "Vague role and task definitions",
+        "Comments noting missing sections (instead of actual content)"
+      ],
+      "quality_score": 40,
+      "why_its_bad": [
+        "Cannot execute without instructions",
+        "No way to know what output should look like",
+        "No examples to learn from",
+        "Ambiguous role and task"
+      ],
+      "how_to_fix": [
+        "Add all required sections",
+        "Provide step-by-step instructions",
+        "Define structured output format",
+        "Include 2+ good examples and 1+ bad example",
+        "Make role and task specific",
+        "Add constraints for edge cases"
+      ]
+    }
+  ],
+
+  "common_anti_patterns": {
+    "flat_structure": "All tags at same level with no nesting",
+    "vague_content": "Generic placeholders like 'do the thing', 'process data'",
+    "missing_sections": "Omitting required tags (instructions, output_format, examples)",
+    "poor_examples": "Unrealistic examples like 'Input: data, Output: result'",
+    "no_constraints": "Missing boundaries and edge case handling",
+    "generic_roles": "'AI Assistant', 'Helper' instead of specific expertise",
+    "undefined_output": "No clear specification of output structure"
+  },
+
+  "usage_notes": "Use these examples to understand what NOT to do. When validating prompts, check for these anti-patterns and provide specific feedback on how to fix them."
+}

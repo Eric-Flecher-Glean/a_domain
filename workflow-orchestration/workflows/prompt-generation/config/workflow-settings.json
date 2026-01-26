@@ -1,0 +1,46 @@
+{
+  "workflow_settings_version": "1.0.0",
+  "description": "Workflow-specific settings that override global defaults",
+
+  "execution_overrides": {
+    "timeout_seconds": 300,
+    "enable_debug_logs": true
+  },
+
+  "validation_overrides": {
+    "success_threshold": 90,
+    "quality_score_weight": {
+      "structural": 0.4,
+      "completeness": 0.3,
+      "quality": 0.3
+    }
+  },
+
+  "stage_specific_settings": {
+    "01-generate-prompt": {
+      "temperature": 0.3,
+      "model": "claude-sonnet-4",
+      "max_tokens": 4000,
+      "examples_to_load": "all"
+    },
+    "02-validate-quality": {
+      "temperature": 0,
+      "model": "claude-sonnet-4",
+      "max_tokens": 2000,
+      "strict_mode": true
+    }
+  },
+
+  "retry_behavior": {
+    "incremental_feedback": true,
+    "preserve_previous_attempts": true,
+    "max_feedback_items": 10
+  },
+
+  "output_configuration": {
+    "include_all_attempts": false,
+    "include_best_attempt_on_failure": true,
+    "include_validation_details": true,
+    "include_execution_metrics": true
+  }
+}

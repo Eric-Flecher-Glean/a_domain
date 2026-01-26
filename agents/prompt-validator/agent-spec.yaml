@@ -1,0 +1,211 @@
+agent_id: prompt-validator-001
+agent_name: "Prompt Quality Validator"
+version: 1.0.0
+created: "2026-01-25"
+status: active
+
+description: |
+  Validates XML-structured prompts against quality standards, checking
+  structure, completeness, and effectiveness. Provides actionable feedback
+  for refinement.
+
+bounded_context: "PromptEngineering"
+
+capabilities:
+  - Parse and validate XML structure
+  - Check tag hierarchy and nesting depth
+  - Verify completeness of required sections
+  - Calculate quality scores (0-100)
+  - Generate actionable feedback
+  - Compare against good/bad example patterns
+  - Track validation across multiple attempts
+
+input_contract:
+  xml_prompt:
+    type: string
+    required: true
+    description: "XML prompt to validate"
+    min_length: 50
+
+  previous_validation_results:
+    type: array
+    required: false
+    description: "Results from previous validation attempts (for tracking)"
+    items:
+      type: object
+
+  attempt_number:
+    type: integer
+    required: false
+    minimum: 1
+    maximum: 3
+    default: 1
+    description: "Current validation attempt number"
+
+output_contract:
+  isValid:
+    type: boolean
+    required: true
+    description: "Overall validation result (score >= threshold AND no errors)"
+
+  qualityScore:
+    type: number
+    required: true
+    minimum: 0
+    maximum: 100
+    description: "Calculated quality score"
+
+  checks:
+    type: array
+    required: true
+    description: "Individual validation check results"
+    items:
+      type: object
+      properties:
+        rule_id: {type: string}
+        status: {enum: [pass, fail]}
+        message: {type: string}
+        severity: {enum: [error, warning, info]}
+        section: {type: string}
+        score_impact: {type: number}
+
+  feedback:
+    type: array
+    required: true
+    description: "Actionable feedback for refinement"
+    items:
+      type: string
+
+  recommendations:
+    type: array
+    required: false
+    description: "Specific improvement suggestions"
+    items:
+      type: string
+
+  scoreBreakdown:
+    type: object
+    required: false
+    properties:
+      structural: {type: number}
+      completeness: {type: number}
+      quality: {type: number}
+      bonuses: {type: number}
+      penalties: {type: number}
+
+  examplesAnalysis:
+    type: object
+    required: false
+    properties:
+      good_examples_found: {type: integer}
+      bad_examples_found: {type: integer}
+      examples_quality_score: {type: number}
+
+glean_integrations:
+  - type: mcp_server
+    server_path: "prompt-engineering"
+    tool_name: "validate_prompt_quality"
+    description: "MCP tool binding for this agent"
+
+  - type: document_store
+    usage: "Load validation rules and examples"
+    query: "app:workflow-orchestration type:VALIDATION_RULE"
+    filter: "prompt-generation"
+
+configuration:
+  model:
+    name: "claude-sonnet-4"
+    temperature: 0
+    max_tokens: 2000
+    top_p: 1.0
+
+  instruction_source: "../../workflow-orchestration/workflows/prompt-generation/stages/02-validate-quality/instructions.md"
+
+  validation_rules_source: "../../workflow-orchestration/workflows/prompt-generation/stages/02-validate-quality/validation-rules.json"
+
+  examples_source: "../../workflow-orchestration/workflows/prompt-generation/stages/02-validate-quality/examples/"
+
+  global_examples_source: "../../workflow-orchestration/global/examples/"
+
+  global_standards_source: "../../workflow-orchestration/global/config/validation-standards.json"
+
+  core_prompt_template: "validation-logic.xml"
+
+  system_instructions: |
+    You are a prompt quality validator specializing in XML-structured prompts.
+
+    Your task is to validate the provided XML prompt against quality standards
+    and provide actionable feedback for improvement.
+
+    Follow the validation criteria from: {validation_rules_source}
+    Compare against examples from: {examples_source} and {global_examples_source}
+
+    Calculate a quality score (0-100) and provide specific recommendations
+    if the score is below the success threshold (90).
+
+    Output a ValidationResult object with all required fields.
+
+scoring:
+  success_threshold: 90
+  base_score: 100
+  error_penalty: 20
+  warning_penalty: 5
+  info_penalty: 0
+  bonus_per_extra_good_example: 2
+  bonus_per_extra_bad_example: 2
+  max_total_bonus: 10
+
+  weights:
+    structural: 0.4
+    completeness: 0.3
+    quality: 0.3
+
+validation_checks:
+  structural:
+    - xml_well_formed
+    - required_sections_present
+    - tag_hierarchy
+    - naming_convention
+
+  completeness:
+    - section_content
+    - examples_quality
+    - instructions_structure
+
+  quality:
+    - clarity_and_specificity
+    - examples_effectiveness
+    - constraints_and_validation
+    - overall_coherence
+
+retry_policy:
+  max_attempts: 3
+  backoff_strategy: "none"
+  note: "Retry handled by workflow orchestration, not agent"
+
+feedback_generation:
+  enabled: true
+  template_based: true
+  include_error_fixes: true
+  include_warning_improvements: true
+  include_recommendations: true
+  reference_examples: true
+  max_feedback_items: 10
+  prioritize_by_severity: true
+
+constraints:
+  - no_write_actions
+  - no_hitl
+  - read_only_operations
+  - strict_validation_mode
+
+performance:
+  expected_latency_ms: 2000
+  max_latency_ms: 60000
+  cache_enabled: false
+
+tags:
+  - prompt-engineering
+  - quality-validation
+  - staged-validation
+  - agent-collaboration

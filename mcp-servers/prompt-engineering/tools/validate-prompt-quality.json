@@ -1,0 +1,144 @@
+{
+  "tool_name": "validate_prompt_quality",
+  "tool_id": "val-pmt-qlt",
+  "version": "1.0.0",
+  "description": "Validate XML-structured prompts against quality standards, checking structure, completeness, and effectiveness",
+
+  "function_signature": {
+    "name": "validate_prompt_quality",
+    "parameters": {
+      "type": "object",
+      "required": ["xml_prompt"],
+      "properties": {
+        "xml_prompt": {
+          "type": "string",
+          "description": "The XML prompt to validate"
+        },
+        "previous_validation_results": {
+          "type": "array",
+          "description": "Results from previous validation attempts"
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "required": ["isValid", "qualityScore", "checks", "feedback"],
+      "properties": {
+        "isValid": {"type": "boolean"},
+        "qualityScore": {"type": "number"},
+        "checks": {"type": "array"},
+        "feedback": {"type": "array"},
+        "recommendations": {"type": "array"},
+        "scoreBreakdown": {"type": "object"},
+        "examplesAnalysis": {"type": "object"}
+      }
+    }
+  },
+
+  "agent_binding": {
+    "agent_id": "prompt-validator-001",
+    "agent_type": "Glean Agent",
+    "invocation_method": "direct"
+  },
+
+  "implementation": {
+    "type": "agent_invocation",
+    "config_path": "../../agents/prompt-validator/agent-spec.yaml",
+    "instructions_path": "../../workflow-orchestration/workflows/prompt-generation/stages/02-validate-quality/instructions.md",
+    "validation_rules_path": "../../workflow-orchestration/workflows/prompt-generation/stages/02-validate-quality/validation-rules.json"
+  },
+
+  "validation_criteria": {
+    "structural": {
+      "weight": 0.4,
+      "checks": [
+        "xml_well_formed",
+        "required_sections_present",
+        "tag_hierarchy",
+        "naming_convention"
+      ]
+    },
+    "completeness": {
+      "weight": 0.3,
+      "checks": [
+        "section_content",
+        "examples_quality",
+        "instructions_structure"
+      ]
+    },
+    "quality": {
+      "weight": 0.3,
+      "checks": [
+        "clarity_and_specificity",
+        "examples_effectiveness",
+        "constraints_and_validation",
+        "overall_coherence"
+      ]
+    }
+  },
+
+  "scoring": {
+    "base_score": 100,
+    "success_threshold": 90,
+    "error_penalty": 20,
+    "warning_penalty": 5,
+    "bonus_per_extra_example": 2,
+    "max_bonus": 10
+  },
+
+  "usage_examples": [
+    {
+      "name": "Validate high-quality prompt",
+      "input": {
+        "xml_prompt": "<metadata><name>mtg-sum-ext</name>...</metadata>...",
+        "attempt_number": 1
+      },
+      "expected_output": {
+        "isValid": true,
+        "qualityScore": 95,
+        "checks": [
+          {"rule_id": "xml-well-formed", "status": "pass"},
+          {"rule_id": "required-sections", "status": "pass"}
+        ],
+        "feedback": []
+      }
+    },
+    {
+      "name": "Validate low-quality prompt",
+      "input": {
+        "xml_prompt": "<metadata><name>bad</name></metadata><goal>Do stuff</goal>",
+        "attempt_number": 1
+      },
+      "expected_output": {
+        "isValid": false,
+        "qualityScore": 35,
+        "checks": [
+          {"rule_id": "required-sections", "status": "fail", "severity": "error"},
+          {"rule_id": "name-format", "status": "fail", "severity": "error"}
+        ],
+        "feedback": [
+          "ERROR [required-sections]: Missing required sections - Add: role, task, instructions, output_format, examples",
+          "ERROR [name-format]: Prompt name 'bad' doesn't match xxx-xxx-xxx format"
+        ]
+      }
+    }
+  ],
+
+  "error_handling": {
+    "xml_parse_error": "Return validation failure with parse error details",
+    "invalid_structure": "Return detailed structural feedback",
+    "agent_unavailable": "Return 503 Service Unavailable",
+    "timeout": "Return partial validation result"
+  },
+
+  "performance": {
+    "expected_latency_ms": 2000,
+    "max_latency_ms": 60000,
+    "cache_enabled": false
+  }
+}

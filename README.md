@@ -177,10 +177,60 @@ Organizations using the DDD Domain Registry report:
 
 ## Project Status
 
-**Current Phase:** Planning & Design
+**Current Phase:** MVP Implementation
 **Target Start:** Q1 2026
 **First Release:** Week 2 (Foundation + Schema Validation Agent)
 **Peak Velocity:** Week 11 (Full SDLC Automation)
+
+### 🎯 NEW: 2-Agent Staged Validation MVP (Completed)
+
+A working implementation of the staged validation workflow pattern is now available! This MVP demonstrates Glean agent collaboration through XML prompt generation and quality validation.
+
+**What's Implemented:**
+- ✅ Document-driven workflow orchestration system
+- ✅ 2 Glean agents (Prompt Generator + Prompt Validator)
+- ✅ MCP server configuration with tool specifications
+- ✅ Staged validation pattern with feedback loops
+- ✅ Saga pattern state management
+- ✅ Complete example library and documentation
+
+**Quick Start:**
+```bash
+# View the workflow orchestration system
+cd workflow-orchestration/
+
+# Review agent specifications
+ls agents/prompt-generator/
+ls agents/prompt-validator/
+
+# See the complete workflow definition
+cat workflows/prompt-generation-workflow.json
+```
+
+**Use Case**: Generate high-quality XML-structured prompts through agent collaboration
+- Input: Natural language request ("Create a prompt for meeting summarization")
+- Process: Agent A generates → Agent B validates → Loop on failure (max 3 attempts)
+- Output: Validated XML prompt with quality score ≥90
+
+**Value Proposition**:
+- Reduce prompt creation time: 15min → <3min (80% reduction)
+- Ensure quality: Automated validation with multi-dimensional scoring
+- Enable non-technical users: No XML expertise required
+- Demonstrate agent patterns: Foundation for SDLC automation
+
+**Documentation**:
+- [Workflow Orchestration System](workflow-orchestration/README.md)
+- [Prompt Generation Workflow](workflow-orchestration/workflows/prompt-generation/README.md)
+- [Agent A (Generator)](agents/prompt-generator/README.md)
+- [Agent B (Validator)](agents/prompt-validator/README.md)
+- [MCP Server Setup](mcp-servers/prompt-engineering/README.md)
+- [Staged Validation Pattern](docs/concepts/a-b-workflow.md)
+
+**Next Steps**:
+1. Deploy to Glean instance (register MCP server + agents)
+2. Run integration tests
+3. Collect metrics and iterate
+4. Scale to additional workflows (Schema Validation → Story Generation)
 
 ---
 

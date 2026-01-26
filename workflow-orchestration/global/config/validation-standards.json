@@ -1,0 +1,78 @@
+{
+  "validation_standards_version": "1.0.0",
+  "description": "Quality thresholds and validation standards for all workflows",
+
+  "quality_thresholds": {
+    "excellent": 95,
+    "good": 90,
+    "acceptable": 85,
+    "needs_improvement": 70,
+    "poor": 50
+  },
+
+  "scoring": {
+    "base_score": 100,
+    "error_penalty": 20,
+    "warning_penalty": 5,
+    "bonus_per_extra_example": 2,
+    "max_bonus": 10
+  },
+
+  "validation_severity_levels": {
+    "error": {
+      "description": "Critical issues that prevent workflow completion",
+      "score_impact": -20,
+      "blocks_progression": true
+    },
+    "warning": {
+      "description": "Issues that reduce quality but don't block",
+      "score_impact": -5,
+      "blocks_progression": false
+    },
+    "info": {
+      "description": "Informational checks with no score impact",
+      "score_impact": 0,
+      "blocks_progression": false
+    }
+  },
+
+  "xml_validation": {
+    "required_tags": [
+      "metadata",
+      "primary_goal",
+      "role",
+      "task",
+      "instructions",
+      "output_format",
+      "examples"
+    ],
+    "optional_tags": [
+      "context",
+      "constraints",
+      "validation_rules",
+      "domain_knowledge"
+    ],
+    "max_nesting_depth": 3,
+    "require_well_formed": true
+  },
+
+  "prompt_naming": {
+    "pattern": "^[a-z0-9]{3}-[a-z0-9]{3}-[a-z0-9]{3}$",
+    "description": "Format: xxx-xxx-xxx (lowercase alphanumeric, hyphens)",
+    "examples": ["mtg-sum-ext", "sen-ana-txt", "cod-rev-pmt"]
+  },
+
+  "example_requirements": {
+    "min_good_examples": 2,
+    "min_bad_examples": 1,
+    "require_metadata": true,
+    "require_explanation": true
+  },
+
+  "feedback_quality": {
+    "require_actionable": true,
+    "min_feedback_items_on_failure": 1,
+    "include_specific_recommendations": true,
+    "reference_examples_library": true
+  }
+}

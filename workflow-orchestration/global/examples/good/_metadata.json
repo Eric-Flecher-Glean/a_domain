@@ -1,0 +1,57 @@
+{
+  "example_set_name": "Well-Structured Prompts (Good Examples)",
+  "description": "High-quality XML prompts demonstrating best practices",
+  "version": "1.0.0",
+  "total_examples": 2,
+
+  "examples": [
+    {
+      "file": "well-structured-prompts/example-001-meeting-summary.xml",
+      "name": "mtg-sum-ext",
+      "description": "Meeting summarization prompt with clear structure",
+      "demonstrates": [
+        "Proper tag hierarchy",
+        "Cognitive containerization for examples",
+        "Clear instructions with numbered steps",
+        "Well-defined output format",
+        "Explicit constraints",
+        "Multiple good and bad examples"
+      ],
+      "quality_score": 95,
+      "use_cases": [
+        "Information extraction from text",
+        "Structured summarization",
+        "Action item tracking"
+      ]
+    },
+    {
+      "file": "well-structured-prompts/example-002-code-review.xml",
+      "name": "cod-rev-chk",
+      "description": "Code review prompt with comprehensive validation",
+      "demonstrates": [
+        "Domain-specific expertise definition",
+        "Multi-criteria evaluation framework",
+        "Structured output with severity levels",
+        "Security-focused constraints",
+        "Educational tone in examples"
+      ],
+      "quality_score": 92,
+      "use_cases": [
+        "Code quality assessment",
+        "Security vulnerability detection",
+        "Developer feedback generation"
+      ]
+    }
+  ],
+
+  "key_patterns": {
+    "tag_hierarchy": "High-priority tags (primary_goal, role, task) at outer level",
+    "nesting": "Maximum 2-3 levels deep",
+    "examples": "Isolated in dedicated <examples> section",
+    "instructions": "Numbered steps with <step1>, <step2>, etc.",
+    "output_format": "Explicit structure with formatting examples",
+    "constraints": "Clear boundaries using <constraint> tags"
+  },
+
+  "usage_notes": "Reference these examples when generating new prompts or validating prompt quality. These represent the gold standard for XML prompt structure."
+}

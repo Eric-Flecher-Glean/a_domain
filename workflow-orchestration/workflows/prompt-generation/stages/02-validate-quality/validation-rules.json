@@ -1,0 +1,182 @@
+{
+  "stage_id": "02-validate-quality",
+  "validation_type": "quality_assessment",
+  "version": "1.0.0",
+  "success_threshold": 90,
+
+  "rules": [
+    {
+      "rule_id": "overall-quality-score",
+      "description": "Overall quality score must be ≥ 90",
+      "check_type": "threshold",
+      "threshold": 90,
+      "severity": "error",
+      "weight": 100,
+      "validation_method": "score_comparison",
+      "error_message": "Quality score below threshold. Address feedback items to improve score."
+    },
+    {
+      "rule_id": "no-structural-errors",
+      "description": "No structural errors from Stage 1 validation",
+      "check_type": "error_count",
+      "max_errors": 0,
+      "severity": "error",
+      "validation_method": "count_severity_level",
+      "error_message": "Structural errors detected. Fix all error-level issues before proceeding."
+    },
+    {
+      "rule_id": "actionable-feedback",
+      "description": "If validation fails, feedback must be actionable",
+      "check_type": "feedback_quality",
+      "min_feedback_items": 1,
+      "severity": "error",
+      "validation_method": "feedback_check",
+      "error_message": "Validation failed but no feedback provided. This is a system error."
+    },
+    {
+      "rule_id": "structural-score-minimum",
+      "description": "Structural validation score must be ≥ 32/40",
+      "check_type": "subscore",
+      "subscore_name": "structural",
+      "min_value": 32,
+      "max_value": 40,
+      "severity": "error",
+      "validation_method": "subscore_check",
+      "error_message": "Critical structural issues detected. Fix XML structure and required sections."
+    },
+    {
+      "rule_id": "completeness-score-minimum",
+      "description": "Completeness validation score must be ≥ 24/30",
+      "check_type": "subscore",
+      "subscore_name": "completeness",
+      "min_value": 24,
+      "max_value": 30,
+      "severity": "warning",
+      "validation_method": "subscore_check",
+      "error_message": "Missing or incomplete sections detected. Add substantive content to all required sections."
+    },
+    {
+      "rule_id": "quality-score-minimum",
+      "description": "Quality validation score must be ≥ 24/30",
+      "check_type": "subscore",
+      "subscore_name": "quality",
+      "min_value": 24,
+      "max_value": 30,
+      "severity": "warning",
+      "validation_method": "subscore_check",
+      "error_message": "Quality issues detected. Improve clarity, examples, and coherence."
+    },
+    {
+      "rule_id": "feedback-addressed",
+      "description": "On retry attempts, previous feedback should be addressed",
+      "check_type": "feedback_tracking",
+      "applies_to_attempts": [2, 3],
+      "severity": "warning",
+      "validation_method": "compare_attempts",
+      "error_message": "Previous feedback not fully addressed. Ensure all error-level items are fixed."
+    }
+  ],
+
+  "loop_logic": {
+    "on_failure": {
+      "max_attempts": 3,
+      "feedback_mode": "incremental",
+      "enrichment_strategy": "append_previous_feedback",
+      "escalation_threshold": 3
+    },
+    "feedback_prioritization": [
+      "error",
+      "warning",
+      "info"
+    ],
+    "max_feedback_items_per_attempt": 10
+  },
+
+  "scoring_weights": {
+    "structural": 0.4,
+    "completeness": 0.3,
+    "quality": 0.3
+  },
+
+  "structural_checks": {
+    "xml_well_formed": {
+      "points": 10,
+      "severity": "error",
+      "description": "XML must be parseable"
+    },
+    "required_sections_present": {
+      "points": 15,
+      "severity": "error",
+      "description": "All required tags must exist"
+    },
+    "tag_hierarchy": {
+      "points": 10,
+      "severity": "warning",
+      "description": "Proper nesting and priority"
+    },
+    "naming_convention": {
+      "points": 5,
+      "severity": "error",
+      "description": "Prompt name format xxx-xxx-xxx"
+    }
+  },
+
+  "completeness_checks": {
+    "section_content": {
+      "points": 15,
+      "severity": "error",
+      "description": "Substantive content in required sections"
+    },
+    "examples_quality": {
+      "points": 10,
+      "severity": "warning",
+      "description": "Minimum 2 good, 1 bad example"
+    },
+    "instructions_structure": {
+      "points": 5,
+      "severity": "info",
+      "description": "Clear step-by-step format"
+    }
+  },
+
+  "quality_checks": {
+    "clarity_and_specificity": {
+      "points": 10,
+      "severity": "warning",
+      "description": "Unambiguous goal, role, task"
+    },
+    "examples_effectiveness": {
+      "points": 10,
+      "severity": "warning",
+      "description": "Realistic, comprehensive examples"
+    },
+    "constraints_and_validation": {
+      "points": 5,
+      "severity": "info",
+      "description": "Explicit constraints and edge cases"
+    },
+    "overall_coherence": {
+      "points": 5,
+      "severity": "info",
+      "description": "Sections align with primary goal"
+    }
+  },
+
+  "bonuses": {
+    "extra_good_example": 2,
+    "extra_bad_example": 2,
+    "optional_sections": {
+      "context": 1,
+      "constraints": 1,
+      "validation_rules": 1,
+      "domain_knowledge": 1
+    },
+    "max_total_bonus": 10
+  },
+
+  "feedback_templates": {
+    "error_template": "ERROR [{rule_id}] {section}: {problem} → {fix}",
+    "warning_template": "WARNING [{rule_id}] {section}: {issue} → {suggestion}",
+    "recommendation_template": "{priority}. {improvement} (See: {example_reference})"
+  }
+}

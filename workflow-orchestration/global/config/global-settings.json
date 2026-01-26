@@ -1,0 +1,53 @@
+{
+  "global_config_version": "1.0.0",
+  "description": "Global settings applied to all workflows unless overridden",
+
+  "execution": {
+    "max_attempts": 3,
+    "timeout_seconds": 300,
+    "retry_backoff_strategy": "none",
+    "enable_debug_logs": true,
+    "log_level": "INFO"
+  },
+
+  "validation": {
+    "default_success_threshold": 85,
+    "quality_score_range": {
+      "min": 0,
+      "max": 100
+    },
+    "feedback_mode": "incremental",
+    "enrichment_strategy": "append_previous_feedback"
+  },
+
+  "state_management": {
+    "saga_enabled": true,
+    "state_storage_path": "state/workflow-executions/",
+    "state_format": "json",
+    "backup_on_step": true,
+    "immutable_states": true,
+    "retention_days": 30
+  },
+
+  "paths": {
+    "workflow_root": "workflow-orchestration/",
+    "examples_root": "workflow-orchestration/global/examples/",
+    "agents_root": "agents/",
+    "mcp_servers_root": "mcp-servers/",
+    "workflows_root": "workflows/"
+  },
+
+  "performance": {
+    "cache_configs": true,
+    "cache_ttl_seconds": 3600,
+    "async_loading": false,
+    "connection_pool_size": 10
+  },
+
+  "error_handling": {
+    "escalate_on_max_attempts": true,
+    "include_best_attempt": true,
+    "notification_on_failure": true,
+    "fallback_to_local": true
+  }
+}

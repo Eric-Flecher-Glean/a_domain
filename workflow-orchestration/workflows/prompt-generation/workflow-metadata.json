@@ -1,0 +1,79 @@
+{
+  "workflow_id": "prompt-generation",
+  "version": "1.0.0",
+  "description": "Generate and validate XML-structured prompts using 2-agent collaboration",
+  "pattern": "stg-val-wkf",
+  "created": "2026-01-25",
+  "status": "active",
+
+  "stages": [
+    {
+      "stage_id": "01-generate-prompt",
+      "name": "Prompt Generation",
+      "path": "stages/01-generate-prompt",
+      "max_attempts": 3,
+      "required": true,
+      "agent_id": "prompt-generator-001",
+      "description": "Transform natural language request into XML-structured prompt"
+    },
+    {
+      "stage_id": "02-validate-quality",
+      "name": "Quality Validation",
+      "path": "stages/02-validate-quality",
+      "max_attempts": 3,
+      "required": true,
+      "agent_id": "prompt-validator-001",
+      "success_threshold": 90,
+      "description": "Validate prompt structure, completeness, and quality"
+    }
+  ],
+
+  "orchestration": {
+    "pattern": "sequential_with_loops",
+    "loop_logic": {
+      "on_validation_failure": "loop_to_generator",
+      "max_total_attempts": 3,
+      "feedback_enrichment": "cumulative"
+    },
+    "escalation": {
+      "on_max_attempts": "notify_user_with_best_attempt",
+      "include_outputs": true,
+      "include_metrics": true
+    }
+  },
+
+  "data_passing": {
+    "stage_1_output": "xml_prompt",
+    "stage_1_to_2_mapping": {
+      "generate.output.xml_prompt": "validate.input.xml_prompt"
+    },
+    "stage_2_to_1_feedback": {
+      "validate.output.feedback": "generate.input.feedback",
+      "validate.output.recommendations": "generate.input.previous_recommendations"
+    }
+  },
+
+  "compensation": {
+    "enabled": false,
+    "reason": "Read-only operations, no side effects to compensate"
+  },
+
+  "global_config_overrides": {
+    "timeout_seconds": 300,
+    "enable_debug_logs": true,
+    "success_threshold": 90
+  },
+
+  "metrics": {
+    "track_execution_time": true,
+    "track_attempt_count": true,
+    "track_quality_scores": true,
+    "track_feedback_effectiveness": true
+  },
+
+  "documentation": {
+    "readme_path": "README.md",
+    "architecture_diagram": "docs/architecture.md",
+    "examples_path": "examples/"
+  }
+}

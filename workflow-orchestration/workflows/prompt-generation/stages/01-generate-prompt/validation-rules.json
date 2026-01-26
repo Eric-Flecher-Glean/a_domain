@@ -1,0 +1,168 @@
+{
+  "stage_id": "01-generate-prompt",
+  "validation_type": "structural",
+  "version": "1.0.0",
+
+  "rules": [
+    {
+      "rule_id": "xml-well-formed",
+      "description": "XML must be well-formed and parseable",
+      "check_type": "syntax",
+      "severity": "error",
+      "auto_fix": false,
+      "validation_method": "xml_parser",
+      "error_message": "XML is not well-formed. Check for unclosed tags, invalid characters, or syntax errors."
+    },
+    {
+      "rule_id": "required-sections",
+      "description": "Must include: metadata, primary_goal, role, task, instructions, output_format, examples",
+      "check_type": "completeness",
+      "required_tags": [
+        "metadata",
+        "primary_goal",
+        "role",
+        "task",
+        "instructions",
+        "output_format",
+        "examples"
+      ],
+      "severity": "error",
+      "validation_method": "tag_existence",
+      "error_message": "Missing required sections. All prompts must include: metadata, primary_goal, role, task, instructions, output_format, examples."
+    },
+    {
+      "rule_id": "metadata-complete",
+      "description": "Metadata must include name and version",
+      "check_type": "completeness",
+      "required_child_tags": {
+        "metadata": ["name", "version"]
+      },
+      "severity": "error",
+      "validation_method": "nested_tag_check",
+      "error_message": "Metadata section must include both <name> and <version> tags."
+    },
+    {
+      "rule_id": "name-format",
+      "description": "Prompt name must match pattern xxx-xxx-xxx",
+      "check_type": "pattern_match",
+      "pattern": "^[a-z0-9]{3}-[a-z0-9]{3}-[a-z0-9]{3}$",
+      "target_tag": "metadata/name",
+      "severity": "error",
+      "validation_method": "regex",
+      "error_message": "Prompt name must follow format xxx-xxx-xxx (e.g., mtg-sum-ext). Use lowercase alphanumeric characters and hyphens only."
+    },
+    {
+      "rule_id": "example-count",
+      "description": "Must have at least 2 good examples and 1 bad example",
+      "check_type": "count",
+      "target_tag": "examples",
+      "min_good_examples": 2,
+      "min_bad_examples": 1,
+      "good_example_tags": ["good_example"],
+      "bad_example_tags": ["bad_example"],
+      "severity": "warning",
+      "validation_method": "tag_count",
+      "error_message": "Examples section should include at least 2 <good_example> and 1 <bad_example> tags."
+    },
+    {
+      "rule_id": "nesting-depth",
+      "description": "Maximum 3 levels of tag nesting",
+      "check_type": "structural",
+      "max_depth": 3,
+      "severity": "warning",
+      "validation_method": "depth_check",
+      "error_message": "Tag nesting exceeds maximum depth of 3 levels. Simplify the structure."
+    },
+    {
+      "rule_id": "no-empty-required-sections",
+      "description": "Required sections must have content",
+      "check_type": "content_presence",
+      "target_tags": [
+        "primary_goal",
+        "role",
+        "task",
+        "instructions",
+        "output_format"
+      ],
+      "min_content_length": 10,
+      "severity": "error",
+      "validation_method": "content_check",
+      "error_message": "Required sections cannot be empty or contain only whitespace. Provide substantive content."
+    },
+    {
+      "rule_id": "no-placeholder-content",
+      "description": "Sections should not contain placeholder text",
+      "check_type": "content_quality",
+      "placeholder_patterns": [
+        "TBD",
+        "TODO",
+        "Lorem ipsum",
+        "Example",
+        "Placeholder",
+        "Fill in",
+        "Insert here"
+      ],
+      "severity": "warning",
+      "validation_method": "pattern_search",
+      "error_message": "Detected placeholder text. Replace with actual content."
+    },
+    {
+      "rule_id": "instructions-structured",
+      "description": "Instructions should use step tags or numbered format",
+      "check_type": "structural",
+      "target_tag": "instructions",
+      "expected_patterns": [
+        "step\\d+",
+        "\\d+\\.",
+        "<li>",
+        "•"
+      ],
+      "severity": "info",
+      "validation_method": "pattern_check",
+      "error_message": "Consider structuring instructions with numbered steps or <step1>, <step2>, etc."
+    },
+    {
+      "rule_id": "examples-have-content",
+      "description": "Examples must include both input and output or explanation",
+      "check_type": "content_presence",
+      "target_tags": ["good_example", "bad_example"],
+      "require_keywords": {
+        "good_example": ["Input", "Output"],
+        "bad_example": ["Issue", "Output"]
+      },
+      "severity": "warning",
+      "validation_method": "keyword_check",
+      "error_message": "Examples should clearly show Input/Output. Bad examples should include an Issue explanation."
+    }
+  ],
+
+  "scoring": {
+    "base_score": 100,
+    "error_penalty": 20,
+    "warning_penalty": 5,
+    "info_penalty": 0,
+    "calculation": "base_score - (error_count * error_penalty) - (warning_count * warning_penalty)"
+  },
+
+  "core_tag_reference": {
+    "high_priority": [
+      "primary_goal",
+      "role",
+      "task"
+    ],
+    "medium_priority": [
+      "instructions",
+      "output_format",
+      "examples"
+    ],
+    "low_priority": [
+      "context",
+      "constraints",
+      "validation_rules",
+      "domain_knowledge"
+    ],
+    "metadata": [
+      "metadata"
+    ]
+  }
+}

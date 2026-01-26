@@ -1,0 +1,225 @@
+{
+  "server_name": "Prompt Engineering",
+  "server_id": "prompt-engineering",
+  "server_path": "prompt-engineering",
+  "description": "MCP server for XML prompt generation and validation",
+  "version": "1.0.0",
+  "created": "2026-01-25",
+
+  "metadata": {
+    "category": "Development Tools",
+    "tags": ["prompts", "xml", "validation", "quality-assurance"],
+    "documentation_url": "README.md"
+  },
+
+  "tools": [
+    {
+      "tool_name": "generate_xml_prompt",
+      "tool_id": "gen-xml-pmt",
+      "description": "Generate XML-structured prompt from natural language request",
+      "version": "1.0.0",
+      "agent_id": "prompt-generator-001",
+      "tool_spec_path": "tools/generate-xml-prompt.json",
+
+      "input_schema": {
+        "type": "object",
+        "required": ["user_request"],
+        "properties": {
+          "user_request": {
+            "type": "string",
+            "description": "Natural language description of desired prompt",
+            "min_length": 10,
+            "examples": [
+              "Create a prompt for meeting summarization",
+              "Generate a prompt for code review"
+            ]
+          },
+          "feedback": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Feedback from previous validation attempt (if any)",
+            "default": []
+          },
+          "previous_attempt": {
+            "type": "object",
+            "description": "Previous prompt generation attempt (for refinement)",
+            "properties": {
+              "xml_prompt": {"type": "string"},
+              "prompt_name": {"type": "string"}
+            }
+          },
+          "attempt_number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "description": "Current attempt number in validation loop",
+            "default": 1
+          }
+        }
+      },
+
+      "output_schema": {
+        "type": "object",
+        "required": ["xml_prompt", "prompt_name"],
+        "properties": {
+          "xml_prompt": {
+            "type": "string",
+            "description": "Complete XML-structured prompt"
+          },
+          "prompt_name": {
+            "type": "string",
+            "pattern": "^[a-z0-9]{3}-[a-z0-9]{3}-[a-z0-9]{3}$",
+            "description": "Unique prompt identifier in format xxx-xxx-xxx"
+          },
+          "components_extracted": {
+            "type": "object",
+            "description": "Parsed components from user request",
+            "properties": {
+              "primary_goal": {"type": "string"},
+              "role": {"type": "string"},
+              "task": {"type": "string"},
+              "context": {"type": "string"},
+              "constraints": {"type": "array"},
+              "output_format": {"type": "string"}
+            }
+          },
+          "generation_metadata": {
+            "type": "object",
+            "properties": {
+              "attempt": {"type": "integer"},
+              "refinements_applied": {"type": "array"},
+              "timestamp": {"type": "string", "format": "date-time"},
+              "feedback_addressed": {"type": "array"}
+            }
+          }
+        }
+      },
+
+      "constraints": ["no_write_actions", "no_hitl"],
+      "timeout_seconds": 120
+    },
+
+    {
+      "tool_name": "validate_prompt_quality",
+      "tool_id": "val-pmt-qlt",
+      "description": "Validate XML prompt structure and quality",
+      "version": "1.0.0",
+      "agent_id": "prompt-validator-001",
+      "tool_spec_path": "tools/validate-prompt-quality.json",
+
+      "input_schema": {
+        "type": "object",
+        "required": ["xml_prompt"],
+        "properties": {
+          "xml_prompt": {
+            "type": "string",
+            "description": "XML prompt to validate",
+            "min_length": 50
+          },
+          "previous_validation_results": {
+            "type": "array",
+            "description": "Results from previous validation attempts (for tracking)"
+          },
+          "attempt_number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "description": "Current validation attempt number",
+            "default": 1
+          }
+        }
+      },
+
+      "output_schema": {
+        "type": "object",
+        "required": ["isValid", "qualityScore", "checks", "feedback"],
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "description": "Overall validation result (score >= threshold AND no errors)"
+          },
+          "qualityScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Calculated quality score"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["rule_id", "status", "message", "severity"],
+              "properties": {
+                "rule_id": {"type": "string"},
+                "status": {"enum": ["pass", "fail"]},
+                "message": {"type": "string"},
+                "severity": {"enum": ["error", "warning", "info"]},
+                "section": {"type": "string"},
+                "score_impact": {"type": "number"}
+              }
+            },
+            "description": "Individual validation check results"
+          },
+          "feedback": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Actionable feedback for refinement"
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Specific improvement suggestions"
+          },
+          "scoreBreakdown": {
+            "type": "object",
+            "properties": {
+              "structural": {"type": "number"},
+              "completeness": {"type": "number"},
+              "quality": {"type": "number"},
+              "bonuses": {"type": "number"},
+              "penalties": {"type": "number"}
+            }
+          },
+          "examplesAnalysis": {
+            "type": "object",
+            "properties": {
+              "good_examples_found": {"type": "integer"},
+              "bad_examples_found": {"type": "integer"},
+              "examples_quality_score": {"type": "number"}
+            }
+          }
+        }
+      },
+
+      "constraints": ["no_write_actions", "no_hitl"],
+      "timeout_seconds": 60
+    }
+  ],
+
+  "permissions": {
+    "oauth_scopes": ["AGENT", "MCP", "TOOLS"],
+    "allowed_groups": ["All Users"],
+    "rate_limits": {
+      "requests_per_minute": 30,
+      "requests_per_hour": 500
+    }
+  },
+
+  "deployment": {
+    "status": "active",
+    "environment": "production",
+    "region": "us-west-2"
+  },
+
+  "monitoring": {
+    "enable_logging": true,
+    "log_level": "INFO",
+    "track_metrics": true,
+    "metrics": [
+      "tool_call_count",
+      "success_rate",
+      "average_execution_time",
+      "quality_score_distribution"
+    ]
+  }
+}

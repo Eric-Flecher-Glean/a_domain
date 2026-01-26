@@ -1,0 +1,102 @@
+{
+  "tool_name": "generate_xml_prompt",
+  "tool_id": "gen-xml-pmt",
+  "version": "1.0.0",
+  "description": "Transform natural language requests into well-structured XML prompts following Anthropic's hierarchical methodology",
+
+  "function_signature": {
+    "name": "generate_xml_prompt",
+    "parameters": {
+      "type": "object",
+      "required": ["user_request"],
+      "properties": {
+        "user_request": {
+          "type": "string",
+          "description": "Natural language description of the desired prompt"
+        },
+        "feedback": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Feedback items from previous validation attempt"
+        },
+        "previous_attempt": {
+          "type": "object",
+          "description": "Previous generation attempt for refinement"
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "xml_prompt": {"type": "string"},
+        "prompt_name": {"type": "string"},
+        "components_extracted": {"type": "object"},
+        "generation_metadata": {"type": "object"}
+      }
+    }
+  },
+
+  "agent_binding": {
+    "agent_id": "prompt-generator-001",
+    "agent_type": "Glean Agent",
+    "invocation_method": "direct"
+  },
+
+  "implementation": {
+    "type": "agent_invocation",
+    "config_path": "../../agents/prompt-generator/agent-spec.yaml",
+    "instructions_path": "../../workflow-orchestration/workflows/prompt-generation/stages/01-generate-prompt/instructions.md",
+    "examples_path": "../../workflow-orchestration/global/examples/"
+  },
+
+  "usage_examples": [
+    {
+      "name": "Basic prompt generation",
+      "input": {
+        "user_request": "Create a prompt for summarizing meeting notes",
+        "attempt_number": 1
+      },
+      "expected_output": {
+        "xml_prompt": "<metadata>...</metadata><primary_goal>...</primary_goal>...",
+        "prompt_name": "mtg-sum-001"
+      }
+    },
+    {
+      "name": "Refinement with feedback",
+      "input": {
+        "user_request": "Create a prompt for sentiment analysis",
+        "feedback": [
+          "Add more specific constraints about edge cases",
+          "Include examples for neutral sentiment"
+        ],
+        "attempt_number": 2
+      },
+      "expected_output": {
+        "xml_prompt": "Refined prompt addressing feedback",
+        "generation_metadata": {
+          "feedback_addressed": [
+            "Added constraint for short text handling",
+            "Added neutral sentiment example"
+          ]
+        }
+      }
+    }
+  ],
+
+  "error_handling": {
+    "invalid_input": "Return error with validation message",
+    "agent_unavailable": "Return 503 Service Unavailable",
+    "timeout": "Return partial result with timeout indicator"
+  },
+
+  "performance": {
+    "expected_latency_ms": 3000,
+    "max_latency_ms": 120000,
+    "cache_enabled": false
+  }
+}

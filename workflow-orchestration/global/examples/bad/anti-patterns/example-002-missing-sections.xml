@@ -1,0 +1,17 @@
+<metadata>
+  <name>incomplete-prompt</name>
+  <version>1.0</version>
+</metadata>
+
+<primary_goal>
+  Summarize text documents
+</primary_goal>
+
+<role>Text summarizer</role>
+
+<task>Read text and make it shorter</task>
+
+<!-- Missing: instructions section -->
+<!-- Missing: output_format section -->
+<!-- Missing: examples section -->
+<!-- Missing: constraints section -->

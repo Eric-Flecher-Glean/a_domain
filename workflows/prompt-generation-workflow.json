@@ -1,0 +1,311 @@
+{
+  "workflow_name": "Prompt Generation with Validation",
+  "workflow_type": "Plan & Execute",
+  "workflow_id": "prompt-gen-val-v1",
+  "version": "1.0.0",
+  "created": "2026-01-25",
+  "status": "active",
+
+  "description": "2-agent staged validation workflow for generating high-quality XML prompts. Agent A generates prompts, Agent B validates them. If validation fails (score < 90), feedback loops back to Agent A for up to 3 total attempts.",
+
+  "metadata": {
+    "pattern": "stg-val-wkf",
+    "agents": ["prompt-generator-001", "prompt-validator-001"],
+    "max_attempts": 3,
+    "success_threshold": 90
+  },
+
+  "trigger": {
+    "type": "manual",
+    "description": "User provides natural language prompt request",
+    "input_schema": {
+      "type": "object",
+      "required": ["user_request"],
+      "properties": {
+        "user_request": {
+          "type": "string",
+          "description": "Natural language description of desired prompt",
+          "min_length": 10
+        }
+      }
+    }
+  },
+
+  "steps": [
+    {
+      "step_id": "generate-prompt-attempt-1",
+      "step_name": "Generate Initial Prompt",
+      "description": "Generate initial XML prompt from user request",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "generate_xml_prompt",
+        "input_mapping": {
+          "user_request": "{{workflow.input.user_request}}",
+          "feedback": null,
+          "previous_attempt": null,
+          "attempt_number": 1
+        }
+      },
+
+      "on_success": "validate-prompt-attempt-1",
+      "on_failure": "escalate-generation-failure",
+
+      "timeout_seconds": 120,
+      "retry_policy": {
+        "max_retries": 0,
+        "note": "No automatic retry; failures escalate immediately"
+      }
+    },
+
+    {
+      "step_id": "validate-prompt-attempt-1",
+      "step_name": "Validate Initial Prompt",
+      "description": "Validate generated prompt quality",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "validate_prompt_quality",
+        "input_mapping": {
+          "xml_prompt": "{{generate-prompt-attempt-1.output.xml_prompt}}",
+          "previous_validation_results": null,
+          "attempt_number": 1
+        }
+      },
+
+      "success_condition": "{{validate-prompt-attempt-1.output.qualityScore}} >= 90 && {{validate-prompt-attempt-1.output.isValid}} == true",
+      "on_success": "complete",
+      "on_failure": "generate-prompt-attempt-2",
+
+      "timeout_seconds": 60
+    },
+
+    {
+      "step_id": "generate-prompt-attempt-2",
+      "step_name": "Regenerate Prompt (Attempt 2)",
+      "description": "Regenerate prompt with validation feedback",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "generate_xml_prompt",
+        "input_mapping": {
+          "user_request": "{{workflow.input.user_request}}",
+          "feedback": "{{validate-prompt-attempt-1.output.feedback}}",
+          "previous_attempt": {
+            "xml_prompt": "{{generate-prompt-attempt-1.output.xml_prompt}}",
+            "prompt_name": "{{generate-prompt-attempt-1.output.prompt_name}}"
+          },
+          "attempt_number": 2
+        }
+      },
+
+      "on_success": "validate-prompt-attempt-2",
+      "on_failure": "escalate-generation-failure",
+
+      "timeout_seconds": 120
+    },
+
+    {
+      "step_id": "validate-prompt-attempt-2",
+      "step_name": "Revalidate Prompt (Attempt 2)",
+      "description": "Revalidate refined prompt",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "validate_prompt_quality",
+        "input_mapping": {
+          "xml_prompt": "{{generate-prompt-attempt-2.output.xml_prompt}}",
+          "previous_validation_results": [
+            "{{validate-prompt-attempt-1.output}}"
+          ],
+          "attempt_number": 2
+        }
+      },
+
+      "success_condition": "{{validate-prompt-attempt-2.output.qualityScore}} >= 90 && {{validate-prompt-attempt-2.output.isValid}} == true",
+      "on_success": "complete",
+      "on_failure": "generate-prompt-attempt-3",
+
+      "timeout_seconds": 60
+    },
+
+    {
+      "step_id": "generate-prompt-attempt-3",
+      "step_name": "Regenerate Prompt (Attempt 3 - Final)",
+      "description": "Final regeneration attempt with cumulative feedback",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "generate_xml_prompt",
+        "input_mapping": {
+          "user_request": "{{workflow.input.user_request}}",
+          "feedback": "{{validate-prompt-attempt-2.output.feedback}}",
+          "previous_attempt": {
+            "xml_prompt": "{{generate-prompt-attempt-2.output.xml_prompt}}",
+            "prompt_name": "{{generate-prompt-attempt-2.output.prompt_name}}"
+          },
+          "attempt_number": 3
+        }
+      },
+
+      "on_success": "validate-prompt-attempt-3",
+      "on_failure": "escalate-max-attempts-reached",
+
+      "timeout_seconds": 120
+    },
+
+    {
+      "step_id": "validate-prompt-attempt-3",
+      "step_name": "Revalidate Prompt (Attempt 3 - Final)",
+      "description": "Final validation attempt",
+      "tool_type": "mcp_server_action",
+
+      "mcp_config": {
+        "server": "prompt-engineering",
+        "tool": "validate_prompt_quality",
+        "input_mapping": {
+          "xml_prompt": "{{generate-prompt-attempt-3.output.xml_prompt}}",
+          "previous_validation_results": [
+            "{{validate-prompt-attempt-1.output}}",
+            "{{validate-prompt-attempt-2.output}}"
+          ],
+          "attempt_number": 3
+        }
+      },
+
+      "success_condition": "{{validate-prompt-attempt-3.output.qualityScore}} >= 90 && {{validate-prompt-attempt-3.output.isValid}} == true",
+      "on_success": "complete",
+      "on_failure": "escalate-max-attempts-reached",
+
+      "timeout_seconds": 60
+    },
+
+    {
+      "step_id": "escalate-max-attempts-reached",
+      "step_name": "Escalate: Max Attempts Exceeded",
+      "description": "Max validation attempts exceeded, escalate to user with best attempt",
+      "tool_type": "notification",
+
+      "notification_config": {
+        "severity": "warning",
+        "title": "Prompt Generation Failed After 3 Attempts",
+        "message": "Unable to generate a prompt meeting quality standards (score ≥ 90) after 3 attempts. Best attempt details included below.",
+        "include_outputs": true,
+        "outputs_to_include": [
+          "{{validate-prompt-attempt-3.output}}",
+          "{{generate-prompt-attempt-3.output}}"
+        ],
+        "action_required": "Review feedback and manually refine the prompt, or adjust requirements."
+      },
+
+      "output_mapping": {
+        "status": "failed_max_attempts",
+        "best_attempt": {
+          "prompt": "{{generate-prompt-attempt-3.output.xml_prompt}}",
+          "quality_score": "{{validate-prompt-attempt-3.output.qualityScore}}",
+          "validation_details": "{{validate-prompt-attempt-3.output}}"
+        },
+        "attempts_count": 3
+      },
+
+      "on_completion": "halt"
+    },
+
+    {
+      "step_id": "escalate-generation-failure",
+      "step_name": "Escalate: Generation Failed",
+      "description": "Prompt generation step failed (agent error or timeout)",
+      "tool_type": "notification",
+
+      "notification_config": {
+        "severity": "error",
+        "title": "Prompt Generation Failed",
+        "message": "Prompt generation agent encountered an error. Check agent configuration and MCP server status.",
+        "include_outputs": false,
+        "action_required": "Verify prompt-generator-001 is active and MCP server is accessible."
+      },
+
+      "output_mapping": {
+        "status": "failed_generation_error"
+      },
+
+      "on_completion": "halt"
+    }
+  ],
+
+  "completion_conditions": {
+    "success": {
+      "description": "Workflow completes successfully when any validation attempt passes",
+      "condition": "Any validate-prompt-attempt-N step succeeds",
+      "possible_attempts": [1, 2, 3]
+    },
+    "failure": {
+      "description": "Workflow fails if max attempts exceeded or generation errors",
+      "conditions": [
+        "escalate-max-attempts-reached is executed",
+        "escalate-generation-failure is executed"
+      ]
+    }
+  },
+
+  "compensation": {
+    "enabled": false,
+    "reason": "Read-only operations with no side effects to compensate"
+  },
+
+  "state_management": {
+    "saga_pattern": true,
+    "state_storage": "local",
+    "state_path": "../state/workflow-executions/",
+    "backup_on_step": true,
+    "immutable_states": true
+  },
+
+  "output": {
+    "success_output": {
+      "final_prompt": "{{last_successful_validation_step.input.xml_prompt}}",
+      "prompt_name": "{{last_successful_generation_step.output.prompt_name}}",
+      "quality_score": "{{last_successful_validation_step.output.qualityScore}}",
+      "attempts_required": "{{calculated_from_successful_step}}",
+      "validation_details": "{{last_successful_validation_step.output}}",
+      "generation_metadata": "{{last_successful_generation_step.output.generation_metadata}}"
+    },
+    "failure_output": {
+      "status": "failed",
+      "reason": "{{escalation_step.output.status}}",
+      "best_attempt": "{{escalation_step.output.best_attempt}}",
+      "attempts_count": 3
+    }
+  },
+
+  "metrics": {
+    "track": true,
+    "metrics_to_collect": [
+      "total_execution_time",
+      "attempts_required_distribution",
+      "success_rate_by_attempt",
+      "average_quality_score",
+      "feedback_effectiveness",
+      "agent_latency_by_step"
+    ]
+  },
+
+  "monitoring": {
+    "enable_logging": true,
+    "log_level": "INFO",
+    "log_all_step_outputs": true,
+    "alert_on_failure": true
+  },
+
+  "tags": [
+    "prompt-engineering",
+    "staged-validation",
+    "2-agent-collaboration",
+    "mvp"
+  ]
+}
