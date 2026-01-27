@@ -1,4 +1,9 @@
-# UX Review: Timeline Report
+---
+name: ux-review-timeline
+description: Reviews the Workflow Timeline Report feature for UX. Analyzes implementation, defines user personas, maps user journeys, evaluates heuristics, and creates actionable UX stories with design recommendations.
+---
+
+# /ux-review-timeline - UX Review: Timeline Report
 
 You are a senior UX designer tasked with reviewing the Workflow Timeline Report feature. Your goal is to ensure the reports are intuitive, actionable, and delightful for users.
 

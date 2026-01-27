@@ -1,3 +1,8 @@
+---
+name: new-workflow
+description: Interactive skill that guides users through creating new workflows. Discovers existing workflows and agents, helps select bounded contexts, designs workflow stages, configures validation rules, and generates all required configuration files.
+---
+
 # /new-workflow - Interactive Workflow Designer
 
 ## Description
@@ -233,16 +238,66 @@ If validation fails:
 
 ## Next Steps After Generation
 
-The skill provides guidance on:
-1. Reviewing generated files
-2. Customizing agent instructions
-3. Adding examples (good/bad)
-4. Testing the workflow
-5. Registering agents
-6. Deploying the MCP server
+After creating a workflow with `/new-workflow`, follow these steps:
+
+### 1. Generate Examples (Recommended)
+**Run `/generate-examples` to populate example directories:**
+```
+/generate-examples
+```
+
+This skill will:
+- Analyze your workflow configuration
+- Generate 2-3 good examples per stage
+- Generate 2-3 bad examples per stage
+- Create end-to-end workflow examples
+- Add clear explanations and documentation
+
+See `.claude/skills/generate-examples.md` for details.
+
+### 2. Validate Structure
+**Run the validation script:**
+```bash
+./scripts/validate-workflow-structure.sh workflow-orchestration/workflows/{workflow-id}
+```
+
+Ensures all required files are present and properly formatted.
+
+### 3. Review and Customize
+- Review generated configuration files
+- Customize agent instructions in `stages/*/instructions.md`
+- Tune validation rules in `stages/*/validation-rules.json`
+- Adjust workflow settings in `config/workflow-settings.json`
+- Refine examples if needed
+
+### 4. Test the Workflow
+- Use generated examples as test cases
+- Test validation feedback loops (if stg-val-wkf pattern)
+- Verify metrics collection
+- Test error handling and escalation
+
+### 5. Register Agents
+- Register agents in Glean Agent Builder
+- Include examples from `stages/*/examples/good/`
+- Configure Glean integration if needed
+- Deploy agents to production
+
+### 6. Deploy MCP Server (if applicable)
+- Deploy workflow orchestration service
+- Configure environment variables
+- Set up monitoring and logging
+- Test end-to-end execution
+
+## Related Skills
+
+- **`/generate-examples`**: Populate example directories with realistic good/bad examples
+- **`/validate-workflow`**: Validate workflow configuration and structure
+- **`/test-workflow`**: Run workflow with test inputs
 
 ## Related Documentation
 
+- **Development Guide**: `workflow-orchestration/WORKFLOW-DEVELOPMENT-GUIDE.md`
+- **Structure Standard**: `workflow-orchestration/WORKFLOW-STRUCTURE-STANDARD.md`
 - **Bounded Contexts**: `.claude/knowledge/workflow-creation/bounded-contexts.md`
 - **Agent Catalog**: `.claude/knowledge/workflow-creation/agent-catalog.md`
 - **Workflow Patterns**: `.claude/knowledge/workflow-creation/workflow-patterns.md`

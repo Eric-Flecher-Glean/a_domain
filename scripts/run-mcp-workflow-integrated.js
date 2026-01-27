@@ -3,10 +3,19 @@
 /**
  * Integrated A/B Agent Workflow with Context Analysis
  * Properly uses the two-agent system with context management
+ *
+ * Enhanced with OpenTelemetry observability
  */
 
 const fs = require('fs');
 const path = require('path');
+
+// OpenTelemetry imports
+const { initializeOTel, shutdown: shutdownOTel, getLogger } = require('../observability/otel-setup');
+const { WorkflowInstrumentation } = require('../observability/instrumentation');
+
+// Initialize OpenTelemetry
+initializeOTel();
 
 const args = process.argv.slice(2);
 const config = {
@@ -33,8 +42,19 @@ const colors = {
   magenta: '\x1b[35m'
 };
 
-function log(message, color = 'reset') {
+// Enhanced logging with structured logs
+const structuredLogger = getLogger();
+
+function log(message, color = 'reset', context = {}) {
+  // Console output (for user visibility)
   console.log(`${colors[color]}${message}${colors.reset}`);
+
+  // Structured log (for observability)
+  const level = color === 'red' ? 'error' :
+                color === 'yellow' ? 'warn' :
+                color === 'green' || color === 'cyan' ? 'info' : 'debug';
+
+  structuredLogger.log(level, message, context);
 }
 
 /**
@@ -477,7 +497,23 @@ function generatePromptName() {
  * Main A/B workflow with context analysis
  */
 async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
-  log('\n🚀 Starting Integrated A/B Agent Workflow', 'green');
+  const sessionStartTime = Date.now();
+
+  // Initialize workflow instrumentation
+  const instrumentation = new WorkflowInstrumentation('prompt-generation', 'stg-val-wkf');
+
+  // Start workflow session (creates root span)
+  instrumentation.startSession(task, {
+    'workflow.analyze_context': config.analyzeContext,
+    'workflow.max_attempts': maxAttempts,
+    'workflow.output_path': outputPath
+  });
+
+  log('\n🚀 Starting Integrated A/B Agent Workflow', 'green', {
+    session_id: instrumentation.sessionId,
+    workflow_id: 'prompt-generation',
+    task: task
+  });
   log('   (Two-Agent System + Context Analysis)', 'magenta');
   log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'green');
 
@@ -488,29 +524,56 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
   let finalResult = null;
 
   while (currentAttempt <= maxAttempts) {
-    log(`\n${'='.repeat(60)}`, 'cyan');
-    log(`ATTEMPT ${currentAttempt}/${maxAttempts}`, 'cyan');
-    log(`${'='.repeat(60)}`, 'cyan');
+    const attemptStartTime = Date.now();
 
-    // STEP 1: Agent A generates XML with context analysis
-    const genResult = await callAgentA({
-      user_request: task,
-      analyze_context: config.analyzeContext,
-      feedback: feedback,
-      previous_attempt: previousAttempt,
+    log(`\n${'='.repeat(60)}`, 'cyan');
+    log(`ATTEMPT ${currentAttempt}/${maxAttempts}`, 'cyan', {
+      session_id: instrumentation.sessionId,
       attempt_number: currentAttempt
     });
+    log(`${'='.repeat(60)}`, 'cyan');
+
+    // Start attempt span
+    instrumentation.startAttempt(currentAttempt, maxAttempts);
+
+    // STEP 1: Agent A generates XML with context analysis
+    const genResult = await instrumentation.instrumentStage(
+      'PromptGeneration',
+      'prompt-generator-001',
+      async () => {
+        return await callAgentA({
+          user_request: task,
+          analyze_context: config.analyzeContext,
+          feedback: feedback,
+          previous_attempt: previousAttempt,
+          attempt_number: currentAttempt
+        });
+      }
+    );
 
     const { xml_prompt, prompt_name, input_analysis, generation_metadata } = genResult;
 
     // STEP 2: Agent B validates with context checks
-    const valResult = await callAgentB({
-      xml_prompt: xml_prompt,
-      previous_validation_results: validationHistory,
-      attempt_number: currentAttempt
-    });
+    const valResult = await instrumentation.instrumentStage(
+      'PromptValidation',
+      'prompt-validator-001',
+      async () => {
+        return await callAgentB({
+          xml_prompt: xml_prompt,
+          previous_validation_results: validationHistory,
+          attempt_number: currentAttempt
+        });
+      }
+    );
 
     validationHistory.push(valResult);
+
+    // Record validation result
+    instrumentation.recordValidation(
+      valResult.isValid,
+      valResult.qualityScore,
+      valResult.feedback
+    );
 
     // Display results
     log(`\n📊 Agent B Validation Results:`, 'cyan');
@@ -535,9 +598,17 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
       }
     }
 
+    // Record attempt duration
+    const attemptDuration = Date.now() - attemptStartTime;
+    instrumentation.recordAttemptDuration(currentAttempt, attemptDuration);
+
     // STEP 3: Check if validation passed
     if (valResult.isValid) {
-      log(`\n✅ SUCCESS! Both agents approved the prompt.`, 'green');
+      log(`\n✅ SUCCESS! Both agents approved the prompt.`, 'green', {
+        session_id: instrumentation.sessionId,
+        attempt_number: currentAttempt,
+        quality_score: valResult.qualityScore
+      });
       finalResult = {
         xml_prompt,
         prompt_name,
@@ -551,7 +622,11 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
 
     // STEP 4: If not valid and attempts remain, prepare for refinement
     if (currentAttempt < maxAttempts) {
-      log(`\n⚠️  Agent B rejected. Preparing feedback for Agent A...`, 'yellow');
+      log(`\n⚠️  Agent B rejected. Preparing feedback for Agent A...`, 'yellow', {
+        session_id: instrumentation.sessionId,
+        attempt_number: currentAttempt,
+        feedback_count: valResult.feedback.length
+      });
       if (valResult.feedback.length > 0) {
         log(`   Feedback to address:`, 'yellow');
         valResult.feedback.forEach((item, i) => {
@@ -559,11 +634,18 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
         });
       }
 
+      // Record feedback cycle
+      instrumentation.recordFeedbackCycle(valResult.feedback);
+
       feedback = valResult.feedback;
       previousAttempt = { xml_prompt, prompt_name };
       currentAttempt++;
     } else {
-      log(`\n❌ Max attempts reached. Best score: ${valResult.qualityScore}/100`, 'red');
+      log(`\n❌ Max attempts reached. Best score: ${valResult.qualityScore}/100`, 'red', {
+        session_id: instrumentation.sessionId,
+        attempt_number: currentAttempt,
+        final_score: valResult.qualityScore
+      });
       finalResult = {
         xml_prompt,
         prompt_name,
@@ -575,6 +657,15 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
       break;
     }
   }
+
+  // Calculate session duration and complete instrumentation
+  const sessionDuration = Date.now() - sessionStartTime;
+  instrumentation.recordSessionDuration(sessionDuration);
+  instrumentation.completeSession(
+    finalResult.final_score,
+    finalResult.attempts,
+    finalResult.final_score >= 90 ? 'success' : 'partial_success'
+  );
 
   // Save results
   const outputDir = path.dirname(outputPath);
@@ -607,16 +698,22 @@ async function runIntegratedABWorkflow(task, outputPath, maxAttempts) {
     if (config.mode === 'generate') {
       if (!config.task) {
         log('❌ Error: --task parameter required', 'red');
+        await shutdownOTel();
         process.exit(1);
       }
       await runIntegratedABWorkflow(config.task, config.output, config.maxAttempts);
+
+      // Shutdown OTel to flush all telemetry
+      await shutdownOTel();
     } else {
       log('❌ Error: --mode must be "generate"', 'red');
+      await shutdownOTel();
       process.exit(1);
     }
   } catch (error) {
     log(`\n❌ Error: ${error.message}`, 'red');
     console.error(error);
+    await shutdownOTel();
     process.exit(1);
   }
 })();

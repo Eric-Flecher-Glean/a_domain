@@ -57,19 +57,45 @@ Create a new workflow orchestration pattern with agents, stages, and validation.
 
 ## Creating New Skills
 
-To create a new skill:
+To create a new skill, follow the proper Claude Code skill structure:
 
-1. **Create a markdown file** in `.claude/skills/`
+1. **Create a skill directory**:
    ```bash
-   touch .claude/skills/my-skill.md
+   mkdir -p .claude/skills/my-skill
    ```
 
-2. **Define the skill behavior** using natural language instructions
+2. **Create a `SKILL.md` file** inside the directory:
+   ```bash
+   touch .claude/skills/my-skill/SKILL.md
+   ```
 
-3. **Use the skill** by typing:
+3. **Add frontmatter** at the top of `SKILL.md`:
+   ```yaml
+   ---
+   name: my-skill
+   description: Brief description of what this skill does and when to use it
+   ---
+
+   # /my-skill - Skill Title
+
+   Your skill instructions here...
+   ```
+
+4. **Use the skill** by typing:
    ```bash
    /my-skill
    ```
+
+**Required Structure**:
+```
+.claude/skills/
+└── my-skill/
+    └── SKILL.md    # Must be named exactly "SKILL.md"
+```
+
+**Frontmatter Fields**:
+- `name` (optional): Skill name (defaults to directory name)
+- `description` (recommended): Helps Claude decide when to auto-invoke the skill
 
 ## Skill Best Practices
 

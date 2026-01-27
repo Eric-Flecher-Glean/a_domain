@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflow Report Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <button id="backBtn" class="btn-back" style="display: none;" title="Go back">
+          ← Back
+        </button>
+        <h1 class="header-title">📊 Workflow Report Explorer</h1>
+      </div>
+      <div class="header-actions">
+        <button id="refreshBtn" class="btn-secondary" title="Refresh reports">
+          🔄 Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Statistics Cards -->
+    <section class="stats-section" aria-label="Statistics Overview">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">-</div>
+        <div class="stat-label">Total Runs</div>
+        <div class="stat-trend" id="statTotalTrend"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value" id="statSuccess">-</div>
+        <div class="stat-label">Success Rate</div>
+        <div class="stat-trend" id="statSuccessTrend"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value" id="statDuration">-</div>
+        <div class="stat-label">Avg Duration</div>
+        <div class="stat-trend" id="statDurationTrend"></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value" id="statErrors">-</div>
+        <div class="stat-label">Errors</div>
+        <div class="stat-trend" id="statErrorsTrend"></div>
+      </div>
+    </section>
+
+    <!-- Search and Filter Bar -->
+    <section class="filter-section">
+      <div class="filter-bar">
+        <div class="search-group">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="🔍 Search by task or session ID..."
+            aria-label="Search reports"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="dateFilter">Date:</label>
+          <select id="dateFilter" class="filter-select">
+            <option value="all">All time</option>
+            <option value="today">Today</option>
+            <option value="week" selected>Last 7 days</option>
+            <option value="month">Last 30 days</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Status:</label>
+          <div class="status-filters">
+            <button class="filter-btn active" data-status="all">All</button>
+            <button class="filter-btn" data-status="success">✅ Success</button>
+            <button class="filter-btn" data-status="error">❌ Error</button>
+          </div>
+        </div>
+
+        <div class="result-count">
+          <span id="resultCount">0</span> results
+        </div>
+      </div>
+    </section>
+
+    <!-- Reports List -->
+    <section class="reports-section" aria-label="Reports List">
+      <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading reports...</p>
+      </div>
+
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+      <div id="reportsList" class="reports-list">
+        <!-- Reports will be inserted here dynamically -->
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">📭</div>
+        <h3>No reports found</h3>
+        <p>Generate some workflows to see reports here.</p>
+        <code>make xml-prompt-ab TASK="your task"</code>
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <section class="pagination-section" id="paginationSection" style="display: none;">
+      <button id="prevBtn" class="btn-pagination" disabled>← Previous</button>
+      <span id="pageInfo" class="page-info">Page 1 of 1</span>
+      <button id="nextBtn" class="btn-pagination" disabled>Next →</button>
+    </section>
+  </main>
+
+  <!-- Preview Modal (Optional - Phase 4) -->
+  <div id="previewModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="previewTitle">Report Preview</h2>
+        <button id="closeModalBtn" class="btn-close">×</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="previewFrame" class="preview-frame"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button id="openFullReportBtn" class="btn-primary">Open Full Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Region for Screen Readers -->
+  <div id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

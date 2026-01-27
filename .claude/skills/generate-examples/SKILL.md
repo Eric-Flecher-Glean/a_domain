@@ -1,3 +1,8 @@
+---
+name: generate-examples
+description: Analyzes workflow configurations and generates realistic, domain-appropriate good and bad examples for each stage. Creates comprehensive examples demonstrating proper usage and common pitfalls.
+---
+
 # /generate-examples - Workflow Example Generator
 
 ## Description

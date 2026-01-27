@@ -1,4 +1,4 @@
-.PHONY: help xml-prompt xml-prompt-enhanced xml-prompt-ab validate-prompt test-workflow test-context-analysis test-ab-workflow clean
+.PHONY: help xml-prompt xml-prompt-enhanced xml-prompt-ab validate-prompt test-workflow test-context-analysis test-ab-workflow view-latest-report view-report generate-report explorer explorer-install ux-review clean
 
 # Colors for output
 GREEN := \033[0;32m
@@ -30,10 +30,29 @@ help:
 	@echo "$(GREEN)make test-ab-workflow$(NC)"
 	@echo "  Test integrated A/B agent workflow with context analysis"
 	@echo ""
+	@echo "$(GREEN)make view-latest-report$(NC)"
+	@echo "  View the latest workflow timeline report in browser"
+	@echo ""
+	@echo "$(GREEN)make view-report SESSION_ID=\"session-id\"$(NC)"
+	@echo "  View a specific workflow timeline report"
+	@echo ""
+	@echo "$(GREEN)make generate-report$(NC)"
+	@echo "  Manually generate timeline report for latest session"
+	@echo ""
+	@echo "$(GREEN)make explorer$(NC)"
+	@echo "  Launch the Report Explorer web app to browse all reports"
+	@echo ""
+	@echo "$(GREEN)make explorer-install$(NC)"
+	@echo "  Install dependencies for the Report Explorer"
+	@echo ""
+	@echo "$(GREEN)make ux-review$(NC)"
+	@echo "  Run comprehensive UX review of timeline reports (creates user stories)"
+	@echo ""
 	@echo "Examples:"
 	@echo "  make xml-prompt TASK=\"Create a prompt for meeting summarization\""
 	@echo "  make xml-prompt-ab TASK=\"Summarize customer feedback\"  (RECOMMENDED)"
 	@echo "  make validate-prompt FILE=\"output/my-prompt.xml\""
+	@echo "  make explorer  # Browse all reports in web UI"
 
 # Generate XML prompt from natural language task description
 xml-prompt:
@@ -132,6 +151,58 @@ test-ab-workflow:
 	@echo ""
 	@echo "$(GREEN)Test 3: Customer Feedback (A/B Agents)$(NC)"
 	@make xml-prompt-ab TASK="Create a prompt for sentiment analysis of customer reviews"
+
+# View latest timeline report
+view-latest-report:
+	@echo "$(BLUE)Opening latest timeline report...$(NC)"
+	@open `ls -t observability/reports-output/*.html 2>/dev/null | head -1` || echo "$(YELLOW)No reports found. Run a workflow first.$(NC)"
+
+# View specific timeline report
+view-report:
+ifndef SESSION_ID
+	@echo "$(YELLOW)Error: SESSION_ID parameter required$(NC)"
+	@echo "Usage: make view-report SESSION_ID=\"your-session-id\""
+	@exit 1
+endif
+	@echo "$(BLUE)Opening timeline report for session $(SESSION_ID)...$(NC)"
+	@open observability/reports-output/$(SESSION_ID)-timeline.html || echo "$(YELLOW)Report not found for session $(SESSION_ID)$(NC)"
+
+# Generate timeline report manually
+generate-report:
+	@echo "$(BLUE)Generating timeline report...$(NC)"
+	@node observability/reports/generate-report.js --latest
+
+# Install Report Explorer dependencies
+explorer-install:
+	@echo "$(BLUE)Installing Report Explorer dependencies...$(NC)"
+	@cd observability/reports/explorer && npm install
+	@echo "$(GREEN)Dependencies installed!$(NC)"
+
+# Launch Report Explorer web app
+explorer:
+	@echo "$(BLUE)Launching Report Explorer...$(NC)"
+	@echo ""
+	@if [ ! -d "observability/reports/explorer/node_modules" ]; then \
+		echo "$(YELLOW)Dependencies not installed. Installing now...$(NC)"; \
+		cd observability/reports/explorer && npm install; \
+	fi
+	@echo "$(GREEN)Starting server at http://localhost:3000$(NC)"
+	@echo "$(YELLOW)Press Ctrl+C to stop$(NC)"
+	@echo ""
+	@cd observability/reports/explorer && npm start
+
+# Run UX review on timeline reports
+ux-review:
+	@echo "$(BLUE)Starting UX review of timeline reports...$(NC)"
+	@echo "$(YELLOW)Tip: Use '/ux-review-timeline' in Claude Code for full analysis$(NC)"
+	@echo ""
+	@echo "This will:"
+	@echo "  • Analyze current HTML reports"
+	@echo "  • Define user personas & journeys"
+	@echo "  • Evaluate UX heuristics"
+	@echo "  • Create prioritized user stories"
+	@echo ""
+	@echo "$(GREEN)Please run: /ux-review-timeline$(NC)"
 
 # Clean generated outputs
 clean:
