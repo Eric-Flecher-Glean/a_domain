@@ -1,0 +1,52 @@
+{
+  "service": {
+    "name": "workflow-orchestration",
+    "version": "1.0.0",
+    "environment": "development"
+  },
+  "exporters": {
+    "traces": {
+      "type": "file",
+      "path": "observability/traces",
+      "format": "jsonl",
+      "rotation": "daily",
+      "retention_days": 30
+    },
+    "metrics": {
+      "type": "file",
+      "path": "observability/metrics",
+      "format": "jsonl",
+      "export_interval_ms": 60000,
+      "rotation": "daily",
+      "retention_days": 30
+    },
+    "events": {
+      "type": "file",
+      "path": "observability/events",
+      "format": "jsonl",
+      "rotation": "daily",
+      "retention_days": 30
+    },
+    "logs": {
+      "type": "file",
+      "path": "observability/logs",
+      "format": "jsonl",
+      "rotation": "daily",
+      "retention_days": 7
+    }
+  },
+  "resource": {
+    "attributes": {
+      "deployment.environment": "dev"
+    }
+  },
+  "sampling": {
+    "type": "always_on"
+  },
+  "instrumentation": {
+    "auto_instrument_stages": true,
+    "auto_emit_events": true,
+    "track_execution_time": true,
+    "track_quality_scores": true
+  }
+}

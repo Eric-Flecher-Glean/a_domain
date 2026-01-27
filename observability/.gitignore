@@ -1,0 +1,12 @@
+# Ignore all observability data files, but keep directory structure
+traces/*.jsonl
+metrics/*.jsonl
+events/*.jsonl
+logs/*.jsonl
+
+# Ignore compressed archives
+*.gz
+*.zip
+
+# Keep .gitkeep files
+!.gitkeep
