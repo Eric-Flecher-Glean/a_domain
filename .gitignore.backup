@@ -1,0 +1,16 @@
+# Node modules
+node_modules/
+
+# Observability runtime data
+observability/events/*.jsonl
+observability/logs/*.jsonl
+observability/traces/*.jsonl
+observability/metrics/*.jsonl
+observability/reports-output/
+
+# Generated outputs
+output/*.xml
+output/*.json
+
+# OS files
+.DS_Store
