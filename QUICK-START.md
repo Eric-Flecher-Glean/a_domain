@@ -167,6 +167,37 @@ cat output/ab-prompt-ab-report.json | jq '.input_analysis'
 - Iterative refinement ✅
 - **Good for: Production use**
 
+## SDLC Framework Commands
+
+This project now includes SDLC governance framework for development lifecycle management.
+
+### Quick SDLC Commands
+
+```bash
+# Check development status
+make status
+
+# Start a work session
+make session-start
+
+# Run SDLC tests
+make test-all
+
+# End work session
+make session-end
+```
+
+### SDLC Claude Skills
+
+```bash
+/sdlc-plan          # Plan next work
+/sdlc-status        # Show project status
+/sdlc-test          # Run tests
+/sdlc-quality       # Quality gates
+```
+
+See [docs/SDLC-INTEGRATION.md](docs/SDLC-INTEGRATION.md) for complete SDLC documentation.
+
 ## Clean Up
 
 ```bash

@@ -249,4 +249,88 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
+## SDLC Framework Integration
+
+This project uses the **SDLC governance framework** for development lifecycle management alongside the prompt engineering workflow.
+
+### Dual-System Architecture
+
+The project now operates two complementary systems:
+
+1. **a_domain Project** (Node.js) - Prompt engineering with AI agent orchestration
+   - XML prompt generation and validation
+   - A/B agent collaboration
+   - Context analysis
+   - Workflow timeline reports
+
+2. **SDLC Framework** (Python) - Development governance and quality
+   - Backlog management
+   - Test-driven development (TDD)
+   - Quality gates and governance
+   - Session management
+   - Artifact tracking
+
+### Getting Started with SDLC
+
+The SDLC framework is installed as a Git submodule at `.sdlc/` and integrates seamlessly with existing workflows.
+
+#### Quick Commands
+
+```bash
+# View all available commands (both systems)
+make help
+
+# a_domain commands (unchanged)
+make xml-prompt-ab TASK="Summarize customer feedback"
+make explorer
+
+# SDLC commands (new)
+make session-start
+make status
+make backlog-next
+make test-all
+```
+
+#### Claude Skills
+
+Skills are organized by namespace:
+
+```bash
+# Project skills
+/project-generate-examples
+/project-new-workflow
+/project-ux-review-timeline
+
+# SDLC skills
+/sdlc-plan
+/sdlc-implement
+/sdlc-test
+/sdlc-quality
+/sdlc-status
+/sdlc-session
+```
+
+### Documentation
+
+- **Integration Guide**: [docs/SDLC-INTEGRATION.md](docs/SDLC-INTEGRATION.md)
+- **SDLC Framework**: [.sdlc/README.md](.sdlc/README.md)
+- **Quick Reference**: [.sdlc/QUICK-REFERENCE.md](.sdlc/QUICK-REFERENCE.md)
+- **Rollback Instructions**: [docs/ROLLBACK.md](docs/ROLLBACK.md)
+
+### For New Team Members
+
+If you just cloned this repository:
+
+```bash
+# Initialize the SDLC submodule
+git submodule update --init --recursive
+
+# Verify installation
+make help
+```
+
+All existing project functionality remains unchanged. The SDLC framework provides optional governance and workflow tools.
+
+---
+
 *"Transform complexity into composability through domain-driven agent design."*

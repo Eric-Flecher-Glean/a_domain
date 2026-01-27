@@ -1,0 +1,17 @@
+# .sdlcrc - SDLC Framework Configuration
+# This file configures the SDLC framework for this project
+
+# Python interpreter to use for SDLC framework
+export SDLC_PYTHON=/opt/homebrew/bin/python3.13
+
+# Python virtual environment location
+export SDLC_VENV=.sdlc/.venv
+
+# uv package manager location
+export SDLC_UV=$(which uv)
+
+# SDLC framework directory
+export SDLC_DIR=.sdlc/.sdlc
+
+# Project root directory
+export PROJECT_ROOT=$(pwd)

@@ -14,3 +14,51 @@ output/*.json
 
 # OS files
 .DS_Store
+
+# === SDLC Framework Additions ===
+
+# Python virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+
+# SDLC framework state
+.sdlc/state/
+.sdlc/cache/
+.sdlc/.venv/
+
+# SDLC temporary files
+.sdlc-init-*.txt
+.sdlc-init-*.backup
+.sdlc-config.lock
+.sdlc-versions/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment files
+.env
+.env.local

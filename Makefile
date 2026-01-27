@@ -1,52 +1,65 @@
-.PHONY: help xml-prompt xml-prompt-enhanced xml-prompt-ab validate-prompt test-workflow test-context-analysis test-ab-workflow view-latest-report view-report generate-report explorer explorer-install ux-review clean
+# Makefile - Integration hub for a_domain + SDLC framework
+# This file integrates both the a_domain project commands and the SDLC governance framework
 
-# Colors for output
-GREEN := \033[0;32m
-YELLOW := \033[0;33m
-BLUE := \033[0;34m
-NC := \033[0m # No Color
+.PHONY: help local-help sdlc-help
 
-help:
-	@echo "$(BLUE)Prompt Engineering MCP Server - Makefile Commands$(NC)"
+# Include SDLC framework targets first (lower priority)
+-include .sdlc-integration.mk
+
+# Include project-specific targets second (higher priority - will override SDLC targets with same name)
+include Makefile.local
+
+# Unified help command
+help: local-help show-sdlc-help
+
+# Project-specific help
+local-help:
 	@echo ""
-	@echo "$(GREEN)make xml-prompt TASK=\"your task description\"$(NC)"
+	@echo "\033[0;34m=== a_domain Project Commands ===\033[0m"
+	@echo ""
+	@echo "Prompt Engineering MCP Server - Makefile Commands"
+	@echo ""
+	@echo "\033[0;32mmake xml-prompt TASK=\"your task description\"\033[0m"
 	@echo "  Generate and validate an XML prompt from natural language"
 	@echo ""
-	@echo "$(GREEN)make xml-prompt-enhanced TASK=\"your task description\"$(NC)"
+	@echo "\033[0;32mmake xml-prompt-enhanced TASK=\"your task description\"\033[0m"
 	@echo "  Generate prompt WITH context analysis (direct, bypasses agents)"
 	@echo ""
-	@echo "$(GREEN)make xml-prompt-ab TASK=\"your task description\"$(NC)"
+	@echo "\033[0;32mmake xml-prompt-ab TASK=\"your task description\"\033[0m"
 	@echo "  Generate prompt using A/B agent system WITH context analysis (RECOMMENDED)"
 	@echo ""
-	@echo "$(GREEN)make validate-prompt FILE=\"path/to/prompt.xml\"$(NC)"
+	@echo "\033[0;32mmake validate-prompt FILE=\"path/to/prompt.xml\"\033[0m"
 	@echo "  Validate an existing XML prompt"
 	@echo ""
-	@echo "$(GREEN)make test-workflow$(NC)"
+	@echo "\033[0;32mmake test-workflow\033[0m"
 	@echo "  Run the full generation + validation workflow with test data"
 	@echo ""
-	@echo "$(GREEN)make test-context-analysis$(NC)"
+	@echo "\033[0;32mmake test-context-analysis\033[0m"
 	@echo "  Test context analysis and input identification"
 	@echo ""
-	@echo "$(GREEN)make test-ab-workflow$(NC)"
+	@echo "\033[0;32mmake test-ab-workflow\033[0m"
 	@echo "  Test integrated A/B agent workflow with context analysis"
 	@echo ""
-	@echo "$(GREEN)make view-latest-report$(NC)"
+	@echo "\033[0;32mmake view-latest-report\033[0m"
 	@echo "  View the latest workflow timeline report in browser"
 	@echo ""
-	@echo "$(GREEN)make view-report SESSION_ID=\"session-id\"$(NC)"
+	@echo "\033[0;32mmake view-report SESSION_ID=\"session-id\"\033[0m"
 	@echo "  View a specific workflow timeline report"
 	@echo ""
-	@echo "$(GREEN)make generate-report$(NC)"
+	@echo "\033[0;32mmake generate-report\033[0m"
 	@echo "  Manually generate timeline report for latest session"
 	@echo ""
-	@echo "$(GREEN)make explorer$(NC)"
+	@echo "\033[0;32mmake explorer\033[0m"
 	@echo "  Launch the Report Explorer web app to browse all reports"
 	@echo ""
-	@echo "$(GREEN)make explorer-install$(NC)"
+	@echo "\033[0;32mmake explorer-install\033[0m"
 	@echo "  Install dependencies for the Report Explorer"
 	@echo ""
-	@echo "$(GREEN)make ux-review$(NC)"
+	@echo "\033[0;32mmake ux-review\033[0m"
 	@echo "  Run comprehensive UX review of timeline reports (creates user stories)"
+	@echo ""
+	@echo "\033[0;32mmake clean\033[0m"
+	@echo "  Clean generated outputs"
 	@echo ""
 	@echo "Examples:"
 	@echo "  make xml-prompt TASK=\"Create a prompt for meeting summarization\""
@@ -54,158 +67,4 @@ help:
 	@echo "  make validate-prompt FILE=\"output/my-prompt.xml\""
 	@echo "  make explorer  # Browse all reports in web UI"
 
-# Generate XML prompt from natural language task description
-xml-prompt:
-ifndef TASK
-	@echo "$(YELLOW)Error: TASK parameter required$(NC)"
-	@echo "Usage: make xml-prompt TASK=\"your task description\""
-	@exit 1
-endif
-	@echo "$(BLUE)Generating XML prompt for:$(NC) $(TASK)"
-	@mkdir -p output
-	@node scripts/run-mcp-workflow.js \
-		--mode generate \
-		--task "$(TASK)" \
-		--output output/generated-prompt.xml \
-		--max-attempts 3
-
-# Validate an existing XML prompt
-validate-prompt:
-ifndef FILE
-	@echo "$(YELLOW)Error: FILE parameter required$(NC)"
-	@echo "Usage: make validate-prompt FILE=\"path/to/prompt.xml\""
-	@exit 1
-endif
-	@echo "$(BLUE)Validating XML prompt:$(NC) $(FILE)"
-	@node scripts/run-mcp-workflow.js \
-		--mode validate \
-		--file "$(FILE)"
-
-# Test the full workflow with example tasks
-test-workflow:
-	@echo "$(BLUE)Testing prompt generation workflow...$(NC)"
-	@echo ""
-	@echo "$(GREEN)Test 1: Meeting Summarization$(NC)"
-	@make xml-prompt TASK="Create a prompt for meeting summarization"
-	@echo ""
-	@echo "$(GREEN)Test 2: Code Review$(NC)"
-	@make xml-prompt TASK="Generate a prompt for code review"
-	@echo ""
-	@echo "$(GREEN)Test 3: Email Draft$(NC)"
-	@make xml-prompt TASK="Create a prompt for drafting professional emails"
-
-# Generate XML prompt with context analysis (ENHANCED)
-xml-prompt-enhanced:
-ifndef TASK
-	@echo "$(YELLOW)Error: TASK parameter required$(NC)"
-	@echo "Usage: make xml-prompt-enhanced TASK=\"your task description\""
-	@exit 1
-endif
-	@echo "$(BLUE)Generating XML prompt WITH context analysis:$(NC) $(TASK)"
-	@mkdir -p output
-	@chmod +x scripts/run-mcp-workflow-enhanced.js
-	@node scripts/run-mcp-workflow-enhanced.js \
-		--mode generate \
-		--task "$(TASK)" \
-		--output output/enhanced-prompt.xml \
-		--max-attempts 3
-
-# Generate XML prompt using A/B agents WITH context analysis (INTEGRATED - RECOMMENDED)
-xml-prompt-ab:
-ifndef TASK
-	@echo "$(YELLOW)Error: TASK parameter required$(NC)"
-	@echo "Usage: make xml-prompt-ab TASK=\"your task description\""
-	@exit 1
-endif
-	@echo "$(BLUE)Generating XML prompt using A/B Agent System + Context Analysis:$(NC) $(TASK)"
-	@mkdir -p output
-	@chmod +x scripts/run-mcp-workflow-integrated.js
-	@node scripts/run-mcp-workflow-integrated.js \
-		--mode generate \
-		--task "$(TASK)" \
-		--output output/ab-prompt.xml \
-		--max-attempts 3
-
-# Test context analysis with different prompt types
-test-context-analysis:
-	@echo "$(BLUE)Testing Context Analysis & Input Identification...$(NC)"
-	@echo ""
-	@echo "$(GREEN)Test 1: Meeting Summarization$(NC)"
-	@make xml-prompt-enhanced TASK="Create a prompt for summarizing meeting transcripts"
-	@echo ""
-	@echo "$(GREEN)Test 2: Code Review$(NC)"
-	@make xml-prompt-enhanced TASK="Generate a prompt for code review with security focus"
-	@echo ""
-	@echo "$(GREEN)Test 3: Customer Feedback Analysis$(NC)"
-	@make xml-prompt-enhanced TASK="Create a prompt for sentiment analysis of customer reviews"
-
-# Test integrated A/B workflow with context analysis
-test-ab-workflow:
-	@echo "$(BLUE)Testing Integrated A/B Agent Workflow + Context Analysis...$(NC)"
-	@echo ""
-	@echo "$(GREEN)Test 1: Meeting Summarization (A/B Agents)$(NC)"
-	@make xml-prompt-ab TASK="Create a prompt for summarizing meeting transcripts"
-	@echo ""
-	@echo "$(GREEN)Test 2: Code Review (A/B Agents)$(NC)"
-	@make xml-prompt-ab TASK="Generate a prompt for code review with security focus"
-	@echo ""
-	@echo "$(GREEN)Test 3: Customer Feedback (A/B Agents)$(NC)"
-	@make xml-prompt-ab TASK="Create a prompt for sentiment analysis of customer reviews"
-
-# View latest timeline report
-view-latest-report:
-	@echo "$(BLUE)Opening latest timeline report...$(NC)"
-	@open `ls -t observability/reports-output/*.html 2>/dev/null | head -1` || echo "$(YELLOW)No reports found. Run a workflow first.$(NC)"
-
-# View specific timeline report
-view-report:
-ifndef SESSION_ID
-	@echo "$(YELLOW)Error: SESSION_ID parameter required$(NC)"
-	@echo "Usage: make view-report SESSION_ID=\"your-session-id\""
-	@exit 1
-endif
-	@echo "$(BLUE)Opening timeline report for session $(SESSION_ID)...$(NC)"
-	@open observability/reports-output/$(SESSION_ID)-timeline.html || echo "$(YELLOW)Report not found for session $(SESSION_ID)$(NC)"
-
-# Generate timeline report manually
-generate-report:
-	@echo "$(BLUE)Generating timeline report...$(NC)"
-	@node observability/reports/generate-report.js --latest
-
-# Install Report Explorer dependencies
-explorer-install:
-	@echo "$(BLUE)Installing Report Explorer dependencies...$(NC)"
-	@cd observability/reports/explorer && npm install
-	@echo "$(GREEN)Dependencies installed!$(NC)"
-
-# Launch Report Explorer web app
-explorer:
-	@echo "$(BLUE)Launching Report Explorer...$(NC)"
-	@echo ""
-	@if [ ! -d "observability/reports/explorer/node_modules" ]; then \
-		echo "$(YELLOW)Dependencies not installed. Installing now...$(NC)"; \
-		cd observability/reports/explorer && npm install; \
-	fi
-	@echo "$(GREEN)Starting server at http://localhost:3000$(NC)"
-	@echo "$(YELLOW)Press Ctrl+C to stop$(NC)"
-	@echo ""
-	@cd observability/reports/explorer && npm start
-
-# Run UX review on timeline reports
-ux-review:
-	@echo "$(BLUE)Starting UX review of timeline reports...$(NC)"
-	@echo "$(YELLOW)Tip: Use '/ux-review-timeline' in Claude Code for full analysis$(NC)"
-	@echo ""
-	@echo "This will:"
-	@echo "  • Analyze current HTML reports"
-	@echo "  • Define user personas & journeys"
-	@echo "  • Evaluate UX heuristics"
-	@echo "  • Create prioritized user stories"
-	@echo ""
-	@echo "$(GREEN)Please run: /ux-review-timeline$(NC)"
-
-# Clean generated outputs
-clean:
-	@echo "$(YELLOW)Cleaning output directory...$(NC)"
-	@rm -rf output/
-	@echo "$(GREEN)Done!$(NC)"
+# Note: SDLC help is provided by show-sdlc-help target in .sdlc-integration.mk

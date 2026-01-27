@@ -2,6 +2,29 @@
 
 This directory contains custom skills (slash commands) for the project.
 
+## Skill Organization
+
+Skills are organized into two namespaces for clarity:
+
+### `project/` - a_domain Project Skills
+Custom skills specific to the prompt engineering workflow:
+- `/project-ux-review-timeline` - UX review of timeline reports
+- `/project-generate-examples` - Generate workflow examples
+- `/project-new-workflow` - Create new workflow patterns
+
+### `sdlc/` - SDLC Framework Skills
+Development lifecycle and governance skills (via symlink to `.sdlc/.sdlc/skills/`):
+- `/sdlc-plan` - Query backlog and plan next work
+- `/sdlc-implement` - Execute implementation tasks
+- `/sdlc-test` - Run test suite and report results
+- `/sdlc-quality` - Run governance + tests
+- `/sdlc-status` - Display backlog and health status
+- `/sdlc-session` - Session start/end workflows
+- `/sdlc-artifact` - Search and process artifacts
+- `/sdlc-deploy` - Deployment workflow
+- `/sdlc-new-feature-chat` - Interactive TDD story creation
+- `/sdlc-client-meetings` - Generate client meeting reports
+
 ## Available Skills
 
 ### `/ux-review-timeline`
