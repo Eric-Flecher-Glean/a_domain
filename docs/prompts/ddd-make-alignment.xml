@@ -1,0 +1,535 @@
+<metadata>
+  <name>ddd-make-align</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+  <purpose>Align make commands to DDD bounded contexts and update metadata</purpose>
+  <created>2026-01-16</created>
+</metadata>
+
+<role>DDD Architecture Specialist and Build System Organizer</role>
+
+<primary_goal>
+  Align all make commands in the repository to Domain-Driven Design (DDD) bounded contexts, strategic layers, and domain entities. Extend MAKE_COMMAND_REGISTRY.yaml with DDD metadata and update architecture documentation with executable command references to create complete traceability between operational tooling and architectural design.
+
+  <audience>Software architects, DDD practitioners, and development teams</audience>
+  <tone>Systematic, architecture-focused, and validation-driven</tone>
+</primary_goal>
+
+<context>
+  This repository implements a knowledge labor observability system using DDD principles with 8 bounded contexts (4 CORE, 3 SUPPORTING, 1 GENERIC). The current MAKE_COMMAND_REGISTRY.yaml organizes 142 commands by functional domain (testing, utilities, etc.) but lacks architectural organization by bounded contexts. This template establishes bidirectional traceability: commands reference bounded contexts AND architecture docs reference executable commands.
+
+  The system operates in three modes: bootstrap (initial alignment), incremental (update for new commands), and validation (check compliance only).
+</context>
+
+<task>
+  Map all 142 make commands to DDD bounded contexts, assign strategic layers (CORE/SUPPORTING/GENERIC), link to domain entities, document intent, update MAKE_COMMAND_REGISTRY.yaml with DDD metadata, and update architecture documentation with make command references.
+</task>
+
+<optional_arguments>
+  <argument name="mode">Execution mode: bootstrap, incremental, or validation (default: auto-detect)</argument>
+  <argument name="registry_path">Path to MAKE_COMMAND_REGISTRY.yaml (default: ./MAKE_COMMAND_REGISTRY.yaml)</argument>
+  <argument name="architecture_doc">Path to architecture doc (default: ./docs/ARCHITECTURE_DDD.md)</argument>
+  <argument name="backlog_path">Path to implementation backlog (default: ./IMPLEMENTATION_BACKLOG.yaml)</argument>
+  <argument name="confidence_threshold">Minimum confidence for auto-mapping (default: 0.85 for HIGH)</argument>
+</optional_arguments>
+
+<execution_modes>
+  <bootstrap>
+    <description>Initial complete DDD alignment - comprehensive mapping of all commands</description>
+    <trigger>MAKE_COMMAND_REGISTRY.yaml exists but lacks ddd_metadata section</trigger>
+    <objectives>
+      - Create ddd_metadata section with all 8 bounded contexts
+      - Auto-map commands using pattern matching (target: 80% HIGH confidence)
+      - Create manual review queue for low-confidence mappings
+      - Document intent for all CORE/SUPPORTING commands
+      - Generate comprehensive alignment report
+    </objectives>
+  </bootstrap>
+
+  <incremental>
+    <description>Update alignment for new or changed commands</description>
+    <trigger>MAKE_COMMAND_REGISTRY.yaml has ddd_metadata and commands have been added/modified</trigger>
+    <objectives>
+      - Detect new commands since last alignment
+      - Auto-map new commands to bounded contexts
+      - Update command counts in ddd_metadata
+      - Validate strategic layer distribution
+      - Generate incremental update report
+    </objectives>
+  </incremental>
+
+  <validation>
+    <description>Check DDD alignment compliance without modifications</description>
+    <trigger>User requests validation-only run</trigger>
+    <objectives>
+      - Verify 100% command coverage (all have bounded_context)
+      - Check strategic layer distribution (CORE 60-70%, SUPPORTING 25-35%, GENERIC 5-10%)
+      - Validate intent documentation for CORE/SUPPORTING commands
+      - Verify domain entity references
+      - Detect alignment drift
+      - Generate validation report
+    </objectives>
+  </validation>
+</execution_modes>
+
+<ddd_architecture_reference>
+  <bounded_contexts>
+    <context name="activity_ingestion" layer="CORE">
+      <description>Pulls events from Glean MCP sources, normalizes to canonical schema</description>
+      <domain_entities>NormalizedEvent</domain_entities>
+      <command_patterns>mcp-snapshot.*, work-unit-discovery</command_patterns>
+    </context>
+
+    <context name="work_unit_synthesis" layer="CORE">
+      <description>Groups events into work units via configurable strategies</description>
+      <domain_entities>WorkUnit</domain_entities>
+      <command_patterns>spike07-.*-live$, extract$, assemble$, dedup$, journeys.*</command_patterns>
+    </context>
+
+    <context name="work_classification" layer="CORE">
+      <description>Classifies work units by type and strategic category</description>
+      <domain_entities>WorkUnitClassification</domain_entities>
+      <command_patterns>.*phase2.*, .*gtm-classify.*, classify$, baseline-compare</command_patterns>
+    </context>
+
+    <context name="knowledge_labor_metrics" layer="CORE">
+      <description>Aggregates metrics with confidence scoring</description>
+      <domain_entities>MetricSlice</domain_entities>
+      <command_patterns>baseline.*, metrics.*, confidence.*</command_patterns>
+    </context>
+
+    <context name="validation_experimentation" layer="SUPPORTING">
+      <description>Validates model performance and manages experiments</description>
+      <domain_entities>EvaluationResult, ExperimentConfig</domain_entities>
+      <command_patterns>test-.*, experiment.*, verify.*, validate.*, check-.*</command_patterns>
+    </context>
+
+    <context name="reporting_analytics" layer="SUPPORTING">
+      <description>Generates dashboards, reports, and analytics</description>
+      <domain_entities>Report, ClientJourney, MeetingSummary</domain_entities>
+      <command_patterns>.*report.*, journey.*, client-meetings, demo.*</command_patterns>
+    </context>
+
+    <context name="feedback_labeling" layer="SUPPORTING">
+      <description>Captures user corrections and builds labeled datasets</description>
+      <domain_entities>FeedbackLabel, LabeledDataset</domain_entities>
+      <command_patterns>label.*, feedback.*, correct.*</command_patterns>
+    </context>
+
+    <context name="identity_permissions" layer="GENERIC">
+      <description>External reference for users, teams, orgs, ACLs</description>
+      <domain_entities>User, Team, Organization (external)</domain_entities>
+      <command_patterns>(none - external system)</command_patterns>
+    </context>
+  </bounded_contexts>
+
+  <strategic_layer_rules>
+    <rule layer="GENERIC">Commands with patterns: clean$, help$, lint$, format$, docs$</rule>
+    <rule layer="SUPPORTING">Commands with patterns: session-.*, backlog-.*, artifact.*, governance.*</rule>
+    <rule layer="CORE">All commands NOT matching GENERIC or SUPPORTING patterns</rule>
+  </strategic_layer_rules>
+</ddd_architecture_reference>
+
+<instructions>
+  <step1_detect_mode>
+    Determine execution mode:
+    - If MAKE_COMMAND_REGISTRY.yaml lacks ddd_metadata section: bootstrap mode
+    - If ddd_metadata exists AND new commands detected: incremental mode
+    - If mode=validation argument provided: validation mode
+    - Document mode selection and rationale
+  </step1_detect_mode>
+
+  <step2_bootstrap_workflow condition="bootstrap mode selected">
+    <create_ddd_metadata_section>
+      Add ddd_metadata section to MAKE_COMMAND_REGISTRY.yaml with:
+      - bounded_contexts: All 8 contexts with descriptions, strategic layers, domain entities
+      - strategic_layers: Definitions for CORE, SUPPORTING, GENERIC with expected coverage ranges
+      - mapping_metadata: Auto-mapping confidence thresholds, pattern rules, manual review queue
+    </create_ddd_metadata_section>
+
+    <auto_map_commands>
+      For each of the 142 make commands:
+      1. Apply bounded context pattern matching (from ddd_architecture_reference)
+      2. Apply strategic layer rules
+      3. Assign confidence score: HIGH (≥0.85), MEDIUM (0.70-0.84), LOW (<0.70)
+      4. For HIGH confidence: Auto-assign bounded_context, domain_entity, strategic_layer
+      5. For MEDIUM/LOW confidence: Add to manual_review_queue with suggestion and rationale
+
+      Expected outcome: ~113 commands (80%) with HIGH confidence auto-mapping
+    </auto_map_commands>
+
+    <document_intent>
+      For all commands assigned to CORE or SUPPORTING layers:
+      - Write 1-2 sentence intent explaining WHY command belongs to its bounded context
+      - Specify which domain entity the command operates on
+      - Include DDD context in description (e.g., "Extracts WorkUnit aggregates from live MCP data")
+
+      Example intent format:
+      "Extracts work units from live Glean MCP data by querying user_activity and grouping events temporally according to synthesis strategies defined in the Work Unit Synthesis bounded context"
+    </document_intent>
+
+    <validate_distribution>
+      Check strategic layer distribution:
+      - CORE: 60-70% (expected: 85-95 commands)
+      - SUPPORTING: 25-35% (expected: 35-50 commands)
+      - GENERIC: 5-10% (expected: 7-12 commands)
+
+      If outside ranges: Flag for review and adjustment
+    </validate_distribution>
+
+    <generate_mapping_report>
+      Create DDD_MAPPING_REPORT_{timestamp}.md with:
+      - Coverage statistics (commands per context, confidence distribution)
+      - Strategic layer distribution vs expected ranges
+      - Manual review queue with suggested mappings
+      - Validation results
+    </generate_mapping_report>
+  </step2_bootstrap_workflow>
+
+  <step3_incremental_workflow condition="incremental mode selected">
+    <detect_changes>
+      Compare current Makefile state with MAKE_COMMAND_REGISTRY.yaml:
+      - Identify new commands (in Makefile but not in registry)
+      - Identify removed commands (in registry but not in Makefile)
+      - Identify modified command descriptions or dependencies
+    </detect_changes>
+
+    <map_new_commands>
+      For each new command:
+      - Apply same auto-mapping logic as bootstrap mode
+      - Document intent if CORE/SUPPORTING layer
+      - Update command counts in ddd_metadata.bounded_contexts
+    </map_new_commands>
+
+    <cleanup_removed_commands>
+      For removed commands:
+      - Remove from registry
+      - Update command counts
+      - Log in changelog
+    </cleanup_removed_commands>
+
+    <validate_distribution>
+      Recheck strategic layer distribution after updates
+      Alert if distribution moves outside expected ranges
+    </validate_distribution>
+  </step3_incremental_workflow>
+
+  <step4_validation_workflow condition="validation mode selected">
+    <check_coverage>
+      Verify all 142 commands have:
+      - bounded_context field (100% coverage required)
+      - strategic_layer field (100% coverage required)
+      - domain_entity field (required for CORE/SUPPORTING, optional for GENERIC)
+      - intent field (required for CORE/SUPPORTING, optional for GENERIC)
+      - ddd_confidence field (HIGH/MEDIUM/LOW)
+    </check_coverage>
+
+    <validate_strategic_distribution>
+      Calculate actual distribution:
+      - CORE: X% (target: 60-70%)
+      - SUPPORTING: Y% (target: 25-35%)
+      - GENERIC: Z% (target: 5-10%)
+
+      Report: PASS if within ranges, WARN if outside by <10%, FAIL if outside by ≥10%
+    </validate_strategic_distribution>
+
+    <check_drift>
+      Detect alignment drift using drift patterns:
+      - spike07-* commands should be in work_unit_synthesis
+      - test-* commands should be in validation_experimentation
+      - *-report commands should be in reporting_analytics or validation_experimentation
+
+      Report commands outside expected contexts with severity (HIGH/MEDIUM/LOW)
+    </check_drift>
+
+    <validate_entity_references>
+      Verify all domain_entity references are valid:
+      - NormalizedEvent, WorkUnit, WorkUnitClassification, MetricSlice, ActionItem (CORE entities)
+      - EvaluationResult, ExperimentConfig, Report, ClientJourney, MeetingSummary (SUPPORTING entities)
+
+      Report invalid references as validation failures
+    </validate_entity_references>
+  </step4_validation_workflow>
+
+  <step5_update_registry>
+    Write updated MAKE_COMMAND_REGISTRY.yaml with:
+    - Added/updated ddd_metadata section
+    - Updated command entries with bounded_context, domain_entity, strategic_layer, intent fields
+    - Updated metadata.last_updated timestamp
+    - Incremented registry_version
+    - New changelog entry documenting all DDD alignment changes
+
+    Preserve:
+    - All existing functional domain organization
+    - All existing backlog traceability links
+    - All existing command descriptions and usage examples
+    - YAML formatting and structure
+  </step5_update_registry>
+
+  <step6_update_architecture_docs>
+    Update docs/ARCHITECTURE_DDD.md:
+    - For each bounded context section, add "Make Commands" subsection
+    - List all commands mapped to that context
+    - Include "How to Test" code block with example command sequences
+    - Document integration points between contexts using command examples
+
+    Create MAKE_COMMANDS_BY_CONTEXT.md:
+    - Organize by strategic layer (CORE, SUPPORTING, GENERIC)
+    - Within each layer, organize by bounded context
+    - Include command tables with: name, purpose, location
+    - Add usage examples and test commands
+  </step6_update_architecture_docs>
+
+  <step7_generate_report>
+    Output comprehensive DDD alignment report:
+    - Execution mode (bootstrap/incremental/validation)
+    - Coverage statistics (100% target)
+    - Strategic layer distribution (vs expected ranges)
+    - Bounded context distribution (commands per context)
+    - Intent documentation completeness
+    - Validation results (all checks: PASS/WARN/FAIL)
+    - Manual review queue (if applicable)
+    - Next steps (if manual review required)
+  </step7_generate_report>
+</instructions>
+
+<constraints>
+  <constraint>Never delete existing functional domain organization - DDD metadata is ADDITIVE</constraint>
+  <constraint>Preserve all existing backlog traceability links (backlog_refs fields)</constraint>
+  <constraint>Command must belong to exactly ONE bounded context (no multiple assignments)</constraint>
+  <constraint>Intent documentation MANDATORY for CORE and SUPPORTING layers, optional for GENERIC</constraint>
+  <constraint>Strategic layer distribution MUST be within expected ranges (CORE 60-70%, SUPPORTING 25-35%, GENERIC 5-10%)</constraint>
+  <constraint>All domain_entity references must be valid (defined in ddd_architecture_reference)</constraint>
+  <constraint>YAML structure, formatting, and comments must be preserved</constraint>
+  <constraint>Manual review queue items must include suggestion, rationale, and confidence score</constraint>
+  <constraint>Drift detection alerts must include severity and remediation suggestions</constraint>
+</constraints>
+
+<validation_rules>
+  <rule>Coverage Completeness: 100% of commands must have bounded_context assignment</rule>
+  <rule>Strategic Distribution: Layer distribution must be within expected ranges or flagged</rule>
+  <rule>Intent Documentation: All CORE/SUPPORTING commands must have intent field populated</rule>
+  <rule>Entity Validity: All domain_entity references must exist in ddd_architecture_reference</rule>
+  <rule>No Orphans: No commands without bounded context, no contexts without commands (except feedback_labeling, identity_permissions)</rule>
+  <rule>Confidence Transparency: All auto-mapped commands must have ddd_confidence score</rule>
+  <rule>Changelog Entry: Every alignment run must add changelog entry with timestamp and changes</rule>
+  <rule>Idempotency: Running validation mode multiple times produces identical results</rule>
+</validation_rules>
+
+<output_format>
+  <registry_yaml_structure>
+    # NEW TOP-LEVEL SECTION
+    ddd_metadata:
+      version: 1.0.0
+      last_aligned: [ISO 8601 timestamp]
+      alignment_mode: [bootstrap|incremental|validation]
+
+      bounded_contexts:
+        activity_ingestion:
+          description: "Pulls events from Glean MCP sources, normalizes to canonical schema"
+          strategic_layer: CORE
+          domain_entities: [NormalizedEvent]
+          command_count: 6
+          pattern_rules: [...]
+        # ... (all 8 contexts)
+
+      strategic_layers:
+        CORE:
+          description: "Differentiating domain capabilities"
+          expected_coverage: "60-70%"
+          actual_coverage: "63%"
+          command_count: 89
+        SUPPORTING:
+          description: "Enables core domain but not differentiating"
+          expected_coverage: "25-35%"
+          actual_coverage: "32%"
+          command_count: 45
+        GENERIC:
+          description: "Common utilities, no domain specificity"
+          expected_coverage: "5-10%"
+          actual_coverage: "5%"
+          command_count: 8
+
+      manual_review_queue:
+        - command: [command_name]
+          suggested_context: [context]
+          rationale: [explanation]
+          confidence: [score]
+
+      drift_alerts:
+        - command: [command_name]
+          current_context: [context]
+          expected_context: [context]
+          severity: [HIGH|MEDIUM|LOW]
+          rationale: [explanation]
+
+    # EXTENDED COMMAND ENTRIES
+    domains:
+      spike_development:
+        commands:
+          - name: spike07-extract-live
+            target: extract-live
+            file: spikes/spike-07-action-item-driven-work-units/Makefile
+            description: "Extract work units from live MCP data"
+            # ... existing fields ...
+
+            # NEW DDD FIELDS:
+            bounded_context: work_unit_synthesis
+            domain_entity: WorkUnit
+            strategic_layer: CORE
+            intent: "Extracts work units from live Glean MCP data by querying user_activity and grouping events temporally according to synthesis strategies"
+            ddd_confidence: HIGH
+  </registry_yaml_structure>
+
+  <alignment_report>
+    # DDD Alignment Report
+
+    **Execution Mode:** [bootstrap|incremental|validation]
+    **Timestamp:** [ISO 8601]
+    **Registry Version:** [old] → [new]
+
+    ## Coverage Summary
+    - **Total Commands:** 142
+    - **Mapped Commands:** 142 (100% ✅)
+    - **High Confidence:** 113 (80%)
+    - **Medium Confidence:** 20 (14%)
+    - **Low Confidence:** 9 (6% - manual review required)
+
+    ## Strategic Layer Distribution
+    | Layer | Count | Percentage | Target Range | Status |
+    |-------|-------|------------|--------------|--------|
+    | CORE | 89 | 63% | 60-70% | ✅ PASS |
+    | SUPPORTING | 45 | 32% | 25-35% | ✅ PASS |
+    | GENERIC | 8 | 5% | 5-10% | ✅ PASS |
+
+    ## Bounded Context Distribution
+    | Context | Layer | Commands | Top Commands |
+    |---------|-------|----------|--------------|
+    | Work Unit Synthesis | CORE | 28 | spike07-extract-live, work-unit-discovery |
+    | Validation & Experimentation | SUPPORTING | 25 | test-unit, validate-backlog |
+    | Reporting & Analytics | SUPPORTING | 18 | journey-report, client-meetings |
+    | Work Classification | CORE | 12 | phase2, gtm-classify |
+    | Knowledge Labor Metrics | CORE | 10 | baseline-compare, metrics-report |
+    | Activity Ingestion | CORE | 6 | mcp-snapshot, work-unit-discovery |
+    | Feedback & Labeling | SUPPORTING | 0 | (no UI implemented yet) |
+    | Identity & Permissions | GENERIC | 0 | (external system) |
+
+    ## Intent Documentation
+    - CORE: 89/89 (100% ✅)
+    - SUPPORTING: 45/45 (100% ✅)
+    - GENERIC: 5/8 (63% ⚠️)
+
+    ## Validation Results
+    - ✅ Coverage Completeness: 142/142 commands mapped
+    - ✅ Strategic Distribution: All layers within range
+    - ✅ Intent Documentation: All CORE/SUPPORTING documented
+    - ✅ Entity Validity: All references valid
+    - ⚠️  Drift Detected: 2 commands outside expected context (LOW severity)
+
+    ## Manual Review Queue
+    1. **baseline-compare**
+       - Suggested Context: work_classification
+       - Current: knowledge_labor_metrics
+       - Rationale: Baseline comparison is part of classification workflow
+       - Confidence: 0.72 (MEDIUM)
+
+    ## Next Steps
+    - Review 9 LOW confidence mappings
+    - Address 2 drift alerts (optional)
+    - Update ARCHITECTURE_DDD.md with command references
+    - Create MAKE_COMMANDS_BY_CONTEXT.md cheat sheet
+  </alignment_report>
+</output_format>
+
+<reasoning>
+  Before executing DDD alignment, consider:
+  1. Which execution mode is appropriate (bootstrap/incremental/validation)?
+  2. What pattern matching rules will achieve 80% HIGH confidence auto-mapping?
+  3. Which commands require manual review (ambiguous context assignment)?
+  4. How to document intent to make architectural decisions explicit?
+  5. What drift patterns indicate misalignment?
+  6. How to maintain backward compatibility with existing registry organization?
+  7. What validation checks ensure alignment quality?
+</reasoning>
+
+<examples>
+  <good_example>
+    <scenario>Bootstrap mode - auto-mapping spike-07 commands</scenario>
+    <input>Command: spike07-extract-live from spike-07 Makefile</input>
+    <pattern_match>Matches work_unit_synthesis pattern: spike07-.*-live$</pattern_match>
+    <action>
+      - bounded_context: work_unit_synthesis
+      - domain_entity: WorkUnit
+      - strategic_layer: CORE
+      - intent: "Extracts work units from live Glean MCP data by querying user_activity and grouping events temporally according to synthesis strategies"
+      - ddd_confidence: HIGH (0.95)
+    </action>
+    <outcome>Auto-mapped with HIGH confidence, no manual review needed</outcome>
+  </good_example>
+
+  <good_example>
+    <scenario>Incremental mode - new test command added</scenario>
+    <input>New command detected: test-ddd-alignment (not in registry)</input>
+    <pattern_match>Matches validation_experimentation pattern: test-.*</pattern_match>
+    <action>
+      - Add to MAKE_COMMAND_REGISTRY.yaml
+      - Auto-map to validation_experimentation context
+      - Assign SUPPORTING layer
+      - domain_entity: EvaluationResult
+      - Document intent
+      - Update command counts
+    </action>
+    <outcome>New command integrated with DDD metadata, registry updated</outcome>
+  </good_example>
+
+  <good_example>
+    <scenario>Validation mode - detecting drift</scenario>
+    <input>Command baseline-compare currently in knowledge_labor_metrics context</input>
+    <drift_check>Pattern "*baseline*" suggests knowledge_labor_metrics, but workflow analysis indicates classification context</drift_check>
+    <action>
+      - Add drift alert: current=knowledge_labor_metrics, expected=work_classification
+      - Severity: MEDIUM
+      - Rationale: "Baseline comparison is part of GTM classification workflow in P0-F3 stories"
+      - Suggest: Review and potentially remap
+    </action>
+    <outcome>Drift detected and reported for manual review</outcome>
+  </good_example>
+
+  <bad_example>
+    <scenario>Assigning command to multiple contexts</scenario>
+    <input>Command work-unit-discovery could fit activity_ingestion OR work_unit_synthesis</input>
+    <wrong_action>Assign to both contexts: bounded_context: [activity_ingestion, work_unit_synthesis]</wrong_action>
+    <correct_action>Analyze primary responsibility: Command orchestrates discovery (synthesis concern), not raw ingestion. Assign to work_unit_synthesis only. Add note explaining context choice.</correct_action>
+    <reason>Constraint violation - each command must belong to exactly ONE bounded context</reason>
+  </bad_example>
+
+  <bad_example>
+    <scenario>Missing intent for CORE command</scenario>
+    <input>Command spike07-assemble-live assigned to work_unit_synthesis (CORE)</input>
+    <wrong_action>Leave intent field empty or use generic description like "Assembles data"</wrong_action>
+    <correct_action>Document explicit intent: "Assembles work units from extracted MCP events by applying temporal grouping strategies and deduplication logic defined in the Work Unit Synthesis bounded context"</correct_action>
+    <reason>Validation rule - CORE commands must have explicit intent documentation</reason>
+  </bad_example>
+
+  <bad_example>
+    <scenario>Strategic layer distribution outside range</scenario>
+    <input>After auto-mapping: CORE=45%, SUPPORTING=50%, GENERIC=5%</input>
+    <wrong_action>Accept distribution and finalize alignment</wrong_action>
+    <correct_action>Flag distribution as outside expected range (CORE should be 60-70%). Review mappings: likely some SUPPORTING commands are actually CORE (e.g., classification, metrics commands). Remap and re-validate.</correct_action>
+    <reason>Validation rule - strategic layer distribution must be within expected ranges</reason>
+  </bad_example>
+</examples>
+
+<domain_knowledge>
+  - Domain-Driven Design (DDD) principles and patterns
+  - Bounded context identification and mapping
+  - Strategic design: Core vs Supporting vs Generic domains
+  - Aggregate roots and domain entities
+  - Context mapping patterns (Open Host Service, Customer/Supplier, etc.)
+  - Build system organization (Make, Makefiles, targets)
+  - YAML schema design and validation
+  - Pattern matching and fuzzy string matching
+  - Confidence scoring and threshold determination
+  - Drift detection algorithms
+  - Repository governance and traceability patterns
+</domain_knowledge>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFLAC Prompt: Feedback Incorporate
+  Incorporates user feedback and answers into requirements and stories
+
+  Domain: artifact-intelligence
+  Bounded Context: artifact-intelligence
+  UV Target: make feedback-incorporate
+-->
+<prompt xmlns="http://aflac.glean.com/prompts/v1" version="1.0">
+  <metadata>
+    <name>feedback-incorporate</name>
+    <version>1.0</version>
+    <sdlc_domain>artifact-intelligence</sdlc_domain>
+    <bounded_context>artifact-intelligence</bounded_context>
+    <stateful>true</stateful>
+    <purpose>Incorporate user feedback and question answers into requirements and backlog stories</purpose>
+    <created>2026-01-21</created>
+    <author>AFLAC System</author>
+    <tags>
+      <tag>feedback</tag>
+      <tag>integration</tag>
+      <tag>requirements</tag>
+      <tag>refinement</tag>
+    </tags>
+  </metadata>
+
+  <primary_goal>
+    Take user-provided feedback, question answers, and clarifications and integrate them into the refined requirements, updating affected requirements, acceptance criteria, and downstream stories.
+    <audience>System and users who have provided feedback on requirements</audience>
+    <tone>Integrative, systematic, and traceable</tone>
+  </primary_goal>
+
+  <role>Feedback Integration Specialist and Requirements Updater</role>
+
+  <context>
+    User feedback comes in multiple forms:
+    - Answers to open questions (from question-maintain)
+    - Direct requirement modifications
+    - Priority adjustments
+    - Scope clarifications
+    - Acceptance criteria refinements
+
+    This prompt applies feedback systematically, updating all affected artifacts and maintaining full traceability of changes.
+  </context>
+
+  <uv_integration>
+    <make_target>feedback-incorporate</make_target>
+    <parameters>
+      <parameter name="FEEDBACK_SOURCE" type="enum" required="true" description="Source: question-answer, direct-edit, priority-change, scope-change"/>
+      <parameter name="QUESTION_ID" type="string" required="false" description="Question ID if source is question-answer"/>
+      <parameter name="REQUIREMENT_ID" type="string" required="false" description="Requirement ID for direct edits"/>
+      <parameter name="FEEDBACK_CONTENT" type="string" required="false" description="Feedback content for direct edits"/>
+      <parameter name="REQUIREMENTS_FILE" type="path" required="false" default="artifacts/refined_requirements.yaml"/>
+      <parameter name="OUTPUT" type="path" required="false" default="artifacts/updated_requirements.yaml"/>
+    </parameters>
+    <idempotency_guarantee>true</idempotency_guarantee>
+    <determinism>
+      <description>Same feedback applied to same state produces same result</description>
+      <hash_inputs>requirements_hash,FEEDBACK_SOURCE,QUESTION_ID,FEEDBACK_CONTENT</hash_inputs>
+    </determinism>
+    <exit_codes>
+      <code value="0" category="success">Feedback incorporated successfully</code>
+      <code value="1" category="validation">Invalid feedback source or IDs</code>
+      <code value="2" category="dependency">Cannot find target requirement</code>
+      <code value="10" category="domain">Feedback creates new conflicts</code>
+    </exit_codes>
+  </uv_integration>
+
+  <claude_orchestration>
+    <execution_mode>autonomous</execution_mode>
+    <state_management>
+      <state_file>artifacts/feedback_history.yaml</state_file>
+      <read_on_start>true</read_on_start>
+      <write_on_complete>true</write_on_complete>
+    </state_management>
+    <feedback_loop>
+      <user_input_required>false</user_input_required>
+    </feedback_loop>
+    <workflow_transitions>
+      <transition from="feedback-incorporate" to="story-refine" condition="Requirements updated" auto="true"/>
+      <transition from="feedback-incorporate" to="question-maintain" condition="New questions arise" auto="true"/>
+      <transition from="feedback-incorporate" to="artifact-refine" condition="Major changes require re-analysis" auto="false"/>
+    </workflow_transitions>
+  </claude_orchestration>
+
+  <steps>
+    <step id="1">
+      <name>Load Current State</name>
+      <description>Read requirements, questions, and feedback history</description>
+    </step>
+    <step id="2">
+      <name>Parse Feedback</name>
+      <description>Extract actionable changes from feedback source</description>
+      <acceptance_criteria>
+        <criterion>Feedback parsed into structured changes</criterion>
+        <criterion>Target requirements identified</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="3">
+      <name>Apply Changes</name>
+      <description>Update requirements with feedback content</description>
+      <acceptance_criteria>
+        <criterion>Changes applied to correct requirements</criterion>
+        <criterion>Original values preserved in history</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="4">
+      <name>Propagate Updates</name>
+      <description>Update dependent requirements and acceptance criteria</description>
+      <acceptance_criteria>
+        <criterion>All dependencies updated</criterion>
+        <criterion>Cascade changes tracked</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="5">
+      <name>Conflict Check</name>
+      <description>Verify no new conflicts introduced by changes</description>
+      <acceptance_criteria>
+        <criterion>No new conflicts, or conflicts flagged</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="6">
+      <name>Update Question Status</name>
+      <description>If feedback is question answer, mark question as RESOLVED</description>
+    </step>
+    <step id="7">
+      <name>Record History</name>
+      <description>Log all changes with timestamps and sources</description>
+    </step>
+    <step id="8">
+      <name>Trigger Story Update</name>
+      <description>Signal story-refine to update affected stories</description>
+    </step>
+  </steps>
+
+  <constraints>
+    <constraint>Never lose original requirement data - preserve in history</constraint>
+    <constraint>All changes must be traceable to feedback source</constraint>
+    <constraint>Validate feedback doesn't contradict existing resolved decisions</constraint>
+    <constraint>Flag for review if feedback significantly changes scope</constraint>
+  </constraints>
+
+  <validation_rules>
+    <rule severity="error">Feedback source must be valid enum value</rule>
+    <rule severity="error">Target requirement must exist</rule>
+    <rule severity="warning">Changes affecting &gt;5 requirements should be reviewed</rule>
+    <rule severity="info">Feedback incorporation should complete in &lt;30 seconds</rule>
+  </validation_rules>
+
+  <output_format>
+    <section name="Integration Summary" format="markdown">Changes applied and their impact</section>
+    <section name="Updated Requirements" format="yaml">Modified requirement entries</section>
+    <section name="Change History" format="yaml">Audit log of modifications</section>
+    <section name="Cascade Report" format="markdown">Dependent items updated</section>
+  </output_format>
+
+  <examples>
+    <example type="good">
+      <input>make feedback-incorporate FEEDBACK_SOURCE=question-answer QUESTION_ID=Q-001</input>
+      <output>
+Feedback Integration Complete:
+
+Source: Question Q-001 answer
+Answer: "200ms p95 response time"
+
+Changes Applied:
+- NFR-003: Added performance threshold "200ms p95"
+- Updated acceptance criteria AC-NFR-003-1
+- Propagated to dependent requirements: FR-015, FR-022
+
+Question Q-001: PENDING -> RESOLVED
+
+Triggering: make story-refine REQUIREMENTS=NFR-003,FR-015,FR-022
+      </output>
+    </example>
+  </examples>
+
+  <observability>
+    <metrics>
+      <metric name="feedback_incorporated" type="counter">
+        <description>Number of feedback items integrated</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="requirements_modified" type="counter">
+        <description>Requirements updated via feedback</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="cascade_depth" type="histogram">
+        <description>Number of dependent items updated per feedback</description>
+        <unit>count</unit>
+      </metric>
+    </metrics>
+  </observability>
+</prompt>

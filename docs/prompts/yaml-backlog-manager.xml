@@ -1,0 +1,138 @@
+<metadata>
+  <name>yml-bck-mgr</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+  <purpose>Create and maintain a single-source-of-truth YAML backlog file</purpose>
+  <created>2026-01-16</created>
+</metadata>
+
+<role>YAML Backlog State Manager and Claude Code Integration Specialist</role>
+
+<primary_goal>
+  Create and maintain a single-source-of-truth YAML backlog file that organizes all implementation and testing stories in priority order with mapped dependencies, and configure Claude Code to use this file for state management throughout the development lifecycle.
+  <audience>Development teams using Claude Code for implementation</audience>
+  <tone>Systematic and procedural</tone>
+</primary_goal>
+
+<context>
+  This is a primer and manual update prompt designed to be run multiple times on the same system. It sets up the foundational state management infrastructure but does NOT trigger actual implementation work. A separate prompt will handle triggering implementation tasks. This prompt focuses solely on creating, updating, and maintaining the YAML backlog as the "north star" for state management.
+</context>
+
+<instructions>
+  <steps>
+    <step1>
+      Scan and parse all available source documents (implementation plans, design documents, test plans, specifications) to extract individual stories and tasks.
+    </step1>
+
+    <step2>
+      Identify and extract priority levels (P0, P1, P2, etc.) and categorize each story accordingly. If priorities are not explicit, infer them from context or document structure.
+    </step2>
+
+    <step3>
+      Map dependencies between stories by identifying references, prerequisites, and logical sequencing requirements. Create dependency IDs for cross-referencing within the YAML.
+    </step3>
+
+    <step4>
+      Generate or update the YAML backlog file with the following structure:
+      - Priority-ordered stories
+      - Unique story IDs
+      - Dependency mappings using story IDs
+      - Status fields (not_started, in_progress, completed, blocked)
+      - Source references (which document/section the story came from)
+      - Metadata (assignee, test cases, acceptance criteria if available)
+    </step4>
+
+    <step5>
+      If not already configured, update Claude Code's system configuration to:
+      - Always read this YAML file at the start of any implementation session for fresh state
+      - Update the YAML file after completing any task or subtask
+      - Use the YAML as the authoritative source for "what's next"
+    </step5>
+
+    <step6>
+      Preserve existing state when updating. If stories are already marked as in_progress or completed, retain that status unless explicitly instructed to reset.
+    </step6>
+  </steps>
+</instructions>
+
+<constraints>
+  <constraint>This prompt must be idempotent - safe to run multiple times without corrupting state</constraint>
+  <constraint>Do NOT trigger implementation work; only create/update the backlog structure</constraint>
+  <constraint>All stories must have unique IDs for dependency mapping</constraint>
+  <constraint>Dependencies must reference valid story IDs within the same YAML file</constraint>
+  <constraint>Source all stories from actual documents provided; do not fabricate stories</constraint>
+  <constraint>Maintain chronological audit trail of when the YAML was last updated</constraint>
+</constraints>
+
+<output_format>
+  <yaml_structure>
+    backlog_metadata:
+      - last_updated: [timestamp]
+      - version: [integer]
+      - source_documents: [list]
+
+    stories:
+      - story_id: [unique_identifier]
+        priority: [P0|P1|P2|P3]
+        title: [string]
+        description: [string]
+        dependencies: [list of story_ids]
+        status: [not_started|in_progress|completed|blocked]
+        source: [document reference with section]
+        test_cases: [list if applicable]
+        acceptance_criteria: [list if available]
+  </yaml_structure>
+
+  <configuration_update>
+    If Claude Code integration is not configured, output the specific configuration changes needed to ensure Claude Code:
+    1. Reads the YAML at session start
+    2. Updates the YAML after task completion
+    3. Uses the YAML to determine next tasks
+  </configuration_update>
+</output_format>
+
+<validation_rules>
+  <rule>Every story must have a unique story_id</rule>
+  <rule>All dependency references must point to valid story_ids within the backlog</rule>
+  <rule>Priorities must follow a consistent scheme (P0, P1, P2, etc.)</rule>
+  <rule>Each story must include a source reference to enable traceability</rule>
+  <rule>The YAML must be valid and parseable</rule>
+  <rule>Status field must be one of: not_started, in_progress, completed, blocked</rule>
+  <rule>Existing status values must be preserved unless explicitly reset</rule>
+</validation_rules>
+
+<examples>
+  <good_example>
+    Input context includes:
+    "Implementation Team:
+      1. Begin with Priority P0 features (Work Unit Discovery, Baseline Comparison, GTM Motion)
+      2. Reference Section 5 for all production workflow implementation
+      3. Use YAML test cases (TC1-TC35) for test development
+      4. Validate against expected outcomes (Section 6)
+      5. Set up test data using procedures from Section 7"
+
+    Expected behavior:
+    - Create story_id: "P0-001" for Work Unit Discovery with source: "Section 5"
+    - Create story_id: "P0-002" for Baseline Comparison with dependency on "P0-001"
+    - Create story_id: "P0-003" for GTM Motion
+    - Map test_cases: ["TC1-TC35"] to relevant stories
+    - Create validation story with source: "Section 6" and dependency on implementation stories
+    - Create test data setup story with source: "Section 7" and set as dependency for testing stories
+  </good_example>
+
+  <bad_example>
+    Creating duplicate story_ids or referencing non-existent dependencies would fail validation and corrupt the backlog state.
+  </bad_example>
+
+  <good_example>
+    On subsequent runs with existing YAML:
+    - Parse new source documents for additional stories
+    - Append new stories without overwriting existing ones
+    - Preserve status="completed" for finished stories
+    - Update version number and last_updated timestamp
+  </good_example>
+</examples>
+
+<reasoning>
+  When determining story priority and dependencies:
+  1. Explicit priority 

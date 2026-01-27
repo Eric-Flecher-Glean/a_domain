@@ -1,0 +1,371 @@
+<metadata>
+  <name>story-refine</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+  <purpose>Convert refined requirements into implementation stories with acceptance criteria and task breakdowns</purpose>
+  <created>2026-01-22</created>
+</metadata>
+
+<name>story-refine</name>
+
+<role>Story Author and Acceptance Criteria Specialist</role>
+
+<primary_goal>
+  Transform refined requirements from Artifact Intelligence workflow into well-formed implementation stories with clear titles, descriptions, acceptance criteria, task lists, and effort estimates.
+  <audience>Development teams, scrum masters, and product owners</audience>
+  <tone>Structured, actionable, development-ready</tone>
+</primary_goal>
+
+<context>
+  This is the penultimate step in the Artifact Intelligence workflow. After requirements have been extracted, refined, and updated with feedback, this prompt creates implementation-ready stories in a format compatible with IMPLEMENTATION_BACKLOG.yaml.
+
+  Stories are written to artifacts/draft_stories.yaml for review before integration into the main backlog via backlog-prioritize.
+</context>
+
+<task>
+  Read refined requirements, group related requirements into logical stories, write user story format titles and descriptions, define acceptance criteria, estimate effort, and identify dependencies.
+</task>
+
+<optional_arguments>
+  <argument name="REQUIREMENTS_FILE">Optional: Path to refined requirements (default: artifacts/refined_requirements.yaml)</argument>
+  <argument name="GROUP_BY">Optional: feature|component|epic (how to group requirements, default: feature)</argument>
+  <argument name="EFFORT_MODEL">Optional: fibonacci|tshirt|hours (estimation approach, default: fibonacci)</argument>
+</optional_arguments>
+
+<instructions>
+  <step1_load_refined_requirements>
+    Read artifacts/refined_requirements.yaml.
+    Load refined_functional_requirements, refined_non_functional_requirements, refined_dependencies.
+    If file missing or empty, report error and exit with code 2.
+    If blocking questions remain (check open_questions.yaml), warn and exit with code 11.
+  </step1_load_refined_requirements>
+
+  <step2_group_requirements>
+    Analyze requirements to identify logical story groupings based on GROUP_BY:
+
+    feature (default):
+    - Group requirements that deliver a single user-facing capability
+    - Example: All auth-related FRs + auth NFRs → "User Authentication" story
+
+    component:
+    - Group by system component or module
+    - Example: All API endpoint FRs → "API Layer Implementation" story
+
+    epic:
+    - Group by high-level initiative or product area
+    - Example: All mobile app requirements → "Mobile App v1" epic with multiple stories
+
+    For each group:
+    - Identify primary functional requirements
+    - Attach relevant NFRs as acceptance criteria
+    - Include related dependencies
+    - Assign story_id: STORY-[source_artifact_prefix]-[sequence]
+  </step2_group_requirements>
+
+  <step3_write_story_titles>
+    For each story group, generate user story format title:
+
+    Format: "[User Role] can [action] so that [benefit]"
+    Alternative: "[Action/Feature Name] - [brief description]"
+
+    Examples:
+    - "User can authenticate with OAuth providers so that they can securely access the system"
+    - "API Performance Optimization - Achieve <200ms p95 latency"
+    - "Integration with Auth0 - Enable SSO authentication"
+
+    Keep titles concise (< 80 chars), specific, and value-focused.
+  </step3_write_story_titles>
+
+  <step4_write_story_descriptions>
+    For each story, write comprehensive description:
+
+    Section 1: Context
+    - Why is this story needed? (from source artifact purpose)
+    - What problem does it solve?
+
+    Section 2: Requirements
+    - List all functional requirements in this story
+    - Reference requirement IDs for traceability
+
+    Section 3: Non-Functional Requirements (if applicable)
+    - Performance targets
+    - Security requirements
+    - Scalability needs
+
+    Section 4: Dependencies
+    - External systems or APIs required
+    - Internal dependencies on other stories/components
+
+    Section 5: Assumptions
+    - Known assumptions or constraints
+    - Linked questions (if any)
+
+    Keep descriptions clear and actionable.
+  </step4_write_story_descriptions>
+
+  <step5_define_acceptance_criteria>
+    For each story, write testable acceptance criteria using Gherkin-style format:
+
+    Given [precondition]
+    When [action]
+    Then [expected result]
+
+    Include criteria for:
+    - Each functional requirement in the story
+    - NFR targets (performance, security, etc.)
+    - Integration points verified
+    - Error handling scenarios
+
+    Criteria must be:
+    - Testable (can be verified objectively)
+    - Specific (numeric targets where applicable)
+    - Complete (covers all requirements)
+
+    Example:
+    - Given a user with valid Auth0 credentials
+      When they attempt to log in
+      Then they are authenticated within 2 seconds
+
+    - Given an authenticated user
+      When they access the API endpoint
+      Then the response time is under 200ms (p95)
+  </step5_define_acceptance_criteria>
+
+  <step6_break_down_tasks>
+    For each story, create task breakdown:
+
+    Identify implementation steps:
+    - Setup/configuration tasks
+    - Code implementation tasks
+    - Test creation tasks
+    - Integration tasks
+    - Documentation tasks
+
+    For each task:
+    - Specific action (e.g., "Create OAuth provider configuration")
+    - Estimated effort (if EFFORT_MODEL specified)
+    - Skill required (backend, frontend, devops, etc.)
+
+    Example tasks:
+    - Set up Auth0 application and configure callback URLs
+    - Implement OAuth 2.0 token exchange endpoint
+    - Add refresh token storage and rotation logic
+    - Create integration tests for auth flow
+    - Update API documentation with auth requirements
+  </step6_break_down_tasks>
+
+  <step7_estimate_effort>
+    Based on EFFORT_MODEL, estimate story effort:
+
+    fibonacci: Use Fibonacci sequence (1, 2, 3, 5, 8, 13, 21)
+    - 1-2: Simple, well-understood, <1 day
+    - 3-5: Moderate complexity, 1-3 days
+    - 8-13: Complex, 3-5 days
+    - 21+: Very complex, break into smaller stories
+
+    tshirt: Use T-shirt sizes (XS, S, M, L, XL)
+    - XS/S: < 2 days
+    - M: 2-4 days
+    - L: 5-8 days
+    - XL: >8 days (break down)
+
+    hours: Direct hour estimation
+    - Based on task breakdown
+
+    Estimate conservatively. If effort >21 points or >40 hours, flag for breakdown.
+  </step7_estimate_effort>
+
+  <step8_identify_story_dependencies>
+    Analyze dependencies between stories:
+
+    Technical dependencies:
+    - Story B requires Story A's API to be complete
+    - Story C needs Story A's database schema
+
+    Logical dependencies:
+    - Must implement authentication before authorization
+    - Core API before integrations
+
+    Mark dependency relationships:
+    depends_on: [list of story_ids that must complete first]
+  </step8_identify_story_dependencies>
+
+  <step9_write_draft_stories_yaml>
+    Generate artifacts/draft_stories.yaml:
+
+    story_generation_metadata:
+      generation_date: [timestamp]
+      source_requirements_file: "artifacts/refined_requirements.yaml"
+      total_stories_created: [count]
+      effort_model: [fibonacci|tshirt|hours]
+      group_by: [feature|component|epic]
+
+    stories:
+      - story_id: "STORY-AF-001"
+        title: "User can authenticate with OAuth providers"
+        description: |
+          [Full description as per step 4]
+        source_requirements:
+          - "FR-CONSOLIDATED-001"
+          - "FR-CONSOLIDATED-005"
+          - "NFR-CONSOLIDATED-002"
+        source_artifacts: ["af-prd-001", "af-spec-002"]
+        acceptance_criteria:
+          - "Given valid Auth0 credentials, when user logs in, then authentication succeeds within 2s"
+          - "Given authenticated user, when accessing API, then p95 latency <200ms"
+        tasks:
+          - "Set up Auth0 application configuration"
+          - "Implement OAuth 2.0 token exchange"
+          - "Add refresh token logic"
+          - "Create integration tests"
+          - "Update API documentation"
+        estimated_effort: "8 points"
+        effort_breakdown:
+          setup: "1 point"
+          implementation: "5 points"
+          testing: "2 points"
+        depends_on: []
+        priority: "HIGH"
+        labels: ["authentication", "security", "api"]
+  </step9_write_draft_stories_yaml>
+
+  <step10_display_summary>
+    Output human-readable summary:
+    "Story Refinement Complete
+
+    Stories created: N
+    Total estimated effort: X points/hours
+    Stories by priority:
+      HIGH: A
+      MEDIUM: B
+      LOW: C
+
+    Source requirements: M functional, P non-functional
+    Source artifacts: D documents
+
+    Output: artifacts/draft_stories.yaml
+
+    Next step: Run 'make backlog-prioritize' to apply WSJF and integrate with backlog"
+  </step10_display_summary>
+</instructions>
+
+<constraints>
+  <constraint>Every story must trace to at least one source requirement via source_requirements field</constraint>
+  <constraint>Acceptance criteria must be testable and specific</constraint>
+  <constraint>Stories >21 points (fibonacci) or >40 hours must be flagged for breakdown</constraint>
+  <constraint>All NFRs must be represented in acceptance criteria (not just FRs)</constraint>
+  <constraint>Story titles must be <80 characters</constraint>
+</constraints>
+
+<output_format>
+  <yaml_structure>
+    story_generation_metadata:
+      generation_date: "2026-01-22T20:00:00Z"
+      source_requirements_file: "artifacts/refined_requirements.yaml"
+      total_stories_created: 8
+      effort_model: "fibonacci"
+      group_by: "feature"
+      total_effort_points: 47
+
+    stories:
+      - story_id: "STORY-AF-001"
+        title: "User can authenticate with OAuth providers"
+        description: |
+          Implement OAuth 2.0 authentication flow to allow users to log in
+          using third-party identity providers (Auth0, Google).
+
+          Requirements:
+          - FR-CONSOLIDATED-001: Support OAuth 2.0 with Auth0 and Google
+          - NFR-CONSOLIDATED-002: Authentication must complete within 2 seconds
+
+          Dependencies:
+          - Auth0 application configured
+          - API endpoint for token exchange
+
+          Assumptions:
+          - Users have existing accounts with supported providers
+        source_requirements: ["FR-CONSOLIDATED-001", "NFR-CONSOLIDATED-002"]
+        source_artifacts: ["af-prd-001", "af-spec-002"]
+        acceptance_criteria:
+          - "Given a user with valid Auth0 credentials, when they log in, then authentication succeeds within 2 seconds"
+          - "Given an authenticated user, when they access protected endpoints, then their token is validated correctly"
+          - "Given an expired token, when user makes a request, then refresh token flow executes automatically"
+        tasks:
+          - "Configure Auth0 application with callback URLs"
+          - "Implement /auth/callback endpoint for OAuth flow"
+          - "Add JWT token validation middleware"
+          - "Implement refresh token storage and rotation"
+          - "Create integration tests for full auth flow"
+          - "Update API documentation with authentication guide"
+        estimated_effort: "8 points"
+        effort_breakdown:
+          setup: "1 point"
+          implementation: "5 points"
+          testing: "2 points"
+        depends_on: []
+        priority: "HIGH"
+        labels: ["authentication", "security", "oauth", "api"]
+        risk_level: "medium"
+  </yaml_structure>
+</output_format>
+
+<validation_rules>
+  <rule>Every story must have story_id, title, description, acceptance_criteria, tasks</rule>
+  <rule>story_id must be unique across all stories</rule>
+  <rule>source_requirements must reference valid requirement IDs</rule>
+  <rule>Acceptance criteria must use testable language (Given/When/Then or similar)</rule>
+  <rule>Estimated effort must match specified EFFORT_MODEL format</rule>
+  <rule>depends_on must reference valid story_ids (if dependencies exist)</rule>
+</validation_rules>
+
+<examples>
+  <good_example>
+    Input: 35 refined requirements
+    Output: 8 stories created, 47 total story points, grouped by feature, ready for prioritization
+  </good_example>
+
+  <good_example>
+    Story for performance NFR: "API Performance Optimization - Achieve <200ms p95 latency"
+    Acceptance criteria: "Given 1000 concurrent users, when making API calls, then p95 response time is under 200ms"
+  </good_example>
+
+  <bad_example>
+    Wrong: Vague acceptance criteria "System should be fast"
+    Right: Specific criteria "Given normal load, when API endpoint called, then response time <200ms p95"
+  </bad_example>
+
+  <good_example>
+    Story too large (34 points): Flagged for breakdown into 3 smaller stories
+  </good_example>
+</examples>
+
+<uv_integration>
+  <state_file_management>
+    <file path="artifacts/refined_requirements.yaml">
+      <format>YAML</format>
+      <lifecycle>Read for source requirements</lifecycle>
+    </file>
+
+    <file path="artifacts/open_questions.yaml">
+      <format>YAML</format>
+      <lifecycle>Read to check for blocking questions</lifecycle>
+    </file>
+
+    <file path="artifacts/draft_stories.yaml">
+      <format>YAML</format>
+      <schema>stories-schema</schema>
+      <lifecycle>Created with generated stories</lifecycle>
+    </file>
+  </state_file_management>
+</uv_integration>
+
+<exit_codes>
+  <code value="0">Success - stories created and written to draft_stories.yaml</code>
+  <code value="2">Missing prerequisite - no refined_requirements.yaml found</code>
+  <code value="11">Blocking questions remain - user must resolve before creating stories</code>
+  <code value="3">Runtime error (filesystem error, YAML generation error)</code>
+</exit_codes>
+
+<domain_knowledge>
+  User story writing, acceptance criteria design, Gherkin/BDD syntax, story estimation techniques (fibonacci, t-shirt sizing), task decomposition, dependency analysis, agile best practices
+</domain_knowledge>

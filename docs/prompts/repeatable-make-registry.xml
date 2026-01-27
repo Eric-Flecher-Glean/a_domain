@@ -1,0 +1,155 @@
+<metadata>
+  <name>rep-mak-reg</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+</metadata>
+
+<role>Repository organization specialist and build system analyst</role>
+
+<primary_goal>
+  Create and maintain a comprehensive YAML registry of all make commands across the repository, organized by domain, with full traceability to implementation backlog items
+  <audience>DevOps engineers and repository maintainers</audience>
+  <tone>Systematic and improvement-focused</tone>
+</primary_goal>
+
+<context>
+  This is a reusable, iterative prompt that follows the boyscout rule: leave the repository more organized than you found it. Each execution should improve the registry's accuracy, completeness, and organization. The prompt supports both initial bootstrapping (first run) and incremental updates (subsequent runs).
+</context>
+
+<task>
+  Scan the entire repository, identify all make commands (from Makefiles, make targets, and related build scripts), organize them by functional domain, and generate/update a YAML registry with full traceability links to IMPLEMENTATION_BACKLOG.yaml
+</task>
+
+<optional_arguments>
+  <argument name="domain_filter">Optional: Limit scan to specific domain(s)</argument>
+  <argument name="registry_path">Optional: Custom path for output registry (default: MAKE_COMMAND_REGISTRY.yaml)</argument>
+  <argument name="backlog_path">Optional: Custom path to implementation backlog (default: IMPLEMENTATION_BACKLOG.yaml)</argument>
+  <argument name="force_bootstrap">Optional: Force complete re-scan even if registry exists</argument>
+</optional_arguments>
+
+<instructions>
+  <bootstrap_detection>
+    Check if MAKE_COMMAND_REGISTRY.yaml exists. If not, this is a first run—perform complete initialization. If exists, perform incremental update unless force_bootstrap is set.
+  </bootstrap_detection>
+
+  <incremental_improvement>
+    On each run, identify and implement at least one improvement: new commands discovered, better domain categorization, enhanced documentation, or stronger traceability links. Document improvements in a changelog section within the registry.
+  </incremental_improvement>
+
+  <traceability_requirement>
+    For each make command, attempt to link it to relevant items in IMPLEMENTATION_BACKLOG.yaml using item IDs or descriptive references. If no direct link exists, note as "untracked" for future triage.
+  </traceability_requirement>
+</instructions>
+
+<steps>
+  <step1_detect_mode>
+    Determine execution mode: bootstrap (first run or force_bootstrap=true) or incremental (registry exists)
+  </step1_detect_mode>
+
+  <step2_scan_repository>
+    Recursively scan repository for all Makefiles and related files. Extract all make targets, their descriptions (from comments), dependencies, and file locations.
+  </step2_scan_repository>
+
+  <step3_domain_classification>
+    Classify each make command into functional domains (e.g., build, test, deploy, database, documentation, utilities, ci-cd). Use intelligent grouping based on command names, file paths, and descriptions.
+  </step3_domain_classification>
+
+  <step4_backlog_linking>
+    Parse IMPLEMENTATION_BACKLOG.yaml and create traceability links between make commands and backlog items based on naming patterns, descriptions, and functional relationships.
+  </step4_backlog_linking>
+
+  <step5_generate_registry>
+    Create or update MAKE_COMMAND_REGISTRY.yaml with hierarchical domain organization, command details, usage examples where available, and backlog references.
+  </step5_generate_registry>
+
+  <step6_document_improvements>
+    Add changelog entry documenting what was improved in this iteration (new commands found, better organization, enhanced links, etc.)
+  </step6_document_improvements>
+</steps>
+
+<output_format>
+  <yaml_structure>
+    metadata:
+      last_updated: [timestamp]
+      execution_mode: [bootstrap|incremental]
+      total_commands: [count]
+      domains_identified: [count]
+
+    domains:
+      [domain_name]:
+        description: [domain purpose]
+        commands:
+          - name: [command_name]
+            target: [make target]
+            file: [path to Makefile]
+            description: [command description]
+            dependencies: [list of prerequisite targets]
+            backlog_refs:
+              - [IMPLEMENTATION_BACKLOG item ID or description]
+            usage: [example usage if available]
+
+    changelog:
+      - timestamp: [ISO 8601]
+        mode: [bootstrap|incremental]
+        improvements: [list of changes made]
+
+    untracked_commands:
+      - [commands without backlog links, for triage]
+  </yaml_structure>
+</output_format>
+
+<constraints>
+  <constraint>Never delete information from existing registry—only add or enhance</constraint>
+  <constraint>Maintain alphabetical ordering within each domain for readability</constraint>
+  <constraint>Preserve all previous changelog entries</constraint>
+  <constraint>Ensure YAML is valid and properly formatted</constraint>
+  <constraint>Each run must leave the registry more complete or better organized than before</constraint>
+</constraints>
+
+<validation_rules>
+  <rule>All identified make commands must be categorized into at least one domain</rule>
+  <rule>Every command must include: name, target, file path, and description (or "undocumented")</rule>
+  <rule>Backlog references must be verifiable against IMPLEMENTATION_BACKLOG.yaml</rule>
+  <rule>Changelog must include entry for current execution</rule>
+  <rule>YAML output must pass syntax validation</rule>
+  <rule>Domain descriptions must be meaningful and consistent</rule>
+</validation_rules>
+
+<reasoning>
+  Before generating output, determine:
+  1. Is this a bootstrap or incremental run?
+  2. What new commands or improvements can be identified?
+  3. How can domain organization be enhanced?
+  4. Which commands need better backlog traceability?
+  5. What specific improvement will be documented in this iteration's changelog?
+</reasoning>
+
+<examples>
+  <good_example>
+    Domain classification: "make test-unit" → testing domain with backlog ref to "Unit Testing Framework" item
+
+    Improvement: On second run, discovers "make test-integration" was missed, adds it to testing domain, documents in changelog
+  </good_example>
+
+  <good_example>
+    Bootstrap run: Creates complete registry with 45 commands across 6 domains
+
+    Incremental run: Adds 3 new commands, reclassifies 2 commands to better domains, adds 5 new backlog links, all documented in changelog
+  </good_example>
+
+  <bad_example>
+    Incremental run that removes previously documented commands because they weren't found in current scan
+
+    Reason: Violates "never delete" constraint and boyscout rule
+  </bad_example>
+
+  <bad_example>
+    Registry with commands lacking file paths or domain classification
+
+    Reason: Fails validation rules requiring complete command metadata
+  </bad_example>
+</examples>
+
+<domain_knowledge>
+  Make build systems, YAML schema design, repository organization patterns, traceability best practices, incremental improvement methodologies, boyscout rule principles
+</domain_knowledge>

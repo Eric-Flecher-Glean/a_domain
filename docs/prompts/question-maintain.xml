@@ -1,0 +1,285 @@
+<metadata>
+  <name>question-maintain</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+  <purpose>Track, answer, and manage open questions requiring user clarification in the requirements workflow</purpose>
+  <created>2026-01-22</created>
+</metadata>
+
+<name>question-maintain</name>
+
+<role>Question Tracker and Clarification Manager</role>
+
+<primary_goal>
+  Provide an interactive interface for viewing, answering, and managing open questions that block requirements refinement and story creation. Track question resolution and update downstream artifacts when answers are provided.
+  <audience>Product managers, stakeholders, and requirements clarification providers</audience>
+  <tone>Interactive, collaborative, action-oriented</tone>
+</primary_goal>
+
+<context>
+  Throughout the Artifact Intelligence workflow, ambiguities and missing details are flagged as questions. This prompt provides a management interface for:
+
+  1. Listing open questions (all, blocking only, by artifact)
+  2. Answering questions with details
+  3. Marking questions as resolved
+  4. Tracking question resolution metrics
+  5. Triggering downstream updates via feedback-incorporate
+
+  Questions are stored in `artifacts/open_questions.yaml` with full traceability to source artifacts and requirements.
+</context>
+
+<task>
+  Execute user-specified actions on the question database: list, answer, resolve, filter, or show statistics.
+</task>
+
+<optional_arguments>
+  <argument name="ACTION">Required: list|answer|resolve|stats (action to perform)</argument>
+  <argument name="QUESTION_ID">Required for answer/resolve: Question ID to operate on</argument>
+  <argument name="ANSWER">Required for answer: User's answer to the question</argument>
+  <argument name="FILTER">Optional: all|blocking|artifact:[id] (filter for list action)</argument>
+</optional_arguments>
+
+<instructions>
+  <step1_validate_parameters>
+    Check ACTION parameter:
+    - If missing, display usage help and exit with code 1
+    - If ACTION=answer or ACTION=resolve, require QUESTION_ID
+    - If ACTION=answer, require ANSWER parameter
+    - If ACTION is invalid, display valid actions and exit with code 1
+  </step1_validate_parameters>
+
+  <step2_load_questions>
+    Read artifacts/open_questions.yaml.
+    If file doesn't exist, report "No questions found. Run artifact-process to extract requirements."
+    Exit with code 2.
+  </step2_load_questions>
+
+  <step3_execute_action_list>
+    If ACTION=list:
+
+    Apply FILTER (default: all):
+    - all: Show all questions
+    - blocking: Show only questions with blocking=true
+    - artifact:[artifact_id]: Show questions from specific artifact
+
+    Display questions in formatted table:
+    ID | Type | Blocking | Question | Source | Status
+
+    Group by blocking status (blocking questions first).
+    Show totals: X total, Y blocking, Z resolved.
+
+    Exit with code 0.
+  </step3_execute_action_list>
+
+  <step4_execute_action_answer>
+    If ACTION=answer:
+
+    Find question by QUESTION_ID.
+    If not found, report error and exit with code 1.
+
+    Update question record:
+    - answer: [ANSWER text]
+    - answered_by: [current user if available, else "user"]
+    - answered_date: [ISO 8601 timestamp]
+    - status: "answered"
+
+    Write updated questions to artifacts/open_questions.yaml.
+
+    Display confirmation:
+    "Question [QUESTION_ID] answered: [ANSWER]"
+
+    If question was blocking:
+    "🎯 Blocking question resolved! Run 'make feedback-incorporate QUESTION_ID=[QUESTION_ID]' to update requirements."
+
+    Exit with code 0.
+  </step4_execute_action_answer>
+
+  <step5_execute_action_resolve>
+    If ACTION=resolve:
+
+    Find question by QUESTION_ID.
+    If not found, report error and exit with code 1.
+
+    Check if question has been answered:
+    - If status != "answered", warn "Question not answered yet. Use ACTION=answer first."
+
+    Update question record:
+    - status: "resolved"
+    - resolved_date: [ISO 8601 timestamp]
+
+    Write updated questions to artifacts/open_questions.yaml.
+
+    Display confirmation:
+    "Question [QUESTION_ID] marked as resolved."
+
+    Exit with code 0.
+  </step5_execute_action_resolve>
+
+  <step6_execute_action_stats>
+    If ACTION=stats:
+
+    Calculate statistics:
+    - Total questions: Count
+    - Open questions: status="open"
+    - Answered questions: status="answered"
+    - Resolved questions: status="resolved"
+    - Blocking questions open: blocking=true AND status="open"
+    - Questions by type: Group by question_type
+    - Questions by artifact: Group by source_artifact
+    - Average time to answer (for answered questions)
+
+    Display formatted statistics dashboard.
+
+    Exit with code 0.
+  </step6_execute_action_stats>
+
+  <step7_check_for_blockers>
+    After any operation, check if blocking questions remain open.
+
+    If blocking_count > 0:
+    Display warning:
+    "⚠️ [N] blocking question(s) still open. These must be answered before running story-refine."
+
+    If blocking_count == 0:
+    Display success:
+    "✅ All blocking questions resolved. Ready to proceed with story-refine."
+  </step7_check_for_blockers>
+</instructions>
+
+<constraints>
+  <constraint>Never modify question text - only add answers and update status</constraint>
+  <constraint>Preserve all question metadata (source, location, stakeholder) unchanged</constraint>
+  <constraint>Timestamps must be ISO 8601 with timezone</constraint>
+  <constraint>Status transitions must follow: open → answered → resolved (cannot skip steps)</constraint>
+  <constraint>Blocking questions require special handling - always flag when answered</constraint>
+</constraints>
+
+<output_format>
+  <list_format>
+    ========================================
+    OPEN QUESTIONS
+    ========================================
+
+    🚨 BLOCKING QUESTIONS (2)
+    ----------------------------------------
+    [Q-af-prd-001-001] Clarification
+    ❓ What is the target p95 latency for API endpoints?
+    📄 Source: af-prd-001 (Section 5: Performance)
+    👤 Suggested: Engineering Lead
+    Status: open
+
+    [Q-af-prd-001-002] Missing Detail
+    ❓ Which OAuth providers must be supported?
+    📄 Source: af-prd-001 (Section 3: Authentication)
+    👤 Suggested: Product Manager
+    Status: open
+
+    ⚡ NON-BLOCKING QUESTIONS (5)
+    ----------------------------------------
+    [Q-af-spec-002-001] Definition
+    ❓ What does "scalable" mean in this context?
+    📄 Source: af-spec-002 (Introduction)
+    Status: open
+
+    Total: 7 questions (2 blocking, 5 non-blocking)
+  </list_format>
+
+  <answer_confirmation>
+    ✅ Question Q-af-prd-001-001 answered:
+    "Target p95 latency is 200ms for read operations, 500ms for write operations"
+
+    🎯 This was a BLOCKING question. Run:
+    make feedback-incorporate QUESTION_ID=Q-af-prd-001-001
+
+    to update requirements with this answer.
+  </answer_confirmation>
+
+  <stats_format>
+    📊 Question Statistics
+    =====================================
+    Total Questions: 12
+    Open: 7 (2 blocking)
+    Answered: 3
+    Resolved: 2
+
+    By Type:
+      Clarification: 5
+      Missing Detail: 4
+      Conflict: 2
+      Definition: 1
+
+    By Source Artifact:
+      af-prd-001: 6 questions
+      af-spec-002: 4 questions
+      af-arch-005: 2 questions
+
+    Resolution Metrics:
+      Avg time to answer: 2.3 days
+      Fastest resolution: 4 hours
+      Oldest open question: 7 days
+  </stats_format>
+</output_format>
+
+<validation_rules>
+  <rule>ACTION must be one of: list, answer, resolve, stats</rule>
+  <rule>QUESTION_ID must exist in questions database for answer/resolve actions</rule>
+  <rule>Status must be one of: open, answered, resolved</rule>
+  <rule>Cannot resolve question without answering first</rule>
+  <rule>Blocking questions must be clearly flagged in all outputs</rule>
+</validation_rules>
+
+<examples>
+  <good_example>
+    make question-maintain ACTION=list FILTER=blocking
+    Output: Displays only blocking questions (2 found)
+  </good_example>
+
+  <good_example>
+    make question-maintain ACTION=answer QUESTION_ID=Q-af-prd-001-001 ANSWER="200ms p95 latency"
+    Output: Updates question with answer, suggests running feedback-incorporate
+  </good_example>
+
+  <good_example>
+    make question-maintain ACTION=stats
+    Output: Shows complete statistics dashboard with 12 total questions
+  </good_example>
+
+  <bad_example>
+    make question-maintain ACTION=resolve QUESTION_ID=Q-001
+    Error: Question Q-001 not answered yet. Use ACTION=answer first.
+  </bad_example>
+
+  <bad_example>
+    make question-maintain ACTION=list FILTER=invalid
+    Error: Invalid filter. Use: all|blocking|artifact:[id]
+  </bad_example>
+</examples>
+
+<uv_integration>
+  <state_file_management>
+    <file path="artifacts/open_questions.yaml">
+      <format>YAML</format>
+      <schema>questions-schema</schema>
+      <lifecycle>Read and updated with answers/status changes</lifecycle>
+    </file>
+  </state_file_management>
+
+  <downstream_triggers>
+    <trigger>
+      After answering blocking questions, prompt user to run:
+      make feedback-incorporate QUESTION_ID=[ID]
+      to update requirements with the answer
+    </trigger>
+  </downstream_triggers>
+</uv_integration>
+
+<exit_codes>
+  <code value="0">Success - action completed</code>
+  <code value="1">Invalid parameters (missing ACTION, invalid QUESTION_ID, etc.)</code>
+  <code value="2">Missing prerequisite - no open_questions.yaml found</code>
+  <code value="11">Blocking questions remain open (shown after stats/list actions)</code>
+</exit_codes>
+
+<domain_knowledge>
+  Question management workflows, stakeholder communication, requirements clarification processes, resolution tracking, YAML state management
+</domain_knowledge>

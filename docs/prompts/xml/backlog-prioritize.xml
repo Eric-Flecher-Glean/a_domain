@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFLAC Prompt: Backlog Prioritize
+  Prioritizes stories and integrates them into the implementation backlog
+
+  Domain: artifact-intelligence
+  Bounded Context: artifact-intelligence
+  UV Target: make backlog-prioritize
+-->
+<prompt xmlns="http://aflac.glean.com/prompts/v1" version="1.0">
+  <metadata>
+    <name>backlog-prioritize</name>
+    <version>1.0</version>
+    <sdlc_domain>artifact-intelligence</sdlc_domain>
+    <bounded_context>artifact-intelligence</bounded_context>
+    <stateful>true</stateful>
+    <purpose>Prioritize draft stories and integrate them into the implementation backlog</purpose>
+    <created>2026-01-21</created>
+    <author>AFLAC System</author>
+    <tags>
+      <tag>prioritization</tag>
+      <tag>backlog</tag>
+      <tag>planning</tag>
+      <tag>integration</tag>
+    </tags>
+  </metadata>
+
+  <primary_goal>
+    Apply prioritization algorithms to draft stories based on business value, dependencies, and effort, then integrate them into the IMPLEMENTATION_BACKLOG.yaml maintaining dependency integrity and workflow continuity.
+    <audience>Product managers and technical leads managing backlog</audience>
+    <tone>Strategic, data-driven, and actionable</tone>
+  </primary_goal>
+
+  <role>Backlog Strategist and Priority Optimizer</role>
+
+  <context>
+    This prompt completes the artifact-intelligence workflow by:
+    - Scoring stories using WSJF (Weighted Shortest Job First) or similar
+    - Respecting dependency constraints
+    - Integrating with existing IMPLEMENTATION_BACKLOG.yaml
+    - Generating unique story IDs in backlog format
+    - Triggering yml-bck-mgr for final backlog update
+
+    This creates a closed-loop from artifact discovery to actionable backlog items.
+  </context>
+
+  <uv_integration>
+    <make_target>backlog-prioritize</make_target>
+    <parameters>
+      <parameter name="STORIES" type="path" required="false" default="artifacts/draft_stories.yaml" description="Path to draft stories"/>
+      <parameter name="ALGORITHM" type="enum" required="false" default="wsjf" description="Prioritization: wsjf, value-first, dependency-first, custom"/>
+      <parameter name="BACKLOG" type="path" required="false" default="IMPLEMENTATION_BACKLOG.yaml" description="Path to implementation backlog"/>
+      <parameter name="DRY_RUN" type="boolean" required="false" default="false" description="Preview changes without writing"/>
+    </parameters>
+    <idempotency_guarantee>true</idempotency_guarantee>
+    <determinism>
+      <description>Same stories and algorithm produce same priority order</description>
+      <hash_inputs>stories_hash,ALGORITHM,backlog_hash</hash_inputs>
+    </determinism>
+    <exit_codes>
+      <code value="0" category="success">Stories prioritized and backlog updated</code>
+      <code value="1" category="validation">Invalid stories or backlog format</code>
+      <code value="2" category="dependency">Circular dependencies detected</code>
+      <code value="10" category="domain">Duplicate story IDs in backlog</code>
+    </exit_codes>
+  </uv_integration>
+
+  <claude_orchestration>
+    <execution_mode>hybrid</execution_mode>
+    <state_management>
+      <state_file>IMPLEMENTATION_BACKLOG.yaml</state_file>
+      <read_on_start>true</read_on_start>
+      <write_on_complete>true</write_on_complete>
+    </state_management>
+    <feedback_loop>
+      <user_input_required>true</user_input_required>
+      <question_file>artifacts/priority_decisions.yaml</question_file>
+      <answer_integration>Apply user priority overrides</answer_integration>
+    </feedback_loop>
+    <skill_triggers>
+      <skill name="backlog-update" command="/backlog" trigger_condition="User requests backlog update"/>
+      <skill name="priority-change" command="/prioritize" trigger_condition="User wants to change priorities"/>
+    </skill_triggers>
+    <workflow_transitions>
+      <transition from="backlog-prioritize" to="yml-bck-mgr" condition="Backlog update ready" auto="true"/>
+      <transition from="backlog-prioritize" to="cycle-implement" condition="User starts implementation" auto="false"/>
+    </workflow_transitions>
+  </claude_orchestration>
+
+  <steps>
+    <step id="1">
+      <name>Load Inputs</name>
+      <description>Read draft stories and current backlog state</description>
+    </step>
+    <step id="2">
+      <name>Validate Dependencies</name>
+      <description>Check for circular dependencies and missing references</description>
+      <acceptance_criteria>
+        <criterion>No circular dependencies</criterion>
+        <criterion>All referenced stories exist</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="3">
+      <name>Calculate Priority Scores</name>
+      <description>Apply WSJF or selected algorithm to score each story</description>
+      <acceptance_criteria>
+        <criterion>All stories have priority scores</criterion>
+        <criterion>Score components documented</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="4">
+      <name>Dependency-Aware Ordering</name>
+      <description>Adjust order to respect dependency constraints</description>
+      <acceptance_criteria>
+        <criterion>Dependencies satisfied in order</criterion>
+        <criterion>Optimal order within constraints</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="5">
+      <name>Assign Priority Tiers</name>
+      <description>Map scores to P0/P1/P2/P3 tiers</description>
+      <acceptance_criteria>
+        <criterion>Each story has priority tier</criterion>
+        <criterion>Tier boundaries documented</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="6">
+      <name>Generate Story IDs</name>
+      <description>Create unique IDs following backlog naming convention</description>
+      <acceptance_criteria>
+        <criterion>IDs are unique</criterion>
+        <criterion>IDs follow pattern: P{priority}-{category}-{number}</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="7">
+      <name>Merge with Backlog</name>
+      <description>Integrate new stories into existing backlog</description>
+      <acceptance_criteria>
+        <criterion>Existing stories preserved</criterion>
+        <criterion>New stories added at correct positions</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="8">
+      <name>Update Metadata</name>
+      <description>Increment version, update timestamps, add changelog</description>
+    </step>
+    <step id="9">
+      <name>Generate Priority Report</name>
+      <description>Output prioritization summary and rationale</description>
+    </step>
+  </steps>
+
+  <constraints>
+    <constraint>Never modify existing story content - only add new stories</constraint>
+    <constraint>Preserve existing story IDs and references</constraint>
+    <constraint>Increment backlog version on every update</constraint>
+    <constraint>Document prioritization rationale for transparency</constraint>
+  </constraints>
+
+  <validation_rules>
+    <rule severity="error">No duplicate story IDs allowed</rule>
+    <rule severity="error">All dependencies must reference valid story IDs</rule>
+    <rule severity="error">Backlog must remain valid YAML</rule>
+    <rule severity="warning">P0 stories should be &lt;20% of total</rule>
+  </validation_rules>
+
+  <output_format>
+    <section name="Prioritization Summary" format="markdown">Algorithm used, score distributions, tier assignments</section>
+    <section name="Priority Order" format="markdown">Ordered list of stories with scores</section>
+    <section name="Backlog Changes" format="yaml">Diff of backlog before/after</section>
+    <section name="Next Steps" format="markdown">Implementation recommendations</section>
+  </output_format>
+
+  <examples>
+    <example type="good">
+      <input>make backlog-prioritize STORIES=artifacts/draft_stories.yaml ALGORITHM=wsjf</input>
+      <output>
+Backlog Prioritization Complete:
+
+Algorithm: WSJF (Weighted Shortest Job First)
+Stories Processed: 8
+
+Priority Assignments:
+P0 (Critical): 2 stories
+  - P0-AUTH-001: User Authentication via OAuth (WSJF: 42)
+  - P0-DB-001: Database Schema Setup (WSJF: 38)
+
+P1 (High): 3 stories
+  - P1-API-001: REST API Endpoints (WSJF: 28)
+  - P1-UI-001: Login Page UI (WSJF: 25)
+  - P1-TEST-001: Integration Test Framework (WSJF: 22)
+
+P2 (Medium): 3 stories
+  - P2-DOC-001: API Documentation (WSJF: 15)
+  - P2-UI-002: Dashboard UI (WSJF: 12)
+  - P2-PERF-001: Performance Optimization (WSJF: 10)
+
+Backlog Updated:
+  Version: 14 -> 15
+  Stories Added: 8
+  Total Stories: 51
+
+Next: Run `make session-start` to see updated backlog
+      </output>
+    </example>
+    <example type="good">
+      <input>make backlog-prioritize STORIES=artifacts/draft_stories.yaml DRY_RUN=true</input>
+      <output>
+DRY RUN - No changes written
+
+Would add 8 stories to backlog:
+- P0-AUTH-001: User Authentication via OAuth
+- P0-DB-001: Database Schema Setup
+... (6 more)
+
+Review and run without DRY_RUN to apply changes.
+      </output>
+    </example>
+  </examples>
+
+  <observability>
+    <metrics>
+      <metric name="stories_prioritized" type="counter">
+        <description>Stories added to backlog via prioritization</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="backlog_version" type="gauge">
+        <description>Current backlog version number</description>
+        <unit>version</unit>
+      </metric>
+      <metric name="prioritization_time" type="histogram">
+        <description>Time to complete prioritization</description>
+        <unit>seconds</unit>
+      </metric>
+      <metric name="p0_ratio" type="gauge">
+        <description>Percentage of P0 stories in backlog</description>
+        <unit>percent</unit>
+      </metric>
+    </metrics>
+    <slo>
+      <target metric="p0_ratio" threshold="&lt;25%" window="continuous"/>
+      <target metric="prioritization_time" threshold="&lt;60s" window="1h"/>
+    </slo>
+  </observability>
+</prompt>

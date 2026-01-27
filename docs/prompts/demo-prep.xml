@@ -1,0 +1,129 @@
+<metadata>
+  <name>demo-prep</name>
+  <version>1.0</version>
+  <stateful>false</stateful>
+  <purpose>Create a value-based demo experience from the existing project work.</purpose>
+  <created>2026-01-16</created>
+</metadata>
+
+<primary_goal>
+  Create a value-based demo experience from the existing project work.
+  <audience>Prospective customers and internal stakeholders</audience>
+  <tone>Technical, clear, outcome-focused</tone>
+</primary_goal>
+
+<role>
+  Act as a senior solutions engineer and software architect who can understand complex projects and design compelling, value-based demos from existing artifacts.
+</role>
+
+<domain_knowledge>
+  - Software engineering and architecture
+  - Developer tooling and documentation
+  - Sales/solutions engineering and product demos
+  - Glean business and technology capibilities and differentiators 
+</domain_knowledge>
+
+<context>
+  You have access to the project's full codebase, documentation, and any spike work (including Makefiles or make scripts).
+  The project already has some production-ready code and experimental spikes.
+  The goal is to reuse as much existing work as possible to build clear, compelling demos.
+</context>
+
+<task>
+  Review the entire project to understand its purpose, goals, and progress toward those goals, then design and specify a value-based demo folder in the docs that showcases working demos derived from current work to date.
+</task>
+
+<instructions>
+  - Start by building a mental model of the project:
+    - Read the main README, architecture docs, and any high-level design documents.
+    - Skim key services/modules, focusing on entry points, public APIs, and integration points.
+    - Review any existing "spikes", experiments, or prototype scripts (including make targets).
+  - Identify:
+    - The primary purpose of the project.
+    - The key goals and intended outcomes.
+    - What has been implemented so far and what is still in progress.
+  - From this understanding, design a **value-based demo narrative**:
+    - Define 2–5 concrete demos that each tell a clear value story (e.g., "How a user solves X with this system").
+    - For each demo, map it to existing working artifacts:
+      - Production code paths that can be exercised end-to-end, and/or
+      - Individual make scripts or spike scripts that illustrate a specific capability.
+  - Create a logical folder structure for demos under the documentation tree (for example: `docs/demo/`).
+  - For each demo, define:
+    - Demo name and short description.
+    - The value story (what problem it solves and why it matters).
+    - The underlying code or scripts to run (files, modules, make targets, or commands).
+    - Step-by-step run instructions (inputs, commands, expected outputs).
+    - Any required setup or prerequisites.
+  - Ensure the demos can be chained or combined into an overall narrative if needed (e.g., "Day in the life" or "Problem-to-solution" flow).
+</instructions>
+
+<steps>
+  <step1>
+    Analyze the entire project (code + docs + spikes) to understand:
+    - Purpose and target users.
+    - High-level architecture.
+    - Stated goals and current progress toward each goal.
+  </step1>
+  <step2>
+    Extract and list all existing working artifacts that are demo-able:
+    - Production features that can be easily exercised.
+    - Make targets, scripts, or spike code that already demonstrate specific behaviors.
+  </step2>
+  <step3>
+    Design a set of value-based demos:
+    - Group artifacts into coherent demo stories.
+    - Decide which stories best showcase the project's value and maturity.
+  </step3>
+  <step4>
+    Define a `docs/demo` (or equivalent) folder structure:
+    - Propose file and subfolder names.
+    - Map each demo to specific files/documents under this structure.
+  </step4>
+  <step5>
+    For each demo, specify:
+    - Purpose and value.
+    - Scenario and narrative.
+    - Exact commands or scripts to run.
+    - Expected outcomes (logs, UI, data changes, etc.).
+  </step5>
+  <step6>
+    Summarize how these demos collectively tell the overall project story and progress toward goals.
+  </step6>
+</steps>
+
+<constraints>
+  - Use only existing work to date: production code and current spikes/scripts.
+  - All proposed demos must be runnable end-to-end with clearly defined steps.
+  - Prefer using existing make targets or scripts where possible rather than inventing new tooling.
+  - Keep the documentation structure simple, discoverable, and friendly to new readers.
+</constraints>
+
+<validation_rules>
+  - The project summary clearly states purpose, key goals, and current progress.
+  - The proposed `docs/demo` structure is explicit (folder paths and filenames are clearly listed).
+  - Each demo:
+    - Has a clear value story tied to user or business outcomes.
+    - Is mapped to specific, existing code or scripts.
+    - Includes exact run instructions and expected results.
+  - Someone unfamiliar with the project could clone the repo, follow the docs, and successfully run each demo.
+</validation_rules>
+
+<output_format>
+  - Section 1: **Project Overview**
+    - Purpose, primary goals, and a concise summary of progress toward each goal.
+  - Section 2: **Existing Demo-able Artifacts**
+    - Bullet list of production features, make targets, and spike scripts that can be demoed.
+  - Section 3: **Demo Folder Structure**
+    - Proposed `docs/demo` directory tree (in a code block), with file names and brief descriptions.
+  - Section 4: **Demo Specifications**
+    - For each demo: name, value story, underlying artifacts, commands to run, expected output.
+  - Section 5: **End-to-End Narrative**
+    - Short explanation of how these demos combine to tell the full project story.
+</output_format>
+
+<reasoning>
+  First, reason about the project holistically to understand its intent and maturity.
+  Next, identify concrete, working artifacts that are easiest to show and most impressive.
+  Then, cluster these artifacts into a small set of high-impact demo stories that align with user or business value.
+  Finally, design a clear docs structure and detailed instructions so others can reliably run and present these demos.
+</reasoning>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFLAC Prompt: Story Refine
+  Refines and creates stories from requirements with full acceptance criteria
+
+  Domain: artifact-intelligence
+  Bounded Context: artifact-intelligence
+  UV Target: make story-refine
+-->
+<prompt xmlns="http://aflac.glean.com/prompts/v1" version="1.0">
+  <metadata>
+    <name>story-refine</name>
+    <version>1.0</version>
+    <sdlc_domain>artifact-intelligence</sdlc_domain>
+    <bounded_context>artifact-intelligence</bounded_context>
+    <stateful>true</stateful>
+    <purpose>Create and refine implementation stories from processed requirements</purpose>
+    <created>2026-01-21</created>
+    <author>AFLAC System</author>
+    <tags>
+      <tag>stories</tag>
+      <tag>requirements</tag>
+      <tag>backlog</tag>
+      <tag>planning</tag>
+    </tags>
+  </metadata>
+
+  <primary_goal>
+    Transform refined requirements into well-structured implementation stories with clear acceptance criteria, dependencies, and effort estimates, ready for backlog prioritization.
+    <audience>Product managers and engineers preparing stories for implementation</audience>
+    <tone>Structured, actionable, and implementation-ready</tone>
+  </primary_goal>
+
+  <role>Story Architect and Backlog Builder</role>
+
+  <context>
+    This prompt takes refined requirements from artifact-refine and creates implementation stories following best practices:
+    - User story format (As a... I want... So that...)
+    - Detailed acceptance criteria (Given/When/Then)
+    - Technical tasks breakdown
+    - Dependency mapping
+    - Effort estimation
+    - Priority assignment
+
+    Stories are created in a format compatible with IMPLEMENTATION_BACKLOG.yaml.
+  </context>
+
+  <uv_integration>
+    <make_target>story-refine</make_target>
+    <parameters>
+      <parameter name="REQUIREMENTS" type="path" required="false" default="artifacts/refined_requirements.yaml" description="Path to refined requirements"/>
+      <parameter name="REQUIREMENT_IDS" type="string" required="false" description="Comma-separated requirement IDs to process"/>
+      <parameter name="STORY_FORMAT" type="enum" required="false" default="standard" description="Format: standard, technical, epic"/>
+      <parameter name="OUTPUT" type="path" required="false" default="artifacts/draft_stories.yaml" description="Output path for draft stories"/>
+    </parameters>
+    <idempotency_guarantee>true</idempotency_guarantee>
+    <determinism>
+      <description>Same requirements produce same story structure</description>
+      <hash_inputs>requirements_hash,STORY_FORMAT</hash_inputs>
+    </determinism>
+    <exit_codes>
+      <code value="0" category="success">Stories created/refined successfully</code>
+      <code value="1" category="validation">Invalid requirements input</code>
+      <code value="10" category="domain">Requirements too vague for story creation</code>
+      <code value="11" category="domain">Missing acceptance criteria</code>
+    </exit_codes>
+  </uv_integration>
+
+  <claude_orchestration>
+    <execution_mode>autonomous</execution_mode>
+    <state_management>
+      <state_file>artifacts/story_state.yaml</state_file>
+      <read_on_start>true</read_on_start>
+      <write_on_complete>true</write_on_complete>
+    </state_management>
+    <feedback_loop>
+      <user_input_required>false</user_input_required>
+    </feedback_loop>
+    <workflow_transitions>
+      <transition from="story-refine" to="backlog-prioritize" condition="Stories ready" auto="false"/>
+      <transition from="story-refine" to="question-maintain" condition="Clarification needed" auto="true"/>
+    </workflow_transitions>
+  </claude_orchestration>
+
+  <steps>
+    <step id="1">
+      <name>Load Requirements</name>
+      <description>Read refined requirements and existing story state</description>
+    </step>
+    <step id="2">
+      <name>Group into Stories</name>
+      <description>Cluster related requirements into coherent stories</description>
+      <acceptance_criteria>
+        <criterion>Each story addresses a cohesive user need</criterion>
+        <criterion>Stories are appropriately sized (2-5 days)</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="3">
+      <name>Generate User Stories</name>
+      <description>Create user story format for each story</description>
+      <acceptance_criteria>
+        <criterion>As a/I want/So that format complete</criterion>
+        <criterion>Persona identified for each story</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="4">
+      <name>Define Acceptance Criteria</name>
+      <description>Create Given/When/Then acceptance criteria from requirements</description>
+      <acceptance_criteria>
+        <criterion>Each requirement maps to acceptance criteria</criterion>
+        <criterion>Criteria are testable and specific</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="5">
+      <name>Break Down Tasks</name>
+      <description>Decompose each story into technical tasks</description>
+      <acceptance_criteria>
+        <criterion>Tasks are actionable</criterion>
+        <criterion>Task dependencies identified</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="6">
+      <name>Map Dependencies</name>
+      <description>Identify inter-story dependencies and external dependencies</description>
+    </step>
+    <step id="7">
+      <name>Estimate Effort</name>
+      <description>Assign effort estimates based on task complexity</description>
+      <acceptance_criteria>
+        <criterion>Estimates follow consistent scale</criterion>
+        <criterion>Estimation rationale documented</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="8">
+      <name>Output Draft Stories</name>
+      <description>Write stories in backlog-compatible format</description>
+    </step>
+  </steps>
+
+  <constraints>
+    <constraint>Stories must trace back to source requirements</constraint>
+    <constraint>Acceptance criteria must be testable</constraint>
+    <constraint>Stories should be independently deliverable when possible</constraint>
+    <constraint>Effort estimates should be conservative</constraint>
+  </constraints>
+
+  <validation_rules>
+    <rule severity="error">Each story must have at least one acceptance criterion</rule>
+    <rule severity="error">Story format must be complete (As a/I want/So that)</rule>
+    <rule severity="warning">Stories over 8 days effort should be split</rule>
+    <rule severity="info">Related stories should reference each other</rule>
+  </validation_rules>
+
+  <output_format>
+    <section name="Story Summary" format="markdown">Count and overview of created stories</section>
+    <section name="Draft Stories" format="yaml">Full story definitions in backlog format</section>
+    <section name="Dependency Graph" format="markdown">Visual representation of story dependencies</section>
+    <section name="Estimation Summary" format="markdown">Total effort and breakdown by category</section>
+  </output_format>
+
+  <examples>
+    <example type="good">
+      <input>make story-refine REQUIREMENTS=artifacts/refined_requirements.yaml</input>
+      <output>
+Story Refinement Complete:
+
+Stories Created: 8
+- 3 new stories from FR requirements
+- 3 new stories from NFR requirements
+- 2 stories updated with new acceptance criteria
+
+Sample Story:
+  story_id: STORY-AUTH-001
+  title: "User Authentication via OAuth"
+  user_story: |
+    As a registered user
+    I want to authenticate using my Google account
+    So that I don't need to remember another password
+
+  acceptance_criteria:
+    - GIVEN I am on the login page
+      WHEN I click "Sign in with Google"
+      THEN I am redirected to Google OAuth
+
+  tasks:
+    - Implement OAuth callback handler
+    - Add session management
+    - Create user provisioning flow
+
+  effort: 3 days
+  dependencies: [STORY-DB-001]
+  source_requirements: [FR-001, FR-002, NFR-001]
+
+Next: Run `make backlog-prioritize` to add to backlog
+      </output>
+    </example>
+  </examples>
+
+  <observability>
+    <metrics>
+      <metric name="stories_created" type="counter">
+        <description>Number of stories created</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="requirements_per_story" type="histogram">
+        <description>Requirements grouped per story</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="estimated_effort_total" type="gauge">
+        <description>Total estimated effort for all stories</description>
+        <unit>days</unit>
+      </metric>
+    </metrics>
+  </observability>
+</prompt>

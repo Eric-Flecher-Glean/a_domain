@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFLAC Prompt: Artifact Process
+  Extracts requirements, dependencies, and open questions from discovered artifacts
+
+  Domain: artifact-intelligence
+  Bounded Context: artifact-intelligence
+  UV Target: make artifact-process
+-->
+<prompt xmlns="http://aflac.glean.com/prompts/v1" version="1.0">
+  <metadata>
+    <name>artifact-process</name>
+    <version>1.0</version>
+    <sdlc_domain>artifact-intelligence</sdlc_domain>
+    <bounded_context>artifact-intelligence</bounded_context>
+    <stateful>true</stateful>
+    <purpose>Extract structured requirements, dependencies, and open questions from discovered artifacts</purpose>
+    <created>2026-01-21</created>
+    <author>AFLAC System</author>
+    <tags>
+      <tag>extraction</tag>
+      <tag>requirements</tag>
+      <tag>processing</tag>
+      <tag>nlp</tag>
+    </tags>
+  </metadata>
+
+  <primary_goal>
+    Process discovered artifacts to extract structured requirements, identify dependencies between artifacts and systems, and surface open questions that require user clarification before story creation.
+    <audience>Product managers and engineers translating artifacts into actionable requirements</audience>
+    <tone>Analytical, thorough, and question-surfacing</tone>
+  </primary_goal>
+
+  <role>Requirements Extraction Specialist and Dependency Analyst</role>
+
+  <context>
+    This prompt operates on the artifact index created by artifact-search. For each artifact, it reads the full content via Glean MCP, applies extraction patterns to identify:
+    - Functional requirements (what the system must do)
+    - Non-functional requirements (performance, security, scalability)
+    - Dependencies (systems, APIs, teams, data sources)
+    - Open questions (ambiguities, missing information, conflicting requirements)
+    - Acceptance criteria (testable conditions for completion)
+
+    The extracted data is stored in a structured format that feeds into artifact-refine and story-refine prompts.
+  </context>
+
+  <uv_integration>
+    <make_target>artifact-process</make_target>
+    <parameters>
+      <parameter name="INDEX" type="path" required="false" default="artifacts/discovered_index.yaml" description="Path to artifact index from search"/>
+      <parameter name="ARTIFACT_IDS" type="string" required="false" description="Comma-separated artifact IDs to process (default: all unprocessed)"/>
+      <parameter name="EXTRACTION_DEPTH" type="enum" required="false" default="standard" description="Extraction depth: quick, standard, thorough"/>
+      <parameter name="OUTPUT" type="path" required="false" default="artifacts/extracted_requirements.yaml" description="Output path for extracted requirements"/>
+    </parameters>
+    <idempotency_guarantee>true</idempotency_guarantee>
+    <determinism>
+      <description>Same artifact content produces same extraction results</description>
+      <hash_inputs>artifact_content_hash,EXTRACTION_DEPTH</hash_inputs>
+      <cache_ttl_seconds>86400</cache_ttl_seconds>
+    </determinism>
+    <exit_codes>
+      <code value="0" category="success">Requirements extracted successfully</code>
+      <code value="1" category="validation">Invalid index or artifact IDs</code>
+      <code value="2" category="dependency">Cannot read artifact content from Glean</code>
+      <code value="3" category="runtime">Extraction error</code>
+      <code value="10" category="domain">No requirements found in artifacts</code>
+      <code value="11" category="domain">High ambiguity - many open questions</code>
+    </exit_codes>
+  </uv_integration>
+
+  <glean_integration>
+    <mcp_tools>
+      <tool name="mcp__glean_default__read_document" primary="true">
+        <purpose>Retrieve full artifact content for processing</purpose>
+      </tool>
+      <tool name="mcp__glean_default__chat">
+        <purpose>AI-powered synthesis for complex requirement extraction</purpose>
+      </tool>
+    </mcp_tools>
+  </glean_integration>
+
+  <claude_orchestration>
+    <execution_mode>autonomous</execution_mode>
+    <state_management>
+      <state_file>artifacts/extraction_state.yaml</state_file>
+      <read_on_start>true</read_on_start>
+      <write_on_complete>true</write_on_complete>
+    </state_management>
+    <feedback_loop>
+      <user_input_required>false</user_input_required>
+    </feedback_loop>
+    <workflow_transitions>
+      <transition from="artifact-process" to="question-maintain" condition="Open questions found" auto="true"/>
+      <transition from="artifact-process" to="artifact-refine" condition="Extraction complete" auto="false"/>
+    </workflow_transitions>
+  </claude_orchestration>
+
+  <domain_knowledge>
+    <area>Requirements engineering and specification patterns</area>
+    <area>Dependency analysis and system integration</area>
+    <area>Ambiguity detection and question formulation</area>
+    <area>Acceptance criteria structure (Given/When/Then)</area>
+  </domain_knowledge>
+
+  <steps>
+    <step id="1">
+      <name>Load Artifact Index</name>
+      <description>Read the artifact index and identify artifacts pending processing</description>
+      <acceptance_criteria>
+        <criterion>Index loaded successfully</criterion>
+        <criterion>Processing queue populated</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="2">
+      <name>Retrieve Artifact Content</name>
+      <description>For each artifact, use read_document to fetch full content from Glean</description>
+      <acceptance_criteria>
+        <criterion>Content retrieved for all artifacts</criterion>
+        <criterion>Failed retrievals logged with reason</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="3">
+      <name>Extract Functional Requirements</name>
+      <description>Identify statements describing what the system must do (user-facing features, behaviors)</description>
+      <acceptance_criteria>
+        <criterion>Each requirement has unique ID</criterion>
+        <criterion>Source location tracked (artifact + section)</criterion>
+        <criterion>Priority inferred if present</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="4">
+      <name>Extract Non-Functional Requirements</name>
+      <description>Identify performance, security, scalability, and other quality attributes</description>
+      <acceptance_criteria>
+        <criterion>NFR category assigned (performance, security, etc.)</criterion>
+        <criterion>Quantitative thresholds captured when present</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="5">
+      <name>Identify Dependencies</name>
+      <description>Map dependencies to external systems, APIs, teams, and data sources</description>
+      <acceptance_criteria>
+        <criterion>Each dependency categorized (system, API, team, data)</criterion>
+        <criterion>Dependency direction indicated (depends-on, depended-by)</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="6">
+      <name>Surface Open Questions</name>
+      <description>Identify ambiguities, missing information, and conflicting requirements</description>
+      <acceptance_criteria>
+        <criterion>Questions are specific and actionable</criterion>
+        <criterion>Context provided for each question</criterion>
+        <criterion>Impact assessment included</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="7">
+      <name>Generate Acceptance Criteria</name>
+      <description>Create testable acceptance criteria for each requirement</description>
+      <acceptance_criteria>
+        <criterion>Criteria follow Given/When/Then format</criterion>
+        <criterion>Criteria are verifiable</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="8">
+      <name>Output Extraction Results</name>
+      <description>Write structured YAML with all extracted data</description>
+      <acceptance_criteria>
+        <criterion>Valid YAML output</criterion>
+        <criterion>Traceability maintained to source artifacts</criterion>
+      </acceptance_criteria>
+    </step>
+  </steps>
+
+  <constraints>
+    <constraint>Preserve original wording when extracting requirements</constraint>
+    <constraint>Never invent requirements not present in source artifacts</constraint>
+    <constraint>Flag uncertain extractions with confidence scores</constraint>
+    <constraint>Maintain bidirectional traceability to source artifacts</constraint>
+  </constraints>
+
+  <validation_rules>
+    <rule severity="error">Each requirement must have source artifact reference</rule>
+    <rule severity="error">Output YAML must be valid</rule>
+    <rule severity="warning">Open questions should have impact assessment</rule>
+    <rule severity="info">Extraction should complete within 5 minutes per artifact</rule>
+  </validation_rules>
+
+  <output_format>
+    <section name="Extraction Summary" format="markdown">Counts of requirements, dependencies, and questions by artifact</section>
+    <section name="Requirements" format="yaml">Structured functional and non-functional requirements</section>
+    <section name="Dependencies" format="yaml">Mapped system and team dependencies</section>
+    <section name="Open Questions" format="yaml">Questions requiring user clarification</section>
+  </output_format>
+
+  <examples>
+    <example type="good">
+      <input>make artifact-process INDEX=artifacts/discovered_index.yaml</input>
+      <output>
+Processed 12 artifacts:
+
+Requirements Extracted:
+- 34 functional requirements
+- 8 non-functional requirements
+
+Dependencies Identified:
+- 5 system dependencies (Auth API, Payment Gateway, ...)
+- 3 team dependencies (Platform, Security, ...)
+
+Open Questions: 7 questions requiring clarification
+- Q1: What is the expected response time for search? (NFR-003)
+- Q2: Should deleted users be hard or soft deleted? (FR-012)
+...
+
+Next: Run `make question-maintain` to track questions
+      </output>
+      <explanation>Successful processing with clear categorization and next steps</explanation>
+    </example>
+  </examples>
+
+  <observability>
+    <metrics>
+      <metric name="artifacts_processed" type="counter">
+        <description>Number of artifacts processed</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="requirements_extracted" type="counter">
+        <description>Number of requirements extracted</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="questions_surfaced" type="counter">
+        <description>Number of open questions identified</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="processing_latency" type="histogram">
+        <description>Time to process single artifact</description>
+        <unit>seconds</unit>
+      </metric>
+    </metrics>
+  </observability>
+</prompt>

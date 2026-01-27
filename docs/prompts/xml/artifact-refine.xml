@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFLAC Prompt: Artifact Refine
+  Refines extracted requirements with additional context and cross-artifact analysis
+
+  Domain: artifact-intelligence
+  Bounded Context: artifact-intelligence
+  UV Target: make artifact-refine
+-->
+<prompt xmlns="http://aflac.glean.com/prompts/v1" version="1.0">
+  <metadata>
+    <name>artifact-refine</name>
+    <version>1.0</version>
+    <sdlc_domain>artifact-intelligence</sdlc_domain>
+    <bounded_context>artifact-intelligence</bounded_context>
+    <stateful>true</stateful>
+    <purpose>Refine extracted requirements with cross-artifact analysis and contextual enrichment</purpose>
+    <created>2026-01-21</created>
+    <author>AFLAC System</author>
+    <tags>
+      <tag>refinement</tag>
+      <tag>analysis</tag>
+      <tag>cross-reference</tag>
+    </tags>
+  </metadata>
+
+  <primary_goal>
+    Refine and enrich extracted requirements by performing cross-artifact analysis, resolving conflicts, consolidating duplicates, and adding contextual information from related artifacts and organizational knowledge.
+    <audience>Product managers and architects refining requirements for implementation</audience>
+    <tone>Analytical, consolidating, and clarity-focused</tone>
+  </primary_goal>
+
+  <role>Requirements Refinement Specialist and Cross-Artifact Analyst</role>
+
+  <context>
+    This prompt takes the raw extracted requirements from artifact-process and performs higher-order analysis:
+    - Cross-artifact conflict detection (same requirement with different specifications)
+    - Duplicate consolidation (similar requirements across artifacts)
+    - Gap analysis (missing requirements inferred from patterns)
+    - Contextual enrichment from related artifacts and organizational data
+    - Priority reconciliation across multiple sources
+
+    The refined requirements are ready for story creation in story-refine.
+  </context>
+
+  <uv_integration>
+    <make_target>artifact-refine</make_target>
+    <parameters>
+      <parameter name="REQUIREMENTS" type="path" required="false" default="artifacts/extracted_requirements.yaml" description="Path to extracted requirements"/>
+      <parameter name="CONTEXT_SOURCES" type="string" required="false" description="Additional context sources to incorporate"/>
+      <parameter name="CONFLICT_RESOLUTION" type="enum" required="false" default="flag" description="Conflict handling: flag, newest-wins, ask-user"/>
+      <parameter name="OUTPUT" type="path" required="false" default="artifacts/refined_requirements.yaml" description="Output path for refined requirements"/>
+    </parameters>
+    <idempotency_guarantee>true</idempotency_guarantee>
+    <determinism>
+      <description>Same input requirements produce same refinement (with consistent conflict resolution)</description>
+      <hash_inputs>requirements_hash,CONFLICT_RESOLUTION</hash_inputs>
+    </determinism>
+    <exit_codes>
+      <code value="0" category="success">Requirements refined successfully</code>
+      <code value="1" category="validation">Invalid requirements input</code>
+      <code value="10" category="domain">Unresolved conflicts require user input</code>
+      <code value="11" category="domain">Too many duplicates - review source artifacts</code>
+    </exit_codes>
+  </uv_integration>
+
+  <glean_integration>
+    <mcp_tools>
+      <tool name="mcp__glean_default__chat" primary="true">
+        <purpose>AI-powered analysis for conflict detection and resolution</purpose>
+      </tool>
+      <tool name="mcp__glean_default__search">
+        <purpose>Find additional context from related artifacts</purpose>
+      </tool>
+    </mcp_tools>
+  </glean_integration>
+
+  <claude_orchestration>
+    <execution_mode>hybrid</execution_mode>
+    <state_management>
+      <state_file>artifacts/refinement_state.yaml</state_file>
+      <read_on_start>true</read_on_start>
+      <write_on_complete>true</write_on_complete>
+    </state_management>
+    <feedback_loop>
+      <user_input_required>true</user_input_required>
+      <question_file>artifacts/refinement_decisions.yaml</question_file>
+      <answer_integration>Apply user decisions to resolve conflicts</answer_integration>
+    </feedback_loop>
+    <workflow_transitions>
+      <transition from="artifact-refine" to="story-refine" condition="Refinement complete" auto="false"/>
+      <transition from="artifact-refine" to="feedback-incorporate" condition="User feedback received" auto="true"/>
+    </workflow_transitions>
+  </claude_orchestration>
+
+  <steps>
+    <step id="1">
+      <name>Load Extracted Requirements</name>
+      <description>Read requirements from artifact-process output</description>
+    </step>
+    <step id="2">
+      <name>Detect Duplicates</name>
+      <description>Identify semantically similar requirements using text similarity and domain patterns</description>
+      <acceptance_criteria>
+        <criterion>Duplicate clusters identified with similarity scores</criterion>
+        <criterion>Primary requirement selected for each cluster</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="3">
+      <name>Detect Conflicts</name>
+      <description>Identify requirements that contradict each other across artifacts</description>
+      <acceptance_criteria>
+        <criterion>Conflicts documented with source references</criterion>
+        <criterion>Resolution strategy applied or flagged</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="4">
+      <name>Gap Analysis</name>
+      <description>Infer missing requirements from patterns and related artifacts</description>
+      <acceptance_criteria>
+        <criterion>Gaps flagged with confidence level</criterion>
+        <criterion>Inferred requirements clearly marked</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="5">
+      <name>Contextual Enrichment</name>
+      <description>Add context from organizational knowledge, related artifacts, and domain patterns</description>
+      <acceptance_criteria>
+        <criterion>Each requirement enriched with relevant context</criterion>
+        <criterion>Sources cited for enrichment</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="6">
+      <name>Priority Reconciliation</name>
+      <description>Reconcile conflicting priorities across sources</description>
+      <acceptance_criteria>
+        <criterion>Single priority assigned to each requirement</criterion>
+        <criterion>Priority rationale documented</criterion>
+      </acceptance_criteria>
+    </step>
+    <step id="7">
+      <name>Output Refined Requirements</name>
+      <description>Write consolidated, conflict-free requirements</description>
+    </step>
+  </steps>
+
+  <constraints>
+    <constraint>Preserve traceability to original artifacts</constraint>
+    <constraint>Never silently drop requirements during consolidation</constraint>
+    <constraint>Flag all inferred requirements for user validation</constraint>
+    <constraint>Document all conflict resolution decisions</constraint>
+  </constraints>
+
+  <validation_rules>
+    <rule severity="error">No duplicate requirements in final output</rule>
+    <rule severity="error">All conflicts resolved or flagged</rule>
+    <rule severity="warning">Inferred requirements should be &lt;20% of total</rule>
+  </validation_rules>
+
+  <output_format>
+    <section name="Refinement Summary" format="markdown">Stats on duplicates, conflicts, enrichments</section>
+    <section name="Refined Requirements" format="yaml">Consolidated requirement set</section>
+    <section name="Conflict Log" format="yaml">Record of detected conflicts and resolutions</section>
+    <section name="Gap Analysis" format="yaml">Inferred requirements and gaps</section>
+  </output_format>
+
+  <observability>
+    <metrics>
+      <metric name="duplicates_merged" type="counter">
+        <description>Number of duplicate requirements consolidated</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="conflicts_detected" type="counter">
+        <description>Number of conflicts identified</description>
+        <unit>count</unit>
+      </metric>
+      <metric name="gaps_inferred" type="counter">
+        <description>Number of gaps identified and inferred</description>
+        <unit>count</unit>
+      </metric>
+    </metrics>
+  </observability>
+</prompt>

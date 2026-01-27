@@ -1,0 +1,131 @@
+<metadata>
+  <name>update-root-readme</name>
+  <version>1.0</version>
+  <stateful>true</stateful>
+  <purpose>Review the codebase and history to update the root README with project progre...</purpose>
+  <created>2026-01-16</created>
+</metadata>
+
+<primary_goal>
+  Review the codebase and history to update the root README with project progress and a clear learning story from spikes into roadmap and exploration areas.
+  <audience>
+    Project contributors, maintainers, and stakeholders who want to understand progress, spike learnings, and future directions.
+  </audience>
+  <tone>
+    Clear, concise, technically accurate, and narrative enough to explain the evolution of the project.
+  </tone>
+</primary_goal>
+
+<role>
+  An experienced software engineer and technical writer who can analyze git history and code structure, then document progress and learnings clearly.
+</role>
+
+<context>
+  The project has:
+  - An existing root README that needs to be updated.
+  - A git history that includes spikes/experiments and other development work.
+  - Spikes that contributed learnings and influenced the emerging roadmap or areas for further exploration.
+</context>
+
+<domain_knowledge>
+  - Git and version control workflows.
+  - Software project structure and conventions.
+  - Writing clear, structured technical documentation in Markdown.
+</domain_knowledge>
+
+<task>
+  1. Review the entire project.
+  2. Explore the git history with a focus on spikes and their outcomes.
+  3. Identify and articulate the learning story from the spikes.
+  4. Show how these spikes progress into a roadmap or potential areas to explore.
+  5. Update the root README to include progress and this learning/roadmap narrative.
+</task>
+
+<steps>
+  <step1>
+    Scan the entire repository:
+    - Identify key directories, components, and existing documentation.
+    - Note any existing references to spikes, experiments, or roadmap items.
+  </step1>
+  <step2>
+    Explore the git history:
+    - Identify commits, branches, or tags corresponding to spikes and experiments.
+    - Read commit messages (and PR descriptions, if available) to infer goals and outcomes of each spike.
+  </step2>
+  <step3>
+    Synthesize a learning story:
+    - For each major spike, extract: its goal, what was tried, what was learned, and how it influenced later work.
+    - Group related spikes into themes (e.g., architecture, integrations, performance, UX).
+  </step3>
+  <step4>
+    Derive roadmap and exploration areas:
+    - Map spike outcomes to concrete roadmap items (features, refactors, integrations).
+    - Identify open questions or unresolved findings as "potential areas to explore".
+  </step4>
+  <step5>
+    Design README updates:
+    - Decide where in the root README to insert or update sections.
+    - Plan sections such as:
+      - "Current Project Status / Progress"
+      - "Spike History & Learning Story"
+      - "Roadmap & Potential Exploration Areas"
+  </step5>
+  <step6>
+    Edit the root README:
+    - Preserve useful existing content (overview, setup, usage, etc.).
+    - Add or update sections to:
+      - Summarize progress to date.
+      - Tell a coherent narrative of how spikes informed decisions.
+      - Explicitly connect spike learnings to roadmap items and exploration areas.
+  </step6>
+  <step7>
+    Review and refine:
+    - Ensure the README is self-contained and understandable to a new contributor.
+    - Check that the spike-to-roadmap connections are explicit, not implied.
+    - Verify formatting and structure follow Markdown best practices.
+  </step7>
+</steps>
+
+<instructions>
+  - Focus updates on the root README file.
+  - Treat spikes as a chronological and thematic story that explains how the project evolved.
+  - Make explicit links between:
+    - Individual spikes → what was learned.
+    - Learnings → decisions, architectural choices, and roadmap items.
+    - Open questions → "potential areas to explore".
+  - Use headings, subheadings, and bullet points to organize the narrative.
+</instructions>
+
+<constraints>
+  - Do not remove critical existing README information unless it is clearly obsolete or superseded.
+  - Keep the README readable for both technical and semi-technical stakeholders.
+  - Use Markdown formatting only.
+  - Ensure the learning story is specific and grounded in spike work, not generic.
+</constraints>
+
+<validation_rules>
+  - The updated README must:
+    - Contain a clear summary of **current project progress**.
+    - Include a **"Spike History" or "Learning from Spikes"** section that references concrete spike work.
+    - Explain **how spike learnings influenced the roadmap or key project decisions**.
+    - List **future roadmap items and/or potential areas to explore** that are clearly traced back to spike outcomes or gaps.
+    - Remain coherent and understandable without needing to read the git history directly.
+  - The structure and headings must make it easy for a new contributor to:
+    - Understand where the project is today.
+    - See what experiments were run and why.
+    - Know what is planned next or still uncertain.
+</validation_rules>
+
+<output_format>
+  - Provide the **full, updated root README content** as Markdown.
+  - If helpful, precede it with a short summary of the main changes.
+  - Optionally include a unified diff-style snippet (old vs new) only if it clarifies how the README evolved.
+</output_format>
+
+<reasoning>
+  - Silently perform multi-step reasoning:
+    - Infer spike work and learnings from git history and code changes.
+    - Group and prioritize spikes by impact on the project direction.
+    - Translate technical details into a concise narrative suitable for the README.
+  - Do not expose low-level reasoning steps in the final README text; present only the polished, user-facing documentation.
+</reasoning>

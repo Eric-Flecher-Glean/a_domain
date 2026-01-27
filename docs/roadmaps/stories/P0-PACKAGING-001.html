@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P0-PACKAGING-001 - Add framework version tracking with .sdlc-config.lock</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+        }
+
+        /* Header with status color */
+        .header {
+            background: #10b981;
+            color: white;
+            padding: 24px 32px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .story-header {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .story-id {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .story-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 16px 0;
+            line-height: 1.3;
+        }
+
+        .story-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 32px auto;
+            padding: 0 32px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        /* Description */
+        .description {
+            white-space: pre-wrap;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        /* Acceptance Criteria */
+        .ac-list {
+            list-style: none;
+        }
+
+        .ac-item {
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .ac-item.completed {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .ac-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #111827;
+        }
+
+        .ac-icon {
+            font-size: 16px;
+        }
+
+        .ac-text {
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        /* Tasks */
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .task-checkbox {
+            margin-top: 2px;
+        }
+
+        /* Test Plan */
+        .test-case {
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .test-header {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .test-command {
+            background: #1f2937;
+            color: #10b981;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+
+        .test-expected {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        /* Sidebar Cards */
+        .status-badge-large {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-not-started {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .status-blocked {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-badge-large {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .priority-P0 {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-P1 {
+            background: #fce7f3;
+            color: #831843;
+        }
+
+        .priority-P2 {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        /* Dependencies */
+        .dep-list {
+            list-style: none;
+        }
+
+        .dep-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .dep-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dep-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Documents */
+        .doc-item {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .doc-icon {
+            font-size: 18px;
+        }
+
+        .doc-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .doc-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* DDD Context Map */
+        .context-map {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .ubiquitous-term {
+            margin-bottom: 12px;
+        }
+
+        .term-name {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .term-definition {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* Timeline Visualization */
+        .mini-timeline {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header-actions,
+            .back-link {
+                display: none;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #9ca3af;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <a href="../roadmap.html" class="back-link">← Back to Roadmap</a>
+            <div class="header-actions">
+                <button class="btn" onclick="window.print()">🖨️ Print</button>
+                <a href="#" class="btn">📥 Export</a>
+            </div>
+        </div>
+
+        <div class="story-header">
+            <div class="story-id">P0-PACKAGING-001</div>
+            <h1 class="story-title">Add framework version tracking with .sdlc-config.lock</h1>
+            <div class="story-meta">
+                <div class="meta-item">
+                    <span>📊 Completed</span>
+                </div>
+                <div class="meta-item">
+                    <span>P0</span>
+                </div>
+                <div class="meta-item">
+                    <span>15</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Description -->
+            <div class="card">
+                <h2 class="card-title">📋 Description</h2>
+                <div class="description">Create version lock file to track installed framework version, commit hash, and integrity.
+This enables version validation, compatibility checking, and audit trail for framework updates.
+
+Problem:
+- No tracking of which framework version is installed
+- Cannot detect outdated frameworks
+- No compatibility validation between framework and project
+
+Solution:
+- Create .sdlc-config.lock file with version, commit hash, install timestamp
+- Track integrity hash for validation
+- Include compatibility requirements (min Python, Make versions)
+
+Impact:
+- Foundation for all version management features
+- Enables migration system and rollback
+- Provides audit trail for framework state
+</div>
+            </div>
+
+            <!-- Acceptance Criteria -->
+            
+            <div class="card">
+                <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
+                <ul class="ac-list">
+                    
+                    <li class="ac-item completed">
+                        <div class="ac-header">
+                            <span class="ac-icon">☑</span>
+                            <span>AC1: .sdlc-config.lock created on framework installation</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item completed">
+                        <div class="ac-header">
+                            <span class="ac-icon">☑</span>
+                            <span>AC2: Lock file tracks version, commit hash, install timestamp, integrity hash</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item completed">
+                        <div class="ac-header">
+                            <span class="ac-icon">☑</span>
+                            <span>AC3: Lock file includes compatibility requirements (min Python, Make versions)</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item completed">
+                        <div class="ac-header">
+                            <span class="ac-icon">☑</span>
+                            <span>AC4: Lock file validates on framework operations</span>
+                        </div>
+                    </li>
+                    
+                </ul>
+            </div>
+            
+
+            <!-- Functional Test Plan -->
+            
+            <div class="card">
+                <h2 class="card-title">🧪 Functional Test Plan</h2>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC1 - Verify install.sh creates lock file
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ .sdlc/bootstrap/install.sh --target /tmp/test-project && test -f /tmp/test-project/.sdlc-config.lock</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> <br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Lock file exists after installation
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC2 - Verify lock file contains required fields
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ test -f .sdlc-config.lock && grep -q 'framework:' .sdlc-config.lock && grep -q 'version:' .sdlc-config.lock</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> <br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Lock file has valid YAML structure with version info
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC3 - Verify compatibility requirements in lock file
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ grep -q 'compatibility:' .sdlc-config.lock && grep -q 'min_python:' .sdlc-config.lock</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> <br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Compatibility section exists with Python version requirement
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+
+            <!-- Tasks -->
+            
+            <div class="card">
+                <h2 class="card-title">📝 Implementation Tasks (5/5)</h2>
+                <ul class="task-list">
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 1: Define .sdlc-config.lock YAML schema with version, commit hash, timestamps</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 2: Create .sdlc/bootstrap/init-version-lock.sh script</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 3: Update install.sh to create lock file on installation</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 4: Add version validation to core validators</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 5: Add .sdlc-config.lock to .gitignore (project-specific)</span>
+                    </li>
+                    
+                </ul>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100.0%"></div>
+                </div>
+                <div class="progress-text">100.0% Complete</div>
+            </div>
+            
+
+            <!-- DDD Bounded Context -->
+            
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Status & Metrics -->
+            <div class="card">
+                <h2 class="card-title">📊 Status & Metrics</h2>
+                <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="status-badge-large status-completed">COMPLETED</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Priority:</span>
+                    <span class="priority-badge-large priority-P0">P0</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Infrastructure</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Effort:</span>
+                    <span class="info-value">15</span>
+                </div>
+                
+            </div>
+
+            <!-- Dependencies -->
+            <div class="card">
+                <h2 class="card-title">🔗 Dependencies</h2>
+                
+                <div class="empty-state" style="padding: 16px;">No dependencies</div>
+                
+
+                
+                <h3 style="font-size: 13px; font-weight: 600; margin: 16px 0 8px 0; color: #6b7280;">Blocks:</h3>
+                <ul class="dep-list">
+                    
+                    <li class="dep-item">
+                        <a href="P0-PACKAGING-002.html" class="dep-link">→ Implement migration system for framework version updates</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-PACKAGING-002</div>
+                    </li>
+                    
+                    <li class="dep-item">
+                        <a href="P0-PACKAGING-003.html" class="dep-link">→ Add --version, --migrate, --dry-run flags to update.sh</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-PACKAGING-003</div>
+                    </li>
+                    
+                    <li class="dep-item">
+                        <a href="P0-PACKAGING-006.html" class="dep-link">→ Implement bootstrap/check-updates.sh</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-PACKAGING-006</div>
+                    </li>
+                    
+                </ul>
+                
+            </div>
+
+            <!-- Related Documentation -->
+            
+
+            <!-- Source Artifacts -->
+            
+
+            <!-- Traceability -->
+            
+
+            <!-- Business Impact -->
+            
+        </div>
+    </div>
+</body>
+</html>
