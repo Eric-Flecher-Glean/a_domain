@@ -30,6 +30,12 @@ from .executor import (
     AgentNotFoundError
 )
 
+from .dashboard import (
+    GleanPublisher,
+    MockGleanPublisher,
+    JourneyDashboardService
+)
+
 __version__ = "1.0.0"
 
 __all__ = [
@@ -48,4 +54,7 @@ __all__ = [
     "UnitOfWorkExecutor",
     "DependencyCycleError",
     "AgentNotFoundError",
+    "GleanPublisher",
+    "MockGleanPublisher",
+    "JourneyDashboardService",
 ]
