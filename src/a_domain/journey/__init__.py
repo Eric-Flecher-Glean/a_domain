@@ -16,6 +16,20 @@ from .state_machine import (
 
 from .coordinator import JourneyCoordinator
 
+from .unit_of_work import (
+    WorkStatus,
+    TaskStatus,
+    Task,
+    UnitOfWork,
+    ExecutionResult
+)
+
+from .executor import (
+    UnitOfWorkExecutor,
+    DependencyCycleError,
+    AgentNotFoundError
+)
+
 __version__ = "1.0.0"
 
 __all__ = [
@@ -26,4 +40,12 @@ __all__ = [
     "JourneyStateMachine",
     "InvalidTransitionError",
     "JourneyCoordinator",
+    "WorkStatus",
+    "TaskStatus",
+    "Task",
+    "UnitOfWork",
+    "ExecutionResult",
+    "UnitOfWorkExecutor",
+    "DependencyCycleError",
+    "AgentNotFoundError",
 ]
