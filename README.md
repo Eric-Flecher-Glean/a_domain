@@ -232,6 +232,52 @@ cat workflows/prompt-generation-workflow.json
 3. Collect metrics and iterate
 4. Scale to additional workflows (Schema Validation → Story Generation)
 
+### 🚀 NEW: DataOps Lifecycle Automation (In Progress)
+
+Automated dataset provisioning, quality validation, and teardown for client environments across sandbox/pilot/production stages.
+
+**Status**: P0-A2A-F2-002 Task 1/4 Complete (30%)
+
+**What's Implemented:**
+- ✅ DatasetProvisioningAgent with complete orchestration workflow
+- ✅ ConnectorManager for Glean connector lifecycle
+- ✅ DataPopulator with synthetic mock data generation (Confluence, GitHub, Slack)
+- ✅ Domain models (Dataset, DatasetTemplate, GleanConnector entities)
+- ✅ Integration tests (500+ mock records provisioned)
+
+**Quick Start:**
+```bash
+# View DataOps agent implementation
+cd .sdlc/sdlc_framework/dataops/agents/
+
+# Run integration test
+python3 dataset_provisioning_agent.py
+
+# Expected output:
+# Dataset provisioned: <uuid>
+# Status: validating
+# Records: 500
+# Size: 512000 bytes
+```
+
+**Implementation Plan:**
+- ✅ Task 1: DatasetProvisioningAgent (24h) - COMPLETE
+- ⏳ Task 2: medtronic_mock_data Integration (12h)
+- ⏳ Task 3: Glean Connector Configuration (20h)
+- ⏳ Task 4: DataTeardownAgent with Archival (24h)
+
+**Value Proposition:**
+- Reduce provisioning time: 2-3 days → <1 hour (96% reduction)
+- Eliminate manual connector errors: 100% automated configuration
+- Zero orphaned datasets: Automatic teardown and archival
+- Quality assurance: Built-in validation pipeline
+
+**Documentation:**
+- [Implementation Plan](docs/planning/p0-a2a-f2-002-implementation-plan.md)
+- [Data Architecture](docs/architecture/dataops-data-architecture.md)
+- [DDD Bounded Context](docs/ddd/dataops-lifecycle-bounded-context.md)
+- [API Design](docs/designs/dataset-discovery-api-design.md)
+
 ---
 
 ## Contributing
