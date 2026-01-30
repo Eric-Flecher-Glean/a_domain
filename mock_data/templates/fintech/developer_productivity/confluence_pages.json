@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "name": "FinTech Developer Productivity - Confluence Pages",
+    "industry": "fintech",
+    "use_case": "developer_productivity",
+    "dataset_type": "confluence_pages",
+    "description": "Mock Confluence pages for FinTech companies focused on developer productivity tools and documentation",
+    "version": "1.0"
+  },
+  "data": [
+    {
+      "page_id": "conf-001",
+      "title": "API Integration Guide - Payment Gateway",
+      "content": "This guide covers integration with our REST API for processing payments. Includes authentication, request formats, and error handling.",
+      "author": "Sarah Chen",
+      "space": "Engineering",
+      "created_date": "2026-01-15T10:30:00Z",
+      "last_modified": "2026-01-20T14:22:00Z",
+      "labels": ["api", "payments", "integration"],
+      "attachments": 3
+    },
+    {
+      "page_id": "conf-002",
+      "title": "Developer Onboarding Checklist",
+      "content": "Complete checklist for new engineering hires. Covers account setup, development environment, code review process, and team rituals.",
+      "author": "Michael Rodriguez",
+      "space": "Engineering",
+      "created_date": "2026-01-10T09:00:00Z",
+      "last_modified": "2026-01-25T16:45:00Z",
+      "labels": ["onboarding", "process", "checklist"],
+      "attachments": 0
+    },
+    {
+      "page_id": "conf-003",
+      "title": "Architecture Decision Record - Event-Driven Microservices",
+      "content": "ADR documenting our decision to adopt event-driven architecture for transaction processing. Covers rationale, alternatives considered, and implementation plan.",
+      "author": "David Kim",
+      "space": "Architecture",
+      "created_date": "2026-01-05T11:15:00Z",
+      "last_modified": "2026-01-18T13:30:00Z",
+      "labels": ["adr", "architecture", "microservices"],
+      "attachments": 2
+    },
+    {
+      "page_id": "conf-004",
+      "title": "Deployment Runbook - Production Release Process",
+      "content": "Step-by-step runbook for production deployments. Includes pre-deployment checklist, rollout steps, monitoring, and rollback procedures.",
+      "author": "Emily Watson",
+      "space": "DevOps",
+      "created_date": "2026-01-12T08:45:00Z",
+      "last_modified": "2026-01-26T10:20:00Z",
+      "labels": ["deployment", "production", "runbook"],
+      "attachments": 1
+    },
+    {
+      "page_id": "conf-005",
+      "title": "Code Review Guidelines",
+      "content": "Best practices for code reviews including standards, checklist, and feedback guidelines. Emphasizes constructive feedback and knowledge sharing.",
+      "author": "Sarah Chen",
+      "space": "Engineering",
+      "created_date": "2026-01-08T14:00:00Z",
+      "last_modified": "2026-01-22T11:10:00Z",
+      "labels": ["code-review", "process", "best-practices"],
+      "attachments": 0
+    }
+  ]
+}

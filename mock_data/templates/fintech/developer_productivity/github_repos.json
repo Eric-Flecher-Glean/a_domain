@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "FinTech Developer Productivity - GitHub Repos",
+    "industry": "fintech",
+    "use_case": "developer_productivity",
+    "dataset_type": "github_repos",
+    "description": "Mock GitHub repositories for FinTech development teams",
+    "version": "1.0"
+  },
+  "data": [
+    {
+      "repo_id": "gh-001",
+      "name": "payment-gateway-api",
+      "description": "REST API for payment processing and transaction management",
+      "owner": "fintech-engineering",
+      "language": "Python",
+      "stars": 245,
+      "forks": 32,
+      "open_issues": 8,
+      "created_at": "2025-06-15T10:00:00Z",
+      "updated_at": "2026-01-26T15:30:00Z",
+      "topics": ["payments", "api", "fintech", "rest"],
+      "default_branch": "main"
+    },
+    {
+      "repo_id": "gh-002",
+      "name": "fraud-detection-ml",
+      "description": "Machine learning models for real-time fraud detection",
+      "owner": "fintech-data-science",
+      "language": "Python",
+      "stars": 189,
+      "forks": 24,
+      "open_issues": 5,
+      "created_at": "2025-08-20T14:30:00Z",
+      "updated_at": "2026-01-25T09:15:00Z",
+      "topics": ["machine-learning", "fraud-detection", "security"],
+      "default_branch": "main"
+    },
+    {
+      "repo_id": "gh-003",
+      "name": "customer-portal-frontend",
+      "description": "React-based customer portal for account management",
+      "owner": "fintech-engineering",
+      "language": "TypeScript",
+      "stars": 156,
+      "forks": 18,
+      "open_issues": 12,
+      "created_at": "2025-09-10T11:00:00Z",
+      "updated_at": "2026-01-27T13:45:00Z",
+      "topics": ["react", "frontend", "customer-portal"],
+      "default_branch": "main"
+    }
+  ]
+}

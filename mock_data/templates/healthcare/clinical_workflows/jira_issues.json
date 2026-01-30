@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "name": "Healthcare Clinical Workflows - JIRA Issues",
+    "industry": "healthcare",
+    "use_case": "clinical_workflows",
+    "dataset_type": "jira_issues",
+    "description": "Mock JIRA issues for healthcare clinical workflow projects",
+    "version": "1.0"
+  },
+  "data": [
+    {
+      "issue_key": "CLIN-101",
+      "summary": "Implement patient admission workflow automation",
+      "description": "Automate patient admission process including bed assignment, staff notification, and EHR record creation",
+      "issue_type": "Story",
+      "priority": "High",
+      "status": "In Progress",
+      "assignee": "Dr. Amanda Foster",
+      "reporter": "Nurse Manager Lisa Chen",
+      "created": "2026-01-10T08:30:00Z",
+      "updated": "2026-01-26T14:20:00Z",
+      "labels": ["automation", "admission", "workflow"],
+      "story_points": 8
+    },
+    {
+      "issue_key": "CLIN-102",
+      "summary": "Add medication verification step to discharge process",
+      "description": "Ensure all medications are verified and reconciled before patient discharge to prevent errors",
+      "issue_type": "Story",
+      "priority": "Critical",
+      "status": "To Do",
+      "assignee": "Pharmacist Tom Anderson",
+      "reporter": "Dr. Sarah Martinez",
+      "created": "2026-01-15T09:15:00Z",
+      "updated": "2026-01-25T16:30:00Z",
+      "labels": ["medication", "discharge", "safety"],
+      "story_points": 5
+    },
+    {
+      "issue_key": "CLIN-103",
+      "summary": "Fix bed assignment conflict in ICU module",
+      "description": "Bug causing double-booking of ICU beds when multiple admissions occur simultaneously",
+      "issue_type": "Bug",
+      "priority": "Critical",
+      "status": "In Progress",
+      "assignee": "Developer James Wilson",
+      "reporter": "ICU Manager Rebecca Brown",
+      "created": "2026-01-20T11:45:00Z",
+      "updated": "2026-01-27T10:15:00Z",
+      "labels": ["bug", "icu", "bed-management"],
+      "story_points": 3
+    },
+    {
+      "issue_key": "CLIN-104",
+      "summary": "Integrate lab results notification system",
+      "description": "Notify physicians when critical lab results are available requiring immediate attention",
+      "issue_type": "Story",
+      "priority": "High",
+      "status": "In Review",
+      "assignee": "Developer Emily Zhang",
+      "reporter": "Dr. Michael Roberts",
+      "created": "2026-01-12T13:00:00Z",
+      "updated": "2026-01-26T15:45:00Z",
+      "labels": ["lab-results", "notifications", "critical"],
+      "story_points": 5
+    }
+  ]
+}
