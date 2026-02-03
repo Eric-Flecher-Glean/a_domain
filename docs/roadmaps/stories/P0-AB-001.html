@@ -21,7 +21,7 @@
 
         /* Header with status color */
         .header {
-            background: #6b7280;
+            background: #10b981;
             color: white;
             padding: 24px 32px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -486,22 +486,24 @@
             <h1 class="story-title">A/B Agent Demo - Proof of Concept</h1>
             <div class="story-meta">
                 <div class="meta-item">
-                    <span>📊 Not Started</span>
+                    <span>✅ Completed</span>
                 </div>
                 <div class="meta-item">
                     <span>P0</span>
                 </div>
                 <div class="meta-item">
-                    <span>10</span>
+                    <span>10 points</span>
                 </div>
-                
                 <div class="meta-item">
-                    <span>📅 Weeks 1</span>
+                    <span>🗓️ 2026-02-03</span>
+                </div>
+                <div class="meta-item">
+                    <span>📅 Week 1</span>
                 </div>
                 <div class="meta-item">
                     <span>📂 Foundation & Protocol</span>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -545,44 +547,44 @@ Success Criteria:
             <!-- Acceptance Criteria -->
             
             <div class="card">
-                <h2 class="card-title">✓ Acceptance Criteria (5)</h2>
+                <h2 class="card-title">✓ Acceptance Criteria (5/5 Completed)</h2>
                 <ul class="ac-list">
-                    
-                    <li class="ac-item ">
+
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
+                            <span class="ac-icon">✅</span>
                             <span>AC1: Agent A generates content and sends to Agent B via protocol bridge</span>
                         </div>
                     </li>
-                    
-                    <li class="ac-item ">
+
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
+                            <span class="ac-icon">✅</span>
                             <span>AC2: Agent B validates and responds with feedback</span>
                         </div>
                     </li>
-                    
-                    <li class="ac-item ">
+
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
+                            <span class="ac-icon">✅</span>
                             <span>AC3: Message flow appears in Report Explorer timeline</span>
                         </div>
                     </li>
-                    
-                    <li class="ac-item ">
+
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
+                            <span class="ac-icon">✅</span>
                             <span>AC4: Demo script runs end-to-end showing 3+ interaction cycles</span>
                         </div>
                     </li>
-                    
-                    <li class="ac-item ">
+
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
+                            <span class="ac-icon">✅</span>
                             <span>AC5: Can observe agent collaboration in web portal</span>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
             
@@ -629,49 +631,123 @@ Success Criteria:
                 </div>
                 
             </div>
-            
+
+
+            <!-- Demo Instructions -->
+            <div class="card">
+                <h2 class="card-title">🚀 Run the Demo</h2>
+                <div style="margin-bottom: 16px;">
+                    <p style="color: #374151; margin-bottom: 12px;">
+                        Experience the A/B agent collaboration in action! Run the demo to see Agent A (Generator)
+                        and Agent B (Validator) communicate via the Protocol Broker.
+                    </p>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #111827;">Quick Start (1 iteration)</h3>
+                <div class="test-command">$ uv run demo/ab_agents_demo.py --iterations=1</div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #111827;">Full Demo (3 iterations)</h3>
+                <div class="test-command">$ uv run demo/ab_agents_demo.py --iterations=3</div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #111827;">Expected Output</h3>
+                <div style="background: #f9fafb; padding: 12px; border-radius: 6px; font-size: 13px; margin-bottom: 16px;">
+                    <ul style="list-style-position: inside; color: #374151;">
+                        <li>✅ Agents registered with broker</li>
+                        <li>🔄 Generate → Validate → Feedback loop for each iteration</li>
+                        <li>📊 Agent statistics (messages sent/received, pass rates)</li>
+                        <li>📁 Timeline reports saved to <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 3px;">observability/reports-output/</code></li>
+                    </ul>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 16px 0 8px 0; color: #111827;">View Results</h3>
+
+                <div style="margin-bottom: 12px;">
+                    <strong style="display: block; margin-bottom: 8px; color: #111827;">Option 1: Report Explorer (Recommended)</strong>
+                    <div class="test-command">$ make explorer</div>
+                    <p style="color: #6b7280; font-size: 13px; margin-top: 8px;">
+                        Then navigate to: <a href="http://localhost:3000" style="color: #3b82f6;">http://localhost:3000</a>
+                        <br>Look for reports named <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 3px;">ab-demo-*.html</code>
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <strong style="display: block; margin-bottom: 8px; color: #111827;">Option 2: Direct HTML View</strong>
+                    <div class="test-command">$ ls -t observability/reports-output/ab-demo-*.html | head -1 | xargs open</div>
+                    <p style="color: #6b7280; font-size: 13px; margin-top: 8px;">
+                        Opens the latest demo report in your default browser
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <strong style="display: block; margin-bottom: 8px; color: #111827;">Option 3: View JSON Timeline</strong>
+                    <div class="test-command">$ cat observability/reports-output/ab-demo-*.json | jq '.'</div>
+                    <p style="color: #6b7280; font-size: 13px; margin-top: 8px;">
+                        Inspect the raw timeline data (requires <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 3px;">jq</code>)
+                    </p>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 20px 0 8px 0; color: #111827;">🎯 What You'll See</h3>
+                <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 6px; margin-top: 12px;">
+                    <ul style="list-style-position: inside; color: #065f46; font-size: 13px;">
+                        <li><strong>Message Flow:</strong> Visual timeline of every message exchanged</li>
+                        <li><strong>Validation Results:</strong> Quality scores and pass/fail status</li>
+                        <li><strong>Interaction Cycles:</strong> Complete generate-validate-feedback loops</li>
+                        <li><strong>Performance Metrics:</strong> Duration, message counts, throughput</li>
+                    </ul>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin: 20px 0 8px 0; color: #111827;">📖 Complete Documentation</h3>
+                <div style="margin-top: 8px;">
+                    <a href="../../recap/P0-AB-001-recap.md" style="color: #3b82f6; text-decoration: none; font-weight: 500;">
+                        📄 View Full Recap Document →
+                    </a>
+                    <p style="color: #6b7280; font-size: 13px; margin-top: 4px;">
+                        Includes architecture details, validation commands, and next steps
+                    </p>
+                </div>
+            </div>
 
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (0/6)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (6/6)</h2>
                 <ul class="task-list">
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 1: Create AgentA (Generator) class extending ProtocolBrokerAgent</span>
                     </li>
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 2: Create AgentB (Validator) class extending ProtocolBrokerAgent</span>
                     </li>
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 3: Implement simple generate-validate workflow</span>
                     </li>
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 4: Add observability hooks to Report Explorer</span>
                     </li>
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 5: Create demo runner script with CLI interface</span>
                     </li>
-                    
+
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
                         <span>Task 6: Add real-time visualization of A↔B messages</span>
                     </li>
-                    
+
                 </ul>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 0.0%"></div>
+                    <div class="progress-fill" style="width: 100%"></div>
                 </div>
-                <div class="progress-text">0.0% Complete</div>
+                <div class="progress-text">100% Complete</div>
             </div>
             
 
@@ -686,7 +762,11 @@ Success Criteria:
                 <h2 class="card-title">📊 Status & Metrics</h2>
                 <div class="info-row">
                     <span class="info-label">Status:</span>
-                    <span class="status-badge-large status-not-started">NOT STARTED</span>
+                    <span class="status-badge-large status-completed">✅ COMPLETED</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Completed:</span>
+                    <span class="info-value">2026-02-03</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Priority:</span>
@@ -698,18 +778,14 @@ Success Criteria:
                 </div>
                 <div class="info-row">
                     <span class="info-label">Effort:</span>
-                    <span class="info-value">10</span>
+                    <span class="info-value">10 points</span>
                 </div>
-                
+
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">1 weeks</span>
+                    <span class="info-value">1 week</span>
                 </div>
-                <div class="info-row">
-                    <span class="info-label">Risk:</span>
-                    <span class="info-value"></span>
-                </div>
-                
+
             </div>
 
             <!-- Dependencies -->
