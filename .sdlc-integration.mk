@@ -20,7 +20,7 @@ include $(SDLC_DIR)/make/testing.mk
 include $(SDLC_DIR)/make/backlog.mk
 include $(SDLC_DIR)/make/artifacts.mk
 include $(SDLC_DIR)/make/logging.mk
-include $(SDLC_DIR)/make/skills.mk
+-include $(SDLC_DIR)/make/skills.mk  # Optional - may not exist in remote version
 
 # Override key SDLC targets to ensure all services are running
 backlog-next: ensure-services
