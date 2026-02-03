@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a_domain - Developer Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #333;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+        }
+
+        .service-card.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+
+        .service-card.primary .service-meta {
+            border-top-color: rgba(255,255,255,0.3);
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .docs-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #333;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .docs-section h2 {
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .doc-link {
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: background 0.2s ease;
+            display: block;
+        }
+
+        .doc-link:hover {
+            background: #e5e7eb;
+        }
+
+        .doc-link-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .doc-link-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+
+        .service-card.primary .tech-badge {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 a_domain Developer Portal</h1>
+        <p>DDD Domain Registry & Unified Agent Interface</p>
+    </div>
+
+    <div class="container">
+        <!-- Primary Services -->
+        <div class="services-grid">
+            <a href="http://localhost:3000" target="_blank" class="service-card primary">
+                <div class="service-icon">📊</div>
+                <div class="service-title">Report Explorer</div>
+                <div class="service-description">
+                    Browse, search, and explore workflow timeline reports. Real-time monitoring of SDLC command execution with detailed metrics and statistics.
+                </div>
+                <div class="service-meta">
+                    <div>
+                        <span class="tech-badge">Express.js</span>
+                        <span class="tech-badge">Port 3000</span>
+                    </div>
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="http://localhost:8000/docs" target="_blank" class="service-card">
+                <div class="service-icon">🔌</div>
+                <div class="service-title">DataOps API</div>
+                <div class="service-description">
+                    REST API for dataset discovery, registry, and lifecycle management. Includes interactive Swagger UI documentation.
+                </div>
+                <div class="service-meta">
+                    <div>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">Port 8000</span>
+                    </div>
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="http://localhost:8000/redoc" target="_blank" class="service-card">
+                <div class="service-icon">📖</div>
+                <div class="service-title">API Documentation</div>
+                <div class="service-description">
+                    Alternative ReDoc documentation for the DataOps API with detailed endpoint specifications and examples.
+                </div>
+                <div class="service-meta">
+                    <div>
+                        <span class="tech-badge">ReDoc</span>
+                        <span class="tech-badge">Port 8000</span>
+                    </div>
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Documentation Section -->
+        <div class="docs-section">
+            <h2>📚 Documentation & Reports</h2>
+            <div class="docs-grid">
+                <a href="/docs/roadmaps/roadmap.html" target="_blank" class="doc-link">
+                    <div class="doc-link-title">🗺️ Product Roadmap</div>
+                    <div class="doc-link-meta">Feature roadmap & epics</div>
+                </a>
+                <a href="/ARCHITECTURE-SUMMARY.md" target="_blank" class="doc-link">
+                    <div class="doc-link-title">🏗️ Architecture</div>
+                    <div class="doc-link-meta">System architecture</div>
+                </a>
+                <a href="/SYSTEM-OVERVIEW.md" target="_blank" class="doc-link">
+                    <div class="doc-link-title">📋 System Overview</div>
+                    <div class="doc-link-meta">Complete overview</div>
+                </a>
+                <a href="/DOCUMENTATION-INDEX.md" target="_blank" class="doc-link">
+                    <div class="doc-link-title">📑 Docs Index</div>
+                    <div class="doc-link-meta">All documentation</div>
+                </a>
+                <a href="/docs/reports/documentation-coverage.html" target="_blank" class="doc-link">
+                    <div class="doc-link-title">📊 Coverage Report</div>
+                    <div class="doc-link-meta">Documentation metrics</div>
+                </a>
+                <a href="/.sdlc/PROJECT_REPORT.md" target="_blank" class="doc-link">
+                    <div class="doc-link-title">📝 SDLC Report</div>
+                    <div class="doc-link-meta">Framework status</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Auto-started with SDLC commands • <a href="/README-PORTAL.md" style="color: white;">Documentation</a></p>
+    </div>
+
+    <script>
+        // Check service status
+        async function checkServiceStatus() {
+            const services = [
+                { url: 'http://localhost:3000', element: document.querySelectorAll('.status-dot')[0] },
+                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[1] },
+                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[2] }
+            ];
+
+            for (const service of services) {
+                try {
+                    const response = await fetch(service.url, { mode: 'no-cors' });
+                    // If we get here, service is reachable
+                    service.element.style.background = '#10b981';
+                } catch (error) {
+                    // Service not reachable
+                    service.element.style.background = '#ef4444';
+                }
+            }
+        }
+
+        // Check status on load and every 10 seconds
+        checkServiceStatus();
+        setInterval(checkServiceStatus, 10000);
+
+        // Auto-refresh check
+        console.log('a_domain Developer Portal loaded');
+    </script>
+</body>
+</html>

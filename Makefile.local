@@ -1,4 +1,4 @@
-.PHONY: help xml-prompt xml-prompt-enhanced xml-prompt-ab validate-prompt test-workflow test-context-analysis test-ab-workflow view-latest-report view-report generate-report explorer explorer-install ux-review clean
+.PHONY: help portal start-services stop-services xml-prompt xml-prompt-enhanced xml-prompt-ab validate-prompt test-workflow test-context-analysis test-ab-workflow view-latest-report view-report generate-report explorer explorer-install ux-review clean
 
 # Colors for output
 GREEN := \033[0;32m
@@ -7,7 +7,20 @@ BLUE := \033[0;34m
 NC := \033[0m # No Color
 
 help:
-	@echo "$(BLUE)Prompt Engineering MCP Server - Makefile Commands$(NC)"
+	@echo "$(BLUE)a_domain Project - Makefile Commands$(NC)"
+	@echo ""
+	@echo "$(YELLOW)=== Web Services ===$(NC)"
+	@echo ""
+	@echo "$(GREEN)make portal$(NC)"
+	@echo "  Launch Developer Portal home page (auto-starts all services)"
+	@echo ""
+	@echo "$(GREEN)make start-services$(NC)"
+	@echo "  Start all web services (Portal, Explorer, DataOps API)"
+	@echo ""
+	@echo "$(GREEN)make stop-services$(NC)"
+	@echo "  Stop all background web services"
+	@echo ""
+	@echo "$(YELLOW)=== Prompt Engineering ===$(NC)"
 	@echo ""
 	@echo "$(GREEN)make xml-prompt TASK=\"your task description\"$(NC)"
 	@echo "  Generate and validate an XML prompt from natural language"
@@ -30,6 +43,8 @@ help:
 	@echo "$(GREEN)make test-ab-workflow$(NC)"
 	@echo "  Test integrated A/B agent workflow with context analysis"
 	@echo ""
+	@echo "$(YELLOW)=== Observability & Reports ===$(NC)"
+	@echo ""
 	@echo "$(GREEN)make view-latest-report$(NC)"
 	@echo "  View the latest workflow timeline report in browser"
 	@echo ""
@@ -48,11 +63,29 @@ help:
 	@echo "$(GREEN)make ux-review$(NC)"
 	@echo "  Run comprehensive UX review of timeline reports (creates user stories)"
 	@echo ""
+	@echo "$(BLUE)🌐 Auto-Start: All web services start automatically with SDLC commands$(NC)"
+	@echo "$(BLUE)   • Developer Portal:  http://localhost:3001$(NC)"
+	@echo "$(BLUE)   • Report Explorer:   http://localhost:3000$(NC)"
+	@echo "$(BLUE)   • DataOps API:       http://localhost:8000/docs$(NC)"
+	@echo ""
 	@echo "Examples:"
+	@echo "  make portal                  # Open unified home page"
+	@echo "  make backlog-status          # Auto-starts all services"
 	@echo "  make xml-prompt TASK=\"Create a prompt for meeting summarization\""
 	@echo "  make xml-prompt-ab TASK=\"Summarize customer feedback\"  (RECOMMENDED)"
 	@echo "  make validate-prompt FILE=\"output/my-prompt.xml\""
-	@echo "  make explorer  # Browse all reports in web UI"
+
+# Web Portal and Services
+portal: start-services
+	@echo "$(GREEN)🚀 Opening Developer Portal...$(NC)"
+	@sleep 2
+	@open http://localhost:3001 || echo "$(YELLOW)Please open http://localhost:3001 in your browser$(NC)"
+
+start-services:
+	@bash scripts/ensure-all-services.sh
+
+stop-services:
+	@bash scripts/stop-all-services.sh
 
 # Generate XML prompt from natural language task description
 xml-prompt:

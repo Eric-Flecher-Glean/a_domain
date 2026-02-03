@@ -62,3 +62,13 @@ htmlcov/
 # Environment files
 .env
 .env.local
+
+# Report Explorer background process
+.explorer.pid
+.logs/explorer.log
+
+# Web Portal background processes
+.portal.pid
+.dataops.pid
+.logs/portal.log
+.logs/dataops.log

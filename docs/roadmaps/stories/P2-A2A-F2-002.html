@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P0-A2A-F7-002 - Agent Protocol Bridge - Discovery Service</title>
+    <title>P2-A2A-F2-002 - DataOps - Provisioning & Teardown Automation</title>
     <style>
         /* Base Styles */
         * {
@@ -21,7 +21,7 @@
 
         /* Header with status color */
         .header {
-            background: #10b981;
+            background: #6b7280;
             color: white;
             padding: 24px 32px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -482,24 +482,24 @@
         </div>
 
         <div class="story-header">
-            <div class="story-id">P0-A2A-F7-002</div>
-            <h1 class="story-title">Agent Protocol Bridge - Discovery Service</h1>
+            <div class="story-id">P2-A2A-F2-002</div>
+            <h1 class="story-title">DataOps - Provisioning & Teardown Automation</h1>
             <div class="story-meta">
                 <div class="meta-item">
-                    <span>📊 Completed</span>
+                    <span>📊 Not Started</span>
                 </div>
                 <div class="meta-item">
-                    <span>P0</span>
+                    <span>P2</span>
                 </div>
                 <div class="meta-item">
-                    <span>30</span>
+                    <span>40</span>
                 </div>
                 
                 <div class="meta-item">
-                    <span>📅 Weeks 2</span>
+                    <span>📅 Weeks 5-6</span>
                 </div>
                 <div class="meta-item">
-                    <span>📂 Foundation & Protocol</span>
+                    <span>📂 No Phase</span>
                 </div>
                 
             </div>
@@ -513,16 +513,18 @@
             <!-- Description -->
             <div class="card">
                 <h2 class="card-title">📋 Description</h2>
-                <div class="description">Implement agent capability discovery service for dynamic collaboration.
+                <div class="description">Automate dataset provisioning and teardown for client environments.
 
 Problem:
-- Agents cannot find collaborators without hardcoded knowledge
-- No way to query for agents with specific capabilities
+- Manual dataset creation takes 2-3 days
+- No automated cleanup, leaving orphaned datasets
+- Connector configuration manual and error-prone
 
 Solution:
-- CapabilityDiscoveryAgent: Publishes agent capabilities, allows queries
-- Maintains compatibility matrix between agents
-- Enables intent-based discovery (e.g., "intent:provision_test_dataset")
+- DatasetProvisioningAgent: Creates datasets from templates
+- Populates with mock data from medtronic_mock_data
+- Configures Glean data connectors
+- DataTeardownAgent: Safely removes datasets when stage complete
 </div>
             </div>
 
@@ -532,31 +534,31 @@ Solution:
                 <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
                 <ul class="ac-list">
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC1: Agents can register capabilities in standard format</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC1: Datasets provisioned in <1 hour</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC2: Query interface supports intent-based discovery</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC2: Mock data populated from medtronic_mock_data</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC3: Compatibility matrix prevents incompatible pairings</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC3: Connectors auto-configured</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC4: Discovery service handles 10+ registered agents</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC4: Teardown archives data and cleans up</span>
                         </div>
                     </li>
                     
@@ -571,16 +573,16 @@ Solution:
                 
                 <div class="test-case">
                     <div class="test-header">
-                        Test Case: AC2 - Verify intent-based discovery
+                        Test Case: AC1 - Verify provisioning speed
                     </div>
                     
                     <div style="margin-top: 8px;">
                         
-                        <div class="test-command">$ uv run tests/integration/test_capability_discovery.py</div>
+                        <div class="test-command">$ time uv run tests/integration/test_dataset_provisioning.py</div>
                         <div class="test-expected">
-                            <strong>Expected:</strong> test_intent_query PASSED<br>
+                            <strong>Expected:</strong> real.*0m[0-5][0-9].*<br>
                             <strong>Exit Code:</strong> 0<br>
-                            <strong>Success:</strong> Query returns matching agents for intent
+                            <strong>Success:</strong> Provisioning completes in <1 hour
                         </div>
                         
                     </div>
@@ -593,34 +595,34 @@ Solution:
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (4/4)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (0/4)</h2>
                 <ul class="task-list">
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 1: Implement CapabilityDiscoveryAgent</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 1: Implement DatasetProvisioningAgent</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 2: Create capability schema and registry</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 2: Integrate with medtronic_mock_data for test data</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 3: Add intent-based query interface</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 3: Add Glean connector configuration</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 4: Build compatibility matrix</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 4: Implement DataTeardownAgent with archival</span>
                     </li>
                     
                 </ul>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100.0%"></div>
+                    <div class="progress-fill" style="width: 0.0%"></div>
                 </div>
-                <div class="progress-text">100.0% Complete</div>
+                <div class="progress-text">0.0% Complete</div>
             </div>
             
 
@@ -635,28 +637,28 @@ Solution:
                 <h2 class="card-title">📊 Status & Metrics</h2>
                 <div class="info-row">
                     <span class="info-label">Status:</span>
-                    <span class="status-badge-large status-completed">COMPLETED</span>
+                    <span class="status-badge-large status-not-started">NOT STARTED</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Priority:</span>
-                    <span class="priority-badge-large priority-P0">P0</span>
+                    <span class="priority-badge-large priority-P2">P2</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Type:</span>
-                    <span class="info-value">Infrastructure</span>
+                    <span class="info-value">Feature</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Effort:</span>
-                    <span class="info-value">30</span>
+                    <span class="info-value">40</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">2 weeks</span>
+                    <span class="info-value">5-6 weeks</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Risk:</span>
-                    <span class="info-value">Medium</span>
+                    <span class="info-value">High</span>
                 </div>
                 
             </div>
@@ -669,8 +671,8 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P0-A2A-F7-001.html" class="dep-link">→ Agent Protocol Bridge - Core Protocol Implementation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F7-001</div>
+                        <a href="P0-A2A-F2-001.html" class="dep-link">→ DataOps - Dataset Discovery & Registry</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F2-001</div>
                     </li>
                     
                 </ul>
@@ -681,8 +683,18 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P2-A2A-F7-003.html" class="dep-link">→ Agent Protocol Bridge - Hyperlight Sandboxing</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P2-A2A-F7-003</div>
+                        <a href="P1-A2A-F2-003.html" class="dep-link">→ DataOps - Quality Validation Pipeline</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F2-003</div>
+                    </li>
+                    
+                    <li class="dep-item">
+                        <a href="P1-A2A-F3-001.html" class="dep-link">→ Flow Builder - Natural Language Workflow Designer</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F3-001</div>
+                    </li>
+                    
+                    <li class="dep-item">
+                        <a href="P1-A2A-F5-001.html" class="dep-link">→ Personal Workspace - Data Inventory & Knowledge Graph</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F5-001</div>
                     </li>
                     
                 </ul>
@@ -700,20 +712,7 @@ Solution:
                         
                     </span>
                     <div style="flex: 1;">
-                        <a href="../../../docs/architecture/ddd-specification.md" class="doc-link">DDD Specification - Agent-to-Agent Platform</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/agent-protocol-bridge-architecture.md" class="doc-link">System Architecture - Agent Protocol Bridge</a>
+                        <a href="../../../docs/architecture/dataops-data-architecture.md" class="doc-link">Data Architecture - DataOps Lifecycle</a>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
                             Defines • Architecture
                         </div>
@@ -726,22 +725,9 @@ Solution:
                         
                     </span>
                     <div style="flex: 1;">
-                        <a href="../../../docs/ddd/agent-communication-bounded-context.md" class="doc-link">Agent Communication Platform - Bounded Context</a>
+                        <a href="../../../docs/ddd/dataops-lifecycle-bounded-context.md" class="doc-link">DataOps Lifecycle - Bounded Context</a>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
                             Defines • Ddd
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📅
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/planning/p0-a2a-f7-002-implementation-plan.md" class="doc-link">Agent Protocol Bridge - Discovery Service - Implementation Plan</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Planning
                         </div>
                     </div>
                 </div>
@@ -752,7 +738,20 @@ Solution:
                         
                     </span>
                     <div style="flex: 1;">
-                        <a href="../../../docs/designs/agent-protocol-bridge-design.md" class="doc-link">Agent Protocol Bridge - Technical Design</a>
+                        <a href="../../../docs/designs/dataset-discovery-api-design.md" class="doc-link">Dataset Discovery & Registry - API Design</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
+                            Specifies • Design
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="doc-item">
+                    <span class="doc-icon">
+                        📋
+                        
+                    </span>
+                    <div style="flex: 1;">
+                        <a href="../../../docs/designs/dataset-provisioning-workflow.md" class="doc-link">Dataset Provisioning Automation - Workflow Design</a>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
                             Specifies • Design
                         </div>
@@ -765,20 +764,7 @@ Solution:
                         
                     </span>
                     <div style="flex: 1;">
-                        <a href="../../../docs/technical/protocol-specification-v1.0.md" class="doc-link">Protocol Specification v1.0</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Technical
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/agent-registry-api.md" class="doc-link">Agent Registry API Documentation</a>
+                        <a href="../../../docs/technical/dataops-api-reference.md" class="doc-link">DataOps Lifecycle - API Reference</a>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
                             Documents • Technical
                         </div>
@@ -799,7 +785,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">💼 Business Impact</h2>
                 <div class="description" style="font-size: 13px;">
-                    Enables zero-code integrations - new agents auto-discover collaborators
+                    96% reduction in dataset provisioning time
                 </div>
             </div>
             

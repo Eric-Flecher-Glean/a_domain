@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P0-A2A-F7-002 - Agent Protocol Bridge - Discovery Service</title>
+    <title>P0-AB-001 - A/B Agent Demo - Proof of Concept</title>
     <style>
         /* Base Styles */
         * {
@@ -21,7 +21,7 @@
 
         /* Header with status color */
         .header {
-            background: #10b981;
+            background: #6b7280;
             color: white;
             padding: 24px 32px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -482,24 +482,24 @@
         </div>
 
         <div class="story-header">
-            <div class="story-id">P0-A2A-F7-002</div>
-            <h1 class="story-title">Agent Protocol Bridge - Discovery Service</h1>
+            <div class="story-id">P0-AB-001</div>
+            <h1 class="story-title">A/B Agent Demo - Proof of Concept</h1>
             <div class="story-meta">
                 <div class="meta-item">
-                    <span>📊 Completed</span>
+                    <span>📊 Not Started</span>
                 </div>
                 <div class="meta-item">
                     <span>P0</span>
                 </div>
                 <div class="meta-item">
-                    <span>30</span>
+                    <span>10</span>
                 </div>
                 
                 <div class="meta-item">
-                    <span>📅 Weeks 2</span>
+                    <span>📅 Weeks 1</span>
                 </div>
                 <div class="meta-item">
-                    <span>📂 Foundation & Protocol</span>
+                    <span>📂 No Phase</span>
                 </div>
                 
             </div>
@@ -513,50 +513,73 @@
             <!-- Description -->
             <div class="card">
                 <h2 class="card-title">📋 Description</h2>
-                <div class="description">Implement agent capability discovery service for dynamic collaboration.
+                <div class="description">Build minimal working demo of A/B agent collaboration with observability.
 
-Problem:
-- Agents cannot find collaborators without hardcoded knowledge
-- No way to query for agents with specific capabilities
+Goal: Prove the agent-to-agent architecture works and can be observed in real-time.
 
-Solution:
-- CapabilityDiscoveryAgent: Publishes agent capabilities, allows queries
-- Maintains compatibility matrix between agents
-- Enables intent-based discovery (e.g., "intent:provision_test_dataset")
+Components:
+- Agent A (Generator): Creates prompts/tasks/content
+- Agent B (Validator): Reviews, validates, and provides feedback
+- Observation Layer: Real-time visualization in Report Explorer
+
+Implementation:
+- Use existing ProtocolBrokerAgent for communication
+- Use existing Journey Orchestration for workflow
+- Add observability hooks to Report Explorer
+- Create demo script showing A↔B interaction loop
+
+Business Value:
+- Validates architecture in days vs weeks
+- Provides observable A/B pattern foundation
+- Enables rapid iteration on agent collaboration
+- Can evolve into production features
+
+Success Criteria:
+- Agent A and Agent B communicate via protocol bridge
+- Message flow visible in Report Explorer
+- Generate-validate-refine loop observable
+- Can run demo and watch agents collaborate in real-time
 </div>
             </div>
 
             <!-- Acceptance Criteria -->
             
             <div class="card">
-                <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
+                <h2 class="card-title">✓ Acceptance Criteria (5)</h2>
                 <ul class="ac-list">
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC1: Agents can register capabilities in standard format</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC1: Agent A generates content and sends to Agent B via protocol bridge</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC2: Query interface supports intent-based discovery</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC2: Agent B validates and responds with feedback</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC3: Compatibility matrix prevents incompatible pairings</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC3: Message flow appears in Report Explorer timeline</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC4: Discovery service handles 10+ registered agents</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC4: Demo script runs end-to-end showing 3+ interaction cycles</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item ">
+                        <div class="ac-header">
+                            <span class="ac-icon">☐</span>
+                            <span>AC5: Can observe agent collaboration in web portal</span>
                         </div>
                     </li>
                     
@@ -571,16 +594,34 @@ Solution:
                 
                 <div class="test-case">
                     <div class="test-header">
-                        Test Case: AC2 - Verify intent-based discovery
+                        Test Case: AC1 - Verify Agent A sends messages to Agent B
                     </div>
                     
                     <div style="margin-top: 8px;">
                         
-                        <div class="test-command">$ uv run tests/integration/test_capability_discovery.py</div>
+                        <div class="test-command">$ python demo/ab_agents_demo.py --iterations=1</div>
                         <div class="test-expected">
-                            <strong>Expected:</strong> test_intent_query PASSED<br>
-                            <strong>Exit Code:</strong> 0<br>
-                            <strong>Success:</strong> Query returns matching agents for intent
+                            <strong>Expected:</strong> Agent A → Agent B: Message sent<br>
+                            <strong>Exit Code:</strong> <br>
+                            <strong>Success:</strong> Message successfully routed
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC4 - Verify full interaction loop
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ python demo/ab_agents_demo.py --iterations=3</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> Completed 3 interaction cycles<br>
+                            <strong>Exit Code:</strong> <br>
+                            <strong>Success:</strong> All cycles complete successfully
                         </div>
                         
                     </div>
@@ -593,34 +634,44 @@ Solution:
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (4/4)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (0/6)</h2>
                 <ul class="task-list">
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 1: Implement CapabilityDiscoveryAgent</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 1: Create AgentA (Generator) class extending ProtocolBrokerAgent</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 2: Create capability schema and registry</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 2: Create AgentB (Validator) class extending ProtocolBrokerAgent</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 3: Add intent-based query interface</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 3: Implement simple generate-validate workflow</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 4: Build compatibility matrix</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 4: Add observability hooks to Report Explorer</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 5: Create demo runner script with CLI interface</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 6: Add real-time visualization of A↔B messages</span>
                     </li>
                     
                 </ul>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100.0%"></div>
+                    <div class="progress-fill" style="width: 0.0%"></div>
                 </div>
-                <div class="progress-text">100.0% Complete</div>
+                <div class="progress-text">0.0% Complete</div>
             </div>
             
 
@@ -635,7 +686,7 @@ Solution:
                 <h2 class="card-title">📊 Status & Metrics</h2>
                 <div class="info-row">
                     <span class="info-label">Status:</span>
-                    <span class="status-badge-large status-completed">COMPLETED</span>
+                    <span class="status-badge-large status-not-started">NOT STARTED</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Priority:</span>
@@ -643,20 +694,20 @@ Solution:
                 </div>
                 <div class="info-row">
                     <span class="info-label">Type:</span>
-                    <span class="info-value">Infrastructure</span>
+                    <span class="info-value">Proof of Concept</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Effort:</span>
-                    <span class="info-value">30</span>
+                    <span class="info-value">10</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">2 weeks</span>
+                    <span class="info-value">1 weeks</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Risk:</span>
-                    <span class="info-value">Medium</span>
+                    <span class="info-value"></span>
                 </div>
                 
             </div>
@@ -665,15 +716,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">🔗 Dependencies</h2>
                 
-                <h3 style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #6b7280;">Depends On:</h3>
-                <ul class="dep-list">
-                    
-                    <li class="dep-item">
-                        <a href="P0-A2A-F7-001.html" class="dep-link">→ Agent Protocol Bridge - Core Protocol Implementation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F7-001</div>
-                    </li>
-                    
-                </ul>
+                <div class="empty-state" style="padding: 16px;">No dependencies</div>
                 
 
                 
@@ -681,8 +724,8 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P2-A2A-F7-003.html" class="dep-link">→ Agent Protocol Bridge - Hyperlight Sandboxing</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P2-A2A-F7-003</div>
+                        <a href="P1-AB-002.html" class="dep-link">→ Enhanced Journey Orchestration with A/B Agent Patterns</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-AB-002</div>
                     </li>
                     
                 </ul>
@@ -690,102 +733,6 @@ Solution:
             </div>
 
             <!-- Related Documentation -->
-            
-            <div class="card">
-                <h2 class="card-title">📄 Related Documentation</h2>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/ddd-specification.md" class="doc-link">DDD Specification - Agent-to-Agent Platform</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/agent-protocol-bridge-architecture.md" class="doc-link">System Architecture - Agent Protocol Bridge</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📐
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/ddd/agent-communication-bounded-context.md" class="doc-link">Agent Communication Platform - Bounded Context</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Ddd
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📅
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/planning/p0-a2a-f7-002-implementation-plan.md" class="doc-link">Agent Protocol Bridge - Discovery Service - Implementation Plan</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Planning
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📋
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/designs/agent-protocol-bridge-design.md" class="doc-link">Agent Protocol Bridge - Technical Design</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Design
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/protocol-specification-v1.0.md" class="doc-link">Protocol Specification v1.0</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Technical
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/agent-registry-api.md" class="doc-link">Agent Registry API Documentation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Documents • Technical
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
             
 
             <!-- Source Artifacts -->
@@ -799,7 +746,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">💼 Business Impact</h2>
                 <div class="description" style="font-size: 13px;">
-                    Enables zero-code integrations - new agents auto-discover collaborators
+                    Validates A/B architecture, enables rapid development
                 </div>
             </div>
             

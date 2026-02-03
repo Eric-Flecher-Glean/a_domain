@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P0-A2A-F7-002 - Agent Protocol Bridge - Discovery Service</title>
+    <title>P0-A2A-F8-000 - Requirements Chat - SDLC Control Plane & Interactive Roadmap</title>
     <style>
         /* Base Styles */
         * {
@@ -482,8 +482,8 @@
         </div>
 
         <div class="story-header">
-            <div class="story-id">P0-A2A-F7-002</div>
-            <h1 class="story-title">Agent Protocol Bridge - Discovery Service</h1>
+            <div class="story-id">P0-A2A-F8-000</div>
+            <h1 class="story-title">Requirements Chat - SDLC Control Plane & Interactive Roadmap</h1>
             <div class="story-meta">
                 <div class="meta-item">
                     <span>📊 Completed</span>
@@ -492,14 +492,14 @@
                     <span>P0</span>
                 </div>
                 <div class="meta-item">
-                    <span>30</span>
+                    <span>40</span>
                 </div>
                 
                 <div class="meta-item">
-                    <span>📅 Weeks 2</span>
+                    <span>📅 Weeks 1-2</span>
                 </div>
                 <div class="meta-item">
-                    <span>📂 Foundation & Protocol</span>
+                    <span>📂 No Phase</span>
                 </div>
                 
             </div>
@@ -513,50 +513,85 @@
             <!-- Description -->
             <div class="card">
                 <h2 class="card-title">📋 Description</h2>
-                <div class="description">Implement agent capability discovery service for dynamic collaboration.
+                <div class="description">Interactive requirements gathering for SDLC Control Plane using /sdlc.new-feature-chat.
 
-Problem:
-- Agents cannot find collaborators without hardcoded knowledge
-- No way to query for agents with specific capabilities
+Purpose:
+- Transform static roadmap HTML into interactive SDLC control plane
+- Enable browser-based workflow execution via Textual terminal integration
+- Provide smart recommendations for next SDLC actions based on backlog state
 
-Solution:
-- CapabilityDiscoveryAgent: Publishes agent capabilities, allows queries
-- Maintains compatibility matrix between agents
-- Enables intent-based discovery (e.g., "intent:provision_test_dataset")
+Current Problem:
+- Roadmap HTML is static visualization only (no interaction)
+- Engineers context-switch between browser (viewing) and terminal (executing)
+- No recommended next actions based on backlog priority and state
+- Cannot execute SDLC workflows from browser
+
+Proposed Solution Components:
+1. Linear Backlog View: New web component showing prioritized stories in execution order
+2. Smart Recommendation Engine: Analyzes backlog state → suggests next action (/implement, /test, /quality)
+3. Textual Terminal Integration: 100% horizontal pane running Claude Code in browser
+4. Tabbed Button Bar: Click-to-execute SDLC commands in Textual UI
+5. Browser-Terminal Bridge: WebSocket/API layer connecting web app context to terminal
+
+Design Sprint Deliverables:
+- Technical architecture document (browser ↔ Textual ↔ Claude Code integration)
+- Smart recommendation algorithm specification
+- UX wireframes (linear backlog + button bar layout)
+- Feasibility analysis (Textual in browser via textual serve/textual-web)
+- Session management design (maintaining Claude Code context across clicks)
+- Security model (browser-initiated SDLC command execution)
+
+Strategic Value:
+- Shortens cycle time by giving Claude Code direct access to user's current state
+- User views roadmap/backlog in browser → system recommends next action → executes in-browser
+- Eliminates context switching between visualization and execution environments
+
+Success Criteria:
+- Complete architecture covering all 5 components
+- Feasibility validated for running Textual in browser via textual serve
+- UX mockups show seamless roadmap → action → execution flow
+- Technical design enables full Claude Code capabilities in browser terminal
 </div>
             </div>
 
             <!-- Acceptance Criteria -->
             
             <div class="card">
-                <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
+                <h2 class="card-title">✓ Acceptance Criteria (5)</h2>
                 <ul class="ac-list">
                     
                     <li class="ac-item completed">
                         <div class="ac-header">
                             <span class="ac-icon">☑</span>
-                            <span>AC1: Agents can register capabilities in standard format</span>
+                            <span>AC1: Terminal widget evaluation complete with performance benchmarks comparing textual-terminal vs custom implementation, including recommendation for Claude Code embedding</span>
                         </div>
                     </li>
                     
                     <li class="ac-item completed">
                         <div class="ac-header">
                             <span class="ac-icon">☑</span>
-                            <span>AC2: Query interface supports intent-based discovery</span>
+                            <span>AC2: Smart recommendation algorithm fully specified with pseudocode, input schema (backlog state), output schema (ranked SDLC actions), and decision tree logic</span>
                         </div>
                     </li>
                     
                     <li class="ac-item completed">
                         <div class="ac-header">
                             <span class="ac-icon">☑</span>
-                            <span>AC3: Compatibility matrix prevents incompatible pairings</span>
+                            <span>AC3: Architecture diagrams document Textual-web deployment model, browser ↔ Python communication layer, and session management for Claude Code context preservation</span>
                         </div>
                     </li>
                     
                     <li class="ac-item completed">
                         <div class="ac-header">
                             <span class="ac-icon">☑</span>
-                            <span>AC4: Discovery service handles 10+ registered agents</span>
+                            <span>AC4: UX mockups show complete user journey: roadmap view → linear backlog → tabbed button bar → terminal execution, with component specifications for 100% horizontal pane layout</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item completed">
+                        <div class="ac-header">
+                            <span class="ac-icon">☑</span>
+                            <span>AC5: Data flow documented for roadmap HTML → Textual app integration, including JavaScript-Python bridge contract and backlog state synchronization mechanism</span>
                         </div>
                     </li>
                     
@@ -571,16 +606,88 @@ Solution:
                 
                 <div class="test-case">
                     <div class="test-header">
-                        Test Case: AC2 - Verify intent-based discovery
+                        Test Case: AC1 - Terminal widget evaluation document exists with performance benchmarks and recommendation
                     </div>
                     
                     <div style="margin-top: 8px;">
                         
-                        <div class="test-command">$ uv run tests/integration/test_capability_discovery.py</div>
+                        <div class="test-command">$ uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-terminal-widget-evaluation.md --required-sections 'Performance Benchmarks,Recommendation,textual-terminal Analysis'</div>
                         <div class="test-expected">
-                            <strong>Expected:</strong> test_intent_query PASSED<br>
+                            <strong>Expected:</strong> ✓ All required sections present<br>
                             <strong>Exit Code:</strong> 0<br>
-                            <strong>Success:</strong> Query returns matching agents for intent
+                            <strong>Success:</strong> Document exists with performance data and clear recommendation
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC2 - Smart recommendation algorithm specification includes pseudocode and schemas
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-recommendation-algorithm.md --required-sections 'Algorithm Pseudocode,Input Schema,Output Schema,Decision Tree'</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> ✓ All required sections present<br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Algorithm fully specified with executable pseudocode and data contracts
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC3 - Textual-web architecture documented with deployment model and session management
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ uv run .sdlc/scripts/validate_design_deliverable.py docs/architecture/f8-textual-web-integration.md --required-sections 'Deployment Architecture,Session Management,Communication Layer'</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> ✓ All required sections present<br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Complete architecture with diagrams for browser deployment and state management
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC4 - UX mockups document complete user journey with component specifications
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-ux-mockups.md --required-sections 'User Journey,Button Bar Design,Linear Backlog Component,Terminal Pane Layout' --require-images 3</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> ✓ All required sections present, ✓ Minimum 3 images/diagrams found<br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Visual mockups show end-to-end flow with component specs
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="test-case">
+                    <div class="test-header">
+                        Test Case: AC5 - Browser-roadmap bridge design documents data flow and JavaScript-Python contract
+                    </div>
+                    
+                    <div style="margin-top: 8px;">
+                        
+                        <div class="test-command">$ uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-browser-bridge.md --required-sections 'Data Flow Diagram,JS-Python API Contract,State Synchronization'</div>
+                        <div class="test-expected">
+                            <strong>Expected:</strong> ✓ All required sections present<br>
+                            <strong>Exit Code:</strong> 0<br>
+                            <strong>Success:</strong> Integration design complete with API contracts and sync mechanism
                         </div>
                         
                     </div>
@@ -593,27 +700,32 @@ Solution:
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (4/4)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (5/5)</h2>
                 <ul class="task-list">
                     
                     <li class="task-item">
                         <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 1: Implement CapabilityDiscoveryAgent</span>
+                        <span>Task 1: Textual Terminal Widget Evaluation - Assess textual-terminal widget performance vs custom terminal implementation for embedding Claude Code terminal in Textual TUI</span>
                     </li>
                     
                     <li class="task-item">
                         <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 2: Create capability schema and registry</span>
+                        <span>Task 2: Smart Recommendation Engine Design - Specify algorithm for analyzing backlog state (priority, status, dependencies) and suggesting next SDLC actions for tabbed button bar</span>
                     </li>
                     
                     <li class="task-item">
                         <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 3: Add intent-based query interface</span>
+                        <span>Task 3: Textual-Web Integration Architecture - Design deployment using textual serve/textual-web to run TUI app in browser, including session management and state synchronization with roadmap HTML</span>
                     </li>
                     
                     <li class="task-item">
                         <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 4: Build compatibility matrix</span>
+                        <span>Task 4: UX Design - Textual Button Bar & Linear Backlog - Create component design for tabbed button bar (SDLC action triggers), linear backlog view, and 100% horizontal terminal pane layout</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 5: Browser-Roadmap Bridge Design - Document data flow between static roadmap HTML (backlog context) and Textual app (button recommendations), including JavaScript ↔ Python communication</span>
                     </li>
                     
                 </ul>
@@ -643,16 +755,16 @@ Solution:
                 </div>
                 <div class="info-row">
                     <span class="info-label">Type:</span>
-                    <span class="info-value">Infrastructure</span>
+                    <span class="info-value">Documentation</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Effort:</span>
-                    <span class="info-value">30</span>
+                    <span class="info-value">40</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">2 weeks</span>
+                    <span class="info-value">1-2 weeks</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Risk:</span>
@@ -665,127 +777,13 @@ Solution:
             <div class="card">
                 <h2 class="card-title">🔗 Dependencies</h2>
                 
-                <h3 style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #6b7280;">Depends On:</h3>
-                <ul class="dep-list">
-                    
-                    <li class="dep-item">
-                        <a href="P0-A2A-F7-001.html" class="dep-link">→ Agent Protocol Bridge - Core Protocol Implementation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F7-001</div>
-                    </li>
-                    
-                </ul>
+                <div class="empty-state" style="padding: 16px;">No dependencies</div>
                 
 
-                
-                <h3 style="font-size: 13px; font-weight: 600; margin: 16px 0 8px 0; color: #6b7280;">Blocks:</h3>
-                <ul class="dep-list">
-                    
-                    <li class="dep-item">
-                        <a href="P2-A2A-F7-003.html" class="dep-link">→ Agent Protocol Bridge - Hyperlight Sandboxing</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P2-A2A-F7-003</div>
-                    </li>
-                    
-                </ul>
                 
             </div>
 
             <!-- Related Documentation -->
-            
-            <div class="card">
-                <h2 class="card-title">📄 Related Documentation</h2>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/ddd-specification.md" class="doc-link">DDD Specification - Agent-to-Agent Platform</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/agent-protocol-bridge-architecture.md" class="doc-link">System Architecture - Agent Protocol Bridge</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📐
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/ddd/agent-communication-bounded-context.md" class="doc-link">Agent Communication Platform - Bounded Context</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Ddd
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📅
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/planning/p0-a2a-f7-002-implementation-plan.md" class="doc-link">Agent Protocol Bridge - Discovery Service - Implementation Plan</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Planning
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📋
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/designs/agent-protocol-bridge-design.md" class="doc-link">Agent Protocol Bridge - Technical Design</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Design
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/protocol-specification-v1.0.md" class="doc-link">Protocol Specification v1.0</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Technical
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/agent-registry-api.md" class="doc-link">Agent Registry API Documentation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Documents • Technical
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
             
 
             <!-- Source Artifacts -->
@@ -799,7 +797,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">💼 Business Impact</h2>
                 <div class="description" style="font-size: 13px;">
-                    Enables zero-code integrations - new agents auto-discover collaborators
+                    Eliminates context switching, enables browser-based SDLC workflow execution, shortens cycle time with smart action recommendations
                 </div>
             </div>
             

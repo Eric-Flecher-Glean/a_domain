@@ -4,6 +4,16 @@
 # Define SDLC base directory
 SDLC_DIR := .sdlc/.sdlc
 
+# Auto-start all web services for observability and UX
+.PHONY: ensure-services
+ensure-services:
+	@bash scripts/ensure-all-services.sh
+
+# Legacy aliases (stop-services defined in Makefile.local)
+.PHONY: ensure-explorer stop-explorer
+ensure-explorer: ensure-services
+stop-explorer: stop-services
+
 # Include all SDLC modules with correct paths
 include $(SDLC_DIR)/make/governance.mk
 include $(SDLC_DIR)/make/testing.mk
@@ -11,6 +21,16 @@ include $(SDLC_DIR)/make/backlog.mk
 include $(SDLC_DIR)/make/artifacts.mk
 include $(SDLC_DIR)/make/logging.mk
 include $(SDLC_DIR)/make/skills.mk
+
+# Override key SDLC targets to ensure all services are running
+backlog-next: ensure-services
+backlog-status: ensure-services
+backlog-in-progress: ensure-services
+backlog-blocked: ensure-services
+session-start: ensure-services
+governance: ensure-services
+test-gate: ensure-services
+register-artifacts: ensure-services
 
 # SDLC framework help (custom version)
 .PHONY: show-sdlc-help
@@ -38,5 +58,13 @@ show-sdlc-help:
 	@echo "Skills:"
 	@grep -E '^[a-z-]+:.*##' $(SDLC_DIR)/make/skills.mk | sed 's/:.*##/  /' || true
 	@echo ""
+	@echo "Web Services:"
+	@echo "  ensure-services  Auto-start all web services (Portal, Explorer, API)"
+	@echo "  stop-services    Stop all background web services"
+	@echo ""
+	@echo "Note: All web services auto-start with SDLC commands"
+	@echo "      • Developer Portal:  http://localhost:3001"
+	@echo "      • Report Explorer:   http://localhost:3000"
+	@echo "      • DataOps API:       http://localhost:8000/docs"
 	@echo "Note: Use '/plan', '/implement', '/test', '/deploy' Claude skills for full SDLC workflow"
 	@echo "See .sdlc/README.md for complete documentation"

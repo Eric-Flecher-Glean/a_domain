@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P0-A2A-F7-002 - Agent Protocol Bridge - Discovery Service</title>
+    <title>P1-AB-002 - Enhanced Journey Orchestration with A/B Agent Patterns</title>
     <style>
         /* Base Styles */
         * {
@@ -21,7 +21,7 @@
 
         /* Header with status color */
         .header {
-            background: #10b981;
+            background: #6b7280;
             color: white;
             padding: 24px 32px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -482,24 +482,24 @@
         </div>
 
         <div class="story-header">
-            <div class="story-id">P0-A2A-F7-002</div>
-            <h1 class="story-title">Agent Protocol Bridge - Discovery Service</h1>
+            <div class="story-id">P1-AB-002</div>
+            <h1 class="story-title">Enhanced Journey Orchestration with A/B Agent Patterns</h1>
             <div class="story-meta">
                 <div class="meta-item">
-                    <span>📊 Completed</span>
+                    <span>📊 Not Started</span>
                 </div>
                 <div class="meta-item">
-                    <span>P0</span>
+                    <span>P1</span>
                 </div>
                 <div class="meta-item">
-                    <span>30</span>
+                    <span>20</span>
                 </div>
                 
                 <div class="meta-item">
-                    <span>📅 Weeks 2</span>
+                    <span>📅 Weeks 2-3</span>
                 </div>
                 <div class="meta-item">
-                    <span>📂 Foundation & Protocol</span>
+                    <span>📂 No Phase</span>
                 </div>
                 
             </div>
@@ -513,50 +513,74 @@
             <!-- Description -->
             <div class="card">
                 <h2 class="card-title">📋 Description</h2>
-                <div class="description">Implement agent capability discovery service for dynamic collaboration.
+                <div class="description">Extend Journey Orchestration framework with reusable A/B agent patterns.
 
-Problem:
-- Agents cannot find collaborators without hardcoded knowledge
-- No way to query for agents with specific capabilities
+Goal: Make A/B collaboration a first-class pattern in the orchestration framework.
 
-Solution:
-- CapabilityDiscoveryAgent: Publishes agent capabilities, allows queries
-- Maintains compatibility matrix between agents
-- Enables intent-based discovery (e.g., "intent:provision_test_dataset")
+Patterns to Implement:
+1. Generate-Validate: One agent generates, another validates
+2. Propose-Critique-Refine: Iterative improvement loop
+3. Parallel-Consensus: Multiple agents propose, reach consensus
+4. Sequential-Handoff: Chain of specialized agents
+
+Implementation:
+- Extend Unit of Work Executor with A/B workflow templates
+- Add pattern definitions to workflow DSL
+- Enhance observability to highlight A↔B interactions
+- Create reusable agent base classes for each pattern
+
+Business Value:
+- Accelerates building new A/B features
+- Provides proven patterns for agent collaboration
+- Reduces implementation time by 50%
+- Observable collaboration out of the box
+
+Success Criteria:
+- 4 A/B patterns available as templates
+- Can create new A/B workflow in <1 hour
+- All patterns include observability hooks
+- Documentation with examples for each pattern
 </div>
             </div>
 
             <!-- Acceptance Criteria -->
             
             <div class="card">
-                <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
+                <h2 class="card-title">✓ Acceptance Criteria (5)</h2>
                 <ul class="ac-list">
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC1: Agents can register capabilities in standard format</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC1: Generate-Validate pattern available as workflow template</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC2: Query interface supports intent-based discovery</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC2: Propose-Critique-Refine pattern supports iterative loops</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC3: Compatibility matrix prevents incompatible pairings</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC3: Pattern usage reduces boilerplate by 50%</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item completed">
+                    <li class="ac-item ">
                         <div class="ac-header">
-                            <span class="ac-icon">☑</span>
-                            <span>AC4: Discovery service handles 10+ registered agents</span>
+                            <span class="ac-icon">☐</span>
+                            <span>AC4: All patterns include built-in observability</span>
+                        </div>
+                    </li>
+                    
+                    <li class="ac-item ">
+                        <div class="ac-header">
+                            <span class="ac-icon">☐</span>
+                            <span>AC5: Documentation includes working example for each pattern</span>
                         </div>
                     </li>
                     
@@ -571,16 +595,16 @@ Solution:
                 
                 <div class="test-case">
                     <div class="test-header">
-                        Test Case: AC2 - Verify intent-based discovery
+                        Test Case: AC1 - Verify Generate-Validate pattern
                     </div>
                     
                     <div style="margin-top: 8px;">
                         
-                        <div class="test-command">$ uv run tests/integration/test_capability_discovery.py</div>
+                        <div class="test-command">$ python tests/test_ab_patterns.py TestGenerateValidate</div>
                         <div class="test-expected">
-                            <strong>Expected:</strong> test_intent_query PASSED<br>
-                            <strong>Exit Code:</strong> 0<br>
-                            <strong>Success:</strong> Query returns matching agents for intent
+                            <strong>Expected:</strong> test_generate_validate PASSED<br>
+                            <strong>Exit Code:</strong> <br>
+                            <strong>Success:</strong> Pattern executes successfully
                         </div>
                         
                     </div>
@@ -593,34 +617,44 @@ Solution:
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (4/4)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (0/6)</h2>
                 <ul class="task-list">
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 1: Implement CapabilityDiscoveryAgent</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 1: Design A/B pattern workflow DSL</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 2: Create capability schema and registry</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 2: Implement Generate-Validate pattern</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 3: Add intent-based query interface</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 3: Implement Propose-Critique-Refine pattern</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox" checked disabled>
-                        <span>Task 4: Build compatibility matrix</span>
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 4: Add A/B-specific observability hooks</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 5: Create pattern documentation and examples</span>
+                    </li>
+                    
+                    <li class="task-item">
+                        <input type="checkbox" class="task-checkbox"  disabled>
+                        <span>Task 6: Refactor demo to use new patterns</span>
                     </li>
                     
                 </ul>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100.0%"></div>
+                    <div class="progress-fill" style="width: 0.0%"></div>
                 </div>
-                <div class="progress-text">100.0% Complete</div>
+                <div class="progress-text">0.0% Complete</div>
             </div>
             
 
@@ -635,28 +669,28 @@ Solution:
                 <h2 class="card-title">📊 Status & Metrics</h2>
                 <div class="info-row">
                     <span class="info-label">Status:</span>
-                    <span class="status-badge-large status-completed">COMPLETED</span>
+                    <span class="status-badge-large status-not-started">NOT STARTED</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Priority:</span>
-                    <span class="priority-badge-large priority-P0">P0</span>
+                    <span class="priority-badge-large priority-P1">P1</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Type:</span>
-                    <span class="info-value">Infrastructure</span>
+                    <span class="info-value">Enhancement</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Effort:</span>
-                    <span class="info-value">30</span>
+                    <span class="info-value">20</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">2 weeks</span>
+                    <span class="info-value">2-3 weeks</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Risk:</span>
-                    <span class="info-value">Medium</span>
+                    <span class="info-value"></span>
                 </div>
                 
             </div>
@@ -669,123 +703,17 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P0-A2A-F7-001.html" class="dep-link">→ Agent Protocol Bridge - Core Protocol Implementation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F7-001</div>
+                        <a href="P0-AB-001.html" class="dep-link">→ A/B Agent Demo - Proof of Concept</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-AB-001</div>
                     </li>
                     
                 </ul>
                 
 
-                
-                <h3 style="font-size: 13px; font-weight: 600; margin: 16px 0 8px 0; color: #6b7280;">Blocks:</h3>
-                <ul class="dep-list">
-                    
-                    <li class="dep-item">
-                        <a href="P2-A2A-F7-003.html" class="dep-link">→ Agent Protocol Bridge - Hyperlight Sandboxing</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P2-A2A-F7-003</div>
-                    </li>
-                    
-                </ul>
                 
             </div>
 
             <!-- Related Documentation -->
-            
-            <div class="card">
-                <h2 class="card-title">📄 Related Documentation</h2>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/ddd-specification.md" class="doc-link">DDD Specification - Agent-to-Agent Platform</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        🏗️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/architecture/agent-protocol-bridge-architecture.md" class="doc-link">System Architecture - Agent Protocol Bridge</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Architecture
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📐
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/ddd/agent-communication-bounded-context.md" class="doc-link">Agent Communication Platform - Bounded Context</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Ddd
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📅
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/planning/p0-a2a-f7-002-implementation-plan.md" class="doc-link">Agent Protocol Bridge - Discovery Service - Implementation Plan</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Defines • Planning
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        📋
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/designs/agent-protocol-bridge-design.md" class="doc-link">Agent Protocol Bridge - Technical Design</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Design
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/protocol-specification-v1.0.md" class="doc-link">Protocol Specification v1.0</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Specifies • Technical
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="doc-item">
-                    <span class="doc-icon">
-                        ⚙️
-                        
-                    </span>
-                    <div style="flex: 1;">
-                        <a href="../../../docs/technical/agent-registry-api.md" class="doc-link">Agent Registry API Documentation</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
-                            Documents • Technical
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
             
 
             <!-- Source Artifacts -->
@@ -799,7 +727,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">💼 Business Impact</h2>
                 <div class="description" style="font-size: 13px;">
-                    Enables zero-code integrations - new agents auto-discover collaborators
+                    Accelerates A/B feature development by 50%
                 </div>
             </div>
             
