@@ -2,7 +2,7 @@
 
 Orchestration hub for integrated agent ecosystem
 
-**Generated**: 2026-02-03 13:13:21
+**Generated**: 2026-02-03 15:03:26
 
 
 
@@ -23,6 +23,8 @@ Orchestration hub for integrated agent ecosystem
 ```
 Weeks 1-4 - Foundation & Protocol
 [================================================================================]
+P0-AB-001 ⏳ A/B Agent Demo - Proof of Concept
+P1-AB-002 ⏳ Enhanced Journey Orchestration with A/B Agent Patterns
 P0-A2A-F7-000 ✅ Requirements Chat - Agent Protocol Bridge
 P0-A2A-F7-001 ✅ Agent Protocol Bridge - Core Protocol Implementation
 P0-A2A-F7-002 ✅ Agent Protocol Bridge - Discovery Service
@@ -32,8 +34,9 @@ P0-A2A-F1-001 ✅ Journey Orchestration - State Machine & Stage Management
 P0-A2A-F1-002 ✅ Journey Orchestration - Unit of Work Executor
 P1-A2A-F1-003 ✅ Journey Orchestration - Glean Dashboard Integration
 P2-A2A-F1-004 ⏳ Journey Orchestration - Metrics & Reporting
+P0-A2A-F8-000 ✅ Requirements Chat - SDLC Control Plane & Interactive Roadmap
 
-  Progress: 78% (210/240 points)
+  Progress: 67% (250/310 points)
 
 Weeks 5-8 - Data & Requirements Automation
 [================================================================================]
@@ -99,10 +102,12 @@ P2-A2A-F6-004 ⏳ Ceremony Orchestrator - Decision Capture & KB
 - Unit of Work executor
 
 
-**Stories (9)**:
+**Stories (12)**:
 
 | Story ID | Title | Priority | Status | Effort | Weeks |
 |----------|-------|----------|--------|--------|-------|
+| P0-AB-001 | A/B Agent Demo - Proof of Concept | P0 | not_started | 10 pts | 1 |
+| P1-AB-002 | Enhanced Journey Orchestration with A/B Agent Patt | P1 | not_started | 20 pts | 2-3 |
 | P0-A2A-F7-000 | Requirements Chat - Agent Protocol Bridge | P0 | completed | 15 pts | 1 |
 | P0-A2A-F7-001 | Agent Protocol Bridge - Core Protocol Implementati | P0 | completed | 40 pts | 1-2 |
 | P0-A2A-F7-002 | Agent Protocol Bridge - Discovery Service | P0 | completed | 30 pts | 2 |
@@ -112,9 +117,10 @@ P2-A2A-F6-004 ⏳ Ceremony Orchestrator - Decision Capture & KB
 | P0-A2A-F1-002 | Journey Orchestration - Unit of Work Executor | P0 | completed | 40 pts | 3-4 |
 | P1-A2A-F1-003 | Journey Orchestration - Glean Dashboard Integratio | P1 | completed | 30 pts | 4 |
 | P2-A2A-F1-004 | Journey Orchestration - Metrics & Reporting | P2 | not_started | 15 pts | 4 |
+| P0-A2A-F8-000 | Requirements Chat - SDLC Control Plane & Interacti | P0 | completed | 40 pts | 1-2 |
 
 
-**Progress**: 78% complete (210/240 points)
+**Progress**: 67% complete (250/310 points)
 
 ---
 
