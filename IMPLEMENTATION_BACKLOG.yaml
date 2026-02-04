@@ -1,6 +1,6 @@
 backlog_metadata:
-  last_updated: '2026-02-04T17:06:15.546848+00:00'
-  version: 84
+  last_updated: '2026-02-04T17:06:35.764650+00:00'
+  version: 85
   source_documents:
   - 'Plan: SDLC Framework Packaging & Distribution Strategy'
   - 'Implementation Plan: /sdlc.initialize command'
@@ -636,6 +636,11 @@ backlog_metadata:
     changes: 'Initial artifact registration: 290 files scanned, 3 stories updated,
       0 unmapped'
     mode: initial_run
+  - version: 85
+    date: '2026-02-04T17:06:35.764650+00:00'
+    changes: 'Initial artifact registration: 292 files scanned, 3 stories updated,
+      0 unmapped'
+    mode: initial_run
 roadmap_metadata:
   project_name: a_domain Agent-to-Agent Platform
   project_tagline: Orchestration hub for integrated agent ecosystem
@@ -1264,31 +1269,31 @@ stories:
     - file_path: ./src/a_domain/patterns/__init__.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841841+00:00'
+      registered_date: '2026-02-04T17:06:35.763199+00:00'
       staleness_status: CURRENT
       size_bytes: 396
     - file_path: ./src/a_domain/patterns/observability.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841848+00:00'
+      registered_date: '2026-02-04T17:06:35.763207+00:00'
       staleness_status: CURRENT
       size_bytes: 14760
     - file_path: ./src/a_domain/patterns/generate_validate.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841854+00:00'
+      registered_date: '2026-02-04T17:06:35.763213+00:00'
       staleness_status: CURRENT
       size_bytes: 8342
     - file_path: ./src/a_domain/patterns/base.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841859+00:00'
+      registered_date: '2026-02-04T17:06:35.763219+00:00'
       staleness_status: CURRENT
       size_bytes: 4823
     - file_path: ./src/a_domain/patterns/propose_critique_refine.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841864+00:00'
+      registered_date: '2026-02-04T17:06:35.763225+00:00'
       staleness_status: CURRENT
       size_bytes: 10442
   roadmap_extensions:
@@ -4979,43 +4984,43 @@ stories:
     - file_path: ./src/a_domain/requirements/models.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841903+00:00'
+      registered_date: '2026-02-04T17:06:35.763266+00:00'
       staleness_status: CURRENT
       size_bytes: 4101
     - file_path: ./src/a_domain/requirements/__init__.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841909+00:00'
+      registered_date: '2026-02-04T17:06:35.763271+00:00'
       staleness_status: CURRENT
       size_bytes: 1091
     - file_path: ./src/a_domain/requirements/extractor.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841919+00:00'
+      registered_date: '2026-02-04T17:06:35.763282+00:00'
       staleness_status: CURRENT
       size_bytes: 13599
     - file_path: ./src/a_domain/requirements/nlp_patterns.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841925+00:00'
+      registered_date: '2026-02-04T17:06:35.763288+00:00'
       staleness_status: CURRENT
       size_bytes: 9222
     - file_path: ./src/a_domain/requirements/gong_connector.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841931+00:00'
+      registered_date: '2026-02-04T17:06:35.763293+00:00'
       staleness_status: CURRENT
       size_bytes: 4041
     - file_path: ./src/a_domain/requirements/output.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841947+00:00'
+      registered_date: '2026-02-04T17:06:35.763309+00:00'
       staleness_status: CURRENT
       size_bytes: 7894
     - file_path: ./src/a_domain/cli/extract_requirements.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841958+00:00'
+      registered_date: '2026-02-04T17:06:35.763322+00:00'
       staleness_status: CURRENT
       size_bytes: 5827
   planning_status: pending
@@ -5123,31 +5128,31 @@ stories:
     - file_path: ./src/a_domain/requirements/figma_output.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841897+00:00'
+      registered_date: '2026-02-04T17:06:35.763260+00:00'
       staleness_status: CURRENT
       size_bytes: 8853
     - file_path: ./src/a_domain/requirements/figma_parser.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841914+00:00'
+      registered_date: '2026-02-04T17:06:35.763277+00:00'
       staleness_status: CURRENT
       size_bytes: 12646
     - file_path: ./src/a_domain/requirements/figma_models.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841936+00:00'
+      registered_date: '2026-02-04T17:06:35.763298+00:00'
       staleness_status: CURRENT
       size_bytes: 5443
     - file_path: ./src/a_domain/requirements/figma_connector.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841942+00:00'
+      registered_date: '2026-02-04T17:06:35.763304+00:00'
       staleness_status: CURRENT
       size_bytes: 9821
     - file_path: ./src/a_domain/cli/parse_figma.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T16:58:14.841953+00:00'
+      registered_date: '2026-02-04T17:06:35.763316+00:00'
       staleness_status: CURRENT
       size_bytes: 4118
   planning_status: pending
@@ -8229,8 +8234,10 @@ stories:
 backlog_summary:
   total_stories: 67
   by_status:
-    completed: 40
+    completed: 41
     not_started: 26
+    in_progress: 0
+    blocked: 0
   by_priority:
     P0: 37
     P1: 18
@@ -8246,8 +8253,10 @@ backlog_summary:
     Automation: 4
     Reporting: 1
     Epic: 1
-  completed: 40
+  completed: 41
   not_started: 26
+  in_progress: 0
+  blocked: 0
 dependency_graph_notes: 'Phase 1 (PACKAGING - COMPLETED):
 
   Linear chain: 001 → 002 → 003 → 004 → 005 → 007

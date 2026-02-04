@@ -309,11 +309,11 @@ src/a_domain/flow_builder/
 ### 1. Verify Design Document Completeness
 
 ```bash
-cat docs/designs/flow-builder-design.md | wc -l
+uv run bash -c 'wc -l docs/designs/flow-builder-design.md'
 ```
 
 **Expected output**:
-- 450+ lines
+- 450+ lines in docs/designs/flow-builder-design.md
 - Exit code: 0
 
 ### 2. Check All Sections Present
@@ -371,13 +371,25 @@ grep -A 10 "<prompt>" docs/designs/flow-builder-design.md
 ### 6. Check Story Completion
 
 ```bash
-grep -A 5 "story_id: P0-A2A-F3000" IMPLEMENTATION_BACKLOG.yaml | grep "status:"
+uv run bash -c 'grep -A 5 "story_id: P0-A2A-F3000" IMPLEMENTATION_BACKLOG.yaml | grep "status:"'
 ```
 
 **Expected output**:
 ```
   status: completed
 ```
+
+### 8. Run Governance Validation
+
+```bash
+make validate-governance
+```
+
+**Expected output**:
+- All HIGH priority checks passing
+- Backlog validation passed
+- Artifact registration: 100% coverage
+- Exit code: 0
 
 ### 7. Verify Acceptance Criteria Coverage
 
