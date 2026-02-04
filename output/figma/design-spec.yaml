@@ -1,0 +1,106 @@
+design_spec:
+  file_id: example_abc123
+  file_name: CRM Integration Designs
+  components:
+  - id: COMP-001
+    figma_file: CRM Integration Designs
+    figma_node_id: '1:2'
+    component_type: Button
+    name: Primary CTA Button
+    properties:
+      variants:
+      - default
+      - hover
+      - disabled
+      - loading
+      dimensions:
+        width: 120px
+        height: 44px
+      colors:
+        background: '#0066ff'
+      typography: {}
+      spacing: {}
+      border_radius: 8px
+      shadow: null
+      opacity: 1.0
+    annotations:
+    - text: Main call-to-action button. Must be accessible (WCAG AA).
+    user_story_hints:
+    - As a user, I want to interact with Primary CTA Button
+    - Button should provide visual feedback on interaction
+    implementation_notes:
+    - Use existing Button component from design system
+    - Add loading state with spinner
+    - Ensure 4.5:1 contrast ratio (WCAG AA)
+    parent_id: null
+    children: []
+    extracted_at: '2026-02-03T22:17:50.608286'
+  - id: COMP-002
+    figma_file: CRM Integration Designs
+    figma_node_id: '2:4'
+    component_type: Input
+    name: Email Input Field
+    properties:
+      variants: []
+      dimensions:
+        width: 300px
+        height: 48px
+      colors:
+        background: '#ffffff'
+        border: '#cccccc'
+      typography: {}
+      spacing: {}
+      border_radius: 4px
+      shadow: null
+      opacity: null
+    annotations:
+    - text: Email address input with validation
+    user_story_hints:
+    - As a user, I want to input data via Email Input Field
+    - Input should validate data and show errors
+    implementation_notes:
+    - Implement validation and error states
+    - Add aria-label for accessibility
+    parent_id: null
+    children: []
+    extracted_at: '2026-02-03T22:17:50.608298'
+  - id: COMP-003
+    figma_file: CRM Integration Designs
+    figma_node_id: '3:5'
+    component_type: Card
+    name: User Profile Card
+    properties:
+      variants: []
+      dimensions:
+        width: 320px
+        height: 200px
+      colors:
+        background: '#f9f9f9'
+      typography: {}
+      spacing: {}
+      border_radius: 12px
+      shadow: null
+      opacity: null
+    annotations:
+    - text: Displays user information
+    user_story_hints:
+    - As a user, I want to view information in User Profile Card
+    - Card should be scannable and highlight key information
+    implementation_notes:
+    - Ensure card is scannable with clear visual hierarchy
+    - Consider hover/focus states for interactive cards
+    parent_id: null
+    children: []
+    extracted_at: '2026-02-03T22:17:50.608309'
+  design_tokens:
+    color_palette: {}
+    typography_scale: {}
+    spacing_scale: {}
+  user_flows: []
+metadata:
+  total_components: 3
+  component_types:
+  - Button
+  - Card
+  - Input
+  generated_at: '2026-02-03T22:17:50.608258'
