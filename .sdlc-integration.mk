@@ -24,6 +24,7 @@ stop-explorer: stop-services
 # Include all SDLC modules with correct paths
 include $(SDLC_DIR)/make/governance.mk
 include $(SDLC_DIR)/make/testing.mk
+include $(SDLC_DIR)/make/demos.mk
 include $(SDLC_DIR)/make/backlog.mk
 include $(SDLC_DIR)/make/artifacts.mk
 include $(SDLC_DIR)/make/logging.mk
