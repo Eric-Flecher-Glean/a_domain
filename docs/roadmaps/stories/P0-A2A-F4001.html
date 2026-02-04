@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P0-A2A-F4-002 - Req-to-Design - Figma Design Parser</title>
+    <title>P0-A2A-F4-001 - Req-to-Design - Gong Transcript Extractor</title>
     <style>
         /* Base Styles */
         * {
@@ -21,7 +21,7 @@
 
         /* Header with status color */
         .header {
-            background: #6b7280;
+            background: #10b981;
             color: white;
             padding: 24px 32px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -482,11 +482,11 @@
         </div>
 
         <div class="story-header">
-            <div class="story-id">P0-A2A-F4-002</div>
-            <h1 class="story-title">Req-to-Design - Figma Design Parser</h1>
+            <div class="story-id">P0-A2A-F4-001</div>
+            <h1 class="story-title">Req-to-Design - Gong Transcript Extractor</h1>
             <div class="story-meta">
                 <div class="meta-item">
-                    <span>📊 Not Started</span>
+                    <span>✅ Completed</span>
                 </div>
                 <div class="meta-item">
                     <span>P0</span>
@@ -496,7 +496,7 @@
                 </div>
                 
                 <div class="meta-item">
-                    <span>📅 Weeks 6-7</span>
+                    <span>📅 Weeks 5-6</span>
                 </div>
                 <div class="meta-item">
                     <span>📂 Data & Requirements Automation</span>
@@ -513,19 +513,56 @@
             <!-- Description -->
             <div class="card">
                 <h2 class="card-title">📋 Description</h2>
-                <div class="description">Implement Figma design file parsing and technical spec generation.
+                <div class="description">Implement Gong transcript extraction and requirement identification.
 
 Problem:
-- Design intent not captured in SDLC stories
-- Manual translation from Figma to specs error-prone
-- No linkage between designs and requirements
+- Manual transcription of customer calls time-consuming
+- Requirements buried in unstructured call notes
+- No automated extraction
 
 Solution:
-- DesignParserAgent: Scans Figma files for UI components and flows
-- Generates technical design specifications
-- Links designs to requirements
-- Integrates with Glean Figma connector
-</div>
+- RequirementExtractorAgent: Analyzes Gong call transcripts using NLP
+- Identifies customer pain points and feature requests
+- Extracts business requirements
+- Integrates with Glean Gong connector
+
+Success Metrics from Features Doc:
+- Requirements processed per week: 100+ (vs. 10-20 manual)
+- Time from Gong call → sdlc backlog: <24 hours
+
+
+            <!-- Demo Instructions -->
+            <div class="card">
+                <h2 class="card-title">🎯 Demo Instructions</h2>
+                <div class="description">### Run the Demo
+
+```bash
+cd /Users/eric.flecher/Workbench/projects/a_domain
+uv run src/a_domain/cli/parse_gong.py demo
+```
+
+Expected output:
+- ✅ Loaded: Customer Feedback - CRM Integration
+- ✅ Extracted 6 requirements
+- 💾 Exported to output/gong/
+
+### View Results
+
+```bash
+cat output/gong/requirements.yaml
+cat output/gong/requirements-summary.txt
+```
+
+### Run Tests
+
+```bash
+uv run tests/integration/test_gong_extractor.py
+```
+
+All 3 tests should pass.</div>
+            </div>
+
+            </div>
             </div>
 
             <!-- Acceptance Criteria -->
@@ -534,31 +571,31 @@ Solution:
                 <h2 class="card-title">✓ Acceptance Criteria (4)</h2>
                 <ul class="ac-list">
                     
-                    <li class="ac-item ">
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
-                            <span>AC1: Parses Figma files for components and flows</span>
+                            <span class="ac-icon">✓</span>
+                            <span>AC1: Extracts requirements from Gong transcripts</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item ">
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
-                            <span>AC2: Generates technical design specifications</span>
+                            <span class="ac-icon">✓</span>
+                            <span>AC2: Identifies customer pain points and feature requests</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item ">
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
-                            <span>AC3: Links designs to extracted requirements</span>
+                            <span class="ac-icon">✓</span>
+                            <span>AC3: Integrates with Glean Gong connector</span>
                         </div>
                     </li>
                     
-                    <li class="ac-item ">
+                    <li class="ac-item completed">
                         <div class="ac-header">
-                            <span class="ac-icon">☐</span>
-                            <span>AC4: Alignment score: Figma vs. Gong requirements tracked</span>
+                            <span class="ac-icon">✓</span>
+                            <span>AC4: Processes 100+ requirements/week</span>
                         </div>
                     </li>
                     
@@ -573,16 +610,16 @@ Solution:
                 
                 <div class="test-case">
                     <div class="test-header">
-                        Test Case: AC1 - Verify Figma parsing
+                        Test Case: AC1 - Verify requirement extraction
                     </div>
                     
                     <div style="margin-top: 8px;">
                         
-                        <div class="test-command">$ uv run tests/integration/test_figma_parser.py</div>
+                        <div class="test-command">$ uv run tests/integration/test_gong_extractor.py</div>
                         <div class="test-expected">
-                            <strong>Expected:</strong> test_parse_figma_components PASSED<br>
+                            <strong>Expected:</strong> test_extract_requirements PASSED<br>
                             <strong>Exit Code:</strong> 0<br>
-                            <strong>Success:</strong> Components extracted from test Figma file
+                            <strong>Success:</strong> Requirements extracted from test transcript
                         </div>
                         
                     </div>
@@ -595,34 +632,34 @@ Solution:
             <!-- Tasks -->
             
             <div class="card">
-                <h2 class="card-title">📝 Implementation Tasks (0/4)</h2>
+                <h2 class="card-title">📝 Implementation Tasks (4/4)</h2>
                 <ul class="task-list">
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
-                        <span>Task 1: Implement DesignParserAgent</span>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 1: Implement RequirementExtractorAgent</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
-                        <span>Task 2: Integrate with Glean Figma connector</span>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 2: Integrate with Glean Gong connector</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
-                        <span>Task 3: Add UI component scanning</span>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 3: Add NLP for pain point identification</span>
                     </li>
                     
                     <li class="task-item">
-                        <input type="checkbox" class="task-checkbox"  disabled>
-                        <span>Task 4: Generate technical design specs</span>
+                        <input type="checkbox" class="task-checkbox" checked disabled>
+                        <span>Task 4: Create raw requirements format</span>
                     </li>
                     
                 </ul>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 0.0%"></div>
+                    <div class="progress-fill" style="width: 100.0%"></div>
                 </div>
-                <div class="progress-text">0.0% Complete</div>
+                <div class="progress-text">100.0% Complete</div>
             </div>
             
 
@@ -637,7 +674,7 @@ Solution:
                 <h2 class="card-title">📊 Status & Metrics</h2>
                 <div class="info-row">
                     <span class="info-label">Status:</span>
-                    <span class="status-badge-large status-not-started">NOT STARTED</span>
+                    <span class="status-badge-large status-completed">COMPLETED</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Priority:</span>
@@ -654,7 +691,7 @@ Solution:
                 
                 <div class="info-row">
                     <span class="info-label">Duration:</span>
-                    <span class="info-value">6-7 weeks</span>
+                    <span class="info-value">5-6 weeks</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Risk:</span>
@@ -671,8 +708,13 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P0-A2A-F4-001.html" class="dep-link">→ Req-to-Design - Gong Transcript Extractor</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F4-001</div>
+                        <a href="P0-A2A-F1-002.html" class="dep-link">→ Journey Orchestration - Unit of Work Executor</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F1-002</div>
+                    </li>
+                    
+                    <li class="dep-item">
+                        <a href="P0-A2A-F4-000.html" class="dep-link">→ Requirements Chat - Requirements-to-Design Pipeline</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F4-000</div>
                     </li>
                     
                 </ul>
@@ -683,18 +725,8 @@ Solution:
                 <ul class="dep-list">
                     
                     <li class="dep-item">
-                        <a href="P1-A2A-F4-003.html" class="dep-link">→ Req-to-Design - SDLC Story Generator</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F4-003</div>
-                    </li>
-                    
-                    <li class="dep-item">
-                        <a href="P1-A2A-F3-001.html" class="dep-link">→ Flow Builder - Natural Language Workflow Designer</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F3-001</div>
-                    </li>
-                    
-                    <li class="dep-item">
-                        <a href="P1-A2A-F5-001.html" class="dep-link">→ Personal Workspace - Data Inventory & Knowledge Graph</a>
-                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P1-A2A-F5-001</div>
+                        <a href="P0-A2A-F4-002.html" class="dep-link">→ Req-to-Design - Figma Design Parser</a>
+                        <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">P0-A2A-F4-002</div>
                     </li>
                     
                 </ul>
@@ -712,7 +744,7 @@ Solution:
                         
                     </span>
                     <div style="flex: 1;">
-                        <a href="../../../docs/designs/figma-parser-design.md" class="doc-link">Figma Design Parser - Component Extraction</a>
+                        <a href="../../../docs/designs/gong-extraction-pipeline-design.md" class="doc-link">Requirements Extraction Pipeline - Gong Integration</a>
                         <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
                             Specifies • Design
                         </div>
@@ -733,7 +765,7 @@ Solution:
             <div class="card">
                 <h2 class="card-title">💼 Business Impact</h2>
                 <div class="description" style="font-size: 13px;">
-                    Traceability - every requirement linked to source design
+                    Automate requirements gathering - zero manual transcription
                 </div>
             </div>
             

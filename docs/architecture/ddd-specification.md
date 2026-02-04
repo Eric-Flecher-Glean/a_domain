@@ -56,6 +56,9 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 3. **Saga Pattern:** For multi-step value chain orchestration with compensation
 4. **Meta-Agent Strategy:** SDLC agents that improve the platform itself (self-bootstrapping)
 5. **Glean Integration:** Anti-Corruption Layer to isolate from Glean platform changes
+6. **Agent Implementation Pattern:** Dual-mode agent implementation strategy
+   - **Glean MCP Agents:** Existing Glean agents accessed via MCP (`mcp__glean__chat`)
+   - **XML Prompt Agents:** Custom prompt-engineered agents stored as XML instructions in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
 
 ### Domain Complexity Classification
 - **Core Domain:** Platform.Registry, Platform.Orchestration (high complexity, high business value)
@@ -76,6 +79,9 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 | **Aggregate Root** | The entry point entity for accessing an aggregate |
 | **Ubiquitous Language** | Shared vocabulary between domain experts and developers within a context |
 | **Domain Event** | An immutable record of something that happened in the domain |
+| **Glean MCP Agent** | An existing Glean agent invoked via Model Context Protocol using `mcp__glean__chat` tool |
+| **XML Prompt Agent** | A prompt-engineered agent defined as XML instruction stored in `Eric-Flecher-Glean/prompts` repository |
+| **Agent Implementation Type** | Classification of how an agent is implemented: either Glean MCP or XML Prompt |
 
 ### Platform.Orchestration Context
 
@@ -1562,6 +1568,83 @@ SLA Target: 95% resolved within 24 hours
 - OpenAPI/Swagger (rejected: over-specified for internal contracts)
 - Protocol Buffers (rejected: less readable, compilation step)
 - TypeScript interfaces (rejected: not runtime-validatable)
+
+---
+
+### ADR-006: Dual-Mode Agent Implementation Strategy
+
+**Decision:** Agents in this system are implemented via one of two patterns:
+1. **Glean MCP Agents**: Existing Glean agents accessed via `mcp__glean__chat` tool
+2. **XML Prompt Agents**: Custom prompt-engineered agents defined as XML instructions and stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
+
+**Rationale:**
+- **Glean MCP Agents**: Leverage existing enterprise AI capabilities already deployed in Glean platform
+  - Access to pre-configured data sources (Salesforce, Gong, GitHub, etc.)
+  - Battle-tested agent templates with high usage (222 customers, 200+ agents each)
+  - Zero implementation cost for capabilities that already exist
+  - Seamless integration with Glean's security model
+
+- **XML Prompt Agents**: Enable rapid development of custom, domain-specific agents
+  - Version-controlled prompts in dedicated Git repository
+  - Structured XML format ensures consistency and discoverability
+  - Enables prompt engineering best practices (role, task, instructions, constraints)
+  - Faster iteration cycle than building full Glean agents (minutes vs. days)
+  - Can compose multiple MCP calls within single agent workflow
+
+**Trade-offs:**
+- **Gained:**
+  - Best-of-both-worlds: Leverage Glean platform + custom innovation
+  - Clear separation: existing capabilities vs. new capabilities
+  - Flexibility to choose implementation based on use case
+  - Reusable prompt library grows over time
+
+- **Lost:**
+  - Need to maintain two agent invocation patterns
+  - XML agents cannot leverage Glean's no-code builder UI
+  - Potential confusion about which pattern to use when
+
+**Implementation Guidelines:**
+
+**Use Glean MCP Agent when:**
+- Capability already exists in Glean platform (Sales, Support, SDLC agents)
+- Need multi-source data integration with enterprise systems
+- Require Glean's agentic looping feature
+- Need bi-directional system integration (read from one, write to another)
+
+**Use XML Prompt Agent when:**
+- Custom domain-specific logic not available in Glean
+- Rapid prototyping or experimentation needed
+- Agent workflow requires custom multi-step orchestration
+- Need fine-grained control over prompt structure
+- Building meta-agents for SDLC automation
+
+**Examples:**
+```yaml
+# Glean MCP Agent Usage
+agent_type: glean_mcp
+implementation:
+  tool: mcp__glean__chat
+  agent_name: "Extract Common Pain Points"  # Existing Glean agent
+  context: "Analyze sales call transcripts by industry"
+
+# XML Prompt Agent Usage
+agent_type: xml_prompt
+implementation:
+  repository: Eric-Flecher-Glean/prompts
+  prompt_path: sdlc/requirements/extract-acceptance-criteria.xml
+  version: "1.2.0"
+```
+
+**Alternatives Considered:**
+- **Glean-only approach** (rejected: too slow for custom SDLC automation needs)
+- **Custom agent framework** (rejected: reinvents wheel, Glean platform already mature)
+- **Python/TypeScript agents** (rejected: harder to version, review, and maintain than XML prompts)
+
+**Registry Implications:**
+- Agent registration must include `implementation_type: [glean_mcp | xml_prompt]`
+- Discovery queries can filter by implementation type
+- Schema validation differs: MCP agents validated by Glean, XML agents validated locally
+- Prompts repository should be synced to registry for discoverability
 
 ---
 
