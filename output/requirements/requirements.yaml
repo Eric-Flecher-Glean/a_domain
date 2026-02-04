@@ -1,0 +1,203 @@
+requirements:
+- id: REQ-001
+  source_type: gong_call
+  requirement_text: We need to integrate with Salesforce within 2 weeks
+  requirement_type: integration
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:15:42
+  speaker:
+    name: John Smith
+    role: CTO
+    company: Acme Corp
+  categories:
+  - integration
+  - we
+  - salesforce
+  priority_signals:
+  - type: urgency_word
+    value: need
+    urgency: medium
+    confidence: 0.6
+  - type: timeline
+    value: 2 weeks
+    urgency: high
+    confidence: 0.8
+  - type: executive
+    value: cto request
+    urgency: high
+    confidence: 0.9
+  entities:
+    systems:
+    - Salesforce
+    - We
+  sentiment: neutral
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481341'
+  confidence: 0.95
+- id: REQ-002
+  source_type: gong_call
+  requirement_text: I understand the urgency. Can you tell me more about your current
+    process?
+  requirement_type: feature_request
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:16:05
+  speaker:
+    name: Sales Rep
+    role: AE
+    company: Our Company
+  categories:
+  - feature_request
+  - can
+  priority_signals: []
+  entities:
+    systems:
+    - Can
+  sentiment: neutral
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481368'
+  confidence: 0.7
+- id: REQ-003
+  source_type: gong_call
+  requirement_text: We're currently using a manual process and our sales team is losing
+    deals because of delays
+  requirement_type: pain_point
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:16:20
+  speaker:
+    name: John Smith
+    role: CTO
+    company: Acme Corp
+  categories:
+  - we
+  - pain_point
+  priority_signals:
+  - type: executive
+    value: cto request
+    urgency: high
+    confidence: 0.9
+  - type: business_impact
+    value: business impact mentioned
+    urgency: critical
+    confidence: 0.9
+  entities:
+    systems:
+    - We
+  sentiment: negative
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481389'
+  confidence: 0.7
+- id: REQ-004
+  source_type: gong_call
+  requirement_text: That sounds frustrating. What specific data do you need to sync?
+  requirement_type: integration
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:16:45
+  speaker:
+    name: Sales Rep
+    role: AE
+    company: Our Company
+  categories:
+  - what
+  - integration
+  - that
+  priority_signals:
+  - type: urgency_word
+    value: need
+    urgency: medium
+    confidence: 0.6
+  entities:
+    systems:
+    - What
+    - That
+  sentiment: negative
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481405'
+  confidence: 0.75
+- id: REQ-005
+  source_type: gong_call
+  requirement_text: We need bi-directional sync of customer records, opportunities,
+    and activity data
+  requirement_type: integration
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:17:10
+  speaker:
+    name: John Smith
+    role: CTO
+    company: Acme Corp
+  categories:
+  - integration
+  - we
+  priority_signals:
+  - type: urgency_word
+    value: need
+    urgency: medium
+    confidence: 0.6
+  - type: executive
+    value: cto request
+    urgency: high
+    confidence: 0.9
+  entities:
+    systems:
+    - We
+  sentiment: neutral
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481423'
+  confidence: 0.8999999999999999
+- id: REQ-006
+  source_type: gong_call
+  requirement_text: This is critical for us. We're evaluating three vendors and integration
+    speed is our top criterion
+  requirement_type: integration
+  source_metadata:
+    call_id: gong_abc123
+    call_title: Example Discovery Call
+    call_date: '2026-02-03'
+    timestamp: 00:17:35
+  speaker:
+    name: Jane Doe
+    role: VP Product
+    company: Acme Corp
+  categories:
+  - integration
+  - we
+  - this
+  priority_signals:
+  - type: urgency_word
+    value: critical
+    urgency: critical
+    confidence: 0.9
+  - type: executive
+    value: vp product request
+    urgency: high
+    confidence: 0.9
+  entities:
+    systems:
+    - This
+    - We
+  sentiment: neutral
+  context: null
+  extracted_at: '2026-02-03T21:34:02.481443'
+  confidence: 0.8999999999999999
+metadata:
+  total_requirements: 6
+  source_types:
+  - gong_call
+  requirement_types:
+  - feature_request
+  - integration
+  - pain_point

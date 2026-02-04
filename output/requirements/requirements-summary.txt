@@ -1,0 +1,42 @@
+📋 Requirements Summary
+============================================================
+Total Requirements: 6
+
+Feature Request: 1
+Integration: 4
+Pain Point: 1
+
+⚠️  High Priority: 4 requirements
+👔 Executive Requests: 4 requirements
+
+Top Requirements:
+------------------------------------------------------------
+
+1. We need to integrate with Salesforce within 2 weeks...
+   Type: integration
+   Confidence: 0.95
+   Speaker: John Smith (CTO)
+   Urgency: medium
+
+2. We need bi-directional sync of customer records, opportunities, and activity dat...
+   Type: integration
+   Confidence: 0.90
+   Speaker: John Smith (CTO)
+   Urgency: medium
+
+3. This is critical for us. We're evaluating three vendors and integration speed is...
+   Type: integration
+   Confidence: 0.90
+   Speaker: Jane Doe (VP Product)
+   Urgency: high
+
+4. That sounds frustrating. What specific data do you need to sync?...
+   Type: integration
+   Confidence: 0.75
+   Speaker: Sales Rep (AE)
+   Urgency: medium
+
+5. I understand the urgency. Can you tell me more about your current process?...
+   Type: feature_request
+   Confidence: 0.70
+   Speaker: Sales Rep (AE)
