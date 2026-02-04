@@ -1,6 +1,6 @@
 backlog_metadata:
-  last_updated: '2026-02-04T16:19:49.559361+00:00'
-  version: 70
+  last_updated: '2026-02-04T16:34:55.252089+00:00'
+  version: 78
   source_documents:
   - 'Plan: SDLC Framework Packaging & Distribution Strategy'
   - 'Implementation Plan: /sdlc.initialize command'
@@ -9,8 +9,7 @@ backlog_metadata:
   - 'Implementation Stories: Document Registry & Navigation System'
   production_readiness:
     current: 37/64 stories completed (58%)
-    target: 61/61 stories completed (100%) - Full Platform + Documentation Portal
-      GA
+    target: 61/61 stories completed (100%) - Full Platform + Documentation Portal GA
   notes: 'PACKAGING PHASE (P0-PACKAGING-*) COMPLETED: 10/10 stories (100%)
 
     - Enhanced Git Submodule approach (7/7 stories)
@@ -127,8 +126,7 @@ backlog_metadata:
     changes:
     - 'Added P0-DOCS-001: Correct Agent Implementation Pattern Documentation'
     - Story created via /new-feature-chat wizard to fix architectural documentation
-    - Corrects misrepresentation of XML prompts as separate pattern - they are templates
-      for Glean MCP agents
+    - Corrects misrepresentation of XML prompts as separate pattern - they are templates for Glean MCP agents
   - version: 68
     date: '2026-02-03T23:36:58Z'
     changes:
@@ -154,8 +152,7 @@ backlog_metadata:
   - version: 63
     date: '2026-02-04T07:00:00Z'
     changes:
-    - 'Fixed story completion workflow: Created missing recap docs for P0-A2A-F4001
-      and P0-A2A-F4002'
+    - 'Fixed story completion workflow: Created missing recap docs for P0-A2A-F4001 and P0-A2A-F4002'
     - 'Updated roadmap HTML: 48% → 58% (37/64 stories complete)'
     - Created update_story_html.py tool for automated HTML card updates
     - Updated implement skill handler to reference working tools
@@ -168,10 +165,8 @@ backlog_metadata:
     - Implemented DesignParserAgent with component tree traversal (DFS)
     - Created Figma data models (ComponentType, DesignComponent, DesignSpec)
     - Built FigmaConnector for Glean MCP and Figma API integration
-    - Implemented comprehensive property extraction (dimensions, colors, typography,
-      variants)
-    - Generated technical design specifications with user story hints and implementation
-      notes
+    - Implemented comprehensive property extraction (dimensions, colors, typography, variants)
+    - Generated technical design specifications with user story hints and implementation notes
     - Created YAML/Markdown output formatters for design specs
     - Built CLI tool with demo mode
     - All integration tests passing (5/5 tests)
@@ -203,13 +198,12 @@ backlog_metadata:
     - Completed P0-A2A-F4001 - Gong Transcript Extractor (30 points)
     - Implemented RequirementExtractorAgent with NLP-based requirement extraction
     - Created GongConnector for Glean MCP integration
-    - Built comprehensive NLP pattern library (pain points, feature requests, urgency
-      detection)
+    - Built comprehensive NLP pattern library (pain points, feature requests, urgency detection)
     - Implemented YAML output formatting and multi-format export
     - Created CLI tool with demo and production modes
     - All functional tests passing (3/3 integration tests)
-    - 'Files: requirements/{__init__,models,extractor,gong_connector,nlp_patterns,output}.py,
-      cli/extract_requirements.py, test_gong_extractor.py'
+    - 'Files: requirements/{__init__,models,extractor,gong_connector,nlp_patterns,output}.py, cli/extract_requirements.py,
+      test_gong_extractor.py'
     - Validated all acceptance criteria (AC1-AC3 verified)
     mode: completion
     stories_completed: 1
@@ -219,13 +213,10 @@ backlog_metadata:
     date: '2026-02-04T03:30:00Z'
     author: Claude Sonnet 4.5
     changes:
-    - 'Fixed schema validation: Transformed 39 A2A story IDs from 4-section to 3-section
-      format'
-    - 'Story ID pattern fix: P0-A2A-F7-000 → P0-A2A-F7000 (removed hyphen before numeric
-      suffix)'
+    - 'Fixed schema validation: Transformed 39 A2A story IDs from 4-section to 3-section format'
+    - 'Story ID pattern fix: P0-A2A-F7-000 → P0-A2A-F7000 (removed hyphen before numeric suffix)'
     - Added missing expected_exit_code field to 3 test commands (P0-AB-001, P1-AB-002)
-    - 'Total replacements: 178 occurrences across backlog (story IDs, dependencies,
-      changelogs)'
+    - 'Total replacements: 178 occurrences across backlog (story IDs, dependencies, changelogs)'
     - Schema validation now passing (all 64 stories compliant with pattern ^P[0-3]-[A-Z0-9]+-[A-Z0-9]+$)
     mode: schema-fix
   - version: 57
@@ -261,8 +252,7 @@ backlog_metadata:
     date: '2026-02-04T01:45:00Z'
     author: Claude Sonnet 4.5
     changes:
-    - Completed P0-BUG-004 - Fixed governance validation dependencies and test suite
-      errors
+    - Completed P0-BUG-004 - Fixed governance validation dependencies and test suite errors
     - Fixed backlog state consistency validation (updated summary counts)
     - Fixed test suite reporting to handle missing venv gracefully
     - Created symlink for IMPLEMENTATION_BACKLOG.yaml in project root
@@ -363,14 +353,11 @@ backlog_metadata:
     date: '2026-01-30T00:00:00Z'
     author: Claude Code
     changes:
-    - Added P0-A2A-F8000 - Requirements Chat for SDLC Control Plane & Interactive
-      Roadmap
-    - Created validation script (.sdlc/scripts/validate_design_deliverable.py) for
-      design sprint deliverables
-    - New feature enables browser-based SDLC workflow execution via Textual terminal
-      integration
-    - Design sprint covers terminal widget evaluation, smart recommendation engine,
-      Textual-web architecture, UX design, and browser-roadmap bridge
+    - Added P0-A2A-F8000 - Requirements Chat for SDLC Control Plane & Interactive Roadmap
+    - Created validation script (.sdlc/scripts/validate_design_deliverable.py) for design sprint deliverables
+    - New feature enables browser-based SDLC workflow execution via Textual terminal integration
+    - Design sprint covers terminal widget evaluation, smart recommendation engine, Textual-web architecture, UX design, and
+      browser-roadmap bridge
     mode: planning
     stories_added: 1
     priority_breakdown: 'P0: 30 (1 new F8-000), P1: 18, P2: 9'
@@ -379,8 +366,7 @@ backlog_metadata:
     date: '2026-01-27T20:00:00Z'
     author: Claude Code
     changes:
-    - Added 12 Document Registry & Navigation System stories (P0-DOCS-001 through
-      P2-DOCS-012 + P0-DOCS-EPIC)
+    - Added 12 Document Registry & Navigation System stories (P0-DOCS-001 through P2-DOCS-012 + P0-DOCS-EPIC)
     - Created DOCUMENT_REGISTRY.yaml with comprehensive schema (24 documents, 6 types)
     - Implemented validation script (.sdlc/scripts/validate_document_registry.py)
     - Implemented auto-update script (.sdlc/scripts/update_doc_registry.py)
@@ -394,10 +380,8 @@ backlog_metadata:
     date: '2026-01-27T18:30:00Z'
     author: Eric Flecher
     changes:
-    - Added 35 A2A feature stories for Agent-to-Agent Platform (7 requirements + 28
-      implementation)
-    - Added roadmap_metadata section with 4 phases, 7 milestones, velocity tracking,
-      and business impact metrics
+    - Added 35 A2A feature stories for Agent-to-Agent Platform (7 requirements + 28 implementation)
+    - Added roadmap_metadata section with 4 phases, 7 milestones, velocity tracking, and business impact metrics
     - Structured stories across 4 phases over 16 weeks
     - Added roadmap_extensions to all stories for visualization support
     mode: planning
@@ -445,133 +429,131 @@ backlog_metadata:
     status_breakdown: 'not_started: 7'
   - version: 3
     date: '2026-01-26T23:08:53.765882+00:00'
-    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0
-      unmapped'
+    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0 unmapped'
     mode: initial_run
   - version: 4
     date: '2026-01-27T04:15:02.042580+00:00'
-    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0
-      unmapped'
+    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0 unmapped'
     mode: initial_run
   - version: 5
     date: '2026-01-27T04:15:06.983530+00:00'
-    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0
-      unmapped'
+    changes: 'Initial artifact registration: 6 files scanned, 0 stories updated, 0 unmapped'
     mode: initial_run
   - version: 7
     date: '2026-01-27T04:26:51.521928+00:00'
-    changes: 'Initial artifact registration: 111 files scanned, 3 stories updated,
-      0 unmapped'
+    changes: 'Initial artifact registration: 111 files scanned, 3 stories updated, 0 unmapped'
     mode: initial_run
   - version: 33
     date: '2026-02-04T01:13:14.054467+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 34
     date: '2026-02-04T01:13:21.288125+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 35
     date: '2026-02-04T01:15:12.890256+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 37
     date: '2026-02-04T01:19:52.188939+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 38
     date: '2026-02-04T01:19:59.637992+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 39
     date: '2026-02-04T01:20:03.471060+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 40
     date: '2026-02-04T01:20:43.483678+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 41
     date: '2026-02-04T01:21:03.047494+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 42
     date: '2026-02-04T01:21:49.815165+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 44
     date: '2026-02-04T01:25:24.511789+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 46
     date: '2026-02-04T01:28:03.880685+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 47
     date: '2026-02-04T01:28:29.049482+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 48
     date: '2026-02-04T01:28:36.027614+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 49
     date: '2026-02-04T01:29:25.963047+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 50
     date: '2026-02-04T01:29:30.594772+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 51
     date: '2026-02-04T01:29:41.982266+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 52
     date: '2026-02-04T01:29:53.928431+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 53
     date: '2026-02-04T01:30:16.078053+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated,
-      17 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 0 stories updated, 17 unmapped'
     mode: initial_run
   - version: 54
     date: '2026-02-04T01:31:36.316670+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated,
-      0 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated, 0 unmapped'
     mode: initial_run
   - version: 55
     date: '2026-02-04T01:31:41.597461+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated,
-      0 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated, 0 unmapped'
     mode: initial_run
   - version: 56
     date: '2026-02-04T01:31:47.307098+00:00'
-    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated,
-      0 unmapped'
+    changes: 'Initial artifact registration: 265 files scanned, 5 stories updated, 0 unmapped'
     mode: initial_run
   - version: 58
     date: '2026-02-04T02:05:23.541333+00:00'
-    changes: 'Initial artifact registration: 266 files scanned, 5 stories updated,
-      0 unmapped'
+    changes: 'Initial artifact registration: 266 files scanned, 5 stories updated, 0 unmapped'
+    mode: initial_run
+  - version: 71
+    date: '2026-02-04T16:28:46.899451+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
+    mode: initial_run
+  - version: 72
+    date: '2026-02-04T16:33:36.415863+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
+    mode: initial_run
+  - version: 74
+    date: '2026-02-04T16:34:09.041742+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
+    mode: initial_run
+  - version: 76
+    date: '2026-02-04T16:34:31.563829+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
+    mode: initial_run
+  - version: 77
+    date: '2026-02-04T16:34:39.117294+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
+    mode: initial_run
+  - version: 78
+    date: '2026-02-04T16:34:55.252089+00:00'
+    changes: 'Initial artifact registration: 290 files scanned, 1 stories updated, 12 unmapped'
     mode: initial_run
 roadmap_metadata:
   project_name: a_domain Agent-to-Agent Platform
@@ -839,39 +821,28 @@ stories:
   priority: P0
   type: Bug
   title: Fix Makefile submodule paths for automated quality checks
-  description: "Makefile targets reference .sdlc/make/*.mk files that don't resolve\
-    \ correctly, breaking automated quality validation.\n\nROOT CAUSE ANALYSIS:\n\
-    - File: Makefile (lines 5-13)\n- Current behavior: Make cannot find .sdlc/make/*.mk\
-    \ files\n- Actual location: Files exist in .sdlc submodule but paths don't resolve\n\
-    - Impact:\n  * make validate-governance fails to run\n  * make test-all fails\
-    \ to run\n  * Quality gates require manual verification instead of automation\n\
-    \  * Story completion checklist cannot use automated targets\n\nEvidence:\n```\n\
-    $ make validate-governance\nMakefile:5: .sdlc/make/governance.mk: No such file\
-    \ or directory\nMakefile:6: .sdlc/make/testing.mk: No such file or directory\n\
-    Makefile:7: .sdlc/make/backlog.mk: No such file or directory\nmake: *** No rule\
-    \ to make target `.sdlc/make/monitor.mk'.  Stop.\n```\n\nFiles exist in submodule:\n\
-    ```\n$ ls .sdlc/make/\n# Files should be listed but make can't find them\n```\n\
-    \nRoot Cause:\nThe .sdlc directory is a git submodule. The Makefile include paths\
-    \ assume the submodule\nis checked out and files are accessible, but the paths\
-    \ may not be resolving correctly\ndue to:\n1. Submodule not initialized in fresh\
-    \ clones\n2. Include paths not accounting for submodule structure\n3. Missing\
-    \ -include directive (non-fatal includes)\n4. Working directory context when make\
-    \ runs\n\nRECOMMENDED CHANGES:\n1. Verify submodule initialization in Makefile:\n\
-    \   ```makefile\n   # Check if .sdlc submodule is initialized\n   SDLC_INITIALIZED\
-    \ := $(shell test -f .sdlc/make/governance.mk && echo yes || echo no)\n\n   ifeq\
-    \ ($(SDLC_INITIALIZED),no)\n   $(error .sdlc submodule not initialized. Run: git\
-    \ submodule update --init --recursive)\n   endif\n   ```\n\n2. Use -include for\
-    \ optional files (allows graceful degradation):\n   ```makefile\n   -include .sdlc/make/governance.mk\n\
-    \   -include .sdlc/make/testing.mk\n   ```\n\n3. Add explicit SDLC_DIR variable:\n\
-    \   ```makefile\n   SDLC_DIR := .sdlc\n   include $(SDLC_DIR)/make/governance.mk\n\
-    \   ```\n\n4. Add helper target to initialize submodule:\n   ```makefile\n   .PHONY:\
-    \ sdlc-init\n   sdlc-init:\n   \t@git submodule update --init --recursive\n  \
-    \ \t@echo \"✅ .sdlc submodule initialized\"\n   ```\n\n5. Document in README that\
-    \ submodule must be initialized:\n   ```markdown\n   ## Setup\n   git clone <repo>\n\
-    \   git submodule update --init --recursive  # Required!\n   make help\n   ```\n\
-    \nTesting:\n- Clone repo fresh (without submodules)\n- Run make validate-governance\n\
-    - Verify helpful error or auto-init\n- After init, verify make targets work\n\
-    - Test make test-all\n- Test make backlog-status\n"
+  description: "Makefile targets reference .sdlc/make/*.mk files that don't resolve correctly, breaking automated quality\
+    \ validation.\n\nROOT CAUSE ANALYSIS:\n- File: Makefile (lines 5-13)\n- Current behavior: Make cannot find .sdlc/make/*.mk\
+    \ files\n- Actual location: Files exist in .sdlc submodule but paths don't resolve\n- Impact:\n  * make validate-governance\
+    \ fails to run\n  * make test-all fails to run\n  * Quality gates require manual verification instead of automation\n\
+    \  * Story completion checklist cannot use automated targets\n\nEvidence:\n```\n$ make validate-governance\nMakefile:5:\
+    \ .sdlc/make/governance.mk: No such file or directory\nMakefile:6: .sdlc/make/testing.mk: No such file or directory\n\
+    Makefile:7: .sdlc/make/backlog.mk: No such file or directory\nmake: *** No rule to make target `.sdlc/make/monitor.mk'.\
+    \  Stop.\n```\n\nFiles exist in submodule:\n```\n$ ls .sdlc/make/\n# Files should be listed but make can't find them\n\
+    ```\n\nRoot Cause:\nThe .sdlc directory is a git submodule. The Makefile include paths assume the submodule\nis checked\
+    \ out and files are accessible, but the paths may not be resolving correctly\ndue to:\n1. Submodule not initialized in\
+    \ fresh clones\n2. Include paths not accounting for submodule structure\n3. Missing -include directive (non-fatal includes)\n\
+    4. Working directory context when make runs\n\nRECOMMENDED CHANGES:\n1. Verify submodule initialization in Makefile:\n\
+    \   ```makefile\n   # Check if .sdlc submodule is initialized\n   SDLC_INITIALIZED := $(shell test -f .sdlc/make/governance.mk\
+    \ && echo yes || echo no)\n\n   ifeq ($(SDLC_INITIALIZED),no)\n   $(error .sdlc submodule not initialized. Run: git submodule\
+    \ update --init --recursive)\n   endif\n   ```\n\n2. Use -include for optional files (allows graceful degradation):\n\
+    \   ```makefile\n   -include .sdlc/make/governance.mk\n   -include .sdlc/make/testing.mk\n   ```\n\n3. Add explicit SDLC_DIR\
+    \ variable:\n   ```makefile\n   SDLC_DIR := .sdlc\n   include $(SDLC_DIR)/make/governance.mk\n   ```\n\n4. Add helper\
+    \ target to initialize submodule:\n   ```makefile\n   .PHONY: sdlc-init\n   sdlc-init:\n   \t@git submodule update --init\
+    \ --recursive\n   \t@echo \"✅ .sdlc submodule initialized\"\n   ```\n\n5. Document in README that submodule must be initialized:\n\
+    \   ```markdown\n   ## Setup\n   git clone <repo>\n   git submodule update --init --recursive  # Required!\n   make help\n\
+    \   ```\n\nTesting:\n- Clone repo fresh (without submodules)\n- Run make validate-governance\n- Verify helpful error or\
+    \ auto-init\n- After init, verify make targets work\n- Test make test-all\n- Test make backlog-status\n"
   dependencies: []
   status: completed
   started_date: '2026-02-04T00:20:00Z'
@@ -918,25 +889,21 @@ stories:
       expected_exit_code: 2
       success_criteria: Clear error message directs user to initialize submodule
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: README documents submodule initialization
-      requirement'
+    test_description: 'Verify ac4 - AC4: README documents submodule initialization requirement'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-005 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   - acceptance_criterion: AC5
-    test_description: 'Verify ac5 - AC5: Story completion checklist can use automated
-      make targe...'
+    test_description: 'Verify ac5 - AC5: Story completion checklist can use automated make targe...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-005 AC5 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   artifact_registry: {}
   roadmap_extensions:
     feature_id: BUG-005
@@ -1036,8 +1003,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Message flow appears in Report Explorer timeline'
     test_commands:
@@ -1045,8 +1011,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC5
     test_description: 'Verify ac5 - AC5: Can observe agent collaboration in web portal'
     test_commands:
@@ -1054,8 +1019,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   artifact_registry:
     demo/ab_agents/__init__.py:
       purpose: A/B agents package initialization
@@ -1159,15 +1123,13 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Pattern executes successfully'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Propose-Critique-Refine pattern supports
-      iterative loop...'
+    test_description: 'Verify ac2 - AC2: Propose-Critique-Refine pattern supports iterative loop...'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-AB-002 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Pattern usage reduces boilerplate by 50%'
     test_commands:
@@ -1175,8 +1137,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: All patterns include built-in observability'
     test_commands:
@@ -1184,48 +1145,45 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   - acceptance_criterion: AC5
-    test_description: 'Verify ac5 - AC5: Documentation includes working example for
-      each pattern'
+    test_description: 'Verify ac5 - AC5: Documentation includes working example for each pattern'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-AB-002 AC5 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   artifact_registry:
     implementation:
     - file_path: ./src/a_domain/patterns/__init__.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T02:05:23.539763+00:00'
+      registered_date: '2026-02-04T16:34:55.250687+00:00'
       staleness_status: CURRENT
       size_bytes: 396
     - file_path: ./src/a_domain/patterns/observability.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T02:05:23.539772+00:00'
+      registered_date: '2026-02-04T16:34:55.250694+00:00'
       staleness_status: CURRENT
       size_bytes: 14760
     - file_path: ./src/a_domain/patterns/generate_validate.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T02:05:23.539779+00:00'
+      registered_date: '2026-02-04T16:34:55.250702+00:00'
       staleness_status: CURRENT
       size_bytes: 8342
     - file_path: ./src/a_domain/patterns/base.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T02:05:23.539786+00:00'
+      registered_date: '2026-02-04T16:34:55.250709+00:00'
       staleness_status: CURRENT
       size_bytes: 4823
     - file_path: ./src/a_domain/patterns/propose_critique_refine.py
       file_type: source_code
       confidence: HIGH
-      registered_date: '2026-02-04T02:05:23.539793+00:00'
+      registered_date: '2026-02-04T16:34:55.250717+00:00'
       staleness_status: CURRENT
       size_bytes: 10442
   roadmap_extensions:
@@ -1237,11 +1195,9 @@ stories:
   priority: P0
   type: Infrastructure
   title: Add framework version tracking with .sdlc-config.lock
-  description: 'Create version lock file to track installed framework version, commit
-    hash, and integrity.
+  description: 'Create version lock file to track installed framework version, commit hash, and integrity.
 
-    This enables version validation, compatibility checking, and audit trail for framework
-    updates.
+    This enables version validation, compatibility checking, and audit trail for framework updates.
 
 
     Problem:
@@ -1297,23 +1253,19 @@ stories:
   - acceptance_criterion: AC2
     test_description: Verify lock file contains required fields
     test_commands:
-    - command: test -f .sdlc-config.lock && grep -q 'framework:' .sdlc-config.lock
-        && grep -q 'version:' .sdlc-config.lock
+    - command: test -f .sdlc-config.lock && grep -q 'framework:' .sdlc-config.lock && grep -q 'version:' .sdlc-config.lock
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Lock file has valid YAML structure with version
-        info'
+      success_criteria: 'Exit code 0: Lock file has valid YAML structure with version info'
   - acceptance_criterion: AC3
     test_description: Verify compatibility requirements in lock file
     test_commands:
-    - command: grep -q 'compatibility:' .sdlc-config.lock && grep -q 'min_python:'
-        .sdlc-config.lock
+    - command: grep -q 'compatibility:' .sdlc-config.lock && grep -q 'min_python:' .sdlc-config.lock
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Compatibility section exists with Python version
-        requirement'
+      success_criteria: 'Exit code 0: Compatibility section exists with Python version requirement'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Lock file validates on framework operations'
     test_commands:
@@ -1321,8 +1273,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   test_cases: []
   artifact_registry:
@@ -1738,8 +1689,7 @@ stories:
   priority: P0
   type: Infrastructure
   title: Implement migration system for framework version updates
-  description: 'Add .sdlc/migrations/ directory with migration scripts for breaking
-    changes between versions.
+  description: 'Add .sdlc/migrations/ directory with migration scripts for breaking changes between versions.
 
     Migration system auto-detects migration path and runs scripts with pre/post validation.
 
@@ -1823,8 +1773,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   estimated_effort: 30 points
   test_cases: []
   artifact_registry: []
@@ -1833,8 +1782,7 @@ stories:
   priority: P0
   type: Infrastructure
   title: Add --version, --migrate, --dry-run flags to update.sh
-  description: 'Enhance bootstrap/update.sh to support version-pinned updates with
-    migration.
+  description: 'Enhance bootstrap/update.sh to support version-pinned updates with migration.
 
     Add compatibility validation to block incompatible updates.
 
@@ -1911,8 +1859,7 @@ stories:
   - acceptance_criterion: AC3
     test_description: Verify dry-run shows detailed preview
     test_commands:
-    - command: .sdlc/bootstrap/update.sh --version v1.1.0 --dry-run | grep -q 'Changes
-        to apply'
+    - command: .sdlc/bootstrap/update.sh --version v1.1.0 --dry-run | grep -q 'Changes to apply'
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -1997,13 +1944,11 @@ stories:
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Retention policy is configurable with default
-        of 3'
+      success_criteria: 'Exit code 0: Retention policy is configurable with default of 3'
   - acceptance_criterion: AC3
     test_description: Verify automatic pruning
     test_commands:
-    - command: for v in 1.0.0 1.1.0 1.2.0 1.3.0; do .sdlc/bootstrap/update.sh --version
-        v$v; done && test ! -d .sdlc-versions/1.0.0
+    - command: for v in 1.0.0 1.1.0 1.2.0 1.3.0; do .sdlc/bootstrap/update.sh --version v$v; done && test ! -d .sdlc-versions/1.0.0
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -2018,8 +1963,7 @@ stories:
   title: Implement bootstrap/rollback.sh for atomic rollback
   description: 'Add rollback script to restore previous framework version from backups.
 
-    Rollback validates backup exists, restores files, and updates lock file in <30
-    seconds.
+    Rollback validates backup exists, restores files, and updates lock file in <30 seconds.
 
 
     Problem:
@@ -2073,8 +2017,8 @@ stories:
   - acceptance_criterion: AC1
     test_description: Verify rollback restores files
     test_commands:
-    - command: '.sdlc/bootstrap/update.sh --version v1.1.0 && .sdlc/bootstrap/rollback.sh
-        --to v1.0.0 && grep -q ''version: "1.0.0"'' .sdlc-config.lock'
+    - command: '.sdlc/bootstrap/update.sh --version v1.1.0 && .sdlc/bootstrap/rollback.sh --to v1.0.0 && grep -q ''version:
+        "1.0.0"'' .sdlc-config.lock'
       command_type: uv
       expected_output: Rollback to v1.0.0 completed
       expected_exit_code: 0
@@ -2090,8 +2034,7 @@ stories:
   - acceptance_criterion: AC4
     test_description: Verify rollback performance
     test_commands:
-    - command: time .sdlc/bootstrap/rollback.sh --to v1.0.0 2>&1 | grep real | awk
-        '{print $2}' | grep -E '^0:0[0-2]'
+    - command: time .sdlc/bootstrap/rollback.sh --to v1.0.0 2>&1 | grep real | awk '{print $2}' | grep -E '^0:0[0-2]'
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -2103,8 +2046,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   estimated_effort: 15 points
   test_cases: []
   artifact_registry: []
@@ -2115,8 +2057,7 @@ stories:
   title: Implement bootstrap/check-updates.sh
   description: 'Script to check for newer framework versions from GitHub.
 
-    Shows current vs latest version, indicates breaking changes, displays changelog
-    summary.
+    Shows current vs latest version, indicates breaking changes, displays changelog summary.
 
 
     Problem:
@@ -2198,8 +2139,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   test_cases: []
   artifact_registry: []
@@ -2208,11 +2148,9 @@ stories:
   priority: P0
   type: Documentation
   title: Create VERSION_MANAGEMENT.md documentation
-  description: 'Comprehensive guide for version pinning, updates, migrations, and
-    rollback.
+  description: 'Comprehensive guide for version pinning, updates, migrations, and rollback.
 
-    Includes installation, update workflow, rollback procedures, migration authoring,
-    and troubleshooting.
+    Includes installation, update workflow, rollback procedures, migration authoring, and troubleshooting.
 
 
     Problem:
@@ -2277,8 +2215,7 @@ stories:
   - acceptance_criterion: AC2
     test_description: Verify update workflow documentation
     test_commands:
-    - command: grep -E '(--version|--migrate|--dry-run)' .sdlc/docs/VERSION_MANAGEMENT.md
-        | wc -l | grep -q '[3-9]'
+    - command: grep -E '(--version|--migrate|--dry-run)' .sdlc/docs/VERSION_MANAGEMENT.md | wc -l | grep -q '[3-9]'
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -2298,8 +2235,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC5
     test_description: 'Verify ac5 - AC5: Troubleshooting common version issues'
     test_commands:
@@ -2307,8 +2243,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   estimated_effort: 15 points
   test_cases: []
   artifact_registry:
@@ -2395,10 +2330,8 @@ stories:
 - story_id: P0-TESTING-001
   priority: P0
   type: Feature
-  title: Implement /sdlc.initialize command for repeatable framework installation
-    testing
-  description: 'Create comprehensive framework initialization system with intelligent
-    YAML handling.
+  title: Implement /sdlc.initialize command for repeatable framework installation testing
+  description: 'Create comprehensive framework initialization system with intelligent YAML handling.
 
 
     Problem:
@@ -2418,8 +2351,7 @@ stories:
 
     - teardown.sh: Safe removal with timestamped backups
 
-    - setup-test.sh: Five-phase orchestration (pre-checks → teardown → install → YAML
-    → verify)
+    - setup-test.sh: Five-phase orchestration (pre-checks → teardown → install → YAML → verify)
 
     - Make targets: interactive, dry-run, force modes
 
@@ -2479,40 +2411,33 @@ stories:
     test_commands:
     - command: make sdlc-initialize-dry-run
       command_type: make
-      expected_output: '[PHASE 1/5].*[PHASE 2/5].*[PHASE 3/5].*[PHASE 4/5].*[PHASE
-        5/5]'
+      expected_output: '[PHASE 1/5].*[PHASE 2/5].*[PHASE 3/5].*[PHASE 4/5].*[PHASE 5/5]'
       expected_exit_code: 0
       success_criteria: 'Exit code 0: All five phases execute in order'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: yaml_repair.py repairs metadata, counts,
-      timestamps aut...'
+    test_description: 'Verify ac2 - AC2: yaml_repair.py repairs metadata, counts, timestamps aut...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-TESTING-001 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC5
-    test_description: 'Verify ac5 - AC5: Make targets work in interactive, dry-run,
-      and force mo...'
+    test_description: 'Verify ac5 - AC5: Make targets work in interactive, dry-run, and force mo...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-TESTING-001 AC5 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   - acceptance_criterion: AC6
-    test_description: 'Verify ac6 - AC6: State preservation verified (story count
-      matches before...'
+    test_description: 'Verify ac6 - AC6: State preservation verified (story count matches before...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-TESTING-001 AC6 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC6 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC6 passes (implementation pending)'
   - acceptance_criterion: AC7
     test_description: 'Verify ac7 - AC7: Completes full cycle in < 30 seconds'
     test_commands:
@@ -2520,8 +2445,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC7 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC7 passes (implementation pending)'
   estimated_effort: 40 points
   test_cases: []
   artifact_registry:
@@ -2557,27 +2481,20 @@ stories:
   priority: P0
   type: Bug
   title: Fix schema path mismatch in backlog_validator.py
-  description: "backlog_validator.py looks for schema at wrong path causing validation\
-    \ to be skipped.\n\nROOT CAUSE ANALYSIS:\n- File: .sdlc/core/backlog_validator.py\n\
-    - Line: ~206 (schema_path definition)\n- Current behavior: Looks for \"schema/implementation_backlog_schema.json\"\
-    \n- Actual location: \".sdlc/config/backlog_schema.json\"\n- Impact: Schema validation\
-    \ silently skipped with warning\n\nEvidence:\n```\n$ make backlog-status\n⚠️ \
-    \ Schema file not found: schema/implementation_backlog_schema.json (skipping schema\
-    \ validation)\n```\n\nRoot Cause:\nThe validator uses a hardcoded relative path\
-    \ that doesn't match the framework structure.\nWhen run from project root, \"\
-    schema/\" directory doesn't exist - schema is in \".sdlc/config/\".\n\nRECOMMENDED\
-    \ CHANGES:\n1. Update backlog_validator.py line ~206:\n   FROM: schema_path =\
-    \ Path(\"schema/implementation_backlog_schema.json\")\n   TO:   schema_path =\
-    \ Path(\".sdlc/config/backlog_schema.json\")\n\n2. Add fallback logic for different\
-    \ execution contexts:\n   ```python\n   schema_candidates = [\n       Path(\"\
-    .sdlc/config/backlog_schema.json\"),  # From project root\n       Path(\"../config/backlog_schema.json\"\
-    ),      # From .sdlc/core/\n       Path(\"config/backlog_schema.json\"),     \
-    \    # From .sdlc/\n   ]\n   schema_path = next((p for p in schema_candidates\
-    \ if p.exists()), None)\n   ```\n\n3. Error instead of warning if schema not found\
-    \ (fail-fast):\n   ```python\n   if not schema_path or not schema_path.exists():\n\
-    \       print(f\"❌ Schema file required but not found\")\n       sys.exit(1)\n\
-    \   ```\n\nTesting:\n- Verify from project root: make backlog-status (should not\
-    \ warn)\n- Verify from .sdlc/: uv run core/backlog_validator.py\n- Verify schema\
+  description: "backlog_validator.py looks for schema at wrong path causing validation to be skipped.\n\nROOT CAUSE ANALYSIS:\n\
+    - File: .sdlc/core/backlog_validator.py\n- Line: ~206 (schema_path definition)\n- Current behavior: Looks for \"schema/implementation_backlog_schema.json\"\
+    \n- Actual location: \".sdlc/config/backlog_schema.json\"\n- Impact: Schema validation silently skipped with warning\n\
+    \nEvidence:\n```\n$ make backlog-status\n⚠️  Schema file not found: schema/implementation_backlog_schema.json (skipping\
+    \ schema validation)\n```\n\nRoot Cause:\nThe validator uses a hardcoded relative path that doesn't match the framework\
+    \ structure.\nWhen run from project root, \"schema/\" directory doesn't exist - schema is in \".sdlc/config/\".\n\nRECOMMENDED\
+    \ CHANGES:\n1. Update backlog_validator.py line ~206:\n   FROM: schema_path = Path(\"schema/implementation_backlog_schema.json\"\
+    )\n   TO:   schema_path = Path(\".sdlc/config/backlog_schema.json\")\n\n2. Add fallback logic for different execution\
+    \ contexts:\n   ```python\n   schema_candidates = [\n       Path(\".sdlc/config/backlog_schema.json\"),  # From project\
+    \ root\n       Path(\"../config/backlog_schema.json\"),      # From .sdlc/core/\n       Path(\"config/backlog_schema.json\"\
+    ),         # From .sdlc/\n   ]\n   schema_path = next((p for p in schema_candidates if p.exists()), None)\n   ```\n\n\
+    3. Error instead of warning if schema not found (fail-fast):\n   ```python\n   if not schema_path or not schema_path.exists():\n\
+    \       print(f\"❌ Schema file required but not found\")\n       sys.exit(1)\n   ```\n\nTesting:\n- Verify from project\
+    \ root: make backlog-status (should not warn)\n- Verify from .sdlc/: uv run core/backlog_validator.py\n- Verify schema\
     \ validation actually runs (test with invalid YAML)\n"
   dependencies: []
   status: completed
@@ -2612,25 +2529,21 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Schema validation confirmation displayed'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Works from project root, .sdlc/, and .sdlc/core/
-      direct...'
+    test_description: 'Verify ac3 - AC3: Works from project root, .sdlc/, and .sdlc/core/ direct...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-001 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Fails with clear error if schema genuinely
-      missing'
+    test_description: 'Verify ac4 - AC4: Fails with clear error if schema genuinely missing'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-001 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 5 points
   test_cases: []
   artifact_registry: []
@@ -2639,34 +2552,25 @@ stories:
   priority: P0
   type: Bug
   title: Fix artifact registrar to scan .sdlc/ directory files
-  description: "Artifact registrar only scans 6 files and misses new .sdlc/ implementation\
-    \ files.\n\nROOT CAUSE ANALYSIS:\n- File: .sdlc/core/artifact_registrar.py\n-\
-    \ Current behavior: Scans 6 files, finds 0 unmapped after adding 5 new files\n\
-    - Expected: Should find 5 new unmapped files in .sdlc/ directory\n- Impact: New\
-    \ framework files not tracked in artifact registry\n\nEvidence:\n```\n$ make register-artifacts\n\
-    Found 6 artifacts\nStories Updated: 0\nUnmapped Artifacts: 0\n```\n\nAfter adding:\n\
-    - .sdlc/core/yaml_repair.py (631 lines)\n- .sdlc/bootstrap/teardown.sh (208 lines)\n\
-    - .sdlc/bootstrap/setup-test.sh (437 lines)\n- .sdlc/commands/sdlc:sdlc.initialize.md\
-    \ (402 lines)\n- .sdlc/skills/sdlc.initialize.md (427 lines)\n\nRoot Cause Hypothesis:\n\
-    1. Artifact registrar may exclude .sdlc/ directory from scanning\n2. May only\
-    \ scan project files (src/, tests/, etc.) not framework files\n3. May have glob\
-    \ pattern that doesn't match .sdlc/**/*\n4. May have explicit .sdlc/ exclusion\
-    \ in gitignore-style filtering\n\nRECOMMENDED CHANGES:\n1. Investigate artifact_registrar.py\
-    \ scanning logic:\n   - Check scan_paths configuration\n   - Review exclusion\
-    \ patterns\n   - Verify glob patterns include .sdlc/\n\n2. Update scan configuration\
-    \ to include .sdlc/ files:\n   ```python\n   scan_paths = [\n       \"src/**/*.py\"\
-    ,\n       \"tests/**/*.py\",\n       \".sdlc/core/**/*.py\",        # Add framework\
-    \ core\n       \".sdlc/bootstrap/**/*.sh\",   # Add bootstrap scripts\n      \
-    \ \".sdlc/commands/**/*.md\",    # Add command definitions\n       \".sdlc/skills/**/*.md\"\
-    ,      # Add skill handlers\n   ]\n   ```\n\n3. Add configuration option for framework\
-    \ file tracking:\n   ```python\n   config = {\n       \"scan_framework_files\"\
-    : True,  # Track .sdlc/ files\n       \"framework_patterns\": [\n           \"\
-    .sdlc/core/**/*.py\",\n           \".sdlc/bootstrap/**/*.sh\",\n           \"\
-    .sdlc/commands/**/*.md\",\n           \".sdlc/skills/**/*.md\",\n       ]\n  \
-    \ }\n   ```\n\n4. Consider separate artifact registry for framework vs project:\n\
-    \   - framework_artifact_registry: .sdlc/ files\n   - project_artifact_registry:\
-    \ src/, tests/ files\n\nTesting:\n- Create test file in .sdlc/core/\n- Run make\
-    \ register-artifacts\n- Verify file detected as unmapped artifact\n- Verify framework\
+  description: "Artifact registrar only scans 6 files and misses new .sdlc/ implementation files.\n\nROOT CAUSE ANALYSIS:\n\
+    - File: .sdlc/core/artifact_registrar.py\n- Current behavior: Scans 6 files, finds 0 unmapped after adding 5 new files\n\
+    - Expected: Should find 5 new unmapped files in .sdlc/ directory\n- Impact: New framework files not tracked in artifact\
+    \ registry\n\nEvidence:\n```\n$ make register-artifacts\nFound 6 artifacts\nStories Updated: 0\nUnmapped Artifacts: 0\n\
+    ```\n\nAfter adding:\n- .sdlc/core/yaml_repair.py (631 lines)\n- .sdlc/bootstrap/teardown.sh (208 lines)\n- .sdlc/bootstrap/setup-test.sh\
+    \ (437 lines)\n- .sdlc/commands/sdlc:sdlc.initialize.md (402 lines)\n- .sdlc/skills/sdlc.initialize.md (427 lines)\n\n\
+    Root Cause Hypothesis:\n1. Artifact registrar may exclude .sdlc/ directory from scanning\n2. May only scan project files\
+    \ (src/, tests/, etc.) not framework files\n3. May have glob pattern that doesn't match .sdlc/**/*\n4. May have explicit\
+    \ .sdlc/ exclusion in gitignore-style filtering\n\nRECOMMENDED CHANGES:\n1. Investigate artifact_registrar.py scanning\
+    \ logic:\n   - Check scan_paths configuration\n   - Review exclusion patterns\n   - Verify glob patterns include .sdlc/\n\
+    \n2. Update scan configuration to include .sdlc/ files:\n   ```python\n   scan_paths = [\n       \"src/**/*.py\",\n  \
+    \     \"tests/**/*.py\",\n       \".sdlc/core/**/*.py\",        # Add framework core\n       \".sdlc/bootstrap/**/*.sh\"\
+    ,   # Add bootstrap scripts\n       \".sdlc/commands/**/*.md\",    # Add command definitions\n       \".sdlc/skills/**/*.md\"\
+    ,      # Add skill handlers\n   ]\n   ```\n\n3. Add configuration option for framework file tracking:\n   ```python\n\
+    \   config = {\n       \"scan_framework_files\": True,  # Track .sdlc/ files\n       \"framework_patterns\": [\n     \
+    \      \".sdlc/core/**/*.py\",\n           \".sdlc/bootstrap/**/*.sh\",\n           \".sdlc/commands/**/*.md\",\n    \
+    \       \".sdlc/skills/**/*.md\",\n       ]\n   }\n   ```\n\n4. Consider separate artifact registry for framework vs project:\n\
+    \   - framework_artifact_registry: .sdlc/ files\n   - project_artifact_registry: src/, tests/ files\n\nTesting:\n- Create\
+    \ test file in .sdlc/core/\n- Run make register-artifacts\n- Verify file detected as unmapped artifact\n- Verify framework\
     \ files appear in artifact counts\n"
   dependencies: []
   status: completed
@@ -2703,25 +2607,21 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: New .sdlc/ file detected as unmapped'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Artifact registrar scans .sdlc/bootstrap/
-      files'
+    test_description: 'Verify ac2 - AC2: Artifact registrar scans .sdlc/bootstrap/ files'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-002 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Artifact registrar scans .sdlc/commands/
-      and .sdlc/skil...'
+    test_description: 'Verify ac3 - AC3: Artifact registrar scans .sdlc/commands/ and .sdlc/skil...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-002 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC5
     test_description: 'Verify ac5 - AC5: Artifact count includes framework files'
     test_commands:
@@ -2729,8 +2629,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
   estimated_effort: 8 points
   test_cases: []
   artifact_registry: []
@@ -2739,29 +2638,22 @@ stories:
   priority: P0
   type: Bug
   title: Fix backlog validator broken import - missing scripts.utils.error_logger
-  description: "Backlog validator fails with ModuleNotFoundError when importing scripts.utils.error_logger\
-    \ module.\n\nROOT CAUSE ANALYSIS:\n- File: .sdlc/core/utils/logger.py\n- Line:\
-    \ 22 (from scripts.utils.error_logger import log_exception, log_error, get_backlog_version)\n\
-    - Current behavior: Import fails with \"ModuleNotFoundError: No module named 'scripts.utils.error_logger'\"\
-    \n- Impact:\n  - Cannot run backlog validation via make validate-backlog\n  -\
-    \ Cannot run governance validation via make validate-governance\n  - Quality gates\
-    \ fail blocking commits\n\nEvidence:\n```\n$ make validate-backlog\nTraceback\
-    \ (most recent call last):\n  File \".sdlc/core/backlog_validator.py\", line 39,\
-    \ in <module>\n    from utils.logger import get_logger\n  File \".sdlc/core/utils/logger.py\"\
-    , line 22, in <module>\n    from scripts.utils.error_logger import log_exception,\
-    \ log_error, get_backlog_version\nModuleNotFoundError: No module named 'scripts.utils.error_logger'\n\
-    ```\n\nGit status shows deleted files:\n```\ndeleted:    scripts/utils/error_logger.py\n\
-    deleted:    scripts/utils/__pycache__/error_logger.cpython-311.pyc\n```\n\nRoot\
-    \ Cause:\n- scripts/utils/error_logger.py was deleted from repository\n- .sdlc/core/utils/logger.py\
-    \ still has stale import referencing deleted module\n- Dependency chain: backlog_validator.py\
-    \ → utils/logger.py → scripts.utils.error_logger (deleted)\n\nRECOMMENDED FIX:\n\
-    1. Remove or replace stale import in .sdlc/core/utils/logger.py:\n   ```python\n\
-    \   # Option A: Remove if not used\n   # from scripts.utils.error_logger import\
-    \ log_exception, log_error, get_backlog_version\n\n   # Option B: Replace with\
-    \ equivalent functionality\n   import logging\n   def log_exception(e): logging.exception(e)\n\
-    \   def log_error(msg): logging.error(msg)\n   ```\n\n2. Update any code in logger.py\
-    \ that calls these functions\n\n3. Verify backlog validator works:\n   ```bash\n\
-    \   make validate-backlog\n   ```\n\n4. Verify governance validation works:\n\
+  description: "Backlog validator fails with ModuleNotFoundError when importing scripts.utils.error_logger module.\n\nROOT\
+    \ CAUSE ANALYSIS:\n- File: .sdlc/core/utils/logger.py\n- Line: 22 (from scripts.utils.error_logger import log_exception,\
+    \ log_error, get_backlog_version)\n- Current behavior: Import fails with \"ModuleNotFoundError: No module named 'scripts.utils.error_logger'\"\
+    \n- Impact:\n  - Cannot run backlog validation via make validate-backlog\n  - Cannot run governance validation via make\
+    \ validate-governance\n  - Quality gates fail blocking commits\n\nEvidence:\n```\n$ make validate-backlog\nTraceback (most\
+    \ recent call last):\n  File \".sdlc/core/backlog_validator.py\", line 39, in <module>\n    from utils.logger import get_logger\n\
+    \  File \".sdlc/core/utils/logger.py\", line 22, in <module>\n    from scripts.utils.error_logger import log_exception,\
+    \ log_error, get_backlog_version\nModuleNotFoundError: No module named 'scripts.utils.error_logger'\n```\n\nGit status\
+    \ shows deleted files:\n```\ndeleted:    scripts/utils/error_logger.py\ndeleted:    scripts/utils/__pycache__/error_logger.cpython-311.pyc\n\
+    ```\n\nRoot Cause:\n- scripts/utils/error_logger.py was deleted from repository\n- .sdlc/core/utils/logger.py still has\
+    \ stale import referencing deleted module\n- Dependency chain: backlog_validator.py → utils/logger.py → scripts.utils.error_logger\
+    \ (deleted)\n\nRECOMMENDED FIX:\n1. Remove or replace stale import in .sdlc/core/utils/logger.py:\n   ```python\n   #\
+    \ Option A: Remove if not used\n   # from scripts.utils.error_logger import log_exception, log_error, get_backlog_version\n\
+    \n   # Option B: Replace with equivalent functionality\n   import logging\n   def log_exception(e): logging.exception(e)\n\
+    \   def log_error(msg): logging.error(msg)\n   ```\n\n2. Update any code in logger.py that calls these functions\n\n3.\
+    \ Verify backlog validator works:\n   ```bash\n   make validate-backlog\n   ```\n\n4. Verify governance validation works:\n\
     \   ```bash\n   make validate-governance\n   ```\n"
   dependencies: []
   status: completed
@@ -2797,54 +2689,43 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Completes without import errors'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: No references to scripts.utils.error_logger
-      remain'
+    test_description: 'Verify ac3 - AC3: No references to scripts.utils.error_logger remain'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-003 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Logging functionality preserved (errors/exceptions
-      logg...'
+    test_description: 'Verify ac4 - AC4: Logging functionality preserved (errors/exceptions logg...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-BUG-003 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 3 points
   artifact_registry: []
 - story_id: P0-BUG-004
   priority: P0
   type: Bug
   title: Fix governance validation dependencies and test suite errors
-  description: "Governance validation reports multiple failures beyond the import\
-    \ error.\n\nROOT CAUSE ANALYSIS:\nMultiple issues detected in make validate-governance\
-    \ output:\n1. Artifact registration check failed - parser error\n2. Test suite:\
-    \ 0/0 tests FAILED - no tests found or run\n\nEvidence:\n```\n$ make validate-governance\n\
-    HIGH Priority (blocking):\n  ❌ Backlog dependency validation FAILED\n     Broken\
-    \ dependency references found\n  ❌ Artifact registration check failed\n     Could\
-    \ not parse registration output\n     warning: `VIRTUAL_ENV=...` does not match\
-    \ the project environment path `.venv`\n  ❌ Test suite: 0/0 tests FAILED\n   \
-    \  Run 'make test-all' to see detailed errors\n```\n\nRoot Causes:\n1. **Artifact\
-    \ registration parser error**:\n   - Output format may have changed\n   - Parser\
-    \ expecting different format\n   - UV environment warning interfering with output\
-    \ parsing\n\n2. **Test suite not found**:\n   - No tests detected (0/0)\n   -\
-    \ Test discovery broken\n   - Test paths misconfigured\n\n3. **Virtual environment\
-    \ mismatch**:\n   - UV using cached environment not matching .venv\n   - Need\
-    \ --active flag or environment cleanup\n\nRECOMMENDED FIX:\n1. Fix artifact registration\
-    \ check:\n   - Review make check-artifacts output format\n   - Update parser to\
-    \ handle UV warnings\n   - Consider using --quiet flag to suppress warnings\n\n\
-    2. Fix test suite:\n   - Verify test files exist and discoverable\n   - Check\
-    \ pytest configuration\n   - Ensure test paths correct in make test-all\n\n3.\
-    \ Clean UV environment cache:\n   ```bash\n   uv cache clean\n   # OR use --active\
-    \ flag\n   make validate-governance --active\n   ```\n\n4. Update governance validator\
-    \ to handle edge cases:\n   - Graceful handling of parser errors\n   - Better\
-    \ error messages\n   - Skip tests if none found (not hard fail)\n"
+  description: "Governance validation reports multiple failures beyond the import error.\n\nROOT CAUSE ANALYSIS:\nMultiple\
+    \ issues detected in make validate-governance output:\n1. Artifact registration check failed - parser error\n2. Test suite:\
+    \ 0/0 tests FAILED - no tests found or run\n\nEvidence:\n```\n$ make validate-governance\nHIGH Priority (blocking):\n\
+    \  ❌ Backlog dependency validation FAILED\n     Broken dependency references found\n  ❌ Artifact registration check failed\n\
+    \     Could not parse registration output\n     warning: `VIRTUAL_ENV=...` does not match the project environment path\
+    \ `.venv`\n  ❌ Test suite: 0/0 tests FAILED\n     Run 'make test-all' to see detailed errors\n```\n\nRoot Causes:\n1.\
+    \ **Artifact registration parser error**:\n   - Output format may have changed\n   - Parser expecting different format\n\
+    \   - UV environment warning interfering with output parsing\n\n2. **Test suite not found**:\n   - No tests detected (0/0)\n\
+    \   - Test discovery broken\n   - Test paths misconfigured\n\n3. **Virtual environment mismatch**:\n   - UV using cached\
+    \ environment not matching .venv\n   - Need --active flag or environment cleanup\n\nRECOMMENDED FIX:\n1. Fix artifact\
+    \ registration check:\n   - Review make check-artifacts output format\n   - Update parser to handle UV warnings\n   -\
+    \ Consider using --quiet flag to suppress warnings\n\n2. Fix test suite:\n   - Verify test files exist and discoverable\n\
+    \   - Check pytest configuration\n   - Ensure test paths correct in make test-all\n\n3. Clean UV environment cache:\n\
+    \   ```bash\n   uv cache clean\n   # OR use --active flag\n   make validate-governance --active\n   ```\n\n4. Update governance\
+    \ validator to handle edge cases:\n   - Graceful handling of parser errors\n   - Better error messages\n   - Skip tests\
+    \ if none found (not hard fail)\n"
   dependencies:
   - P0-BUG-003
   status: completed
@@ -2887,8 +2768,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: UV environment warnings do not break validation'
     test_commands:
@@ -2896,16 +2776,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 5 points
   artifact_registry: []
 - story_id: P0-A2A-F7000
   priority: P0
   type: Documentation
   title: Requirements Chat - Agent Protocol Bridge
-  description: 'Interactive requirements gathering session for Agent Protocol Bridge
-    using /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering session for Agent Protocol Bridge using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -2964,28 +2842,23 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Functional test plan defines validation for
-      all 4 imple...'
+    test_description: 'Verify ac3 - AC3: Functional test plan defines validation for all 4 imple...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7000 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Stories F7-001 through F7-004 updated with
-      clarified ac...'
+    test_description: 'Verify ac4 - AC4: Stories F7-001 through F7-004 updated with clarified ac...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7000 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F7
@@ -3082,15 +2955,13 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Messages route between test agents'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Agent registry supports registration and
-      discovery'
+    test_description: 'Verify ac3 - AC3: Agent registry supports registration and discovery'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7001 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Handles 100+ messages/sec throughput'
     test_commands:
@@ -3098,16 +2969,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F7
     feature_name: Agent Protocol Bridge
     phase_id: phase-1
     week_range: 1-2
-    business_impact: Foundation for all agent collaboration - enables 500+ inter-agent
-      interactions/day
+    business_impact: Foundation for all agent collaboration - enables 500+ inter-agent interactions/day
     risk_level: medium
     estimated_completion: '2026-02-10'
     success_metrics:
@@ -3134,8 +3003,7 @@ stories:
       path: docs/ddd/agent-communication-bounded-context.md
       type: ddd
     - doc_id: PLAN-036
-      title: Agent Protocol Bridge - Core Protocol Implementation - Implementation
-        Plan
+      title: Agent Protocol Bridge - Core Protocol Implementation - Implementation Plan
       path: docs/planning/p0-a2a-f7-001-implementation-plan.md
       type: planning
       status: current
@@ -3237,35 +3105,29 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Query returns matching agents for intent'
   - acceptance_criterion: AC1
-    test_description: 'Verify ac1 - AC1: Agents can register capabilities in standard
-      format'
+    test_description: 'Verify ac1 - AC1: Agents can register capabilities in standard format'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7002 AC1 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Compatibility matrix prevents incompatible
-      pairings'
+    test_description: 'Verify ac3 - AC3: Compatibility matrix prevents incompatible pairings'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7002 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Discovery service handles 10+ registered
-      agents'
+    test_description: 'Verify ac4 - AC4: Discovery service handles 10+ registered agents'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F7002 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F7
@@ -3329,8 +3191,7 @@ stories:
   priority: P2
   type: Infrastructure
   title: Agent Protocol Bridge - Hyperlight Sandboxing
-  description: 'Integrate Hyperlight for sandboxed agent execution to prevent malicious
-    behavior.
+  description: 'Integrate Hyperlight for sandboxed agent execution to prevent malicious behavior.
 
 
     Problem:
@@ -3379,8 +3240,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Works on ARM64/macOS platforms'
     test_commands:
@@ -3388,8 +3248,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Zero security incidents from agent interactions'
     test_commands:
@@ -3397,8 +3256,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F7
@@ -3483,8 +3341,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Alerts fire on protocol violations'
     test_commands:
@@ -3492,8 +3349,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F7
@@ -3512,8 +3368,7 @@ stories:
   priority: P0
   type: Documentation
   title: Requirements Chat - Journey Orchestration
-  description: 'Interactive requirements gathering for Client Journey Orchestration
-    Engine using /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering for Client Journey Orchestration Engine using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -3573,8 +3428,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: State machine transitions specified'
     test_commands:
@@ -3582,8 +3436,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Test plan covers all stage transitions'
     test_commands:
@@ -3591,16 +3444,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F1
     feature_name: Journey Orchestration
     phase_id: phase-1
     week_range: '2'
-    business_impact: Ensures clear requirements for 90-day → 30-day time-to-production
-      reduction
+    business_impact: Ensures clear requirements for 90-day → 30-day time-to-production reduction
     risk_level: low
     estimated_completion: '2026-02-10'
     success_metrics:
@@ -3642,8 +3493,7 @@ stories:
   priority: P0
   type: Feature
   title: Journey Orchestration - State Machine & Stage Management
-  description: 'Implement journey state machine that manages client progression through
-    maturity stages.
+  description: 'Implement journey state machine that manages client progression through maturity stages.
 
 
     Problem:
@@ -3704,8 +3554,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Journey breadcrumbs tracked in Glean'
     test_commands:
@@ -3713,8 +3562,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Rollback rate <5% measured'
     test_commands:
@@ -3722,8 +3570,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F1
@@ -3791,8 +3638,7 @@ stories:
   priority: P0
   type: Feature
   title: Journey Orchestration - Unit of Work Executor
-  description: 'Implement unit of work execution engine that orchestrates multi-agent
-    workflows.
+  description: 'Implement unit of work execution engine that orchestrates multi-agent workflows.
 
 
     Problem:
@@ -3839,15 +3685,13 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Workflow completes with multiple agents'
   - acceptance_criterion: AC1
-    test_description: 'Verify ac1 - AC1: UoW schema defines steps, agents, entry/exit
-      criteria'
+    test_description: 'Verify ac1 - AC1: UoW schema defines steps, agents, entry/exit criteria'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F1002 AC1 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Saga compensation works on failure'
     test_commands:
@@ -3855,8 +3699,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Metrics tracked per UoW execution'
     test_commands:
@@ -3864,8 +3707,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F1
@@ -3975,8 +3817,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Alerts fire when UoW exceeds SLA'
     test_commands:
@@ -3984,8 +3825,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Labor costs visible per stage'
     test_commands:
@@ -3993,8 +3833,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F1
@@ -4077,8 +3916,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Bottlenecks identified and reported'
     test_commands:
@@ -4086,8 +3924,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Client satisfaction >4.5/5 tracked'
     test_commands:
@@ -4095,8 +3932,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F1
@@ -4115,8 +3951,7 @@ stories:
   priority: P0
   type: Documentation
   title: Requirements Chat - DataOps Lifecycle
-  description: 'Interactive requirements gathering for DataOps Lifecycle Agent using
-    /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering for DataOps Lifecycle Agent using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -4176,8 +4011,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Mock data integration documented'
     test_commands:
@@ -4185,8 +4019,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Test plan covers all lifecycle stages'
     test_commands:
@@ -4194,16 +4027,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F2
     feature_name: DataOps Lifecycle
     phase_id: phase-2
     week_range: '5'
-    business_impact: Ensures tight requirements for 96% dataset provisioning time
-      reduction
+    business_impact: Ensures tight requirements for 96% dataset provisioning time reduction
     risk_level: low
     estimated_completion: '2026-03-10'
     success_metrics:
@@ -4298,8 +4129,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: API supports dataset queries'
     test_commands:
@@ -4307,8 +4137,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Sample data cataloged per dataset'
     test_commands:
@@ -4316,8 +4145,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F2
@@ -4421,8 +4249,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Connectors auto-configured'
     test_commands:
@@ -4430,8 +4257,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Teardown archives data and cleans up'
     test_commands:
@@ -4439,8 +4265,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F2
@@ -4541,8 +4366,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Quality metrics tracked in observability'
     test_commands:
@@ -4550,8 +4374,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Bad data blocked before pilot'
     test_commands:
@@ -4559,8 +4382,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F2
@@ -4652,8 +4474,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Connector health monitored'
     test_commands:
@@ -4661,8 +4482,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Optimization recommendations generated'
     test_commands:
@@ -4670,8 +4490,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F2
@@ -4690,8 +4509,7 @@ stories:
   priority: P0
   type: Documentation
   title: Requirements Chat - Requirements-to-Design Pipeline
-  description: 'Interactive requirements gathering for Requirements-to-Design Pipeline
-    using /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering for Requirements-to-Design Pipeline using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -4741,8 +4559,7 @@ stories:
   - acceptance_criterion: AC1
     test_description: Verify design defines all pipeline stages
     test_commands:
-    - command: grep -E "(Gong|Figma|SDLC)" docs/designs/req-to-design-pipeline-design.md
-        | wc -l
+    - command: grep -E "(Gong|Figma|SDLC)" docs/designs/req-to-design-pipeline-design.md | wc -l
       command_type: uv
       expected_output: '> 50'
       expected_exit_code: 0
@@ -4758,8 +4575,7 @@ stories:
   - acceptance_criterion: AC3
     test_description: Verify SDLC story format documented
     test_commands:
-    - command: grep -A 20 "Auto-Generated Story Structure" docs/designs/req-to-design-pipeline-design.md
-        | grep -q "story_id:"
+    - command: grep -A 20 "Auto-Generated Story Structure" docs/designs/req-to-design-pipeline-design.md | grep -q "story_id:"
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -4767,8 +4583,7 @@ stories:
   - acceptance_criterion: AC4
     test_description: Verify test plan covers all pipeline stages
     test_commands:
-    - command: grep -E "(Test 1|Test 2|Test 3|Test 4|Test 5)" docs/designs/req-to-design-pipeline-design.md
-        | wc -l
+    - command: grep -E "(Test 1|Test 2|Test 3|Test 4|Test 5)" docs/designs/req-to-design-pipeline-design.md | wc -l
       command_type: uv
       expected_output: '5'
       expected_exit_code: 0
@@ -4865,15 +4680,13 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Requirements extracted from test transcript'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Identifies customer pain points and feature
-      requests'
+    test_description: 'Verify ac2 - AC2: Identifies customer pain points and feature requests'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F4001 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Integrates with Glean Gong connector'
     test_commands:
@@ -4881,8 +4694,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Processes 100+ requirements/week'
     test_commands:
@@ -4890,8 +4702,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F4
@@ -4942,6 +4753,14 @@ stories:
     docs/roadmaps/stories/P0-A2A-F4001.html:
       purpose: Story HTML card (updated to COMPLETED status with demo instructions)
       created_in_task: Story Completion
+    files:
+    - ./src/a_domain/requirements/gong_connector.py
+    - ./src/a_domain/requirements/extractor.py
+    - ./src/a_domain/requirements/nlp_patterns.py
+    - ./src/a_domain/cli/extract_requirements.py
+    - ./src/a_domain/requirements/models.py
+    - ./src/a_domain/requirements/__init__.py
+    - ./src/a_domain/requirements/output.py
   planning_status: pending
 - story_id: P0-A2A-F4002
   priority: P0
@@ -5002,8 +4821,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Links designs to extracted requirements'
     test_commands:
@@ -5011,18 +4829,15 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Alignment score: Figma vs. Gong requirements
-      tracked'
+    test_description: 'Verify ac4 - AC4: Alignment score: Figma vs. Gong requirements tracked'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-A2A-F4002 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F4
@@ -5067,6 +4882,12 @@ stories:
     docs/roadmaps/stories/P0-A2A-F4002.html:
       purpose: Story HTML card (updated to COMPLETED status with demo instructions)
       created_in_task: Story Completion
+    files:
+    - ./src/a_domain/requirements/figma_parser.py
+    - ./src/a_domain/requirements/figma_connector.py
+    - ./src/a_domain/requirements/figma_models.py
+    - ./src/a_domain/requirements/figma_output.py
+    - ./src/a_domain/cli/parse_figma.py
   planning_status: pending
 - story_id: P1-A2A-F4003
   priority: P1
@@ -5125,8 +4946,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Validation checks completeness >85%'
     test_commands:
@@ -5134,8 +4954,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: 89% reduction in story writing time measured'
     test_commands:
@@ -5143,8 +4962,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F4
@@ -5216,8 +5034,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Full traceability from call to story'
     test_commands:
@@ -5225,8 +5042,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Pipeline performance tracked'
     test_commands:
@@ -5234,16 +5050,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F4
     feature_name: Requirements-to-Design Pipeline
     phase_id: phase-2
     week_range: '8'
-    business_impact: Faster time-to-market - customer request → backlog in hours vs.
-      weeks
+    business_impact: Faster time-to-market - customer request → backlog in hours vs. weeks
     risk_level: low
     estimated_completion: '2026-04-07'
     success_metrics:
@@ -5304,8 +5118,7 @@ stories:
   - acceptance_criterion: AC1
     test_description: Verify design completeness
     test_commands:
-    - command: uv run bash -c 'grep -q "natural language.*validation.*visualization"
-        docs/designs/flow-builder-design.md'
+    - command: uv run bash -c 'grep -q "natural language.*validation.*visualization" docs/designs/flow-builder-design.md'
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -5317,8 +5130,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Visual editor capabilities documented'
     test_commands:
@@ -5326,8 +5138,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Test plan covers all workflow features'
     test_commands:
@@ -5335,8 +5146,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F3
@@ -5424,8 +5234,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Design time reduced to <3 minutes'
     test_commands:
@@ -5433,8 +5242,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Non-technical users can create workflows'
     test_commands:
@@ -5442,16 +5250,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F3
     feature_name: Value Stream Mapping & Flow Builder
     phase_id: phase-3
     week_range: '9'
-    business_impact: Democratize workflow creation - non-technical users build agent
-      chains
+    business_impact: Democratize workflow creation - non-technical users build agent chains
     risk_level: medium
     estimated_completion: '2026-04-21'
     success_metrics:
@@ -5522,8 +5328,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Workflow quality score >90%'
     test_commands:
@@ -5531,8 +5336,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Optimization suggestions provided'
     test_commands:
@@ -5540,8 +5344,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F3
@@ -5615,8 +5418,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Identifies bottlenecks visually'
     test_commands:
@@ -5624,8 +5426,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: One-click deployment from Glean'
     test_commands:
@@ -5633,8 +5434,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F3
@@ -5706,8 +5506,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Ratings and usage tracked'
     test_commands:
@@ -5715,8 +5514,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Marketplace deployed'
     test_commands:
@@ -5724,8 +5522,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F3
@@ -5744,8 +5541,7 @@ stories:
   priority: P0
   type: Documentation
   title: Requirements Chat - Personal Knowledge Workspace
-  description: 'Interactive requirements gathering for Personal Knowledge Workspace
-    using /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering for Personal Knowledge Workspace using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -5794,8 +5590,7 @@ stories:
   - acceptance_criterion: AC1
     test_description: Verify design completeness
     test_commands:
-    - command: uv run bash -c 'grep -q "inventory.*pattern.*automation.*insights"
-        docs/designs/personal-workspace-design.md'
+    - command: uv run bash -c 'grep -q "inventory.*pattern.*automation.*insights" docs/designs/personal-workspace-design.md'
       command_type: uv
       expected_output: ''
       expected_exit_code: 0
@@ -5807,8 +5602,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Automation criteria documented'
     test_commands:
@@ -5816,8 +5610,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Test plan covers all workspace features'
     test_commands:
@@ -5825,16 +5618,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F5
     feature_name: Personal Knowledge Workspace
     phase_id: phase-3
     week_range: '9'
-    business_impact: Ensures tight requirements for 5-7 hours/week time savings per
-      user
+    business_impact: Ensures tight requirements for 5-7 hours/week time savings per user
     risk_level: low
     estimated_completion: '2026-04-14'
     success_metrics:
@@ -5907,8 +5698,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC1 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Frequently accessed resources identified'
     test_commands:
@@ -5916,8 +5706,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Glean Search integration working'
     test_commands:
@@ -5925,8 +5714,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F5
@@ -5998,8 +5786,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Pattern analysis accurate >80%'
     test_commands:
@@ -6007,8 +5794,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Metrics integrated with observability'
     test_commands:
@@ -6016,16 +5802,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F5
     feature_name: Personal Knowledge Workspace
     phase_id: phase-3
     week_range: 10-11
-    business_impact: Proactive automation - system suggests workflows before user
-      asks
+    business_impact: Proactive automation - system suggests workflows before user asks
     risk_level: medium
     estimated_completion: '2026-05-05'
     success_metrics:
@@ -6090,8 +5874,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Suggestion acceptance rate >40%'
     test_commands:
@@ -6099,8 +5882,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Automated workflows per user: 8-12 average'
     test_commands:
@@ -6108,8 +5890,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F5
@@ -6181,8 +5962,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Time sinks identified'
     test_commands:
@@ -6190,8 +5970,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Dashboard deployed to Glean'
     test_commands:
@@ -6199,8 +5978,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F5
@@ -6219,8 +5997,7 @@ stories:
   priority: P0
   type: Documentation
   title: Requirements Chat - Team Ceremony Orchestrator
-  description: 'Interactive requirements gathering for Team Ceremony Orchestrator
-    using /sdlc.new-feature-chat.
+  description: 'Interactive requirements gathering for Team Ceremony Orchestrator using /sdlc.new-feature-chat.
 
 
     Purpose:
@@ -6281,8 +6058,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Action tracking workflow documented'
     test_commands:
@@ -6290,8 +6066,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Test plan covers all ceremony features'
     test_commands:
@@ -6299,16 +6074,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F6
     feature_name: Team Ceremony Orchestrator
     phase_id: phase-4
     week_range: '13'
-    business_impact: Ensures tight requirements for 2-3 hours/week time savings per
-      team
+    business_impact: Ensures tight requirements for 2-3 hours/week time savings per team
     risk_level: low
     estimated_completion: '2026-05-19'
     success_metrics:
@@ -6381,8 +6154,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Planning materials created from backlog'
     test_commands:
@@ -6390,8 +6162,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Prep time reduced by 2-3 hours/week per team'
     test_commands:
@@ -6399,8 +6170,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F6
@@ -6472,8 +6242,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Completion tracking functional'
     test_commands:
@@ -6481,8 +6250,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Action item completion rate >85%'
     test_commands:
@@ -6490,8 +6258,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 30 points
   roadmap_extensions:
     feature_id: F6
@@ -6563,8 +6330,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Effectiveness score >3.5/5'
     test_commands:
@@ -6572,8 +6338,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Dashboard shows time vs. value'
     test_commands:
@@ -6581,16 +6346,14 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F6
     feature_name: Team Ceremony Orchestrator
     phase_id: phase-4
     week_range: '15'
-    business_impact: Data-driven ceremony optimization - know which meetings provide
-      value
+    business_impact: Data-driven ceremony optimization - know which meetings provide value
     risk_level: low
     estimated_completion: '2026-06-02'
     success_metrics:
@@ -6655,8 +6418,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
     test_description: 'Verify ac3 - AC3: Affected parties notified'
     test_commands:
@@ -6664,8 +6426,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Decisions searchable in Glean'
     test_commands:
@@ -6673,8 +6434,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   estimated_effort: 15 points
   roadmap_extensions:
     feature_id: F6
@@ -6718,18 +6478,15 @@ stories:
 
     Proposed Solution Components:
 
-    1. Linear Backlog View: New web component showing prioritized stories in execution
-    order
+    1. Linear Backlog View: New web component showing prioritized stories in execution order
 
-    2. Smart Recommendation Engine: Analyzes backlog state → suggests next action
-    (/implement, /test, /quality)
+    2. Smart Recommendation Engine: Analyzes backlog state → suggests next action (/implement, /test, /quality)
 
     3. Textual Terminal Integration: 100% horizontal pane running Claude Code in browser
 
     4. Tabbed Button Bar: Click-to-execute SDLC commands in Textual UI
 
-    5. Browser-Terminal Bridge: WebSocket/API layer connecting web app context to
-    terminal
+    5. Browser-Terminal Bridge: WebSocket/API layer connecting web app context to terminal
 
 
     Design Sprint Deliverables:
@@ -6751,8 +6508,7 @@ stories:
 
     - Shortens cycle time by giving Claude Code direct access to user''s current state
 
-    - User views roadmap/backlog in browser → system recommends next action → executes
-    in-browser
+    - User views roadmap/backlog in browser → system recommends next action → executes in-browser
 
     - Eliminates context switching between visualization and execution environments
 
@@ -6774,102 +6530,81 @@ stories:
   completed_date: '2026-01-30'
   source: /sdlc.new-feature-chat
   tasks:
-  - 'Task 1: Textual Terminal Widget Evaluation - Assess textual-terminal widget performance
-    vs custom terminal implementation for embedding Claude Code terminal in Textual
-    TUI'
-  - 'Task 2: Smart Recommendation Engine Design - Specify algorithm for analyzing
-    backlog state (priority, status, dependencies) and suggesting next SDLC actions
-    for tabbed button bar'
-  - 'Task 3: Textual-Web Integration Architecture - Design deployment using textual
-    serve/textual-web to run TUI app in browser, including session management and
-    state synchronization with roadmap HTML'
-  - 'Task 4: UX Design - Textual Button Bar & Linear Backlog - Create component design
-    for tabbed button bar (SDLC action triggers), linear backlog view, and 100% horizontal
-    terminal pane layout'
-  - 'Task 5: Browser-Roadmap Bridge Design - Document data flow between static roadmap
-    HTML (backlog context) and Textual app (button recommendations), including JavaScript
-    ↔ Python communication'
+  - 'Task 1: Textual Terminal Widget Evaluation - Assess textual-terminal widget performance vs custom terminal implementation
+    for embedding Claude Code terminal in Textual TUI'
+  - 'Task 2: Smart Recommendation Engine Design - Specify algorithm for analyzing backlog state (priority, status, dependencies)
+    and suggesting next SDLC actions for tabbed button bar'
+  - 'Task 3: Textual-Web Integration Architecture - Design deployment using textual serve/textual-web to run TUI app in browser,
+    including session management and state synchronization with roadmap HTML'
+  - 'Task 4: UX Design - Textual Button Bar & Linear Backlog - Create component design for tabbed button bar (SDLC action
+    triggers), linear backlog view, and 100% horizontal terminal pane layout'
+  - 'Task 5: Browser-Roadmap Bridge Design - Document data flow between static roadmap HTML (backlog context) and Textual
+    app (button recommendations), including JavaScript ↔ Python communication'
   acceptance_criteria:
-  - 'AC1: Terminal widget evaluation complete with performance benchmarks comparing
-    textual-terminal vs custom implementation, including recommendation for Claude
-    Code embedding'
-  - 'AC2: Smart recommendation algorithm fully specified with pseudocode, input schema
-    (backlog state), output schema (ranked SDLC actions), and decision tree logic'
-  - 'AC3: Architecture diagrams document Textual-web deployment model, browser ↔ Python
-    communication layer, and session management for Claude Code context preservation'
-  - 'AC4: UX mockups show complete user journey: roadmap view → linear backlog → tabbed
-    button bar → terminal execution, with component specifications for 100% horizontal
-    pane layout'
-  - 'AC5: Data flow documented for roadmap HTML → Textual app integration, including
-    JavaScript-Python bridge contract and backlog state synchronization mechanism'
+  - 'AC1: Terminal widget evaluation complete with performance benchmarks comparing textual-terminal vs custom implementation,
+    including recommendation for Claude Code embedding'
+  - 'AC2: Smart recommendation algorithm fully specified with pseudocode, input schema (backlog state), output schema (ranked
+    SDLC actions), and decision tree logic'
+  - 'AC3: Architecture diagrams document Textual-web deployment model, browser ↔ Python communication layer, and session management
+    for Claude Code context preservation'
+  - 'AC4: UX mockups show complete user journey: roadmap view → linear backlog → tabbed button bar → terminal execution, with
+    component specifications for 100% horizontal pane layout'
+  - 'AC5: Data flow documented for roadmap HTML → Textual app integration, including JavaScript-Python bridge contract and
+    backlog state synchronization mechanism'
   functional_test_plan:
   - acceptance_criterion: AC1
-    test_description: Terminal widget evaluation document exists with performance
-      benchmarks and recommendation
+    test_description: Terminal widget evaluation document exists with performance benchmarks and recommendation
     test_commands:
-    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-terminal-widget-evaluation.md
-        --required-sections 'Performance Benchmarks,Recommendation,textual-terminal
-        Analysis'
+    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-terminal-widget-evaluation.md --required-sections
+        'Performance Benchmarks,Recommendation,textual-terminal Analysis'
       command_type: uv
       expected_output: ✓ All required sections present
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Document exists with performance data and clear
-        recommendation'
+      success_criteria: 'Exit code 0: Document exists with performance data and clear recommendation'
   - acceptance_criterion: AC2
-    test_description: Smart recommendation algorithm specification includes pseudocode
-      and schemas
+    test_description: Smart recommendation algorithm specification includes pseudocode and schemas
     test_commands:
-    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-recommendation-algorithm.md
-        --required-sections 'Algorithm Pseudocode,Input Schema,Output Schema,Decision
-        Tree'
+    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-recommendation-algorithm.md --required-sections
+        'Algorithm Pseudocode,Input Schema,Output Schema,Decision Tree'
       command_type: uv
       expected_output: ✓ All required sections present
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Algorithm fully specified with executable pseudocode
-        and data contracts'
+      success_criteria: 'Exit code 0: Algorithm fully specified with executable pseudocode and data contracts'
   - acceptance_criterion: AC3
-    test_description: Textual-web architecture documented with deployment model and
-      session management
+    test_description: Textual-web architecture documented with deployment model and session management
     test_commands:
-    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/architecture/f8-textual-web-integration.md
-        --required-sections 'Deployment Architecture,Session Management,Communication
-        Layer'
+    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/architecture/f8-textual-web-integration.md --required-sections
+        'Deployment Architecture,Session Management,Communication Layer'
       command_type: uv
       expected_output: ✓ All required sections present
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Complete architecture with diagrams for browser
-        deployment and state management'
+      success_criteria: 'Exit code 0: Complete architecture with diagrams for browser deployment and state management'
   - acceptance_criterion: AC4
     test_description: UX mockups document complete user journey with component specifications
     test_commands:
-    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-ux-mockups.md
-        --required-sections 'User Journey,Button Bar Design,Linear Backlog Component,Terminal
-        Pane Layout' --require-images 3
+    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-ux-mockups.md --required-sections 'User
+        Journey,Button Bar Design,Linear Backlog Component,Terminal Pane Layout' --require-images 3
       command_type: uv
-      expected_output: ✓ All required sections present, ✓ Minimum 3 images/diagrams
-        found
+      expected_output: ✓ All required sections present, ✓ Minimum 3 images/diagrams found
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Visual mockups show end-to-end flow with component
-        specs'
+      success_criteria: 'Exit code 0: Visual mockups show end-to-end flow with component specs'
   - acceptance_criterion: AC5
-    test_description: Browser-roadmap bridge design documents data flow and JavaScript-Python
-      contract
+    test_description: Browser-roadmap bridge design documents data flow and JavaScript-Python contract
     test_commands:
-    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-browser-bridge.md
-        --required-sections 'Data Flow Diagram,JS-Python API Contract,State Synchronization'
+    - command: uv run .sdlc/scripts/validate_design_deliverable.py docs/designs/f8-browser-bridge.md --required-sections 'Data
+        Flow Diagram,JS-Python API Contract,State Synchronization'
       command_type: uv
       expected_output: ✓ All required sections present
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Integration design complete with API contracts
-        and sync mechanism'
+      success_criteria: 'Exit code 0: Integration design complete with API contracts and sync mechanism'
   estimated_effort: 40 points
   roadmap_extensions:
     feature_id: F8
     feature_name: SDLC Control Plane
     phase_id: phase-1
     week_range: 1-2
-    business_impact: Eliminates context switching, enables browser-based SDLC workflow
-      execution, shortens cycle time with smart action recommendations
+    business_impact: Eliminates context switching, enables browser-based SDLC workflow execution, shortens cycle time with
+      smart action recommendations
     risk_level: medium
     estimated_completion: '2026-02-10'
     success_metrics:
@@ -6880,8 +6615,7 @@ stories:
   priority: P0
   type: Infrastructure
   title: Create Document Registry Schema and Infrastructure
-  description: 'Create the central document registry system with YAML schema, validation,
-    and core data structures.
+  description: 'Create the central document registry system with YAML schema, validation, and core data structures.
 
 
     Problem:
@@ -6903,8 +6637,7 @@ stories:
 
     - Create validation script to ensure registry integrity
 
-    - Establish document categorization (architecture, design, planning, technical,
-    research, ddd)
+    - Establish document categorization (architecture, design, planning, technical, research, ddd)
 
 
     Business Value:
@@ -6927,8 +6660,7 @@ stories:
   - 'Task 5: Add registry validation to make validate-all target'
   acceptance_criteria:
   - 'AC1: DOCUMENT_REGISTRY.yaml schema supports all document types and metadata'
-  - 'AC2: Validation script checks registry integrity (unique IDs, valid paths, valid
-    relationships)'
+  - 'AC2: Validation script checks registry integrity (unique IDs, valid paths, valid relationships)'
   - 'AC3: Search index enables lookup by tag, bounded context, and story ID'
   - 'AC4: Make validate-all includes registry validation'
   functional_test_plan:
@@ -6941,25 +6673,21 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Registry schema validates successfully'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Validation script checks registry integrity
-      (unique IDs...'
+    test_description: 'Verify ac2 - AC2: Validation script checks registry integrity (unique IDs...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-DOCS-001 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Search index enables lookup by tag, bounded
-      context, an...'
+    test_description: 'Verify ac3 - AC3: Search index enables lookup by tag, bounded context, an...'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-DOCS-001 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
     test_description: 'Verify ac4 - AC4: Make validate-all includes registry validation'
     test_commands:
@@ -6967,15 +6695,13 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   roadmap_extensions:
     feature_id: DOCS
     feature_name: Document Registry & Navigation
     phase_id: phase-infrastructure
     week_range: '1'
-    business_impact: Foundation for documentation portal - enables all navigation
-      features
+    business_impact: Foundation for documentation portal - enables all navigation features
     risk_level: low
     estimated_completion: '2026-01-30'
     success_metrics:
@@ -7049,8 +6775,7 @@ stories:
   priority: P0
   type: Infrastructure
   title: Enhance Story Schema with Document References
-  description: 'Add document_references field to story schema and link all stories
-    to relevant documentation.
+  description: 'Add document_references field to story schema and link all stories to relevant documentation.
 
 
     Problem:
@@ -7111,8 +6836,7 @@ stories:
   priority: P0
   type: Infrastructure
   title: Enhance DDD Bounded Context with Architecture Links
-  description: 'Link DDD bounded contexts to architecture documents and aggregate
-    definitions.
+  description: 'Link DDD bounded contexts to architecture documents and aggregate definitions.
 
 
     Problem:
@@ -7239,51 +6963,42 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Placeholder test passes (implementation pending)'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Documents categorized visually by type (icons
-      and color...'
+    test_description: 'Verify ac2 - AC2: Documents categorized visually by type (icons and color...'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-005 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Status badges show document state (Current,
-      Draft, Depr...'
+    test_description: 'Verify ac3 - AC3: Status badges show document state (Current, Draft, Depr...'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-005 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Click opens document in modal viewer or new
-      tab'
+    test_description: 'Verify ac4 - AC4: Click opens document in modal viewer or new tab'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-005 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   - acceptance_criterion: AC5
-    test_description: 'Verify ac5 - AC5: Mobile responsive layout works on all screen
-      sizes'
+    test_description: 'Verify ac5 - AC5: Mobile responsive layout works on all screen sizes'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-005 AC5 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
 - story_id: P1-DOCS-006
   priority: P1
   type: UI
   title: Enhance DDD Section with Architecture Document Links
-  description: 'Update DDD Bounded Context section with clickable links to architecture
-    documents.
+  description: 'Update DDD Bounded Context section with clickable links to architecture documents.
 
 
     Problem:
@@ -7350,35 +7065,29 @@ stories:
       expected_exit_code: 0
       success_criteria: 'Exit code 0: Placeholder test passes (implementation pending)'
   - acceptance_criterion: AC2
-    test_description: 'Verify ac2 - AC2: Each aggregate links to its definition with
-      page number'
+    test_description: 'Verify ac2 - AC2: Each aggregate links to its definition with page number'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-006 AC2 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Context relationships show architecture doc
-      sources'
+    test_description: 'Verify ac3 - AC3: Context relationships show architecture doc sources'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-006 AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: Clicking link jumps directly to referenced
-      section'
+    test_description: 'Verify ac4 - AC4: Clicking link jumps directly to referenced section'
     test_commands:
     - command: uv run python3 -c "print('Test for P1-DOCS-006 AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
 - story_id: P0-DOCS-007
   priority: P0
   type: Automation
@@ -7504,8 +7213,7 @@ stories:
   priority: P1
   type: Automation
   title: Auto-Create Documentation Stubs from Requirements Chat
-  description: 'Automatically generate documentation stubs during requirements chat
-    phase.
+  description: 'Automatically generate documentation stubs during requirements chat phase.
 
 
     Problem:
@@ -7551,8 +7259,7 @@ stories:
   acceptance_criteria:
   - 'AC1: /new-feature-chat creates design doc stub in docs/designs/'
   - 'AC2: Design doc pre-populated with story ID, title, description'
-  - 'AC3: Template includes standard sections (Overview, Architecture, Components,
-    etc.)'
+  - 'AC3: Template includes standard sections (Overview, Architecture, Components, etc.)'
   - 'AC4: Stub registered in DOCUMENT_REGISTRY.yaml with status=draft'
   roadmap_extensions:
     feature_id: DOCS
@@ -7567,8 +7274,7 @@ stories:
   priority: P1
   type: Reporting
   title: Create Documentation Coverage Report Generator
-  description: 'Build /docs-report skill to generate comprehensive documentation coverage
-    reports.
+  description: 'Build /docs-report skill to generate comprehensive documentation coverage reports.
 
 
     Problem:
@@ -7756,8 +7462,7 @@ stories:
   priority: P0
   type: Epic
   title: Document Registry & Navigation System - Full Implementation
-  description: 'Epic tracking complete implementation of document registry and navigation
-    system.
+  description: 'Epic tracking complete implementation of document registry and navigation system.
 
 
     Scope:
@@ -7811,8 +7516,8 @@ stories:
     feature_name: Document Registry & Navigation
     phase_id: phase-infrastructure
     week_range: 1-4
-    business_impact: Reduces documentation discovery time by 95% (15min → 30sec),
-      enables self-service onboarding, ensures documentation quality through automation
+    business_impact: Reduces documentation discovery time by 95% (15min → 30sec), enables self-service onboarding, ensures
+      documentation quality through automation
     risk_level: low
     estimated_completion: '2026-03-21'
     success_metrics:
@@ -7837,28 +7542,23 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC2 passes (implementation pending)'
   - acceptance_criterion: AC3
-    test_description: 'Verify ac3 - AC3: Auto-update hooks working in /implement and
-      /quality'
+    test_description: 'Verify ac3 - AC3: Auto-update hooks working in /implement and /quality'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-DOCS-EPIC AC3 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC3 passes (implementation pending)'
   - acceptance_criterion: AC4
-    test_description: 'Verify ac4 - AC4: /docs-report generates comprehensive coverage
-      metrics'
+    test_description: 'Verify ac4 - AC4: /docs-report generates comprehensive coverage metrics'
     test_commands:
     - command: uv run python3 -c "print('Test for P0-DOCS-EPIC AC4 - pending implementation')"
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC4 passes (implementation pending)'
   - acceptance_criterion: AC5
     test_description: 'Verify ac5 - AC5: User satisfaction ≥90% (from pilot survey)'
     test_commands:
@@ -7866,8 +7566,7 @@ stories:
       command_type: uv
       expected_output: pending implementation
       expected_exit_code: 0
-      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation
-        pending)'
+      success_criteria: 'Exit code 0: Placeholder test for AC5 passes (implementation pending)'
 - story_id: P1-EXAMPLE-001
   priority: P1
   type: Documentation
@@ -7877,12 +7576,11 @@ stories:
 
     **Approach**: Direct mcp__glean__chat invocation (no XML template)
 
-    **Purpose**: Show how to integrate existing Glean agents via `mcp__glean__chat`
-    tool
+    **Purpose**: Show how to integrate existing Glean agents via `mcp__glean__chat` tool
 
 
-    **Use Case**: Extract customer pain points from Gong call transcripts using the
-    existing "Extract Common Pain Points" Glean agent.
+    **Use Case**: Extract customer pain points from Gong call transcripts using the existing "Extract Common Pain Points"
+    Glean agent.
 
 
     **Implementation Approach**:
@@ -7968,12 +7666,10 @@ stories:
 
     **Approach**: XML template + mcp__glean__chat invocation
 
-    **Purpose**: Show how to create custom agents using XML prompts from Eric-Flecher-Glean/prompts
-    repository
+    **Purpose**: Show how to create custom agents using XML prompts from Eric-Flecher-Glean/prompts repository
 
 
-    **Use Case**: Extract acceptance criteria from user story text using custom NLP-based
-    extraction.
+    **Use Case**: Extract acceptance criteria from user story text using custom NLP-based extraction.
 
 
     **Implementation Approach**:
@@ -8058,55 +7754,45 @@ stories:
 - story_id: P0-DOCS-013
   priority: P0
   type: Documentation
-  title: Correct Agent Implementation Pattern Documentation - XML Prompts as Glean
-    MCP Templates
-  description: The current documentation (ADR-006, agent-implementation-guide.md,
-    and example stories P1-EXAMPLE-001/002) incorrectly describes two separate agent
-    patterns. The correct architecture is that XML prompts stored in Eric-Flecher-Glean/prompts
-    are templates that structure messages sent TO existing Glean MCP agents via mcp__glean__chat
-    tool. This story corrects all documentation, examples, and backlog descriptions
-    to reflect the unified pattern where XML prompts enhance Glean agent interactions
-    rather than being an alternative implementation approach.
+  title: Correct Agent Implementation Pattern Documentation - XML Prompts as Glean MCP Templates
+  description: The current documentation (ADR-006, agent-implementation-guide.md, and example stories P1-EXAMPLE-001/002)
+    incorrectly describes two separate agent patterns. The correct architecture is that XML prompts stored in Eric-Flecher-Glean/prompts
+    are templates that structure messages sent TO existing Glean MCP agents via mcp__glean__chat tool. This story corrects
+    all documentation, examples, and backlog descriptions to reflect the unified pattern where XML prompts enhance Glean agent
+    interactions rather than being an alternative implementation approach.
   status: completed
   dependencies: []
   estimated_effort: 56 points
   tasks:
-  - Update ADR-006 in docs/architecture/ddd-specification.md to describe single pattern
-    with XML prompts as message templates
-  - Revise docs/guides/agent-implementation-guide.md to remove 'dual-mode' concept
-    and explain XML prompt usage with Glean MCP
-  - Update docs/guides/xml-prompt-agent-pattern.md to reframe as 'XML Prompt Templates
-    for Glean MCP Agents'
-  - Modify examples/xml_prompt_agent_example.py to show XML prompt → mcp__glean__chat
-    integration flow
+  - Update ADR-006 in docs/architecture/ddd-specification.md to describe single pattern with XML prompts as message templates
+  - Revise docs/guides/agent-implementation-guide.md to remove 'dual-mode' concept and explain XML prompt usage with Glean
+    MCP
+  - Update docs/guides/xml-prompt-agent-pattern.md to reframe as 'XML Prompt Templates for Glean MCP Agents'
+  - Modify examples/xml_prompt_agent_example.py to show XML prompt → mcp__glean__chat integration flow
   - Update P1-EXAMPLE-001 and P1-EXAMPLE-002 descriptions in IMPLEMENTATION_BACKLOG.yaml
   - Update docs/recap files for both example stories to reflect corrected architecture
   - Increment backlog version and update changelog
   acceptance_criteria:
-  - ADR-006 describes single unified pattern (XML prompts as templates for Glean MCP
-    agents)
+  - ADR-006 describes single unified pattern (XML prompts as templates for Glean MCP agents)
   - Agent implementation guide no longer references 'dual-mode' or 'alternative patterns'
-  - XML prompt pattern guide clearly states prompts are used WITH mcp__glean__chat,
-    not as standalone agents
+  - XML prompt pattern guide clearly states prompts are used WITH mcp__glean__chat, not as standalone agents
   - Example code demonstrates XML prompt → Glean agent flow
   - All recap documents and backlog descriptions reflect corrected architecture
   functional_test_plan:
   - acceptance_criterion: AC1
     test_description: Verify ADR-006 contains correct architecture description
     test_commands:
-    - command: 'grep -q "XML prompts.*templates.*Glean MCP" docs/architecture/ddd-specification.md
-        && echo "PASS: ADR-006 updated"'
+    - command: 'grep -q "XML prompts.*templates.*Glean MCP" docs/architecture/ddd-specification.md && echo "PASS: ADR-006
+        updated"'
       command_type: bash
       expected_output: 'PASS: ADR-006 updated'
       expected_exit_code: 0
-      success_criteria: Exit code 0 and grep finds pattern showing XML prompts are
-        templates for Glean agents
+      success_criteria: Exit code 0 and grep finds pattern showing XML prompts are templates for Glean agents
   - acceptance_criterion: AC2
-    test_description: Verify agent-implementation-guide.md does not contain 'dual-mode'
-      references
+    test_description: Verify agent-implementation-guide.md does not contain 'dual-mode' references
     test_commands:
-    - command: '! grep -i "dual-mode\|dual mode\|alternative.*pattern" docs/guides/agent-implementation-guide.md
-        && echo "PASS: No dual-mode references"'
+    - command: '! grep -i "dual-mode\|dual mode\|alternative.*pattern" docs/guides/agent-implementation-guide.md && echo "PASS:
+        No dual-mode references"'
       command_type: bash
       expected_output: 'PASS: No dual-mode references'
       expected_exit_code: 0
@@ -8114,8 +7800,7 @@ stories:
   - acceptance_criterion: AC3
     test_description: Verify xml-prompt-agent-pattern.md explains usage WITH mcp__glean__chat
     test_commands:
-    - command: 'grep -q "mcp__glean__chat" docs/guides/xml-prompt-agent-pattern.md
-        && echo "PASS: Glean MCP integration documented"'
+    - command: 'grep -q "mcp__glean__chat" docs/guides/xml-prompt-agent-pattern.md && echo "PASS: Glean MCP integration documented"'
       command_type: bash
       expected_output: 'PASS: Glean MCP integration documented'
       expected_exit_code: 0
@@ -8123,8 +7808,7 @@ stories:
   - acceptance_criterion: AC4
     test_description: Verify example includes mcp__glean__chat call with XML prompt
     test_commands:
-    - command: 'grep -q "mcp__glean__chat" examples/xml_prompt_agent_example.py &&
-        echo "PASS: Example shows Glean integration"'
+    - command: 'grep -q "mcp__glean__chat" examples/xml_prompt_agent_example.py && echo "PASS: Example shows Glean integration"'
       command_type: bash
       expected_output: 'PASS: Example shows Glean integration'
       expected_exit_code: 0
@@ -8132,44 +7816,34 @@ stories:
   - acceptance_criterion: AC5
     test_description: Verify story descriptions in backlog reflect corrected architecture
     test_commands:
-    - command: 'grep -A5 "P1-EXAMPLE-001\|P1-EXAMPLE-002" IMPLEMENTATION_BACKLOG.yaml
-        | grep -q "template\|mcp__glean__chat" && echo "PASS: Backlog updated"'
+    - command: 'grep -A5 "P1-EXAMPLE-001\|P1-EXAMPLE-002" IMPLEMENTATION_BACKLOG.yaml | grep -q "template\|mcp__glean__chat"
+        && echo "PASS: Backlog updated"'
       command_type: bash
       expected_output: 'PASS: Backlog updated'
       expected_exit_code: 0
-      success_criteria: Exit code 0 and backlog descriptions mention templates or
-        Glean MCP integration
+      success_criteria: Exit code 0 and backlog descriptions mention templates or Glean MCP integration
   artifact_registry: {}
   completed_date: '2026-02-04T16:19:49.559132+00:00'
 backlog_summary:
   total_stories: 67
   by_status:
-    completed: 39
-    not_started: 28
+    completed: 40
+    not_started: 27
   by_priority:
     P0: 37
     P1: 18
     P2: 12
-  critical_path:
-  - P0-PACKAGING-001 (foundation) ✅
-  - P0-PACKAGING-002 (migration system) ✅
-  - P0-PACKAGING-003 (enhanced update.sh) ✅
-  - P0-PACKAGING-004 (multi-version backups) ✅
-  - P0-PACKAGING-005 (rollback utility) ✅
-  - P0-PACKAGING-006 (update checker - parallel with 005) ✅
-  - P0-PACKAGING-007 (documentation - final) ✅
-  - P0-A2A-F7000 (requirements chat - protocol) ⏳
-  - P0-A2A-F7001 (agent protocol - core) ⏳
-  - P0-A2A-F7002 (agent protocol - discovery) ⏳
-  - P0-A2A-F1000 (requirements chat - journey) ⏳
-  - P0-A2A-F1001 (journey - state machine) ⏳
-  - P0-A2A-F1002 (journey - unit of work) ⏳
-  - P0-A2A-F2000 (requirements chat - dataops) ⏳
-  - P0-A2A-F2001 (dataops - discovery) ⏳
-  - P0-A2A-F2002 (dataops - provisioning) ⏳
-  - P0-A2A-F4000 (requirements chat - req-to-design) ⏳
-  - P0-A2A-F4001 (req-to-design - gong) ⏳
-  - P0-A2A-F4002 (req-to-design - figma) ⏳
+  by_type:
+    Bug: 5
+    Proof of Concept: 1
+    Enhancement: 1
+    Infrastructure: 13
+    Documentation: 13
+    Feature: 25
+    UI: 3
+    Automation: 4
+    Reporting: 1
+    Epic: 1
 dependency_graph_notes: 'Phase 1 (PACKAGING - COMPLETED):
 
   Linear chain: 001 → 002 → 003 → 004 → 005 → 007
@@ -8217,40 +7891,30 @@ dependency_graph_notes: 'Phase 1 (PACKAGING - COMPLETED):
   Critical Path: F7→F1→F2→F3→F6 (16 weeks total)
 
   '
-usage_instructions: "IMPLEMENTATION SEQUENCE:\n\nPACKAGING PHASE (COMPLETED - 10/10\
-  \ stories):\n1. Enhanced Git Submodule approach (P0-PACKAGING-001 through 007)\n\
-  2. Testing Infrastructure (/sdlc.initialize - P0-TESTING-001)\n3. Bug Fixes (P0-BUG-001,\
-  \ P0-BUG-002)\n\nAGENT-TO-AGENT PLATFORM (CURRENT - 0/35 stories):\n\nWeek 1: Requirements\
-  \ Chat + Protocol Foundation\n1. Run /sdlc.new-feature-chat for P0-A2A-F7000 (Agent\
-  \ Protocol Bridge)\n2. Implement P0-A2A-F7001 (Core Protocol Implementation)\n3.\
-  \ Run /sdlc.roadmap to visualize progress\n\nWeek 2-4: Complete Phase 1 (Foundation\
-  \ & Protocol)\n- Finish Feature 7 (Agent Protocol Bridge): F7-002, F7-003, F7-004\n\
-  - Requirements Chat for Feature 1: P0-A2A-F1000\n- Implement Feature 1 (Journey\
-  \ Orchestration): F1-001, F1-002, F1-003, F1-004\n\nWeek 5-8: Phase 2 (Data & Requirements\
-  \ Automation)\n- Requirements Chats: F2-000, F4-000\n- Implement Feature 2 (DataOps):\
-  \ F2-001 through F2-004\n- Implement Feature 4 (Req-to-Design): F4-001 through F4-004\n\
-  \nWeek 9-12: Phase 3 (User Productivity & Workflow Design)\n- Requirements Chats:\
-  \ F3-000, F5-000\n- Implement Feature 3 (Flow Builder): F3-001 through F3-004\n\
-  - Implement Feature 5 (Personal Workspace): F5-001 through F5-004\n\nWeek 13-16:\
-  \ Phase 4 (Team Optimization)\n- Requirements Chat: F6-000\n- Implement Feature\
-  \ 6 (Ceremony Orchestrator): F6-001 through F6-004\n\nWORKFLOW PER STORY:\n1. Read\
-  \ story acceptance criteria and functional test plan\n2. Run /sdlc.implement <story-id>\n\
-  3. Implement solution following TDD approach\n4. Run functional tests to verify\
-  \ acceptance criteria\n5. Run /sdlc.quality to validate governance\n6. Run /sdlc.roadmap\
-  \ to update progress visualization\n7. Mark story as completed\n\nSUCCESS CRITERIA:\n\
-  - All 35 A2A stories completed\n- All functional tests passing\n- Business impact\
-  \ metrics achieved:\n  * Time to production: <30 days (vs. 90 days baseline)\n \
-  \ * Dataset provisioning: <1 hour (vs. 2-3 days)\n  * Requirements processed: 100+/week\
-  \ (vs. 10-20)\n  * Workflows created: 50+/week (vs. 5-10)\n  * User time saved:\
-  \ 5-7 hours/week\n  * Ceremony prep saved: 2-3 hours/week per team\n- Velocity multiplier:\
-  \ 6.8x baseline achieved\n"
+usage_instructions: "IMPLEMENTATION SEQUENCE:\n\nPACKAGING PHASE (COMPLETED - 10/10 stories):\n1. Enhanced Git Submodule approach\
+  \ (P0-PACKAGING-001 through 007)\n2. Testing Infrastructure (/sdlc.initialize - P0-TESTING-001)\n3. Bug Fixes (P0-BUG-001,\
+  \ P0-BUG-002)\n\nAGENT-TO-AGENT PLATFORM (CURRENT - 0/35 stories):\n\nWeek 1: Requirements Chat + Protocol Foundation\n\
+  1. Run /sdlc.new-feature-chat for P0-A2A-F7000 (Agent Protocol Bridge)\n2. Implement P0-A2A-F7001 (Core Protocol Implementation)\n\
+  3. Run /sdlc.roadmap to visualize progress\n\nWeek 2-4: Complete Phase 1 (Foundation & Protocol)\n- Finish Feature 7 (Agent\
+  \ Protocol Bridge): F7-002, F7-003, F7-004\n- Requirements Chat for Feature 1: P0-A2A-F1000\n- Implement Feature 1 (Journey\
+  \ Orchestration): F1-001, F1-002, F1-003, F1-004\n\nWeek 5-8: Phase 2 (Data & Requirements Automation)\n- Requirements Chats:\
+  \ F2-000, F4-000\n- Implement Feature 2 (DataOps): F2-001 through F2-004\n- Implement Feature 4 (Req-to-Design): F4-001\
+  \ through F4-004\n\nWeek 9-12: Phase 3 (User Productivity & Workflow Design)\n- Requirements Chats: F3-000, F5-000\n- Implement\
+  \ Feature 3 (Flow Builder): F3-001 through F3-004\n- Implement Feature 5 (Personal Workspace): F5-001 through F5-004\n\n\
+  Week 13-16: Phase 4 (Team Optimization)\n- Requirements Chat: F6-000\n- Implement Feature 6 (Ceremony Orchestrator): F6-001\
+  \ through F6-004\n\nWORKFLOW PER STORY:\n1. Read story acceptance criteria and functional test plan\n2. Run /sdlc.implement\
+  \ <story-id>\n3. Implement solution following TDD approach\n4. Run functional tests to verify acceptance criteria\n5. Run\
+  \ /sdlc.quality to validate governance\n6. Run /sdlc.roadmap to update progress visualization\n7. Mark story as completed\n\
+  \nSUCCESS CRITERIA:\n- All 35 A2A stories completed\n- All functional tests passing\n- Business impact metrics achieved:\n\
+  \  * Time to production: <30 days (vs. 90 days baseline)\n  * Dataset provisioning: <1 hour (vs. 2-3 days)\n  * Requirements\
+  \ processed: 100+/week (vs. 10-20)\n  * Workflows created: 50+/week (vs. 5-10)\n  * User time saved: 5-7 hours/week\n  *\
+  \ Ceremony prep saved: 2-3 hours/week per team\n- Velocity multiplier: 6.8x baseline achieved\n"
 changelog:
 - version: 70
   date: '2026-02-04T16:20:20.530312+00:00'
   changes:
   - 'Completed P0-DOCS-013: Corrected agent implementation pattern documentation'
-  - 'Updated ADR-006: Changed from "Dual-Mode" to unified pattern with optional XML
-    templates'
+  - 'Updated ADR-006: Changed from "Dual-Mode" to unified pattern with optional XML templates'
   - Clarified XML prompts are templates FOR Glean agents, not standalone agents
   - Updated agent-implementation-guide.md, xml-prompt-agent-pattern.md
   - Updated P1-EXAMPLE-001 and P1-EXAMPLE-002 recaps
