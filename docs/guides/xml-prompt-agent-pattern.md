@@ -1,7 +1,7 @@
-# XML Prompt Agent Implementation Pattern
+# XML Prompt Template Pattern
 
-**Pattern Type**: XML Prompt Agent
-**Purpose**: Create custom agents using structured XML prompts
+**Pattern Type**: Message Template for Glean MCP Agents
+**Purpose**: Structure messages sent to Glean agents via `mcp__glean__chat` using version-controlled XML templates
 **Repository**: Eric-Flecher-Glean/prompts (https://github.com/Eric-Flecher-Glean/prompts)
 **Reference**: ADR-006 in `docs/architecture/ddd-specification.md`
 
@@ -9,27 +9,30 @@
 
 ## Overview
 
-The XML Prompt Agent pattern enables rapid development of custom, domain-specific agents using version-controlled XML prompts. Unlike Glean MCP agents (which leverage existing capabilities), XML Prompt agents give you fine-grained control over prompt structure, instructions, and constraints.
+XML Prompt Templates provide structured, version-controlled message formats for invoking Glean agents via `mcp__glean__chat`. They are NOT standalone agents—they are templates that format the input messages you send to existing Glean agents.
 
-### When to Use This Pattern
+**Key Concept**: All agent capabilities come from Glean platform. XML templates just structure how you ask for those capabilities.
 
-✅ **Use XML Prompt Agent when:**
-- Custom domain-specific logic needed (not available in Glean)
-- Rapid prototyping or experimentation required (minutes vs. days)
-- Custom multi-step orchestration needed
-- Building SDLC meta-agents (schema validation, story generation, etc.)
-- Need fine-grained control over prompt structure
-- Want version-controlled, reusable prompts
+### When to Use XML Templates
 
-❌ **Don't use when:**
-- Capability already exists in Glean platform (use Glean MCP Agent instead)
-- Need multi-source data integration with enterprise systems
-- Require Glean's agentic looping feature
-- Want zero implementation cost
+✅ **Use XML Prompt Template when:**
+- Repeatable invocation pattern needed (same structure, different inputs)
+- Complex message structure (role, detailed instructions, constraints)
+- Need version control of prompt format
+- Want to share/reuse prompt structure across team
+- Building SDLC workflows requiring consistent formatting
+- Want to document prompt engineering decisions
+
+❌ **Don't use templates when:**
+- Simple, one-off query to Glean agent (use direct `mcp__glean__chat` call)
+- Message structure is straightforward
+- Not planning to reuse the prompt
 
 ---
 
 ## Architecture
+
+**Key**: XML template → formats message → sent to Glean agent via `mcp__glean__chat`
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -37,12 +40,20 @@ The XML Prompt Agent pattern enables rapid development of custom, domain-specifi
 │  ┌───────────────────────────────────────────────────┐  │
 │  │ Python/TypeScript Code                            │  │
 │  │                                                    │  │
-│  │  prompt = load_xml_prompt(                        │  │
+│  │  # 1. Load XML template                           │  │
+│  │  template = load_xml_template(                    │  │
 │  │    repo="Eric-Flecher-Glean/prompts",            │  │
-│  │    path="sdlc/requirements/extract-ac.xml",      │  │
-│  │    version="1.0.0"                               │  │
+│  │    path="sdlc/requirements/extract-ac.xml"       │  │
 │  │  )                                                │  │
-│  │  result = execute_prompt(prompt, input_text)     │  │
+│  │                                                    │  │
+│  │  # 2. Template formats the message                │  │
+│  │  message = template.format(user_story=story)     │  │
+│  │                                                    │  │
+│  │  # 3. Send formatted message to Glean agent       │  │
+│  │  result = mcp__glean__chat(                       │  │
+│  │    message=message,                               │  │
+│  │    context=template.context                       │  │
+│  │  )                                                │  │
 │  └──────────────────┬────────────────────────────────┘  │
 └─────────────────────┼────────────────────────────────────┘
                       │
@@ -50,18 +61,27 @@ The XML Prompt Agent pattern enables rapid development of custom, domain-specifi
 ┌─────────────────────────────────────────────────────────┐
 │  Eric-Flecher-Glean/prompts Repository                  │
 │  ┌───────────────────────────────────────────────────┐  │
-│  │ Git Repository with Versioned XML Prompts         │  │
+│  │ Git Repository with Versioned XML Templates       │  │
 │  │ - sdlc/requirements/*.xml                         │  │
-│  │ - sdlc/code-generation/*.xml                      │  │
-│  │ - sales/*.xml                                     │  │
+│  │ - Templates define: role, task, instructions      │  │
 │  │ - Tagged releases (v1.0.0, v1.1.0, etc.)          │  │
 │  └──────────────────┬────────────────────────────────┘  │
 └─────────────────────┼────────────────────────────────────┘
                       │
                       ↓
 ┌─────────────────────────────────────────────────────────┐
-│  LLM (Claude, GPT-4, etc.)                               │
-│  Executes prompt and returns structured output          │
+│  mcp__glean__chat Tool                                   │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │ Sends formatted message to Glean agent            │  │
+│  │ (e.g., "Extract Requirements", "Deal Strategy")  │  │
+│  └──────────────────┬────────────────────────────────┘  │
+└─────────────────────┼────────────────────────────────────┘
+                      │
+                      ↓
+┌─────────────────────────────────────────────────────────┐
+│  Glean Platform                                          │
+│  Executes agent with formatted message                  │
+│  Returns structured output                              │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -442,36 +462,41 @@ Always update `<version>` in `<metadata>`:
 
 ---
 
-## Comparison with Glean MCP Agent
+## Comparison: Direct Invocation vs. XML Template
 
-| Aspect | Glean MCP Agent | XML Prompt Agent |
-|--------|----------------|------------------|
-| **Development Time** | 0 (already exists) | Minutes to hours |
-| **Customization** | Limited | Full control |
-| **Data Sources** | Pre-configured (5+) | Manual integration |
-| **Security** | Built-in | Manual implementation |
-| **Iteration Speed** | Slow (Glean release cycle) | Fast (edit XML, commit) |
-| **Agentic Looping** | Built-in | Manual orchestration |
-| **Cost** | Zero (existing investment) | Development time |
-| **Battle-Tested** | Yes (222 customers) | No (new prompts) |
-| **Use Case** | Existing capabilities | Custom logic, SDLC meta-agents |
+**Important**: Both approaches use the SAME Glean agents via `mcp__glean__chat`. The difference is whether you use a template to structure the message.
+
+| Aspect | Direct Invocation | With XML Template |
+|--------|------------------|-------------------|
+| **Glean Agent** | ✅ Uses `mcp__glean__chat` | ✅ Uses `mcp__glean__chat` |
+| **Setup Time** | Immediate | Minutes (create template) |
+| **Message Structure** | Ad-hoc string | Structured XML (role, task, instructions) |
+| **Version Control** | Code only | Template in Git + code |
+| **Reusability** | Copy-paste | Load template |
+| **Iteration Speed** | Code change required | Edit XML, commit |
+| **Consistency** | Manual | Template enforces structure |
+| **Documentation** | In code comments | Self-documenting XML |
+| **Data Sources** | Glean platform (5+ sources) | Glean platform (5+ sources) |
+| **Security** | Glean platform | Glean platform |
+| **Agentic Looping** | Glean platform | Glean platform |
 
 ---
 
 ## Integration with Domain Registry
 
-Register XML Prompt agents in the Domain Registry:
+Register agent invocations that use XML templates in the Domain Registry:
 
 ```yaml
 agent_id: "ac-extractor-v1"
 name: "Acceptance Criteria Extractor"
 bounded_context: "SDLC.RequirementsManagement"
-implementation_type: "xml_prompt"
 implementation:
-  repository: "Eric-Flecher-Glean/prompts"
-  prompt_path: "sdlc/requirements/extract-acceptance-criteria.xml"
-  version: "1.0.0"
-  llm_model: "claude-3-5-sonnet-20241022"  # LLM used to execute prompt
+  tool: "mcp__glean__chat"
+  glean_agent: "Extract Requirements"  # Which Glean agent to invoke
+  message_template:  # Optional: XML template structures the message
+    repository: "Eric-Flecher-Glean/prompts"
+    path: "sdlc/requirements/extract-acceptance-criteria.xml"
+    version: "1.0.0"
 supported_intents:
   - "ExtractAcceptanceCriteria"
 input_schema:
@@ -498,12 +523,12 @@ output_schema:
 
 ## Related Documentation
 
-- **ADR-006**: Dual-Mode Agent Implementation Strategy (`docs/architecture/ddd-specification.md`)
-- **Glean MCP Pattern**: `docs/guides/glean-mcp-agent-pattern.md`
+- **ADR-006**: Glean MCP Agent Integration with XML Prompt Templates (`docs/architecture/ddd-specification.md`)
+- **Direct Invocation Guide**: `docs/guides/glean-mcp-agent-pattern.md`
 - **Master Guide**: `docs/guides/agent-implementation-guide.md`
 - **Example Code**: `examples/xml_prompt_agent_example.py`
-- **Example Prompt**: `examples/prompts/extract-acceptance-criteria.xml`
-- **Repository**: https://github.com/Eric-Flecher-Glean/prompts
+- **Example Template**: `examples/prompts/extract-acceptance-criteria.xml`
+- **Template Repository**: https://github.com/Eric-Flecher-Glean/prompts
 
 ---
 
@@ -520,5 +545,5 @@ output_schema:
 ---
 
 **Last Updated**: 2026-02-04
-**Pattern Version**: 1.0.0
-**Related Stories**: P1-EXAMPLE-001, P1-EXAMPLE-002
+**Pattern Version**: 2.0.0 (Corrected: XML templates are used WITH mcp__glean__chat, not as standalone agents)
+**Related Stories**: P1-EXAMPLE-001, P1-EXAMPLE-002, P0-DOCS-013

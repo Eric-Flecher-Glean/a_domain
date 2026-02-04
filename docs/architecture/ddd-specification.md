@@ -56,9 +56,9 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 3. **Saga Pattern:** For multi-step value chain orchestration with compensation
 4. **Meta-Agent Strategy:** SDLC agents that improve the platform itself (self-bootstrapping)
 5. **Glean Integration:** Anti-Corruption Layer to isolate from Glean platform changes
-6. **Agent Implementation Pattern:** Dual-mode agent implementation strategy
-   - **Glean MCP Agents:** Existing Glean agents accessed via MCP (`mcp__glean__chat`)
-   - **XML Prompt Agents:** Custom prompt-engineered agents stored as XML instructions in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
+6. **Agent Implementation Pattern:** Unified Glean MCP agent integration
+   - **Glean MCP Agents:** All agent capabilities accessed via `mcp__glean__chat` tool
+   - **XML Prompt Templates:** Optional structured templates that format messages sent to Glean agents, stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
 
 ### Domain Complexity Classification
 - **Core Domain:** Platform.Registry, Platform.Orchestration (high complexity, high business value)
@@ -80,8 +80,8 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 | **Ubiquitous Language** | Shared vocabulary between domain experts and developers within a context |
 | **Domain Event** | An immutable record of something that happened in the domain |
 | **Glean MCP Agent** | An existing Glean agent invoked via Model Context Protocol using `mcp__glean__chat` tool |
-| **XML Prompt Agent** | A prompt-engineered agent defined as XML instruction stored in `Eric-Flecher-Glean/prompts` repository |
-| **Agent Implementation Type** | Classification of how an agent is implemented: either Glean MCP or XML Prompt |
+| **XML Prompt Template** | A structured XML template that formats messages sent to Glean agents via `mcp__glean__chat`, stored in `Eric-Flecher-Glean/prompts` repository |
+| **Message Template** | An XML template defining role, task, instructions, and constraints used to structure inputs to Glean agents |
 
 ### Platform.Orchestration Context
 
@@ -1571,79 +1571,95 @@ SLA Target: 95% resolved within 24 hours
 
 ---
 
-### ADR-006: Dual-Mode Agent Implementation Strategy
+### ADR-006: Glean MCP Agent Integration with XML Prompt Templates
 
-**Decision:** Agents in this system are implemented via one of two patterns:
-1. **Glean MCP Agents**: Existing Glean agents accessed via `mcp__glean__chat` tool
-2. **XML Prompt Agents**: Custom prompt-engineered agents defined as XML instructions and stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
+**Decision:** All agents in this system leverage existing Glean agents accessed via the `mcp__glean__chat` tool. XML prompts stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository serve as templates to structure the messages sent to these Glean agents, enhancing consistency and enabling version-controlled prompt engineering.
+
+**Architecture:**
+There is ONE unified agent pattern:
+- **Glean MCP Agents**: Access existing enterprise AI capabilities via `mcp__glean__chat` tool
+- **XML Prompts (Optional)**: Structured templates that format messages sent TO Glean agents
+
+XML prompts are NOT standalone agents. They are templates that:
+1. Structure the input message passed to `mcp__glean__chat`
+2. Define role, task, instructions, and constraints
+3. Ensure consistent formatting across invocations
+4. Enable version control and reusability
 
 **Rationale:**
-- **Glean MCP Agents**: Leverage existing enterprise AI capabilities already deployed in Glean platform
+- **Leverage Glean Platform**: All agent capabilities come from existing, battle-tested Glean agents
   - Access to pre-configured data sources (Salesforce, Gong, GitHub, etc.)
-  - Battle-tested agent templates with high usage (222 customers, 200+ agents each)
-  - Zero implementation cost for capabilities that already exist
+  - 222 customers already using these agents
+  - Zero implementation cost for capabilities
   - Seamless integration with Glean's security model
+  - Agentic looping built-in for complex analysis
 
-- **XML Prompt Agents**: Enable rapid development of custom, domain-specific agents
-  - Version-controlled prompts in dedicated Git repository
-  - Structured XML format ensures consistency and discoverability
-  - Enables prompt engineering best practices (role, task, instructions, constraints)
-  - Faster iteration cycle than building full Glean agents (minutes vs. days)
-  - Can compose multiple MCP calls within single agent workflow
+- **XML Prompts Enhance Invocation**: Templates provide structure and consistency
+  - Version-controlled in dedicated Git repository
+  - Structured XML format (role, task, instructions, constraints, examples)
+  - Enables prompt engineering best practices
+  - Fast iteration (edit XML, commit, use)
+  - Reusable across projects and teams
+  - Clear documentation of intent
 
 **Trade-offs:**
 - **Gained:**
-  - Best-of-both-worlds: Leverage Glean platform + custom innovation
-  - Clear separation: existing capabilities vs. new capabilities
-  - Flexibility to choose implementation based on use case
+  - Unified pattern: Always use `mcp__glean__chat`, optionally with XML template
+  - Best-of-both-worlds: Glean platform power + structured prompt engineering
+  - No confusion: XML prompts are templates, not separate agent type
   - Reusable prompt library grows over time
 
 - **Lost:**
-  - Need to maintain two agent invocation patterns
-  - XML agents cannot leverage Glean's no-code builder UI
-  - Potential confusion about which pattern to use when
+  - XML prompts require loading/parsing infrastructure
+  - Cannot create capabilities outside of Glean platform
+  - Dependent on Glean agent availability
 
 **Implementation Guidelines:**
 
-**Use Glean MCP Agent when:**
-- Capability already exists in Glean platform (Sales, Support, SDLC agents)
-- Need multi-source data integration with enterprise systems
-- Require Glean's agentic looping feature
-- Need bi-directional system integration (read from one, write to another)
+**Use Direct mcp__glean__chat Invocation when:**
+- Simple, ad-hoc queries to Glean agents
+- One-off exploration or prototyping
+- Message structure is straightforward
 
-**Use XML Prompt Agent when:**
-- Custom domain-specific logic not available in Glean
-- Rapid prototyping or experimentation needed
-- Agent workflow requires custom multi-step orchestration
-- Need fine-grained control over prompt structure
-- Building meta-agents for SDLC automation
+**Use XML Prompt Template when:**
+- Repeatable invocation pattern needed
+- Complex message structure (role, instructions, constraints)
+- Need version control of prompt structure
+- Want to share/reuse prompt across team
+- Building SDLC workflows requiring consistent formatting
 
 **Examples:**
 ```yaml
-# Glean MCP Agent Usage
-agent_type: glean_mcp
-implementation:
+# Direct Glean MCP Agent Usage (No Template)
+agent_invocation:
   tool: mcp__glean__chat
-  agent_name: "Extract Common Pain Points"  # Existing Glean agent
-  context: "Analyze sales call transcripts by industry"
+  message: "Extract customer pain points from Q1 2026 sales calls"
+  context:
+    - "industry: healthcare"
+    - "customer_segment: enterprise"
 
-# XML Prompt Agent Usage
-agent_type: xml_prompt
-implementation:
-  repository: Eric-Flecher-Glean/prompts
-  prompt_path: sdlc/requirements/extract-acceptance-criteria.xml
-  version: "1.2.0"
+# Glean MCP Agent with XML Prompt Template
+agent_invocation:
+  tool: mcp__glean__chat
+  message_template:
+    repository: Eric-Flecher-Glean/prompts
+    path: sdlc/requirements/extract-acceptance-criteria.xml
+    version: "1.2.0"
+    variables:
+      user_story: "As a developer, I want to search agents by context"
+  # XML template structures the message sent to mcp__glean__chat
 ```
 
 **Alternatives Considered:**
-- **Glean-only approach** (rejected: too slow for custom SDLC automation needs)
+- **Glean-only approach without templates** (rejected: repetitive prompt structure, no version control)
 - **Custom agent framework** (rejected: reinvents wheel, Glean platform already mature)
-- **Python/TypeScript agents** (rejected: harder to version, review, and maintain than XML prompts)
+- **Python/TypeScript functions for prompts** (rejected: harder to version, review, and maintain than XML)
+- **Treating XML prompts as separate agents** (rejected: creates confusion, duplicates Glean capabilities)
 
 **Registry Implications:**
-- Agent registration must include `implementation_type: [glean_mcp | xml_prompt]`
-- Discovery queries can filter by implementation type
-- Schema validation differs: MCP agents validated by Glean, XML agents validated locally
+- Agent registration must include `glean_agent_name` (which Glean agent is used)
+- Optional: `prompt_template` field if using XML template
+- Discovery queries return Glean agents, with template as enhancement
 - Prompts repository should be synced to registry for discoverability
 
 ---

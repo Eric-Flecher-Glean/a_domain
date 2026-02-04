@@ -11,7 +11,7 @@
 
 ## Summary
 
-Implemented complete example demonstrating the Glean MCP Agent implementation pattern. This example shows how to access existing, battle-tested Glean agents via the `mcp__glean__chat` tool, pass context parameters, parse structured responses, and integrate results into the requirements backlog.
+Implemented complete example demonstrating direct invocation of Glean agents via `mcp__glean__chat` tool. This example shows how to access existing, battle-tested Glean agents without using XML templates—simply passing a message string and context parameters directly to `mcp__glean__chat`, parsing structured responses, and integrating results into the requirements backlog.
 
 ---
 
@@ -241,19 +241,15 @@ context = [
 
 ## Key Learnings
 
-### When to Use Glean MCP Agent
+### When to Use Direct Invocation
 
 ✅ **Perfect for**:
-- Existing capabilities in Glean platform
-- Multi-source data aggregation needed
-- Agentic looping required for complex analysis
-- Zero development budget
+- Simple, ad-hoc queries to Glean agents
+- One-off exploration or prototyping
+- Straightforward message structure
+- No need for repeatable/version-controlled prompts
 
-❌ **Not suitable for**:
-- Custom domain logic not in Glean
-- Rapid prototyping without Glean setup
-- Custom multi-step orchestration
-- Fine-grained prompt control
+**Note**: All invocations use `mcp__glean__chat` to access Glean platform capabilities. This example shows the simplest approach without XML templates.
 
 ### Implementation Best Practices
 
@@ -273,7 +269,7 @@ context = [
 - None (example story)
 
 **Related**:
-- P1-EXAMPLE-002: XML Prompt Agent example (demonstrates alternative pattern)
+- P1-EXAMPLE-002: XML Template example (demonstrates using templates to structure messages to Glean agents)
 
 ---
 
@@ -319,9 +315,9 @@ context = [
 
 ## Related Documentation
 
-- **ADR-006**: Dual-Mode Agent Implementation Strategy (`docs/architecture/ddd-specification.md`)
+- **ADR-006**: Glean MCP Agent Integration with XML Prompt Templates (`docs/architecture/ddd-specification.md`)
 - **Glean Agent Library**: `docs/research/glean-agent-usage-categorization.md`
-- **Pattern Guide**: `docs/guides/glean-mcp-agent-pattern.md`
+- **Direct Invocation Guide**: `docs/guides/glean-mcp-agent-pattern.md`
 - **Master Guide**: `docs/guides/agent-implementation-guide.md`
 - **Story**: P1-EXAMPLE-001 in `IMPLEMENTATION_BACKLOG.yaml`
 
