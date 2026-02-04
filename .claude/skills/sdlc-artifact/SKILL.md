@@ -1,0 +1,1 @@
+../../../.sdlc/.sdlc/skills/sdlc.artifact.md

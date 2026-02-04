@@ -24,6 +24,8 @@ Development lifecycle and governance skills (via symlink to `.sdlc/.sdlc/skills/
 - `/sdlc-deploy` - Deployment workflow
 - `/sdlc-new-feature-chat` - Interactive TDD story creation
 - `/sdlc-client-meetings` - Generate client meeting reports
+- `/sdlc-docs` - Launch interactive documentation browser
+- `/sdlc-audit` - Audit repositories and generate integration plans
 
 ## Available Skills
 
