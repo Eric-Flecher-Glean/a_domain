@@ -4,6 +4,13 @@
 # Define SDLC base directory
 SDLC_DIR := .sdlc/.sdlc
 
+# Check if .sdlc submodule is initialized
+SDLC_INITIALIZED := $(shell test -f $(SDLC_DIR)/make/governance.mk && echo yes || echo no)
+
+ifeq ($(SDLC_INITIALIZED),no)
+$(error ❌ .sdlc submodule not initialized. Run: git submodule update --init --recursive)
+endif
+
 # Auto-start all web services for observability and UX
 .PHONY: ensure-services
 ensure-services:
@@ -21,6 +28,18 @@ include $(SDLC_DIR)/make/backlog.mk
 include $(SDLC_DIR)/make/artifacts.mk
 include $(SDLC_DIR)/make/logging.mk
 -include $(SDLC_DIR)/make/skills.mk  # Optional - may not exist in remote version
+
+# Helper target to initialize .sdlc submodule
+.PHONY: sdlc-init
+sdlc-init:
+	@echo "🔄 Initializing .sdlc submodule..."
+	@git submodule update --init --recursive
+	@echo "✅ .sdlc submodule initialized"
+	@echo ""
+	@echo "You can now use:"
+	@echo "  make validate-governance"
+	@echo "  make test-all"
+	@echo "  make backlog-status"
 
 # Override key SDLC targets to ensure all services are running
 backlog-next: ensure-services

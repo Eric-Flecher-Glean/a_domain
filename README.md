@@ -51,7 +51,23 @@ Choreograph complex workflows across agents with both orchestrated sagas and eve
 ![Developer Onboarding Journey](./docs/images/developer/ddd-registry-onboarding-developers-v1.png)
 *Step-by-step developer onboarding: From "I need an agent" to production deployment in minutes*
 
-### 1. Install the Registry
+### 1. Clone and Initialize
+
+```bash
+# Clone the repository
+git clone https://github.com/Eric-Flecher-Glean/a_domain.git
+cd a_domain
+
+# Initialize .sdlc submodule (REQUIRED!)
+git submodule update --init --recursive
+
+# Or use the helper command
+make sdlc-init
+```
+
+**Important**: The `.sdlc` directory is a git submodule. You must initialize it before using make targets like `make validate-governance` or `make test-all`.
+
+### 2. Install Dependencies
 ```bash
 npm install @glean/ddd-registry
 ```
