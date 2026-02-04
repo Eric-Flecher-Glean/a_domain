@@ -302,6 +302,72 @@ grep "Glean MCP Agent Integration with XML Prompt Templates" docs/architecture/d
 
 ---
 
+## How to Validate
+
+### 1. Verify No "Dual-Mode" References
+
+```bash
+grep -i "dual-mode\|dual mode" docs/guides/agent-implementation-guide.md docs/guides/xml-prompt-agent-pattern.md docs/architecture/ddd-specification.md
+```
+
+**Expected output**:
+- No matches found (exit code: 1)
+- All "dual-mode" references successfully removed
+
+### 2. Verify ADR-006 Title Updated
+
+```bash
+grep "Glean MCP Agent Integration with XML Prompt Templates" docs/architecture/ddd-specification.md
+```
+
+**Expected output**:
+- Match found in ADR-006 title
+- Exit code: 0
+
+### 3. Verify XML Templates Described Correctly
+
+```bash
+grep "templates.*structure.*messages" docs/guides/xml-prompt-agent-pattern.md
+```
+
+**Expected output**:
+- Match found describing XML prompts as templates that structure messages TO Glean agents
+- Exit code: 0
+
+### 4. Verify Example Recaps Updated
+
+```bash
+grep -l "Approach.*Direct\|Approach.*XML template" docs/recap/P1-EXAMPLE-00*.md
+```
+
+**Expected output**:
+- Both P1-EXAMPLE-001-recap.md and P1-EXAMPLE-002-recap.md listed
+- Files correctly describe approaches (not "patterns")
+- Exit code: 0
+
+### 5. Verify Backlog Story Titles
+
+```bash
+grep "P1-EXAMPLE-001\|P1-EXAMPLE-002" IMPLEMENTATION_BACKLOG.yaml | head -2
+```
+
+**Expected output**:
+- P1-EXAMPLE-001: Example: Direct Glean Agent Invocation
+- P1-EXAMPLE-002: Example: XML Template for Glean Agent
+
+### 6. Run Documentation Standards Check
+
+```bash
+uv run .sdlc/core/docs_validator.py
+```
+
+**Expected output**:
+- No critical documentation issues related to P0-DOCS-013
+- Terminology consistency verified
+- All 5 documentation files passing structure checks
+
+---
+
 ## Next Steps
 
 ### Immediate ✅

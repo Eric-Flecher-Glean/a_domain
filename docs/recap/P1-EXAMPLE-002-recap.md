@@ -379,6 +379,76 @@ Both example stories (P1-EXAMPLE-001 and P1-EXAMPLE-002) are now complete, demon
 
 ---
 
+## How to Validate
+
+### 1. Run the Example
+
+```bash
+uv run examples/xml_prompt_agent_example.py
+```
+
+**Expected output**:
+- Header shows "XML PROMPT AGENT EXAMPLE"
+- Step 1: Prompt loaded successfully (name: extract-acceptance-criteria, version: 1.0.0)
+- Step 2: Extraction complete
+- Step 3: Results show 5 acceptance criteria with types, priorities, test approaches
+- Backlog integration format displayed in YAML
+- Exit code: 0
+
+### 2. Verify XML Template Structure
+
+```bash
+grep "<prompt>\|<metadata>\|<role>\|<task>\|<instructions>\|<output_format>\|<constraints>\|<examples>\|<validation_rules>" examples/prompts/extract-acceptance-criteria.xml | wc -l
+```
+
+**Expected output**:
+- At least 9 matches (all required XML sections present)
+- Exit code: 0
+
+### 3. Check Pattern Guide Content
+
+```bash
+grep "XML prompts are NOT standalone agents" docs/guides/xml-prompt-agent-pattern.md
+```
+
+**Expected output**:
+- Match found clarifying XML prompts are templates, not separate agents
+- Exit code: 0
+
+### 4. Verify XMLPromptLoader Class
+
+```bash
+grep "class XMLPromptLoader" examples/xml_prompt_agent_example.py
+```
+
+**Expected output**:
+- XMLPromptLoader class defined
+- Methods: load_from_file, load_from_repository
+- Exit code: 0
+
+### 5. Check Storage Documentation
+
+```bash
+ls examples/prompts/README.md
+```
+
+**Expected output**:
+- README.md exists explaining prompt storage in Eric-Flecher-Glean/prompts repo
+- Exit code: 0
+
+### 6. Verify Backlog Integration
+
+```bash
+grep "P1-EXAMPLE-002" IMPLEMENTATION_BACKLOG.yaml | head -1
+```
+
+**Expected output**:
+- Story title: "Example: XML Template for Glean Agent" or similar
+- Status: completed
+- Exit code: 0
+
+---
+
 ## Related Documentation
 
 - **ADR-006**: Glean MCP Agent Integration with XML Prompt Templates (`docs/architecture/ddd-specification.md`)

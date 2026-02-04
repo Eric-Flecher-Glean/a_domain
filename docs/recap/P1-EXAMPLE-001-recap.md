@@ -313,6 +313,71 @@ context = [
 
 ---
 
+## How to Validate
+
+### 1. Run the Example
+
+```bash
+uv run examples/glean_mcp_agent_example.py
+```
+
+**Expected output**:
+- Header shows "GLEAN MCP AGENT EXAMPLE"
+- Agent invocation shows message and context parameters
+- Results section displays:
+  - Agent metadata (name, version, date)
+  - Data sources (Gong, HubSpot, Teams, Salesforce, Zoom)
+  - Summary with 6 pain points, 32 mentions
+  - Pain point details with frequency and impact scores
+  - Recommendations section
+  - Backlog integration format
+- Exit code: 0
+
+### 2. Verify Documentation Files Exist
+
+```bash
+ls docs/guides/glean-mcp-agent-pattern.md docs/guides/agent-implementation-guide.md
+```
+
+**Expected output**:
+- Both files exist
+- Exit code: 0
+
+### 3. Check Pattern Guide Content
+
+```bash
+grep "mcp__glean__chat" docs/guides/glean-mcp-agent-pattern.md | head -3
+```
+
+**Expected output**:
+- References to mcp__glean__chat tool found
+- Guide explains direct invocation without templates
+- Exit code: 0
+
+### 4. Verify Example Demonstrates Key Features
+
+```bash
+grep "context = \[" examples/glean_mcp_agent_example.py
+```
+
+**Expected output**:
+- Context parameter structure shown (list of "key: value" strings)
+- Example includes: industry, timeframe, customer_segment, focus parameters
+- Exit code: 0
+
+### 5. Check Backlog Integration
+
+```bash
+grep "P1-EXAMPLE-001" IMPLEMENTATION_BACKLOG.yaml | head -1
+```
+
+**Expected output**:
+- Story title: "Example: Direct Glean Agent Invocation" or similar
+- Status: completed
+- Exit code: 0
+
+---
+
 ## Related Documentation
 
 - **ADR-006**: Glean MCP Agent Integration with XML Prompt Templates (`docs/architecture/ddd-specification.md`)

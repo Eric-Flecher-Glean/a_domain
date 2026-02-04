@@ -177,6 +177,57 @@ uv run tests/integration/test_gong_extractor.py
 3. Expand NLP patterns based on real transcript analysis
 4. Add multi-language support for global calls
 
+## How to Validate
+
+### 1. Run the Demo
+
+```bash
+uv run src/a_domain/cli/parse_gong.py demo
+```
+
+**Expected output**:
+- ✅ Loaded demo transcript: "Customer Feedback - CRM Integration"
+- ✅ Extracted 6 requirements
+- Summary shows breakdown by type (3 integration, 2 feature, 1 performance)
+- Files created in `output/gong/`: requirements.yaml, requirements-summary.txt, requirements-review.txt
+
+### 2. Verify Output Files
+
+```bash
+cat output/gong/requirements.yaml
+cat output/gong/requirements-summary.txt
+cat output/gong/requirements-review.txt
+```
+
+**Expected output**:
+- YAML contains structured requirements with metadata (type, priority, source)
+- Summary shows statistics (total: 6, by type, by priority)
+- Review format groups requirements by type for quick scanning
+
+### 3. Run Integration Tests
+
+```bash
+uv run tests/integration/test_gong_extractor.py
+```
+
+**Expected output**:
+- All 3 tests passing: test_extract_requirements, test_identify_pain_points, test_glean_integration
+- Exit code: 0
+- No errors or warnings
+
+### 4. Verify Artifact Registration
+
+```bash
+make register-artifacts
+```
+
+**Expected output**:
+- All files mapped to P0-A2A-F4001: extractor.py, gong_connector.py, nlp_patterns.py, models.py, output_formatter.py, parse_gong.py
+- 100% artifact coverage
+- No unmapped files in src/a_domain/requirements/ or src/a_domain/cli/
+
+---
+
 ## Related Documentation
 
 - Design: `docs/designs/gong-extraction-pipeline-design.md`

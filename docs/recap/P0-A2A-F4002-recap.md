@@ -210,6 +210,58 @@ The parser recognizes and handles 12 component types:
 4. Expand design token extraction (complete color palettes, typography scales)
 5. Add flow detection (user journeys across screens)
 
+## How to Validate
+
+### 1. Run the Demo
+
+```bash
+uv run src/a_domain/cli/parse_figma.py demo
+```
+
+**Expected output**:
+- ✅ Loaded demo Figma file: "CRM Integration Designs"
+- ✅ Extracted 3 components
+- Summary shows breakdown by type (1 button, 1 card, 1 input)
+- Key components listed with dimensions and user story hints
+- Files created in `output/figma/`: design-spec.yaml, technical-spec.md, design-summary.txt
+
+### 2. Verify Output Files
+
+```bash
+cat output/figma/design-spec.yaml
+cat output/figma/technical-spec.md
+cat output/figma/design-summary.txt
+```
+
+**Expected output**:
+- YAML contains structured design spec with component metadata
+- Markdown technical spec includes component details, properties, and implementation notes
+- Summary shows statistics (total: 3 components, by type, with dimensions)
+
+### 3. Run Integration Tests
+
+```bash
+uv run tests/integration/test_figma_parser.py
+```
+
+**Expected output**:
+- All 5 tests passing: test_parse_figma_components, test_extract_properties, test_generate_user_stories, test_glean_integration, test_output_formats
+- Exit code: 0
+- No errors or warnings
+
+### 4. Verify Artifact Registration
+
+```bash
+make register-artifacts
+```
+
+**Expected output**:
+- All files mapped to P0-A2A-F4002: figma_parser.py, figma_connector.py, figma_models.py, figma_output.py, parse_figma.py
+- 100% artifact coverage
+- No unmapped files in src/a_domain/requirements/ or src/a_domain/cli/
+
+---
+
 ## Related Documentation
 
 - Design: `docs/designs/req-to-design-pipeline-design.md`
