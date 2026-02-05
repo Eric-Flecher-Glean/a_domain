@@ -193,7 +193,25 @@
     <div class="container">
         <!-- Primary Services -->
         <div class="services-grid">
-            <a href="http://localhost:3000" target="_blank" class="service-card primary">
+            <a href="/tests-dashboard" class="service-card primary">
+                <div class="service-icon">🧪</div>
+                <div class="service-title">Testing Dashboard</div>
+                <div class="service-description">
+                    Run unit, integration, and functional tests with real-time output streaming. View test history, filter results, and monitor test execution status.
+                </div>
+                <div class="service-meta">
+                    <div>
+                        <span class="tech-badge">WebSocket</span>
+                        <span class="tech-badge">Port 3001</span>
+                    </div>
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="http://localhost:3000" target="_blank" class="service-card">
                 <div class="service-icon">📊</div>
                 <div class="service-title">Report Explorer</div>
                 <div class="service-description">
@@ -288,9 +306,10 @@
         // Check service status
         async function checkServiceStatus() {
             const services = [
-                { url: 'http://localhost:3000', element: document.querySelectorAll('.status-dot')[0] },
-                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[1] },
-                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[2] }
+                { url: 'http://localhost:3001/tests-dashboard', element: document.querySelectorAll('.status-dot')[0] },
+                { url: 'http://localhost:3000', element: document.querySelectorAll('.status-dot')[1] },
+                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[2] },
+                { url: 'http://localhost:8000/health', element: document.querySelectorAll('.status-dot')[3] }
             ];
 
             for (const service of services) {

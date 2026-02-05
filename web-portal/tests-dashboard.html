@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Dashboard - a_domain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .nav {
+            padding: 1rem 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .controls-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .controls-panel h2 {
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .output-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .output-panel h2 {
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .output-display {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .output-display:empty::before {
+            content: 'Test output will appear here...';
+            opacity: 0.5;
+        }
+
+        .output-line {
+            margin-bottom: 0.25rem;
+        }
+
+        .output-line.stdout {
+            color: #10b981;
+        }
+
+        .output-line.stderr {
+            color: #ef4444;
+        }
+
+        .output-line.info {
+            color: #3b82f6;
+        }
+
+        .output-line.success {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .output-line.error {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-running {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .history-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .history-panel h2 {
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .history-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .history-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .history-table tr {
+            cursor: pointer;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .metrics-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            flex: 1;
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .connection-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .connection-dot.connected {
+            background: #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .connection-dot.disconnected {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">
+        <div class="connection-dot disconnected" id="connectionDot"></div>
+        <span id="connectionText">Connecting...</span>
+    </div>
+
+    <div class="header">
+        <h1>🧪 Testing Dashboard</h1>
+        <p>Run tests and monitor execution in real-time</p>
+    </div>
+
+    <div class="nav">
+        <a href="/">← Back to Portal</a>
+    </div>
+
+    <div class="container">
+        <!-- Test Controls -->
+        <div class="controls-panel">
+            <h2>Test Execution</h2>
+
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-label">Total Runs</div>
+                    <div class="metric-value" id="totalRuns">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Last Status</div>
+                    <div class="metric-value" id="lastStatus">—</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Last Duration</div>
+                    <div class="metric-value" id="lastDuration">—</div>
+                </div>
+            </div>
+
+            <div class="controls-row">
+                <div class="control-group">
+                    <label for="testSuite">Test Suite</label>
+                    <select id="testSuite">
+                        <option value="all">All Tests</option>
+                        <option value="unit">Unit Tests</option>
+                        <option value="integration">Integration Tests</option>
+                        <option value="functional">Functional Tests</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="testPattern">Test Pattern (optional)</label>
+                    <input type="text" id="testPattern" placeholder="e.g., test_backlog_*">
+                </div>
+            </div>
+
+            <button id="runTestsBtn" class="btn btn-primary" onclick="runTests()">
+                <span id="btnText">Run Tests</span>
+            </button>
+            <button id="clearOutputBtn" class="btn btn-secondary" onclick="clearOutput()">
+                Clear Output
+            </button>
+        </div>
+
+        <!-- Test Output -->
+        <div class="output-panel">
+            <h2>Test Output</h2>
+            <div class="output-display" id="outputDisplay"></div>
+        </div>
+
+        <!-- Test History -->
+        <div class="history-panel">
+            <h2>Test History</h2>
+
+            <div class="history-filters">
+                <button class="filter-btn active" data-filter="all" onclick="filterHistory('all')">
+                    All
+                </button>
+                <button class="filter-btn" data-filter="passed" onclick="filterHistory('passed')">
+                    Passed
+                </button>
+                <button class="filter-btn" data-filter="failed" onclick="filterHistory('failed')">
+                    Failed
+                </button>
+            </div>
+
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Suite</th>
+                        <th>Status</th>
+                        <th>Duration</th>
+                        <th>Exit Code</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: #9ca3af;">
+                            No test runs yet. Click "Run Tests" to start.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let currentRunId = null;
+        let currentFilter = 'all';
+        let testHistory = [];
+
+        // Connect to WebSocket
+        function connectWebSocket() {
+            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${wsProtocol}//${window.location.hostname}:3001/ws`;
+
+            try {
+                ws = new WebSocket(wsUrl);
+
+                ws.onopen = () => {
+                    console.log('WebSocket connected');
+                    updateConnectionStatus(true);
+                };
+
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    handleWebSocketMessage(data);
+                };
+
+                ws.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    updateConnectionStatus(false);
+                };
+
+                ws.onclose = () => {
+                    console.log('WebSocket disconnected');
+                    updateConnectionStatus(false);
+                    // Reconnect after 3 seconds
+                    setTimeout(connectWebSocket, 3000);
+                };
+            } catch (error) {
+                console.error('Failed to connect WebSocket:', error);
+                updateConnectionStatus(false);
+                setTimeout(connectWebSocket, 3000);
+            }
+        }
+
+        function updateConnectionStatus(connected) {
+            const dot = document.getElementById('connectionDot');
+            const text = document.getElementById('connectionText');
+
+            if (connected) {
+                dot.className = 'connection-dot connected';
+                text.textContent = 'Connected';
+            } else {
+                dot.className = 'connection-dot disconnected';
+                text.textContent = 'Disconnected';
+            }
+        }
+
+        function handleWebSocketMessage(data) {
+            const output = document.getElementById('outputDisplay');
+
+            switch (data.type) {
+                case 'output':
+                    appendOutput(data.stream, data.data);
+                    break;
+                case 'complete':
+                    handleTestComplete(data);
+                    break;
+                case 'error':
+                    appendOutput('error', `Error: ${data.message}`);
+                    enableRunButton();
+                    break;
+            }
+        }
+
+        function appendOutput(stream, text) {
+            const output = document.getElementById('outputDisplay');
+            const line = document.createElement('div');
+            line.className = `output-line ${stream}`;
+            line.textContent = text;
+            output.appendChild(line);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        async function runTests() {
+            const suite = document.getElementById('testSuite').value;
+            const pattern = document.getElementById('testPattern').value;
+            const btn = document.getElementById('runTestsBtn');
+            const btnText = document.getElementById('btnText');
+
+            // Clear previous output
+            document.getElementById('outputDisplay').innerHTML = '';
+
+            // Disable button
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span>Running...';
+
+            // Send test run request
+            try {
+                const response = await fetch('/api/tests/run', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        suite: suite,
+                        pattern: pattern || null
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentRunId = result.runId;
+                    appendOutput('info', `Test run ${result.runId} started...`);
+                } else {
+                    appendOutput('error', `Failed to start tests: ${result.message}`);
+                    enableRunButton();
+                }
+            } catch (error) {
+                appendOutput('error', `Failed to start tests: ${error.message}`);
+                enableRunButton();
+            }
+        }
+
+        function handleTestComplete(data) {
+            const { runId, exitCode, duration, suite } = data;
+
+            const status = exitCode === 0 ? 'passed' : 'failed';
+            appendOutput('info', `\n${'='.repeat(60)}`);
+            appendOutput(status, `Tests ${status.toUpperCase()} (exit code: ${exitCode}, duration: ${duration}s)`);
+            appendOutput('info', ${'='.repeat(60)});
+
+            // Update metrics
+            document.getElementById('lastStatus').textContent = status.toUpperCase();
+            document.getElementById('lastDuration').textContent = `${duration}s`;
+
+            // Add to history
+            addToHistory({
+                timestamp: new Date().toISOString(),
+                suite: suite || 'all',
+                status: status,
+                duration: duration,
+                exitCode: exitCode,
+                runId: runId
+            });
+
+            // Re-enable button
+            enableRunButton();
+
+            // Load history from API
+            loadHistory();
+        }
+
+        function enableRunButton() {
+            const btn = document.getElementById('runTestsBtn');
+            const btnText = document.getElementById('btnText');
+            btn.disabled = false;
+            btnText.textContent = 'Run Tests';
+        }
+
+        function clearOutput() {
+            document.getElementById('outputDisplay').innerHTML = '';
+        }
+
+        function addToHistory(run) {
+            testHistory.unshift(run);
+            renderHistory();
+        }
+
+        async function loadHistory() {
+            try {
+                const response = await fetch('/api/tests/history');
+                const data = await response.json();
+
+                if (data.success) {
+                    testHistory = data.history;
+                    document.getElementById('totalRuns').textContent = testHistory.length;
+                    renderHistory();
+                }
+            } catch (error) {
+                console.error('Failed to load history:', error);
+            }
+        }
+
+        function renderHistory() {
+            const tbody = document.getElementById('historyTableBody');
+            let filteredHistory = testHistory;
+
+            if (currentFilter !== 'all') {
+                filteredHistory = testHistory.filter(run => run.status === currentFilter);
+            }
+
+            if (filteredHistory.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: #9ca3af;">
+                            No test runs match the current filter.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredHistory.map(run => {
+                const date = new Date(run.timestamp);
+                const statusClass = run.status === 'passed' ? 'status-passed' : 'status-failed';
+
+                return `
+                    <tr onclick="loadTestRun('${run.runId}')">
+                        <td>${date.toLocaleString()}</td>
+                        <td>${run.suite}</td>
+                        <td><span class="status-badge ${statusClass}">${run.status.toUpperCase()}</span></td>
+                        <td>${run.duration}s</td>
+                        <td>${run.exitCode}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterHistory(filter) {
+            currentFilter = filter;
+
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                }
+            });
+
+            renderHistory();
+        }
+
+        async function loadTestRun(runId) {
+            try {
+                const response = await fetch(`/api/tests/output/${runId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const output = document.getElementById('outputDisplay');
+                    output.innerHTML = '';
+                    appendOutput('info', `Loading test run ${runId}...`);
+                    appendOutput('info', '');
+                    appendOutput('stdout', data.output);
+                }
+            } catch (error) {
+                console.error('Failed to load test run:', error);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWebSocket();
+            loadHistory();
+        });
+    </script>
+</body>
+</html>

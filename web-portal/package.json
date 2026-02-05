@@ -1,0 +1,16 @@
+{
+  "name": "a-domain-developer-portal",
+  "version": "1.0.0",
+  "description": "Developer Portal for a_domain with testing dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "ws": "^8.14.2"
+  },
+  "keywords": ["developer-portal", "testing", "dashboard"],
+  "author": "a_domain",
+  "license": "MIT"
+}
