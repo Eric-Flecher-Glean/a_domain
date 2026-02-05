@@ -511,134 +511,7 @@
             }
         }
     
-        /* All Stories Section */
-        .all-stories-section {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 24px;
-        }
-
-        .all-stories-section h2 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 8px;
-        }
-
-        .all-stories-section .section-description {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 24px;
-        }
-
-        .priority-group {
-            margin-bottom: 32px;
-        }
-
-        .priority-header {
-            font-size: 18px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .story-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
-        }
-
-        .story-card-item {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .story-card-item:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-
-        .story-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .story-id {
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 13px;
-            font-weight: 600;
-            color: #4b5563;
-            background: #e5e7eb;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .story-status-badge {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Status badge colors */
-        .status-badge-completed {
-            background: #d1fae5;
-            color: #065f46;
-            border-left: 3px solid #10b981;
-        }
-
-        .status-badge-in-progress {
-            background: #dbeafe;
-            color: #1e40af;
-            border-left: 3px solid #3b82f6;
-        }
-
-        .status-badge-not-started {
-            background: #f3f4f6;
-            color: #6b7280;
-            border-left: 3px solid #9ca3af;
-        }
-
-        .status-badge-blocked {
-            background: #fee2e2;
-            color: #991b1b;
-            border-left: 3px solid #ef4444;
-        }
-
-        .story-card-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .story-card-meta {
-            display: flex;
-            gap: 12px;
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .story-type,
-        .story-priority {
-            padding: 2px 6px;
-            background: #e5e7eb;
-            border-radius: 3px;
-            font-weight: 500;
-        }
+        
 </style>
 </head>
 <body>
@@ -857,11 +730,9 @@
 
                     <!-- Phases as swimlanes -->
                     
-                    
-                    
                     <g class="phase-swimlane">
                         <!-- Phase separator line -->
-                        
+
 
                         <!-- Phase label -->
                         <text x="20"
@@ -873,25 +744,44 @@
                         <rect x="20" y="135" width="100" height="8"
                               fill="#e5e7eb" rx="4"/>
                         <rect x="20" y="135"
-                              width="66.66666666666666" height="8"
+                              width="84" height="8"
                               fill="#10b981" rx="4"/>
                         <text x="125" y="142"
-                              font-size="11" fill="#6b7280" font-weight="600">67%</text>
+                              font-size="11" fill="#6b7280" font-weight="600">84%</text>
                         
 
                         <!-- Story cards -->
                         
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-AB-001">
+                        <g class="story-card story-completed" data-story-id="P0-BUG-005">
                             <rect x="200.0"
                                   y="130"
-                                  width="64.75"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
 
-                            <foreignObject x="200.0" y="130" width="64.75" height="60">
+                            <foreignObject x="200.0" y="130" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Fix Makefile submodule paths for automated quality checks</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-BUG-005: Fix Makefile submodule paths for automated quality checks
+Status: completed
+Priority: P0
+Type: Bug
+Completed: 26-02-04</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-AB-001">
+                            <rect x="200.0"
+                                  y="200"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="200" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">A/B Agent Demo - Proof of Concept</div>
                                 </div>
@@ -900,21 +790,19 @@
                             <title>P0-AB-001: A/B Agent Demo - Proof of Concept
 Status: completed
 Priority: P0
-Completed: 45-02-03</title>
+Type: Proof of Concept
+Completed: 26-02-03</title>
                         </g>
-                        
-                        
-                        
-                        
+
                         <g class="story-card story-completed" data-story-id="P1-AB-002">
                             <rect x="268.75"
                                   y="130"
-                                  width="133.5"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
 
-                            <foreignObject x="268.75" y="130" width="133.5" height="60">
+                            <foreignObject x="268.75" y="130" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Enhanced Journey Orchestration with A/B Agent Patterns</div>
                                 </div>
@@ -923,715 +811,1347 @@ Completed: 45-02-03</title>
                             <title>P1-AB-002: Enhanced Journey Orchestration with A/B Agent Patterns
 Status: completed
 Priority: P1
-Completed: 45-02-03</title>
+Type: Enhancement
+Completed: 26-02-03</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F7-000">
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-001">
                             <rect x="200.0"
-                                  y="200"
-                                  width="64.75"
+                                  y="270"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="200.0" y="200" width="64.75" height="60">
+
+                            <foreignObject x="200.0" y="270" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Add framework version tracking with .sdlc-config.lock</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-001: Add framework version tracking with .sdlc-config.lock
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-002">
+                            <rect x="200.0"
+                                  y="340"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="340" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement migration system for framework version updates</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-002: Implement migration system for framework version updates
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-003">
+                            <rect x="200.0"
+                                  y="410"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="410" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Add --version, --migrate, --dry-run flags to update.sh</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-003: Add --version, --migrate, --dry-run flags to update.sh
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-004">
+                            <rect x="200.0"
+                                  y="480"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="480" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Replace single backup with multi-version backup retention</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-004: Replace single backup with multi-version backup retention
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-005">
+                            <rect x="200.0"
+                                  y="550"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="550" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement bootstrap/rollback.sh for atomic rollback</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-005: Implement bootstrap/rollback.sh for atomic rollback
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-006">
+                            <rect x="200.0"
+                                  y="620"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="620" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement bootstrap/check-updates.sh</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-006: Implement bootstrap/check-updates.sh
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-PACKAGING-007">
+                            <rect x="200.0"
+                                  y="690"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="690" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Create VERSION_MANAGEMENT.md documentation</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-PACKAGING-007: Create VERSION_MANAGEMENT.md documentation
+Status: completed
+Priority: P0
+Type: Documentation</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-TESTING-001">
+                            <rect x="200.0"
+                                  y="760"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="760" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement /sdlc.initialize command for repeatable framework installation testing</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-TESTING-001: Implement /sdlc.initialize command for repeatable framework installation testing
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-01-27</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-TESTING-002">
+                            <rect x="268.75"
+                                  y="200"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="200" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement demo validation in /sdlc-quality command</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-TESTING-002: Implement demo validation in /sdlc-quality command
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-02-05</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-BUG-001">
+                            <rect x="268.75"
+                                  y="270"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="270" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Fix schema path mismatch in backlog_validator.py</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-BUG-001: Fix schema path mismatch in backlog_validator.py
+Status: completed
+Priority: P0
+Type: Bug
+Completed: 26-01-27</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-BUG-002">
+                            <rect x="268.75"
+                                  y="340"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="340" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Fix artifact registrar to scan .sdlc/ directory files</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-BUG-002: Fix artifact registrar to scan .sdlc/ directory files
+Status: completed
+Priority: P0
+Type: Bug
+Completed: 26-01-27</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-BUG-003">
+                            <rect x="268.75"
+                                  y="410"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="410" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Fix backlog validator broken import - missing scripts.utils.error_logger</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-BUG-003: Fix backlog validator broken import - missing scripts.utils.error_logger
+Status: completed
+Priority: P0
+Type: Bug
+Completed: 26-01-30</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-BUG-004">
+                            <rect x="268.75"
+                                  y="480"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="480" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Fix governance validation dependencies and test suite errors</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-BUG-004: Fix governance validation dependencies and test suite errors
+Status: completed
+Priority: P0
+Type: Bug
+Completed: 26-02-04</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F7000">
+                            <rect x="200.0"
+                                  y="830"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="830" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Agent Protocol Bridge</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F7-000: Requirements Chat - Agent Protocol Bridge
+
+                            <title>P0-A2A-F7000: Requirements Chat - Agent Protocol Bridge
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Documentation
+Completed: 26-01-27</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F7-001">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F7001">
                             <rect x="200.0"
-                                  y="270"
-                                  width="133.5"
+                                  y="900"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="200.0" y="270" width="133.5" height="60">
+
+                            <foreignObject x="200.0" y="900" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Agent Protocol Bridge - Core Protocol Implementation</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F7-001: Agent Protocol Bridge - Core Protocol Implementation
+
+                            <title>P0-A2A-F7001: Agent Protocol Bridge - Core Protocol Implementation
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Infrastructure
+Completed: 26-01-27</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F7-002">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F7002">
                             <rect x="268.75"
-                                  y="200"
-                                  width="64.75"
+                                  y="550"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="268.75" y="200" width="64.75" height="60">
+
+                            <foreignObject x="268.75" y="550" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Agent Protocol Bridge - Discovery Service</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F7-002: Agent Protocol Bridge - Discovery Service
+
+                            <title>P0-A2A-F7002: Agent Protocol Bridge - Discovery Service
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Infrastructure
+Completed: 26-01-27</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F7-004">
-                            <rect x="406.25"
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F7003">
+                            <rect x="337.5"
                                   y="130"
-                                  width="64.75"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="406.25" y="130" width="64.75" height="60">
+
+                            <foreignObject x="337.5" y="130" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Agent Protocol Bridge - Hyperlight Sandboxing</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P2-A2A-F7003: Agent Protocol Bridge - Hyperlight Sandboxing
+Status: not_started
+Priority: P2
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F7004">
+                            <rect x="406.25"
+                                  y="130"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="406.25" y="130" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Agent Protocol Bridge - Protocol Monitoring</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F7-004: Agent Protocol Bridge - Protocol Monitoring
+
+                            <title>P2-A2A-F7004: Agent Protocol Bridge - Protocol Monitoring
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Infrastructure</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F1-000">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F1000">
                             <rect x="268.75"
-                                  y="340"
-                                  width="64.75"
+                                  y="620"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="268.75" y="340" width="64.75" height="60">
+
+                            <foreignObject x="268.75" y="620" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Journey Orchestration</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F1-000: Requirements Chat - Journey Orchestration
+
+                            <title>P0-A2A-F1000: Requirements Chat - Journey Orchestration
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Documentation
+Completed: 26-01-27</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F1-001">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F1001">
                             <rect x="268.75"
-                                  y="410"
-                                  width="133.5"
+                                  y="690"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="268.75" y="410" width="133.5" height="60">
+
+                            <foreignObject x="268.75" y="690" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Journey Orchestration - State Machine & Stage Management</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F1-001: Journey Orchestration - State Machine & Stage Management
+
+                            <title>P0-A2A-F1001: Journey Orchestration - State Machine & Stage Management
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F1-002">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F1002">
                             <rect x="337.5"
                                   y="200"
-                                  width="133.5"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="337.5" y="200" width="133.5" height="60">
+
+                            <foreignObject x="337.5" y="200" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Journey Orchestration - Unit of Work Executor</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F1-002: Journey Orchestration - Unit of Work Executor
+
+                            <title>P0-A2A-F1002: Journey Orchestration - Unit of Work Executor
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P1-A2A-F1-003">
+
+                        <g class="story-card story-completed" data-story-id="P1-A2A-F1003">
                             <rect x="406.25"
-                                  y="270"
-                                  width="64.75"
+                                  y="200"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="406.25" y="270" width="64.75" height="60">
+
+                            <foreignObject x="406.25" y="200" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Journey Orchestration - Glean Dashboard Integration</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F1-003: Journey Orchestration - Glean Dashboard Integration
+
+                            <title>P1-A2A-F1003: Journey Orchestration - Glean Dashboard Integration
 Status: completed
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F1-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F1004">
                             <rect x="406.25"
-                                  y="340"
-                                  width="64.75"
+                                  y="270"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="406.25" y="340" width="64.75" height="60">
+
+                            <foreignObject x="406.25" y="270" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Journey Orchestration - Metrics & Reporting</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F1-004: Journey Orchestration - Metrics & Reporting
+
+                            <title>P2-A2A-F1004: Journey Orchestration - Metrics & Reporting
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F8-000">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F8000">
                             <rect x="200.0"
-                                  y="480"
-                                  width="133.5"
+                                  y="970"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="200.0" y="480" width="133.5" height="60">
+
+                            <foreignObject x="200.0" y="970" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - SDLC Control Plane & Interactive Roadmap</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F8-000: Requirements Chat - SDLC Control Plane & Interactive Roadmap
+
+                            <title>P0-A2A-F8000: Requirements Chat - SDLC Control Plane & Interactive Roadmap
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Documentation
+Completed: 26-01-30</title>
                         </g>
-                        
-                        
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-001">
+                            <rect x="200.0"
+                                  y="1040"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="1040" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Create Document Registry Schema and Infrastructure</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-001: Create Document Registry Schema and Infrastructure
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-002">
+                            <rect x="200.0"
+                                  y="1110"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="200.0" y="1110" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Populate Document Registry with Existing Documentation</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-002: Populate Document Registry with Existing Documentation
+Status: completed
+Priority: P0
+Type: Documentation</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-003">
+                            <rect x="268.75"
+                                  y="760"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="760" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Enhance Story Schema with Document References</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-003: Enhance Story Schema with Document References
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-004">
+                            <rect x="268.75"
+                                  y="830"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="268.75" y="830" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Enhance DDD Bounded Context with Architecture Links</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-004: Enhance DDD Bounded Context with Architecture Links
+Status: completed
+Priority: P0
+Type: Infrastructure</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P1-DOCS-005">
+                            <rect x="268.75"
+                                  y="900"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="268.75" y="900" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement Related Documents Section in Story Detail Page</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-DOCS-005: Implement Related Documents Section in Story Detail Page
+Status: not_started
+Priority: P1
+Type: UI</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P1-DOCS-006">
+                            <rect x="268.75"
+                                  y="970"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="268.75" y="970" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Enhance DDD Section with Architecture Document Links</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-DOCS-006: Enhance DDD Section with Architecture Document Links
+Status: not_started
+Priority: P1
+Type: UI</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-007">
+                            <rect x="337.5"
+                                  y="270"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="337.5" y="270" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Auto-Update Document Registry on Story Implementation</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-007: Auto-Update Document Registry on Story Implementation
+Status: completed
+Priority: P0
+Type: Automation</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-008">
+                            <rect x="337.5"
+                                  y="340"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="337.5" y="340" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Auto-Update Documentation on Quality Gate Pass</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-008: Auto-Update Documentation on Quality Gate Pass
+Status: completed
+Priority: P0
+Type: Automation</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P1-DOCS-009">
+                            <rect x="337.5"
+                                  y="410"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="337.5" y="410" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Auto-Create Documentation Stubs from Requirements Chat</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-DOCS-009: Auto-Create Documentation Stubs from Requirements Chat
+Status: completed
+Priority: P1
+Type: Automation</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P1-DOCS-010">
+                            <rect x="406.25"
+                                  y="340"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="340" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Create Documentation Coverage Report Generator</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-DOCS-010: Create Documentation Coverage Report Generator
+Status: completed
+Priority: P1
+Type: Reporting</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P2-DOCS-011">
+                            <rect x="406.25"
+                                  y="410"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="410" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement Document Staleness Detection</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P2-DOCS-011: Implement Document Staleness Detection
+Status: completed
+Priority: P2
+Type: Automation</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P2-DOCS-012">
+                            <rect x="406.25"
+                                  y="480"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="406.25" y="480" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Add Document Viewer Modal to Story Detail Page</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P2-DOCS-012: Add Document Viewer Modal to Story Detail Page
+Status: not_started
+Priority: P2
+Type: UI</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P0-DOCS-EPIC">
+                            <rect x="200.0"
+                                  y="1180"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="200.0" y="1180" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Document Registry & Navigation System - Full Implementation</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-EPIC: Document Registry & Navigation System - Full Implementation
+Status: not_started
+Priority: P0
+Type: Epic</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P1-EXAMPLE-001">
+                            <rect x="406.25"
+                                  y="550"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="550" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Example: Direct Glean Agent Invocation - Customer Pain Point Extractor</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-EXAMPLE-001: Example: Direct Glean Agent Invocation - Customer Pain Point Extractor
+Status: completed
+Priority: P1
+Type: Documentation
+Completed: 26-02-03</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P1-EXAMPLE-002">
+                            <rect x="406.25"
+                                  y="620"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="620" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Example: XML Template for Glean Agent - Acceptance Criteria Extractor</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P1-EXAMPLE-002: Example: XML Template for Glean Agent - Acceptance Criteria Extractor
+Status: completed
+Priority: P1
+Type: Documentation
+Completed: 26-02-03</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-DOCS-013">
+                            <rect x="406.25"
+                                  y="690"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="690" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Correct Agent Implementation Pattern Documentation - XML Prompts as Glean MCP Templates</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-DOCS-013: Correct Agent Implementation Pattern Documentation - XML Prompts as Glean MCP Templates
+Status: completed
+Priority: P0
+Type: Documentation
+Completed: 26-02-04</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-INFRA-013">
+                            <rect x="406.25"
+                                  y="760"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="406.25" y="760" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Add auto-update hooks for roadmap HTML generation in build workflow</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-INFRA-013: Add auto-update hooks for roadmap HTML generation in build workflow
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-02-05</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-INFRA-014">
+                            <rect x="475.0"
+                                  y="130"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="475.0" y="130" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Implement complete backlog-to-roadmap synchronization with status tracking</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-INFRA-014: Implement complete backlog-to-roadmap synchronization with status tracking
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-02-05</title>
+                        </g>
+
+                        <g class="story-card story-completed" data-story-id="P0-UI-001">
+                            <rect x="475.0"
+                                  y="200"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-completed"/>
+
+                            <foreignObject x="475.0" y="200" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">Create web-based testing dashboard with run controls and real-time output viewer</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P0-UI-001: Create web-based testing dashboard with run controls and real-time output viewer
+Status: completed
+Priority: P0
+Type: UI
+Completed: 26-02-05</title>
+                        </g>
+
                     </g>
-                    
-                    
-                    
+
                     <g class="phase-swimlane">
                         <!-- Phase separator line -->
-                        
-                        <line x1="0" y1="570"
-                              x2="1400" y2="570"
-                              class="phase-separator"/>
-                        
+
 
                         <!-- Phase label -->
                         <text x="20"
-                              y="598"
+                              y="398"
                               class="phase-label">Data & Requirements Automation</text>
 
                         <!-- Phase progress - only show if > 0% -->
                         
-                        <rect x="20" y="605" width="100" height="8"
+                        <rect x="20" y="405" width="100" height="8"
                               fill="#e5e7eb" rx="4"/>
-                        <rect x="20" y="605"
-                              width="22.22222222222222" height="8"
+                        <rect x="20" y="405"
+                              width="50" height="8"
                               fill="#10b981" rx="4"/>
-                        <text x="125" y="612"
-                              font-size="11" fill="#6b7280" font-weight="600">22%</text>
+                        <text x="125" y="412"
+                              font-size="11" fill="#6b7280" font-weight="600">50%</text>
                         
 
                         <!-- Story cards -->
                         
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F2-000">
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F2000">
                             <rect x="475.0"
-                                  y="600"
-                                  width="64.75"
+                                  y="400"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="475.0" y="600" width="64.75" height="60">
+
+                            <foreignObject x="475.0" y="400" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - DataOps Lifecycle</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F2-000: Requirements Chat - DataOps Lifecycle
+
+                            <title>P0-A2A-F2000: Requirements Chat - DataOps Lifecycle
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Documentation</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-completed" data-story-id="P0-A2A-F2-001">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F2001">
                             <rect x="475.0"
-                                  y="670"
-                                  width="64.75"
+                                  y="470"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-completed"/>
-                            
-                            <foreignObject x="475.0" y="670" width="64.75" height="60">
+
+                            <foreignObject x="475.0" y="470" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">DataOps - Dataset Discovery & Registry</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F2-001: DataOps - Dataset Discovery & Registry
+
+                            <title>P0-A2A-F2001: DataOps - Dataset Discovery & Registry
 Status: completed
-Priority: P0</title>
+Priority: P0
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F2-003">
-                            <rect x="543.75"
-                                  y="600"
-                                  width="133.5"
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F2002">
+                            <rect x="475.0"
+                                  y="540"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="543.75" y="600" width="133.5" height="60">
+
+                            <foreignObject x="475.0" y="540" width="60" height="60">
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
+                                    <div class="story-text">DataOps - Provisioning & Teardown Automation</div>
+                                </div>
+                            </foreignObject>
+
+                            <title>P2-A2A-F2002: DataOps - Provisioning & Teardown Automation
+Status: not_started
+Priority: P2
+Type: Feature</title>
+                        </g>
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F2003">
+                            <rect x="543.75"
+                                  y="400"
+                                  width="60"
+                                  height="60"
+                                  rx="6"
+                                  class="story-not-started"/>
+
+                            <foreignObject x="543.75" y="400" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">DataOps - Quality Validation Pipeline</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F2-003: DataOps - Quality Validation Pipeline
+
+                            <title>P1-A2A-F2003: DataOps - Quality Validation Pipeline
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F2-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F2004">
                             <rect x="681.25"
-                                  y="600"
-                                  width="64.75"
+                                  y="400"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="681.25" y="600" width="64.75" height="60">
+
+                            <foreignObject x="681.25" y="400" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">DataOps - Usage Analytics & Optimization</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F2-004: DataOps - Usage Analytics & Optimization
+
+                            <title>P2-A2A-F2004: DataOps - Usage Analytics & Optimization
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F4-000">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F4000">
                             <rect x="475.0"
-                                  y="740"
-                                  width="64.75"
+                                  y="610"
+                                  width="60"
                                   height="60"
                                   rx="6"
-                                  class="story-not-started"/>
-                            
-                            <foreignObject x="475.0" y="740" width="64.75" height="60">
+                                  class="story-completed"/>
+
+                            <foreignObject x="475.0" y="610" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Requirements-to-Design Pipeline</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F4-000: Requirements Chat - Requirements-to-Design Pipeline
-Status: not_started
-Priority: P0</title>
+
+                            <title>P0-A2A-F4000: Requirements Chat - Requirements-to-Design Pipeline
+Status: completed
+Priority: P0
+Type: Documentation
+Completed: 26-02-04</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F4-001">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F4001">
                             <rect x="475.0"
-                                  y="810"
-                                  width="133.5"
+                                  y="680"
+                                  width="60"
                                   height="60"
                                   rx="6"
-                                  class="story-not-started"/>
-                            
-                            <foreignObject x="475.0" y="810" width="133.5" height="60">
+                                  class="story-completed"/>
+
+                            <foreignObject x="475.0" y="680" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Req-to-Design - Gong Transcript Extractor</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F4-001: Req-to-Design - Gong Transcript Extractor
-Status: not_started
-Priority: P0</title>
+
+                            <title>P0-A2A-F4001: Req-to-Design - Gong Transcript Extractor
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-02-04</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F4-002">
+
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F4002">
                             <rect x="543.75"
-                                  y="670"
-                                  width="133.5"
+                                  y="470"
+                                  width="60"
                                   height="60"
                                   rx="6"
-                                  class="story-not-started"/>
-                            
-                            <foreignObject x="543.75" y="670" width="133.5" height="60">
+                                  class="story-completed"/>
+
+                            <foreignObject x="543.75" y="470" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Req-to-Design - Figma Design Parser</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F4-002: Req-to-Design - Figma Design Parser
-Status: not_started
-Priority: P0</title>
+
+                            <title>P0-A2A-F4002: Req-to-Design - Figma Design Parser
+Status: completed
+Priority: P0
+Type: Feature
+Completed: 26-02-04</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F4-003">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F4003">
                             <rect x="612.5"
-                                  y="740"
-                                  width="133.5"
+                                  y="400"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="612.5" y="740" width="133.5" height="60">
+
+                            <foreignObject x="612.5" y="400" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Req-to-Design - SDLC Story Generator</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F4-003: Req-to-Design - SDLC Story Generator
+
+                            <title>P1-A2A-F4003: Req-to-Design - SDLC Story Generator
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F4-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F4004">
                             <rect x="681.25"
-                                  y="670"
-                                  width="64.75"
+                                  y="470"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="681.25" y="670" width="64.75" height="60">
+
+                            <foreignObject x="681.25" y="470" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Req-to-Design - Quality Scoring & Traceability</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F4-004: Req-to-Design - Quality Scoring & Traceability
+
+                            <title>P2-A2A-F4004: Req-to-Design - Quality Scoring & Traceability
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
+
                     </g>
-                    
-                    
-                    
+
                     <g class="phase-swimlane">
                         <!-- Phase separator line -->
-                        
-                        <line x1="0" y1="900"
-                              x2="1400" y2="900"
-                              class="phase-separator"/>
-                        
+
 
                         <!-- Phase label -->
                         <text x="20"
-                              y="928"
+                              y="628"
                               class="phase-label">User Productivity & Workflow Design</text>
 
                         <!-- Phase progress - only show if > 0% -->
                         
+                        <rect x="20" y="635" width="100" height="8"
+                              fill="#e5e7eb" rx="4"/>
+                        <rect x="20" y="635"
+                              width="10" height="8"
+                              fill="#10b981" rx="4"/>
+                        <text x="125" y="642"
+                              font-size="11" fill="#6b7280" font-weight="600">10%</text>
+                        
 
                         <!-- Story cards -->
                         
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F3-000">
+                        <g class="story-card story-completed" data-story-id="P0-A2A-F3000">
                             <rect x="750.0"
-                                  y="930"
-                                  width="64.75"
+                                  y="630"
+                                  width="60"
                                   height="60"
                                   rx="6"
-                                  class="story-not-started"/>
-                            
-                            <foreignObject x="750.0" y="930" width="64.75" height="60">
+                                  class="story-completed"/>
+
+                            <foreignObject x="750.0" y="630" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Value Stream Mapping & Flow Builder</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F3-000: Requirements Chat - Value Stream Mapping & Flow Builder
-Status: not_started
-Priority: P0</title>
+
+                            <title>P0-A2A-F3000: Requirements Chat - Value Stream Mapping & Flow Builder
+Status: completed
+Priority: P0
+Type: Documentation</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3-001">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3001">
                             <rect x="750.0"
-                                  y="1000"
-                                  width="64.75"
+                                  y="700"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="750.0" y="1000" width="64.75" height="60">
+
+                            <foreignObject x="750.0" y="700" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Flow Builder - Natural Language Workflow Designer</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F3-001: Flow Builder - Natural Language Workflow Designer
+
+                            <title>P1-A2A-F3001: Flow Builder - Natural Language Workflow Designer
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3-002">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3002">
                             <rect x="750.0"
-                                  y="1070"
-                                  width="133.5"
+                                  y="770"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="750.0" y="1070" width="133.5" height="60">
+
+                            <foreignObject x="750.0" y="770" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Flow Builder - Workflow Validator & Optimizer</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F3-002: Flow Builder - Workflow Validator & Optimizer
+
+                            <title>P1-A2A-F3002: Flow Builder - Workflow Validator & Optimizer
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3-003">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F3003">
                             <rect x="818.75"
-                                  y="930"
-                                  width="133.5"
+                                  y="630"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="818.75" y="930" width="133.5" height="60">
+
+                            <foreignObject x="818.75" y="630" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Flow Builder - Visual Workflow Editor</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F3-003: Flow Builder - Visual Workflow Editor
+
+                            <title>P1-A2A-F3003: Flow Builder - Visual Workflow Editor
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F3-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F3004">
                             <rect x="956.25"
-                                  y="930"
-                                  width="64.75"
+                                  y="630"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="956.25" y="930" width="64.75" height="60">
+
+                            <foreignObject x="956.25" y="630" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Flow Builder - Template Library & Marketplace</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F3-004: Flow Builder - Template Library & Marketplace
+
+                            <title>P2-A2A-F3004: Flow Builder - Template Library & Marketplace
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F5-000">
+
+                        <g class="story-card story-not-started" data-story-id="P0-A2A-F5000">
                             <rect x="750.0"
-                                  y="1140"
-                                  width="64.75"
+                                  y="840"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="750.0" y="1140" width="64.75" height="60">
+
+                            <foreignObject x="750.0" y="840" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Personal Knowledge Workspace</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F5-000: Requirements Chat - Personal Knowledge Workspace
+
+                            <title>P0-A2A-F5000: Requirements Chat - Personal Knowledge Workspace
 Status: not_started
-Priority: P0</title>
+Priority: P0
+Type: Documentation</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5-001">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5001">
                             <rect x="750.0"
-                                  y="1210"
-                                  width="133.5"
+                                  y="910"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="750.0" y="1210" width="133.5" height="60">
+
+                            <foreignObject x="750.0" y="910" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Personal Workspace - Data Inventory & Knowledge Graph</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F5-001: Personal Workspace - Data Inventory & Knowledge Graph
+
+                            <title>P1-A2A-F5001: Personal Workspace - Data Inventory & Knowledge Graph
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5-002">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5002">
                             <rect x="818.75"
-                                  y="1000"
-                                  width="133.5"
+                                  y="700"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="818.75" y="1000" width="133.5" height="60">
+
+                            <foreignObject x="818.75" y="700" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Personal Workspace - Behavior Pattern Detection</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F5-002: Personal Workspace - Behavior Pattern Detection
+
+                            <title>P1-A2A-F5002: Personal Workspace - Behavior Pattern Detection
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5-003">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F5003">
                             <rect x="887.5"
-                                  y="1070"
-                                  width="133.5"
+                                  y="630"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="887.5" y="1070" width="133.5" height="60">
+
+                            <foreignObject x="887.5" y="630" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Personal Workspace - Automation Suggestions</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F5-003: Personal Workspace - Automation Suggestions
+
+                            <title>P1-A2A-F5003: Personal Workspace - Automation Suggestions
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F5-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F5004">
                             <rect x="956.25"
-                                  y="1000"
-                                  width="64.75"
+                                  y="700"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="956.25" y="1000" width="64.75" height="60">
+
+                            <foreignObject x="956.25" y="700" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Personal Workspace - Productivity Insights Dashboard</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F5-004: Personal Workspace - Productivity Insights Dashboard
+
+                            <title>P2-A2A-F5004: Personal Workspace - Productivity Insights Dashboard
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
+
                     </g>
-                    
-                    
-                    
+
                     <g class="phase-swimlane">
                         <!-- Phase separator line -->
-                        
-                        <line x1="0" y1="1300"
-                              x2="1400" y2="1300"
-                              class="phase-separator"/>
-                        
+
 
                         <!-- Phase label -->
                         <text x="20"
-                              y="1328"
+                              y="858"
                               class="phase-label">Team Optimization</text>
 
                         <!-- Phase progress - only show if > 0% -->
@@ -1639,234 +2159,109 @@ Priority: P2</title>
 
                         <!-- Story cards -->
                         
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P0-A2A-F6-000">
+                        <g class="story-card story-not-started" data-story-id="P0-A2A-F6000">
                             <rect x="1025.0"
-                                  y="1330"
-                                  width="64.75"
+                                  y="860"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="1025.0" y="1330" width="64.75" height="60">
+
+                            <foreignObject x="1025.0" y="860" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Requirements Chat - Team Ceremony Orchestrator</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P0-A2A-F6-000: Requirements Chat - Team Ceremony Orchestrator
+
+                            <title>P0-A2A-F6000: Requirements Chat - Team Ceremony Orchestrator
 Status: not_started
-Priority: P0</title>
+Priority: P0
+Type: Documentation</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F6-001">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F6001">
                             <rect x="1025.0"
-                                  y="1400"
-                                  width="64.75"
+                                  y="930"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="1025.0" y="1400" width="64.75" height="60">
+
+                            <foreignObject x="1025.0" y="930" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Ceremony Orchestrator - Prep Agent & Material Generation</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F6-001: Ceremony Orchestrator - Prep Agent & Material Generation
+
+                            <title>P1-A2A-F6001: Ceremony Orchestrator - Prep Agent & Material Generation
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P1-A2A-F6-002">
+
+                        <g class="story-card story-not-started" data-story-id="P1-A2A-F6002">
                             <rect x="1025.0"
-                                  y="1470"
-                                  width="133.5"
+                                  y="1000"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="1025.0" y="1470" width="133.5" height="60">
+
+                            <foreignObject x="1025.0" y="1000" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Ceremony Orchestrator - Action Item Tracker</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P1-A2A-F6-002: Ceremony Orchestrator - Action Item Tracker
+
+                            <title>P1-A2A-F6002: Ceremony Orchestrator - Action Item Tracker
 Status: not_started
-Priority: P1</title>
+Priority: P1
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F6-003">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F6003">
                             <rect x="1162.5"
-                                  y="1330"
-                                  width="64.75"
+                                  y="860"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="1162.5" y="1330" width="64.75" height="60">
+
+                            <foreignObject x="1162.5" y="860" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Ceremony Orchestrator - Effectiveness Metrics</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F6-003: Ceremony Orchestrator - Effectiveness Metrics
+
+                            <title>P2-A2A-F6003: Ceremony Orchestrator - Effectiveness Metrics
 Status: not_started
-Priority: P2</title>
+Priority: P2
+Type: Feature</title>
                         </g>
-                        
-                        
-                        
-                        
-                        <g class="story-card story-not-started" data-story-id="P2-A2A-F6-004">
+
+                        <g class="story-card story-not-started" data-story-id="P2-A2A-F6004">
                             <rect x="1231.25"
-                                  y="1330"
-                                  width="64.75"
+                                  y="860"
+                                  width="60"
                                   height="60"
                                   rx="6"
                                   class="story-not-started"/>
-                            
-                            <foreignObject x="1231.25" y="1330" width="64.75" height="60">
+
+                            <foreignObject x="1231.25" y="860" width="60" height="60">
                                 <div xmlns="http://www.w3.org/1999/xhtml" class="story-text-wrapper">
                                     <div class="story-text">Ceremony Orchestrator - Decision Capture & KB</div>
                                 </div>
                             </foreignObject>
-                            
-                            <title>P2-A2A-F6-004: Ceremony Orchestrator - Decision Capture & KB
-Status: not_started
-Priority: P2</title>
-                        </g>
-                        
-                        
-                    </g>
-                    
 
-                    <!-- Milestones -->
-                    
-                    
-                    
-                    
-                    
-                    <line x1="406.25" y1="60" x2="406.25" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="406.25" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="396.25" y="8" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 406.25 22)"/>
-                    <text x="406.25" y="22"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 406.25 22)">Agent Protocol Complete</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="475.0" y1="60" x2="475.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="475.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="465.0" y="31" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 475.0 45)"/>
-                    <text x="475.0" y="45"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 475.0 45)">Journey Orchestration Live</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="750.0" y1="60" x2="750.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="750.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="740.0" y="8" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 750.0 22)"/>
-                    <text x="750.0" y="22"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 750.0 22)">DataOps Automation Ready</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="750.0" y1="60" x2="750.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="750.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="740.0" y="31" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 750.0 45)"/>
-                    <text x="750.0" y="45"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 750.0 45)">Requirements Pipeline Active</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="1025.0" y1="60" x2="1025.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="1025.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="1015.0" y="8" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 1025.0 22)"/>
-                    <text x="1025.0" y="22"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 1025.0 22)">Self-Service Workflows Live</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="1025.0" y1="60" x2="1025.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="1025.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="1015.0" y="31" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 1025.0 45)"/>
-                    <text x="1025.0" y="45"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 1025.0 45)">Personal Workspace GA</text>
-                    
-                    
-                    
-                    
-                    
-                    
-                    <line x1="1300.0" y1="60" x2="1300.0" y2="1640"
-                          class="milestone-line"/>
-                    <circle cx="1300.0" cy="60" r="6" class="milestone-marker"/>
-                    <!-- Background for better readability -->
-                    <rect x="1290.0" y="8" width="110" height="16"
-                          fill="white" opacity="0.95" rx="3"
-                          transform="rotate(-50 1300.0 22)"/>
-                    <text x="1300.0" y="22"
-                          font-size="9" fill="#7c3aed" text-anchor="end" font-weight="700"
-                          transform="rotate(-50 1300.0 22)">Team Optimization Complete</text>
-                    
-                    
-                        </svg>
+                            <title>P2-A2A-F6004: Ceremony Orchestrator - Decision Capture & KB
+Status: not_started
+Priority: P2
+Type: Feature</title>
+                        </g>
+
+                    </g>
+
+                </svg>
                     </div>
                 </div>
 
@@ -2545,887 +2940,7 @@ Priority: P2</title>
 
             
             
-            <!-- ALL STORIES LIST - Auto-generated from IMPLEMENTATION_BACKLOG.yaml -->
-            <div class="all-stories-section">
-                <h2>Complete Story List</h2>
-                <p class="section-description">All stories from backlog with real-time status tracking</p>
-
-                <div class="priority-group">
-                    <h3 class="priority-header">P0 Priority (41 stories)</h3>
-                    <div class="story-grid">
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-BUG-005</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">🐛 Fix Makefile submodule paths for automated quality checks</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Bug</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-AB-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">A/B Agent Demo - Proof of Concept</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Proof of Concept</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Add framework version tracking with .sdlc-config.lock</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement migration system for framework version updates</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-003</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Add --version, --migrate, --dry-run flags to update.sh</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-004</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Replace single backup with multi-version backup retention</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-005</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement bootstrap/rollback.sh for atomic rollback</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-006</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement bootstrap/check-updates.sh</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-PACKAGING-007</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Create VERSION_MANAGEMENT.md documentation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-TESTING-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement /sdlc.initialize command for repeatable framework installation testing</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-TESTING-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement demo validation in /sdlc-quality command</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-BUG-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">🐛 Fix schema path mismatch in backlog_validator.py</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Bug</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-BUG-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">🐛 Fix artifact registrar to scan .sdlc/ directory files</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Bug</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-BUG-003</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">🐛 Fix backlog validator broken import - missing scripts.utils.error_logger</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Bug</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-BUG-004</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">🐛 Fix governance validation dependencies and test suite errors</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Bug</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F7000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Agent Protocol Bridge</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F7001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Agent Protocol Bridge - Core Protocol Implementation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F7002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Agent Protocol Bridge - Discovery Service</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F1000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Journey Orchestration</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F1001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Journey Orchestration - State Machine & Stage Management</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F1002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Journey Orchestration - Unit of Work Executor</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F2000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - DataOps Lifecycle</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F2001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">DataOps - Dataset Discovery & Registry</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F4000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Requirements-to-Design Pipeline</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F4001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Req-to-Design - Gong Transcript Extractor</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F4002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Req-to-Design - Figma Design Parser</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F3000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Value Stream Mapping & Flow Builder</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F5000</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Personal Knowledge Workspace</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F6000</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - Team Ceremony Orchestrator</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-A2A-F8000</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Requirements Chat - SDLC Control Plane & Interactive Roadmap</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Create Document Registry Schema and Infrastructure</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Populate Document Registry with Existing Documentation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-003</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Enhance Story Schema with Document References</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-004</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Enhance DDD Bounded Context with Architecture Links</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-007</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Auto-Update Document Registry on Story Implementation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Automation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-008</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Auto-Update Documentation on Quality Gate Pass</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Automation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-EPIC</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Document Registry & Navigation System - Full Implementation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Epic</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-DOCS-013</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Correct Agent Implementation Pattern Documentation - XML Prompts as Glean MCP Templates</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-INFRA-013</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Add auto-update hooks for roadmap HTML generation in build workflow</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-INFRA-014</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement complete backlog-to-roadmap synchronization with status tracking</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P0-UI-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Create web-based testing dashboard with run controls and real-time output viewer</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">UI</span>
-                                <span class="story-priority">P0</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="priority-group">
-                    <h3 class="priority-header">P1 Priority (18 stories)</h3>
-                    <div class="story-grid">
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-AB-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Enhanced Journey Orchestration with A/B Agent Patterns</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Enhancement</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F1003</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Journey Orchestration - Glean Dashboard Integration</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F2003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">DataOps - Quality Validation Pipeline</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F4003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Req-to-Design - SDLC Story Generator</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F3001</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Flow Builder - Natural Language Workflow Designer</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F3002</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Flow Builder - Workflow Validator & Optimizer</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F3003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Flow Builder - Visual Workflow Editor</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F5001</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Personal Workspace - Data Inventory & Knowledge Graph</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F5002</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Personal Workspace - Behavior Pattern Detection</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F5003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Personal Workspace - Automation Suggestions</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F6001</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Ceremony Orchestrator - Prep Agent & Material Generation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-A2A-F6002</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Ceremony Orchestrator - Action Item Tracker</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-DOCS-005</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Implement Related Documents Section in Story Detail Page</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">UI</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-DOCS-006</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Enhance DDD Section with Architecture Document Links</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">UI</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-DOCS-009</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Auto-Create Documentation Stubs from Requirements Chat</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Automation</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-DOCS-010</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Create Documentation Coverage Report Generator</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Reporting</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-EXAMPLE-001</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Example: Direct Glean Agent Invocation - Customer Pain Point Extractor</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P1-EXAMPLE-002</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Example: XML Template for Glean Agent - Acceptance Criteria Extractor</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Documentation</span>
-                                <span class="story-priority">P1</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="priority-group">
-                    <h3 class="priority-header">P2 Priority (12 stories)</h3>
-                    <div class="story-grid">
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F7003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Agent Protocol Bridge - Hyperlight Sandboxing</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F7004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Agent Protocol Bridge - Protocol Monitoring</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Infrastructure</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F1004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Journey Orchestration - Metrics & Reporting</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F2002</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">DataOps - Provisioning & Teardown Automation</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F2004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">DataOps - Usage Analytics & Optimization</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F4004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Req-to-Design - Quality Scoring & Traceability</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F3004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Flow Builder - Template Library & Marketplace</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F5004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Personal Workspace - Productivity Insights Dashboard</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F6003</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Ceremony Orchestrator - Effectiveness Metrics</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-A2A-F6004</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Ceremony Orchestrator - Decision Capture & KB</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Feature</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-completed">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-DOCS-011</code>
-                                <span class="story-status-badge status-badge-completed">✓ Completed</span>
-                            </div>
-                            <div class="story-card-title">Implement Document Staleness Detection</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">Automation</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                        <div class="story-card-item status-badge-not-started">
-                            <div class="story-card-header">
-                                <code class="story-id">P2-DOCS-012</code>
-                                <span class="story-status-badge status-badge-not-started">○ Not Started</span>
-                            </div>
-                            <div class="story-card-title">Add Document Viewer Modal to Story Detail Page</div>
-                            <div class="story-card-meta">
-                                <span class="story-type">UI</span>
-                                <span class="story-priority">P2</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-        <!-- Metrics Sidebar -->
+            <!-- Metrics Sidebar -->
         <aside class="sidebar">
             <div class="metrics-panel">
                 <div class="metric">
