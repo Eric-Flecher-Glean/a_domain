@@ -28,6 +28,7 @@ include $(SDLC_DIR)/make/demos.mk
 include $(SDLC_DIR)/make/backlog.mk
 include $(SDLC_DIR)/make/artifacts.mk
 include $(SDLC_DIR)/make/logging.mk
+include $(SDLC_DIR)/make/roadmap.mk
 -include $(SDLC_DIR)/make/skills.mk  # Optional - may not exist in remote version
 
 # Helper target to initialize .sdlc submodule
