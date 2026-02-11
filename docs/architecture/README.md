@@ -64,6 +64,7 @@ The **Integrated A/B Prompt Engineering System** is a production-ready, event-dr
 
 | Document | Description | When to Read |
 |----------|-------------|--------------|
+| **[CORE-PRINCIPLES.md](./CORE-PRINCIPLES.md)** | **Non-negotiable constraints** | **READ FIRST - Required for all** |
 | **[INDEX.md](./INDEX.md)** | Navigation guide and overview | Start here |
 | **[REFERENCE-ARCHITECTURE.md](./REFERENCE-ARCHITECTURE.md)** | Complete system architecture | Understanding overall design |
 | **[AGGREGATE-DESIGN.md](./AGGREGATE-DESIGN.md)** | DDD aggregates and domain model | Implementing domain logic |

@@ -1,5 +1,7 @@
 # Architecture Documentation Index
 
+> **🔒 CRITICAL:** Before reading any architecture document, review [CORE-PRINCIPLES.md](./CORE-PRINCIPLES.md) for non-negotiable architectural constraints.
+
 ## Overview
 
 This directory contains comprehensive architecture documentation for the **Integrated A/B Prompt Engineering System with Context Analysis**.
@@ -9,6 +11,29 @@ The system is built using **Domain-Driven Design (DDD)**, **Event Sourcing**, an
 ---
 
 ## 📚 Documentation Structure
+
+### 0. [Core Principles](./CORE-PRINCIPLES.md) **[READ THIS FIRST]**
+
+**Non-negotiable architectural constraints**
+
+**Key Requirements:**
+- ❌ NO direct Anthropic API usage
+- ❌ NO ANTHROPIC_API_KEY environment variables
+- ❌ NO model specifications in configs (`claude-sonnet-4-5`, etc.)
+- ✅ USE `mcp__glean__chat` tool for Glean agents
+- ✅ USE Claude Code commands/Task tool for multi-step workflows
+- ✅ USE XML prompt templates (optional) for structured Glean agent invocations
+
+**Why This Matters:**
+- Security: Centralized access control and audit trails
+- Cost Control: Usage tracking through authenticated sessions
+- Consistency: Single integration pattern across all features
+
+**Compliance:** All architecture documents and implementations MUST pass validation checklist before merge.
+
+**Related:** [Architecture Review Checklist](./ARCHITECTURE-REVIEW-CHECKLIST.md)
+
+---
 
 ### 1. [Reference Architecture](./REFERENCE-ARCHITECTURE.md)
 **Complete system architecture with data flows and DDD events**
@@ -168,12 +193,14 @@ The system is built using **Domain-Driven Design (DDD)**, **Event Sourcing**, an
 ### By Role
 
 **Software Architect**
+0. **[REQUIRED]** Read [Core Principles](./CORE-PRINCIPLES.md)
 1. Start with [Reference Architecture](./REFERENCE-ARCHITECTURE.md) for overall system design
 2. Review [Aggregate Design](./AGGREGATE-DESIGN.md) for DDD patterns
 3. Study [Event Sourcing & CQRS](./EVENT-SOURCING-CQRS.md) for advanced patterns
 4. Review [Agent Nodes and Workflow](./AGENT-NODES-AND-WORKFLOW.md) for execution flow
 
 **Backend Developer**
+0. **[REQUIRED]** Read [Core Principles](./CORE-PRINCIPLES.md)
 1. Start with [Aggregate Design](./AGGREGATE-DESIGN.md) to understand domain model
 2. Review repository interfaces and domain behaviors
 3. Check [Reference Architecture](./REFERENCE-ARCHITECTURE.md) for component interactions
@@ -181,12 +208,14 @@ The system is built using **Domain-Driven Design (DDD)**, **Event Sourcing**, an
 5. Review [Agent Nodes and Workflow](./AGENT-NODES-AND-WORKFLOW.md) for workflow implementation
 
 **Frontend Developer**
+0. **[REQUIRED]** Read [Core Principles](./CORE-PRINCIPLES.md)
 1. Review [Reference Architecture](./REFERENCE-ARCHITECTURE.md) - Data Flow section
 2. Check command and query definitions in [Event Sourcing & CQRS](./EVENT-SOURCING-CQRS.md)
 3. Understand workflow states from [Aggregate Design](./AGGREGATE-DESIGN.md)
 4. Study [Agent Nodes and Workflow](./AGENT-NODES-AND-WORKFLOW.md) for workflow visualization
 
 **DevOps Engineer**
+0. **[REQUIRED]** Read [Core Principles](./CORE-PRINCIPLES.md)
 1. Review [Reference Architecture](./REFERENCE-ARCHITECTURE.md) - Deployment Architecture section
 2. Check [Event Sourcing & CQRS](./EVENT-SOURCING-CQRS.md) for persistence requirements
 3. Review integration patterns for external services

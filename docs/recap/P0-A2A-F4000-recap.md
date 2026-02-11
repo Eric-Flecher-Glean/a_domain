@@ -332,7 +332,7 @@ P2: score < 5.0
 **APIs:**
 - Gong API (OAuth 2.0)
 - Figma API (Bearer token)
-- Anthropic API (Claude)
+- Glean MCP (mcp__glean__chat tool)
 
 **Infrastructure:**
 - Docker containers
@@ -419,7 +419,7 @@ P2: score < 5.0
 **External APIs:**
 - Gong API access and credentials
 - Figma API personal access token
-- Anthropic API key (Claude Sonnet 4.5)
+- Glean MCP server configuration (authenticated session)
 
 **Internal:**
 - Existing IMPLEMENTATION_BACKLOG.yaml structure

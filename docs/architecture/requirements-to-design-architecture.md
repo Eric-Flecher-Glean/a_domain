@@ -859,7 +859,7 @@ services:
     image: requirements-pipeline/gong-extraction:latest
     env:
       - GONG_API_KEY=${GONG_API_KEY}
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GLEAN_MCP_CONFIG=${GLEAN_MCP_CONFIG}
     resources:
       limits:
         cpu: 1
@@ -1087,10 +1087,9 @@ extraction:
     timeout_seconds: 300
     retry_attempts: 3
 
-  llm:
-    model: claude-sonnet-4-5
-    temperature: 0.3
-    max_tokens: 4096
+  agent:
+    tool: mcp__glean__chat
+    prompt_template: sdlc/requirements/extract-requirements.xml
 
   rules:
     urgency_keywords:

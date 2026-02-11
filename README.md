@@ -374,6 +374,7 @@ Skills are organized by namespace:
 
 ### Documentation
 
+- **Core Constraints**: [docs/architecture/CORE-PRINCIPLES.md](docs/architecture/CORE-PRINCIPLES.md) **[Required Reading]**
 - **Integration Guide**: [docs/SDLC-INTEGRATION.md](docs/SDLC-INTEGRATION.md)
 - **SDLC Framework**: [.sdlc/README.md](.sdlc/README.md)
 - **Quick Reference**: [.sdlc/QUICK-REFERENCE.md](.sdlc/QUICK-REFERENCE.md)

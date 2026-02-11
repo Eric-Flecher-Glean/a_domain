@@ -130,12 +130,10 @@ design_specification:
           step_5: Apply rule-based validation
 
       llm_integration:
-        primary: Glean MCP chat tool
-        fallback_model: claude-sonnet-4-5
-        temperature: 0.3
-        max_tokens: 4096
+        tool: mcp__glean__chat
+        prompt_template: sdlc/requirements/extract-requirements.xml
 
-        prompt_template: |
+        message_template: |
           You are a requirements analyst. Extract structured requirements from this meeting transcript.
 
           For each requirement mentioned, provide:
@@ -823,7 +821,6 @@ design_specification:
         image: python:3.11-slim
         env:
           - GLEAN_MCP_CONFIG
-          - ANTHROPIC_API_KEY  # Fallback only
         resources:
           cpu: 1 core
           memory: 2GB
@@ -940,7 +937,6 @@ design_specification:
       storage: S3 or local filesystem
 
     libraries:
-      - anthropic: Claude API client
       - pydantic: Data validation
       - sqlalchemy: ORM
       - celery: Task queue

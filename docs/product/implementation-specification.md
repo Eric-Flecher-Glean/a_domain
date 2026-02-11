@@ -27,6 +27,8 @@ A Domain-Driven Design (DDD) based registry and orchestration layer that enables
 
 **Confidence:** 85% implementation-ready based on Glean technical validation (see `/docs/research/glean-technical-research-iteration-1.md`)
 
+**⚠️ ARCHITECTURAL CONSTRAINTS:** All implementations MUST follow [CORE-PRINCIPLES.md](../architecture/CORE-PRINCIPLES.md).
+
 ---
 
 ## Architecture Components

@@ -51,14 +51,18 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 
 ### Key Architectural Decisions
 
+**See [CORE-PRINCIPLES.md](./CORE-PRINCIPLES.md) for non-negotiable constraints.**
+
 1. **Strategic Pattern Choice:** Context mapping with explicit relationship types to manage complexity
 2. **Event-Driven Architecture:** Domain events as primary integration mechanism between contexts
 3. **Saga Pattern:** For multi-step value chain orchestration with compensation
 4. **Meta-Agent Strategy:** SDLC agents that improve the platform itself (self-bootstrapping)
 5. **Glean Integration:** Anti-Corruption Layer to isolate from Glean platform changes
 6. **Agent Implementation Pattern:** Unified Glean MCP agent integration
+   - **REQUIRED:** All LLM compute via `mcp__glean__chat` or Claude Code (see [CORE-PRINCIPLES.md](./CORE-PRINCIPLES.md))
    - **Glean MCP Agents:** All agent capabilities accessed via `mcp__glean__chat` tool
    - **XML Prompt Templates:** Optional structured templates that format messages sent to Glean agents, stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
+   - **Prohibited:** Direct Anthropic API usage, ANTHROPIC_API_KEY environment variables, model specifications
 
 ### Domain Complexity Classification
 - **Core Domain:** Platform.Registry, Platform.Orchestration (high complexity, high business value)
