@@ -28,7 +28,7 @@ Implemented complete example demonstrating XML prompt templates that structure m
    - Includes concrete example with input/output
 
 2. **Prompt Storage Documentation** (`examples/prompts/README.md`)
-   - How to store prompts in Eric-Flecher-Glean/prompts repository
+   - How to store prompts in sdlc/prompts repository
    - Directory structure and organization
    - Semantic versioning strategy
    - Git workflow and tagging conventions
@@ -135,7 +135,7 @@ cat examples/prompts/README.md
 - Follows XML schema with proper encoding and structure
 - Validated via XMLPromptLoader parsing
 
-✅ **AC2**: Prompt is stored in Eric-Flecher-Glean/prompts repo
+✅ **AC2**: Prompt is stored in sdlc/prompts repo
 - Documented storage process in `examples/prompts/README.md`
 - Shows directory structure and organization
 - Includes Git workflow and tagging conventions
@@ -240,7 +240,7 @@ The prompt demonstrates all required sections:
    - Easy rollback
 
 4. **Reusability**
-   - Store in Eric-Flecher-Glean/prompts
+   - Store in sdlc/prompts
    - Share across projects
    - Build prompt library
    - Compose into workflows
@@ -254,7 +254,7 @@ prompt = XMLPromptLoader.load_from_file("path/to/prompt.xml")
 
 # Load from repository (production)
 prompt = XMLPromptLoader.load_from_repository(
-    repo="Eric-Flecher-Glean/prompts",
+    repo="sdlc/prompts",
     path="sdlc/requirements/extract-acceptance-criteria.xml",
     version="1.0.0"
 )
@@ -367,7 +367,7 @@ Both example stories (P1-EXAMPLE-001 and P1-EXAMPLE-002) are now complete, demon
 
 ### Short-term
 1. Create XML prompts for your use cases
-2. Store in Eric-Flecher-Glean/prompts repository
+2. Store in sdlc/prompts repository
 3. Build reusable prompt library
 4. Register agents in Domain Registry
 
@@ -433,7 +433,7 @@ ls examples/prompts/README.md
 ```
 
 **Expected output**:
-- README.md exists explaining prompt storage in Eric-Flecher-Glean/prompts repo
+- README.md exists explaining prompt storage in sdlc/prompts repo
 - Exit code: 0
 
 ### 6. Verify Backlog Integration

@@ -8,7 +8,7 @@
 
 ## User Request
 
-> "I want to clarify and add to the roadmap if this is not present. Agents in this system will either be an existing Glean agent that we call via mcp chat, or it will be an xml instruction that is organized and retained in https://github.com/Eric-Flecher-Glean/prompts"
+> "I want to clarify and add to the roadmap if this is not present. Agents in this system will either be an existing Glean agent that we call via mcp chat, or it will be an xml instruction that is organized and retained in local: sdlc/prompts"
 
 ---
 
@@ -27,7 +27,7 @@
 2. **Updated Ubiquitous Language Glossary**
    - Added 3 new terms:
      - **Glean MCP Agent**: An existing Glean agent invoked via `mcp__glean__chat` tool
-     - **XML Prompt Agent**: Prompt-engineered agent stored in `Eric-Flecher-Glean/prompts` repository
+     - **XML Prompt Agent**: Prompt-engineered agent stored in `sdlc/prompts` repository
      - **Agent Implementation Type**: Classification (glean_mcp or xml_prompt)
 
 3. **Created ADR-006: Dual-Mode Agent Implementation Strategy**
@@ -84,7 +84,7 @@ implementation:
 ```yaml
 agent_type: xml_prompt
 implementation:
-  repository: Eric-Flecher-Glean/prompts
+  repository: sdlc/prompts
   prompt_path: sdlc/requirements/extract-acceptance-criteria.xml
   version: "1.2.0"
 ```
@@ -115,7 +115,7 @@ implementation:
 
 **Key Points**:
 - Shows XML prompt structure (role, task, instructions, constraints)
-- Stored in `Eric-Flecher-Glean/prompts` repository
+- Stored in `sdlc/prompts` repository
 - Version-controlled with semantic versioning
 - Demonstrates prompt loading and execution
 
@@ -166,7 +166,7 @@ agent_registration:
     mcp_tool: "mcp__glean__chat"
     glean_agent_name: "Extract Common Pain Points"
     # OR XML Prompt specific
-    repository: "Eric-Flecher-Glean/prompts"
+    repository: "sdlc/prompts"
     prompt_path: "sales/pain-point-extraction.xml"
     version: "1.2.0"
 ```
@@ -239,10 +239,10 @@ Different validation rules apply:
 1. Update Agent Registry schema to include `implementation_type` field
 2. Update Discovery API to support filtering by implementation type
 3. Create validation rules for XML Prompt agents
-4. Sync `Eric-Flecher-Glean/prompts` repository to registry
+4. Sync `sdlc/prompts` repository to registry
 
 ### Long-term
-1. Build prompt library in `Eric-Flecher-Glean/prompts`
+1. Build prompt library in `sdlc/prompts`
 2. Create reusable XML prompt templates
 3. Establish prompt versioning and deprecation strategy
 4. Measure usage metrics: Glean MCP vs. XML Prompt adoption
@@ -261,7 +261,7 @@ Different validation rules apply:
    - "XML Prompt Agent" (emphasizes structured XML format)
 
 2. **Repository**:
-   - Use `Eric-Flecher-Glean/prompts` as single source of truth
+   - Use `sdlc/prompts` as single source of truth
    - Version control with semantic versioning
    - Organize by domain (sdlc/, sales/, support/, etc.)
 

@@ -1,735 +1,741 @@
-# Glean Agent Registry
-# Version: 1.0.0
-# Last Updated: 2026-02-11
-# Purpose: Catalog of available Glean agents for explicit invocation via mcp__glean__chat
-
 metadata:
-  registry_version: "1.0.0"
-  last_updated: "2026-02-11"
-  total_agents_in_glean: 52  # Total available across Glean platform
-  documented_agents: 16       # Detailed specs provided in this file
-  documentation_scope: "representative_sample"
-  data_source: "Glean MCP - Internal Agent Templates & Usage Metrics"
+  registry_version: 1.0.0
+  last_updated: '2026-02-11'
+  total_agents_in_glean: 52
+  documented_agents: 16
+  documentation_scope: representative_sample
+  data_source: Glean MCP - Internal Agent Templates & Usage Metrics
+  note: 'This registry provides detailed specifications for 16 representative agents
 
-  note: |
-    This registry provides detailed specifications for 16 representative agents
     across 6 domains. These agents represent ~80% of typical enterprise usage patterns.
 
+
     Full agent list available in your Glean platform at:
+
     https://app.glean.com/admin/agents
 
+
     To add more agents to this registry, see:
+
     docs/glean/AGENT-REGISTRY-GUIDE.md#contributing
 
+    '
   glean_deployment:
     customers_with_agents: 222
     avg_agents_per_customer: 200+
     weekly_active_builders: 4000
+  usage_notes: '- All agents accessed via mcp__glean__chat tool (see CORE-PRINCIPLES.md)
 
-  usage_notes: |
-    - All agents accessed via mcp__glean__chat tool (see CORE-PRINCIPLES.md)
     - Agent names must match exactly (case-sensitive)
+
     - Use auto-routing mode if agent name unknown
+
     - See AGENT-REGISTRY-GUIDE.md for usage examples
 
-# =============================================================================
-# 1. SALES ENABLEMENT DOMAIN (~25% of usage)
-# =============================================================================
-
+    '
 sales_enablement:
-  domain_description: "Agents supporting sales teams with deal management, prospecting, and customer intelligence"
+  domain_description: Agents supporting sales teams with deal management, prospecting,
+    and customer intelligence
   usage_weight: 0.25
-  bounded_context: "SalesEnablement"
-
+  bounded_context: SalesEnablement
   agents:
-    - name: "Extract Common Pain Points"
-      id: "glean-sales-pain-points-v2"
-      status: active
-      deployed_customers: 222
-      avg_weekly_runs: 550000
-
-      description: "Analyzes sales call transcripts, support tickets, and customer communications to extract recurring pain points by industry and customer segment"
-
-      capabilities:
-        - Multi-source data aggregation (Gong, HubSpot, Teams, Salesforce, Zoom)
-        - Agentic looping for iterative refinement
-        - Industry-specific pattern recognition
-        - Frequency and impact scoring
-
-      data_sources:
-        - Gong (call transcripts)
-        - HubSpot (customer records)
-        - Microsoft Teams (chat logs)
-        - Salesforce (opportunities, accounts)
-        - Zoom (meeting transcripts)
-
-      input_schema:
+  - name: Extract Common Pain Points
+    id: glean-sales-pain-points-v2
+    status: active
+    deployed_customers: 222
+    avg_weekly_runs: 550000
+    description: Analyzes sales call transcripts, support tickets, and customer communications
+      to extract recurring pain points by industry and customer segment
+    capabilities:
+    - Multi-source data aggregation (Gong, HubSpot, Teams, Salesforce, Zoom)
+    - Agentic looping for iterative refinement
+    - Industry-specific pattern recognition
+    - Frequency and impact scoring
+    data_sources:
+    - Gong (call transcripts)
+    - HubSpot (customer records)
+    - Microsoft Teams (chat logs)
+    - Salesforce (opportunities, accounts)
+    - Zoom (meeting transcripts)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          required: true
-          description: "Natural language query about pain points"
-          example: "Extract pain points from Q1 sales calls"
+          description: Natural language query about pain points
+          example: Extract pain points from Q1 sales calls
         context:
           type: array
-          required: false
+          description: Additional context parameters
           items:
-            - industry:
-                type: string
-                example: "healthcare"
-            - timeframe:
-                type: string
-                example: "Q1 2026"
-            - customer_segment:
-                type: string
-                enum: [enterprise, mid-market, smb]
-
-      output_schema:
-        type: object
-        properties:
-          pain_points:
-            type: array
-            items:
-              description: string
-              frequency: enum[high, medium, low]
-              impact: string
-              source: string (call ID, ticket ID, etc.)
-              customer: string
-          summary: string
-          recommendations: array[string]
-
-      example_invocation:
-        agent: "Extract Common Pain Points"
-        message: "Extract pain points from Q1 sales calls for healthcare customers"
-        context:
-          - "industry: healthcare"
-          - "timeframe: Q1 2026"
-          - "segment: enterprise"
-
-      use_cases:
-        - Product roadmap prioritization
-        - Sales enablement content creation
-        - Competitive positioning
-        - Customer success planning
-
-    - name: "Deal Strategy"
-      id: "glean-sales-deal-strategy-v1"
-      status: active
-      deployed_customers: 222
-
-      description: "Generates comprehensive deal strategies with action items, risk assessment, and next steps based on opportunity data and customer context"
-
-      capabilities:
-        - Deal risk assessment
-        - Competitive analysis
-        - Action item generation
-        - Agentic looping enabled
-
-      data_sources:
-        - HubSpot (opportunities, contacts)
-        - Salesforce (accounts, opportunities)
-
-      input_schema:
+            type: string
+          example:
+          - industry:
+              type: string
+              example: healthcare
+          - timeframe:
+              type: string
+              example: Q1 2026
+          - customer_segment:
+              type: string
+              enum:
+              - enterprise
+              - mid-market
+              - smb
+    output_schema:
+      type: object
+      properties:
+        pain_points:
+          type: array
+          items:
+            description: string
+            frequency: enum[high, medium, low]
+            impact: string
+            source: string (call ID, ticket ID, etc.)
+            customer: string
+        summary: string
+        recommendations: array[string]
+    example_invocation:
+      agent: Extract Common Pain Points
+      message: Extract pain points from Q1 sales calls for healthcare customers
+      context:
+      - 'industry: healthcare'
+      - 'timeframe: Q1 2026'
+      - 'segment: enterprise'
+    use_cases:
+    - Product roadmap prioritization
+    - Sales enablement content creation
+    - Competitive positioning
+    - Customer success planning
+  - name: Deal Strategy
+    id: glean-sales-deal-strategy-v1
+    status: active
+    deployed_customers: 222
+    description: Generates comprehensive deal strategies with action items, risk assessment,
+      and next steps based on opportunity data and customer context
+    capabilities:
+    - Deal risk assessment
+    - Competitive analysis
+    - Action item generation
+    - Agentic looping enabled
+    data_sources:
+    - HubSpot (opportunities, contacts)
+    - Salesforce (accounts, opportunities)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          required: true
-          example: "Generate deal strategy for Acme Corp opportunity"
-        context:
-          - opportunity_id: string
-          - account_name: string
-
-      output_schema:
-        type: object
-        properties:
-          deal_summary: string
-          risk_factors: array[string]
-          competitive_threats: array[object]
-          action_items: array[object]
-          next_steps: array[string]
-          win_probability: number
-
-      example_invocation:
-        agent: "Deal Strategy"
-        message: "Create comprehensive deal strategy"
-        context:
-          - "opportunity_id: OPP-12345"
-          - "account_name: Memorial Hospital"
-
-    - name: "Account Handoff"
-      id: "glean-sales-account-handoff-v1"
-      status: active
-
-      description: "Drafts detailed handoff documents when transitioning accounts from pre-sales to post-sales teams"
-
-      capabilities:
-        - Automatic context aggregation
-        - Handoff document generation
-        - Agentic looping enabled
-
-      data_sources:
-        - HubSpot (deal history, interactions)
-        - Salesforce (account data, opportunities)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Generate deal strategy for Acme Corp opportunity
+    output_schema:
+      type: object
+      properties:
+        deal_summary: string
+        risk_factors: array[string]
+        competitive_threats: array[object]
+        action_items: array[object]
+        next_steps: array[string]
+        win_probability: number
+    example_invocation:
+      agent: Deal Strategy
+      message: Create comprehensive deal strategy
+      context:
+      - 'opportunity_id: OPP-12345'
+      - 'account_name: Memorial Hospital'
+  - name: Account Handoff
+    id: glean-sales-account-handoff-v1
+    status: active
+    description: Drafts detailed handoff documents when transitioning accounts from
+      pre-sales to post-sales teams
+    capabilities:
+    - Automatic context aggregation
+    - Handoff document generation
+    - Agentic looping enabled
+    data_sources:
+    - HubSpot (deal history, interactions)
+    - Salesforce (account data, opportunities)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Create handoff document for Memorial Hospital account"
-        context:
-          - account_id: string
-          - opportunity_id: string
-
-      output_schema:
-        type: object
-        properties:
-          account_overview: string
-          deal_history: array[object]
-          key_stakeholders: array[object]
-          technical_requirements: array[string]
-          special_considerations: array[string]
-          handoff_notes: string
-
-    - name: "Find Potential Customer References"
-      id: "glean-sales-references-v1"
-      status: active
-
-      description: "Surfaces best-fit customer references for live deals based on industry, use case, and customer profile matching"
-
-      capabilities:
-        - Similarity matching algorithm
-        - Industry and use-case filtering
-        - Agentic looping enabled
-
-      data_sources:
-        - HubSpot (customer data)
-        - Salesforce (accounts, case studies)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Create handoff document for Memorial Hospital account
+    output_schema:
+      type: object
+      properties:
+        account_overview: string
+        deal_history: array[object]
+        key_stakeholders: array[object]
+        technical_requirements: array[string]
+        special_considerations: array[string]
+        handoff_notes: string
+    example_invocation:
+      agent: Account Handoff
+      message: Generate account handoff documentation for Memorial Hospital
+      context:
+      - 'account_id: ACC-7890'
+      - 'handoff_type: AE to CSM'
+      - 'timeframe: Q1 2026'
+  - name: Find Potential Customer References
+    id: glean-sales-references-v1
+    status: active
+    description: Surfaces best-fit customer references for live deals based on industry,
+      use case, and customer profile matching
+    capabilities:
+    - Similarity matching algorithm
+    - Industry and use-case filtering
+    - Agentic looping enabled
+    data_sources:
+    - HubSpot (customer data)
+    - Salesforce (accounts, case studies)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Find customer references for healthcare enterprise deal"
-        context:
-          - industry: string
-          - use_case: string
-          - company_size: string
-
-      output_schema:
-        type: object
-        properties:
-          references:
-            type: array
-            items:
-              customer_name: string
-              industry: string
-              use_case: string
-              contact: object
-              success_metrics: array[string]
-              match_score: number
-
-    - name: "Sales Call Coaching"
-      id: "glean-sales-coaching-v1"
-      status: active
-
-      description: "Analyzes sales call transcripts to verify if reps covered key topics, handled objections, and followed best practices"
-
-      capabilities:
-        - Call transcript analysis
-        - Topic coverage scoring
-        - Objection handling evaluation
-
-      data_sources:
-        - Gong (call transcripts, recordings)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Find customer references for healthcare enterprise deal
+    output_schema:
+      type: object
+      properties:
+        references:
+          type: array
+          items:
+            customer_name: string
+            industry: string
+            use_case: string
+            contact: object
+            success_metrics: array[string]
+            match_score: number
+    example_invocation:
+      agent: Find Potential Customer References
+      message: Find customer references for healthcare data integration use case
+      context:
+      - 'industry: healthcare'
+      - 'use_case: EHR integration'
+      - 'region: North America'
+  - name: Sales Call Coaching
+    id: glean-sales-coaching-v1
+    status: active
+    description: Analyzes sales call transcripts to verify if reps covered key topics,
+      handled objections, and followed best practices
+    capabilities:
+    - Call transcript analysis
+    - Topic coverage scoring
+    - Objection handling evaluation
+    data_sources:
+    - Gong (call transcripts, recordings)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Evaluate sales call for Memorial Hospital demo"
-        context:
-          - call_id: string
-          - required_topics: array[string]
-
-      output_schema:
-        type: object
-        properties:
-          topics_covered: array[string]
-          topics_missed: array[string]
-          objections_handled: array[object]
-          coaching_feedback: array[string]
-          overall_score: number
-
-# =============================================================================
-# 2. SDLC/ENGINEERING AUTOMATION DOMAIN (~20% of usage)
-# =============================================================================
-
+          description: Natural language query to the agent
+          example: Evaluate sales call for Memorial Hospital demo
+    output_schema:
+      type: object
+      properties:
+        topics_covered: array[string]
+        topics_missed: array[string]
+        objections_handled: array[object]
+        coaching_feedback: array[string]
+        overall_score: number
+    example_invocation:
+      agent: Sales Call Coaching
+      message: Provide coaching feedback for recent discovery call with CFO
+      context:
+      - 'call_id: CALL-5678'
+      - 'rep: Sarah Johnson'
+      - 'focus_area: objection handling'
 sdlc_engineering:
-  domain_description: "Agents automating software development lifecycle tasks from requirements to deployment"
-  usage_weight: 0.20
-  bounded_context: "SDLC.*"
-
+  domain_description: Agents automating software development lifecycle tasks from
+    requirements to deployment
+  usage_weight: 0.2
+  bounded_context: SDLC.*
   agents:
-    - name: "Pull Request Review"
-      id: "glean-eng-pr-review-v1"
-      status: active
-
-      description: "Performs comprehensive code review on pull requests with security, quality, and best practices analysis"
-
-      capabilities:
-        - Code quality assessment
-        - Security vulnerability detection
-        - Best practices validation
-        - Test coverage analysis
-
-      data_sources:
-        - GitHub (PR diff, file changes)
-
-      required_actions:
-        - GitHub comments
-        - PR diff access
-
-      input_schema:
+  - name: Pull Request Review
+    id: glean-eng-pr-review-v1
+    status: active
+    description: Performs comprehensive code review on pull requests with security,
+      quality, and best practices analysis
+    capabilities:
+    - Code quality assessment
+    - Security vulnerability detection
+    - Best practices validation
+    - Test coverage analysis
+    data_sources:
+    - GitHub (PR diff, file changes)
+    required_actions:
+    - GitHub comments
+    - PR diff access
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Review pull request for authentication module"
-        context:
-          - pr_number: string
-          - repository: string
-          - focus_areas: array[string]
-
-      output_schema:
-        type: object
-        properties:
-          issues_found:
-            type: array
-            items:
-              severity: enum[critical, high, medium, low]
-              category: string
-              description: string
-              file: string
-              line: number
-              suggestion: string
-          overall_assessment: string
-          approval_recommendation: enum[approve, request_changes, comment]
-
-    - name: "CI/CD GitHub Logs Debugger"
-      id: "glean-eng-cicd-debugger-v1"
-      status: active
-
-      description: "Analyzes CI/CD pipeline failures and provides root cause analysis with fix recommendations"
-
-      capabilities:
-        - Log analysis and error extraction
-        - Root cause identification
-        - Fix recommendations
-
-      data_sources:
-        - GitHub (workflow logs, PR comments)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Review pull request for authentication module
+    output_schema:
+      type: object
+      properties:
+        issues_found:
+          type: array
+          items:
+            severity: enum[critical, high, medium, low]
+            category: string
+            description: string
+            file: string
+            line: number
+            suggestion: string
+        overall_assessment: string
+        approval_recommendation: enum[approve, request_changes, comment]
+    example_invocation:
+      agent: Pull Request Review
+      message: 'Review PR #1234 for authentication feature implementation'
+      context:
+      - 'pr_number: 1234'
+      - 'repository: backend-api'
+      - 'focus: security and code quality'
+  - name: CI/CD GitHub Logs Debugger
+    id: glean-eng-cicd-debugger-v1
+    status: active
+    description: Analyzes CI/CD pipeline failures and provides root cause analysis
+      with fix recommendations
+    capabilities:
+    - Log analysis and error extraction
+    - Root cause identification
+    - Fix recommendations
+    data_sources:
+    - GitHub (workflow logs, PR comments)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Debug CI/CD failure for PR #1234"
-        context:
-          - workflow_run_id: string
-          - pr_number: string
-
-      output_schema:
-        type: object
-        properties:
-          failure_summary: string
-          root_cause: string
-          error_details: array[object]
-          fix_recommendations: array[string]
-          related_issues: array[string]
-
-    - name: "Implementation from Design Doc/PRD"
-      id: "glean-eng-implement-design-v1"
-      status: active
-
-      description: "Generates implementation pull requests from design documents or PRDs with code scaffolding"
-
-      capabilities:
-        - Design doc parsing
-        - Code generation
-        - Test scaffolding
-
-      data_sources:
-        - Design documents (Google Drive, Confluence)
-        - GitHub (repository structure)
-
-      required_actions:
-        - AI coding assistant
-        - GitHub PR creation
-
-      input_schema:
+          description: Natural language query to the agent
+          example: 'Debug CI/CD failure for PR #1234'
+    output_schema:
+      type: object
+      properties:
+        failure_summary: string
+        root_cause: string
+        error_details: array[object]
+        fix_recommendations: array[string]
+        related_issues: array[string]
+    example_invocation:
+      agent: CI/CD GitHub Logs Debugger
+      message: Debug failed CI/CD pipeline for deployment to production
+      context:
+      - 'workflow_run_id: 987654321'
+      - 'repository: frontend-app'
+      - 'failure_step: build'
+  - name: Implementation from Design Doc/PRD
+    id: glean-eng-implement-design-v1
+    status: active
+    description: Generates implementation pull requests from design documents or PRDs
+      with code scaffolding
+    capabilities:
+    - Design doc parsing
+    - Code generation
+    - Test scaffolding
+    data_sources:
+    - Design documents (Google Drive, Confluence)
+    - GitHub (repository structure)
+    required_actions:
+    - AI coding assistant
+    - GitHub PR creation
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Implement feature from design doc: User Authentication"
-        context:
-          - design_doc_url: string
-          - target_repository: string
-          - implementation_language: string
-
-      output_schema:
-        type: object
-        properties:
-          pr_url: string
-          files_created: array[string]
-          implementation_notes: string
-          test_coverage: number
-
-    - name: "Feature Status Update"
-      id: "glean-eng-feature-status-v1"
-      status: active
-
-      description: "Aggregates feature status across Jira, Slack, and Google Drive to provide unified status view"
-
-      capabilities:
-        - Multi-source status aggregation
-        - Timeline construction
-        - Blocker identification
-
-      data_sources:
-        - Jira (tickets, epics)
-        - Slack (channels, threads)
-        - Google Drive (status docs)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: 'Implement feature from design doc: User Authentication'
+    output_schema:
+      type: object
+      properties:
+        pr_url: string
+        files_created: array[string]
+        implementation_notes: string
+        test_coverage: number
+    example_invocation:
+      agent: Implementation from Design Doc/PRD
+      message: Generate implementation plan from PRD-2024-Q1-AuthFlow design document
+      context:
+      - 'doc_id: PRD-2024-Q1-AuthFlow'
+      - 'scope: backend implementation'
+      - 'timeline: 2 weeks'
+  - name: Feature Status Update
+    id: glean-eng-feature-status-v1
+    status: active
+    description: Aggregates feature status across Jira, Slack, and Google Drive to
+      provide unified status view
+    capabilities:
+    - Multi-source status aggregation
+    - Timeline construction
+    - Blocker identification
+    data_sources:
+    - Jira (tickets, epics)
+    - Slack (channels, threads)
+    - Google Drive (status docs)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "What's the status of the authentication refactor?"
-        context:
-          - feature_name: string
-          - epic_id: string (optional)
-
-      output_schema:
-        type: object
-        properties:
-          current_status: string
-          completion_percentage: number
-          blockers: array[string]
-          recent_updates: array[object]
-          estimated_completion: string
-
-# =============================================================================
-# 3. CUSTOMER SUCCESS/SUPPORT DOMAIN (~18% of usage)
-# =============================================================================
-
+          description: Natural language query to the agent
+          example: What's the status of the authentication refactor?
+    output_schema:
+      type: object
+      properties:
+        current_status: string
+        completion_percentage: number
+        blockers: array[string]
+        recent_updates: array[object]
+        estimated_completion: string
+    example_invocation:
+      agent: Feature Status Update
+      message: Generate status update for OAuth integration feature
+      context:
+      - 'feature_id: FEAT-456'
+      - 'stakeholders: product, engineering, security'
+      - 'period: past week'
 customer_support:
-  domain_description: "Agents supporting customer success and support teams with ticket management and customer intelligence"
+  domain_description: Agents supporting customer success and support teams with ticket
+    management and customer intelligence
   usage_weight: 0.18
-  bounded_context: "JourneyOrchestration"
-
+  bounded_context: JourneyOrchestration
   agents:
-    - name: "Customer Sentiment Scorer"
-      id: "glean-support-sentiment-v1"
-      status: active
-
-      description: "Assesses customer sentiment by analyzing account status, product usage, support tickets, and communication patterns"
-
-      capabilities:
-        - Multi-source sentiment analysis
-        - Predictive churn scoring
-        - Trend detection
-
-      data_sources:
-        - ServiceCloud / Salesforce
-        - Zendesk (tickets, interactions)
-        - Product usage metrics
-
-      input_schema:
+  - name: Customer Sentiment Scorer
+    id: glean-support-sentiment-v1
+    status: active
+    description: Assesses customer sentiment by analyzing account status, product
+      usage, support tickets, and communication patterns
+    capabilities:
+    - Multi-source sentiment analysis
+    - Predictive churn scoring
+    - Trend detection
+    data_sources:
+    - ServiceCloud / Salesforce
+    - Zendesk (tickets, interactions)
+    - Product usage metrics
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Assess sentiment for Memorial Hospital account"
-        context:
-          - account_id: string
-          - timeframe: string
-
-      output_schema:
-        type: object
-        properties:
-          sentiment_score: number
-          sentiment_trend: enum[improving, stable, declining]
-          risk_factors: array[string]
-          positive_signals: array[string]
-          recommended_actions: array[string]
-          churn_probability: number
-
-    - name: "Support Ticket Next Steps"
-      id: "glean-support-next-steps-v1"
-      status: active
-
-      description: "Generates actionable resolution steps for support tickets based on similar ticket history and knowledge base"
-
-      capabilities:
-        - Similar ticket matching
-        - Resolution path recommendation
-        - Knowledge base integration
-
-      data_sources:
-        - ServiceCloud (tickets, solutions)
-        - Zendesk (tickets, KB articles)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Assess sentiment for Memorial Hospital account
+    output_schema:
+      type: object
+      properties:
+        sentiment_score: number
+        sentiment_trend: enum[improving, stable, declining]
+        risk_factors: array[string]
+        positive_signals: array[string]
+        recommended_actions: array[string]
+        churn_probability: number
+    example_invocation:
+      agent: Customer Sentiment Scorer
+      message: Assess sentiment for Memorial Hospital account based on recent interactions
+      context:
+      - 'account_id: ACC-7890'
+      - 'timeframe: past 30 days'
+      - 'data_sources: tickets, calls, emails'
+  - name: Support Ticket Next Steps
+    id: glean-support-next-steps-v1
+    status: active
+    description: Generates actionable resolution steps for support tickets based on
+      similar ticket history and knowledge base
+    capabilities:
+    - Similar ticket matching
+    - Resolution path recommendation
+    - Knowledge base integration
+    data_sources:
+    - ServiceCloud (tickets, solutions)
+    - Zendesk (tickets, KB articles)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Suggest next steps for ticket #12345"
-        context:
-          - ticket_id: string
-
-      output_schema:
-        type: object
-        properties:
-          recommended_steps: array[string]
-          similar_tickets: array[object]
-          kb_articles: array[string]
-          escalation_needed: boolean
-          estimated_resolution_time: string
-
-    - name: "Customer 360 Account Snapshot"
-      id: "glean-support-account360-v1"
-      status: active
-
-      description: "Comprehensive account view aggregating data from CRM, support, product usage, and communication channels"
-
-      capabilities:
-        - Multi-source aggregation
-        - Timeline construction
-        - Health scoring
-
-      data_sources:
-        - Salesforce (account data)
-        - ServiceCloud (support history)
-        - Zendesk (tickets)
-        - Product analytics
-        - Communication platforms
-
-      input_schema:
+          description: Natural language query to the agent
+          example: 'Suggest next steps for ticket #12345'
+    output_schema:
+      type: object
+      properties:
+        recommended_steps: array[string]
+        similar_tickets: array[object]
+        kb_articles: array[string]
+        escalation_needed: boolean
+        estimated_resolution_time: string
+    example_invocation:
+      agent: Support Ticket Next Steps
+      message: Recommend next steps for escalated support ticket about API timeouts
+      context:
+      - 'ticket_id: SUP-12345'
+      - 'severity: high'
+      - 'customer: Enterprise Corp'
+  - name: Customer 360 Account Snapshot
+    id: glean-support-account360-v1
+    status: active
+    description: Comprehensive account view aggregating data from CRM, support, product
+      usage, and communication channels
+    capabilities:
+    - Multi-source aggregation
+    - Timeline construction
+    - Health scoring
+    data_sources:
+    - Salesforce (account data)
+    - ServiceCloud (support history)
+    - Zendesk (tickets)
+    - Product analytics
+    - Communication platforms
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Show 360 view for Memorial Hospital"
-        context:
-          - account_id: string
-
-      output_schema:
-        type: object
-        properties:
-          account_overview: object
-          health_score: number
-          recent_activity: array[object]
-          open_issues: array[object]
-          product_usage: object
-          key_contacts: array[object]
-          risk_indicators: array[string]
-
-# =============================================================================
-# 4. KNOWLEDGE MANAGEMENT DOMAIN (~12% of usage)
-# =============================================================================
-
+          description: Natural language query to the agent
+          example: Show 360 view for Memorial Hospital
+    output_schema:
+      type: object
+      properties:
+        account_overview: object
+        health_score: number
+        recent_activity: array[object]
+        open_issues: array[object]
+        product_usage: object
+        key_contacts: array[object]
+        risk_indicators: array[string]
+    example_invocation:
+      agent: Customer 360 Account Snapshot
+      message: Generate comprehensive snapshot for Memorial Hospital account
+      context:
+      - 'account_id: ACC-7890'
+      - 'include: usage, health, opportunities, tickets'
 knowledge_management:
-  domain_description: "Agents managing organizational knowledge, documentation, and Q&A capabilities"
+  domain_description: Agents managing organizational knowledge, documentation, and
+    Q&A capabilities
   usage_weight: 0.12
-  bounded_context: "KnowledgeManagement"
-
+  bounded_context: KnowledgeManagement
   agents:
-    - name: "Create KB Article from Ticket"
-      id: "glean-kb-article-creator-v1"
-      status: active
-
-      description: "Automatically creates knowledge base articles from resolved support tickets"
-
-      capabilities:
-        - Ticket-to-article transformation
-        - Auto-formatting and structuring
-        - Document creation
-
-      data_sources:
-        - ServiceCloud (tickets, resolutions)
-        - Zendesk (tickets)
-
-      required_actions:
-        - Create Google Doc / Word Doc
-
-      input_schema:
+  - name: Create KB Article from Ticket
+    id: glean-kb-article-creator-v1
+    status: active
+    description: Automatically creates knowledge base articles from resolved support
+      tickets
+    capabilities:
+    - Ticket-to-article transformation
+    - Auto-formatting and structuring
+    - Document creation
+    data_sources:
+    - ServiceCloud (tickets, resolutions)
+    - Zendesk (tickets)
+    required_actions:
+    - Create Google Doc / Word Doc
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Create KB article from ticket #12345"
-        context:
-          - ticket_id: string
-          - category: string
-
-      output_schema:
-        type: object
-        properties:
-          article_title: string
-          article_content: string
-          document_url: string
-          tags: array[string]
-          category: string
-
-    - name: "Q&A Chatbot"
-      id: "glean-kb-qna-chatbot-v1"
-      status: active
-
-      description: "Topic-specific conversational chatbot for knowledge retrieval and Q&A"
-
-      capabilities:
-        - Natural language Q&A
-        - Knowledge base search
-        - Multi-turn conversations
-
-      data_sources:
-        - Internal documentation
-        - Knowledge base
-        - Wiki pages
-
-      input_schema:
+          description: Natural language query to the agent
+          example: 'Create KB article from ticket #12345'
+    output_schema:
+      type: object
+      properties:
+        article_title: string
+        article_content: string
+        document_url: string
+        tags: array[string]
+        category: string
+    example_invocation:
+      agent: Create KB Article from Ticket
+      message: Create knowledge base article from resolved ticket about SSO configuration
+      context:
+      - 'ticket_id: SUP-67890'
+      - 'category: authentication'
+      - 'target_audience: administrators'
+  - name: Q&A Chatbot
+    id: glean-kb-qna-chatbot-v1
+    status: active
+    description: Topic-specific conversational chatbot for knowledge retrieval and
+      Q&A
+    capabilities:
+    - Natural language Q&A
+    - Knowledge base search
+    - Multi-turn conversations
+    data_sources:
+    - Internal documentation
+    - Knowledge base
+    - Wiki pages
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "How do I reset a user password?"
-        context:
-          - topic_area: string
-          - user_role: string
-
-      output_schema:
-        type: object
-        properties:
-          answer: string
-          source_documents: array[string]
-          confidence: number
-          follow_up_questions: array[string]
-
-# =============================================================================
-# 5. JOURNEY ORCHESTRATION/PRODUCTIVITY DOMAIN (~10% of usage)
-# =============================================================================
-
+          description: Natural language query to the agent
+          example: How do I reset a user password?
+    output_schema:
+      type: object
+      properties:
+        answer: string
+        source_documents: array[string]
+        confidence: number
+        follow_up_questions: array[string]
+    example_invocation:
+      agent: Q&A Chatbot
+      message: How do I configure SSO with Okta?
+      context:
+      - 'kb_category: authentication'
+      - 'user_role: administrator'
 journey_orchestration:
-  domain_description: "Agents supporting personal productivity, meeting management, and work orchestration"
-  usage_weight: 0.10
-  bounded_context: "JourneyOrchestration"
-
+  domain_description: Agents supporting personal productivity, meeting management,
+    and work orchestration
+  usage_weight: 0.1
+  bounded_context: JourneyOrchestration
   agents:
-    - name: "Extract Meeting Action Items"
-      id: "glean-meeting-actions-v1"
-      status: active
-
-      description: "Extracts action items from meeting transcripts with owner assignment and deadline detection"
-
-      capabilities:
-        - Transcript analysis
-        - Action item extraction
-        - Owner and deadline detection
-        - Agentic looping enabled
-
-      data_sources:
-        - Google Calendar (meeting transcripts)
-        - Zoom (recordings, transcripts)
-
-      input_schema:
+  - name: Extract Meeting Action Items
+    id: glean-meeting-actions-v1
+    status: active
+    description: Extracts action items from meeting transcripts with owner assignment
+      and deadline detection
+    capabilities:
+    - Transcript analysis
+    - Action item extraction
+    - Owner and deadline detection
+    - Agentic looping enabled
+    data_sources:
+    - Google Calendar (meeting transcripts)
+    - Zoom (recordings, transcripts)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Extract action items from design review meeting"
-        context:
-          - meeting_id: string
-          - date: string
-
-      output_schema:
-        type: object
-        properties:
-          action_items:
-            type: array
-            items:
-              description: string
-              owner: string
-              deadline: string
-              priority: enum[high, medium, low]
-              status: enum[open, in_progress, completed]
-          meeting_summary: string
-          participants: array[string]
-
-    - name: "Weekly Work Report"
-      id: "glean-work-report-v1"
-      status: active
-
-      description: "Generates comprehensive work summaries for the past week by aggregating activity across tools"
-
-      capabilities:
-        - Multi-source activity aggregation
-        - Automatic categorization
-        - Markdown formatting
-
-      data_sources:
-        - Jira (tickets completed)
-        - GitHub (PRs, commits)
-        - Google Calendar (meetings)
-        - Slack (conversations)
-
-      input_schema:
+          description: Natural language query to the agent
+          example: Extract action items from design review meeting
+    output_schema:
+      type: object
+      properties:
+        action_items:
+          type: array
+          items:
+            description: string
+            owner: string
+            deadline: string
+            priority: enum[high, medium, low]
+            status: enum[open, in_progress, completed]
+        meeting_summary: string
+        participants: array[string]
+    example_invocation:
+      agent: Extract Meeting Action Items
+      message: Extract action items from Product Review meeting on 2026-02-10
+      context:
+      - 'meeting_id: MTG-20260210-PR'
+      - 'attendees: product, engineering, design'
+  - name: Weekly Work Report
+    id: glean-work-report-v1
+    status: active
+    description: Generates comprehensive work summaries for the past week by aggregating
+      activity across tools
+    capabilities:
+    - Multi-source activity aggregation
+    - Automatic categorization
+    - Markdown formatting
+    data_sources:
+    - Jira (tickets completed)
+    - GitHub (PRs, commits)
+    - Google Calendar (meetings)
+    - Slack (conversations)
+    input_schema:
+      type: object
+      required:
+      - message
+      properties:
         message:
           type: string
-          example: "Generate my work report for last week"
-        context:
-          - start_date: string
-          - end_date: string
-
-      output_schema:
-        type: object
-        properties:
-          summary: string
-          achievements: array[string]
-          meetings_attended: number
-          code_contributions: array[object]
-          tickets_completed: array[object]
-          collaboration_highlights: array[string]
-
-# =============================================================================
-# METADATA & STATISTICS
-# =============================================================================
-
+          description: Natural language query to the agent
+          example: Generate my work report for last week
+    output_schema:
+      type: object
+      properties:
+        summary: string
+        achievements: array[string]
+        meetings_attended: number
+        code_contributions: array[object]
+        tickets_completed: array[object]
+        collaboration_highlights: array[string]
+    example_invocation:
+      agent: Weekly Work Report
+      message: Generate my weekly work report for the week of Feb 3-9, 2026
+      context:
+      - 'user: current_user'
+      - 'start_date: 2026-02-03'
+      - 'end_date: 2026-02-09'
+      - 'include: commits, PRs, meetings, tickets'
 statistics:
-  documented_agents: 16  # Agents with full specs in this file
-  total_agents_in_glean: 52  # Total across all Glean customers
+  documented_agents: 16
+  total_agents_in_glean: 52
   by_domain:
     sales_enablement: 5
     sdlc_engineering: 4
     customer_support: 3
     knowledge_management: 2
     journey_orchestration: 2
-    # Total: 16 documented agents (representative sample)
-
   by_status:
-    active: 16  # All documented agents are active
+    active: 16
     deprecated: 0
     experimental: 0
-
   features:
-    agentic_looping_enabled: 3  # Extract Pain Points, Deal Strategy, Extract Meeting Actions
-    multi_source_integration: 12  # Most agents integrate 2+ data sources
-    requires_actions: 2  # Implementation from Design, Create KB Article
-    web_search_enabled: 0  # None in current documented set
-
+    agentic_looping_enabled: 3
+    multi_source_integration: 12
+    requires_actions: 2
+    web_search_enabled: 0
 usage_guidelines:
-  explicit_invocation: |
-    Use agent name exactly as specified in 'name' field.
-    Example:
-      client.call_tool("mcp__glean__chat", {
-        "agent": "Extract Common Pain Points",
-        "message": "Extract pain points from Q1 calls"
-      })
-
-  auto_routing: |
-    Omit 'agent' parameter to let Glean route based on message.
-    Example:
-      client.call_tool("mcp__glean__chat", {
-        "message": "What are customer pain points in healthcare?"
-      })
-
-  validation: |
-    Before deploying, validate agent name exists in registry:
-      - Check spelling and capitalization
-      - Verify agent status is 'active'
-      - Review input/output schemas for compatibility
-      - Test with example invocation first
-
+  explicit_invocation: "Use agent name exactly as specified in 'name' field.\nExample:\n\
+    \  client.call_tool(\"mcp__glean__chat\", {\n    \"agent\": \"Extract Common Pain\
+    \ Points\",\n    \"message\": \"Extract pain points from Q1 calls\"\n  })\n"
+  auto_routing: "Omit 'agent' parameter to let Glean route based on message.\nExample:\n\
+    \  client.call_tool(\"mcp__glean__chat\", {\n    \"message\": \"What are customer\
+    \ pain points in healthcare?\"\n  })\n"
+  validation: "Before deploying, validate agent name exists in registry:\n  - Check\
+    \ spelling and capitalization\n  - Verify agent status is 'active'\n  - Review\
+    \ input/output schemas for compatibility\n  - Test with example invocation first\n"
 references:
-  - docs/architecture/CORE-PRINCIPLES.md
-  - docs/glean/AGENT-REGISTRY-GUIDE.md
-  - docs/guides/glean-mcp-agent-pattern.md
-  - docs/research/glean-agent-usage-categorization.md
+- docs/architecture/CORE-PRINCIPLES.md
+- docs/glean/AGENT-REGISTRY-GUIDE.md
+- docs/guides/glean-mcp-agent-pattern.md
+- docs/research/glean-agent-usage-categorization.md

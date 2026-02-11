@@ -2,7 +2,7 @@
 
 **Pattern Type**: Message Template for Glean MCP Agents
 **Purpose**: Structure messages sent to Glean agents via `mcp__glean__chat` using version-controlled XML templates
-**Repository**: sdlc/prompts (https://github.com/sdlc/prompts)
+**Repository**: sdlc/prompts (Local: sdlc/prompts)
 **Reference**: ADR-006 in `docs/architecture/ddd-specification.md`
 
 ---
@@ -197,7 +197,7 @@ All XML prompts follow this standardized structure:
 
 ```bash
 # Clone prompts repository
-git clone https://github.com/sdlc/prompts.git
+git clone Local: sdlc/prompts.git
 cd prompts
 
 # Create directory structure
@@ -528,7 +528,7 @@ output_schema:
 - **Master Guide**: `docs/guides/agent-implementation-guide.md`
 - **Example Code**: `examples/xml_prompt_agent_example.py`
 - **Example Template**: `examples/prompts/extract-acceptance-criteria.xml`
-- **Template Repository**: https://github.com/sdlc/prompts
+- **Template Repository**: Local: sdlc/prompts
 
 ---
 

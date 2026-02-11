@@ -379,7 +379,7 @@ uv run .sdlc/core/docs_validator.py
 ### Short-term
 1. Update any slides/presentations that reference old "dual-mode" model
 2. Review code examples to ensure they match corrected documentation
-3. Check if Eric-Flecher-Glean/prompts repository README needs updates
+3. Check if sdlc/prompts repository README needs updates
 4. Verify developer onboarding materials reflect new understanding
 
 ### Long-term

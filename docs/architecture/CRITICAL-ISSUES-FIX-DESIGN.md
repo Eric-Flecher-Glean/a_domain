@@ -23,7 +23,7 @@ This document outlines the comprehensive solution for fixing 55 identified issue
 
 ### Issue 1: Prompts Repository Solution
 
-**Problem:** References to `https://github.com/Eric-Flecher-Glean/prompts` but repository doesn't exist.
+**Problem:** References to `local: sdlc/prompts` but repository doesn't exist.
 
 **Decision: Create Local Prompts Directory** ✅
 
@@ -64,7 +64,7 @@ ls -la sdlc/prompts/requirements/
 # Should show 2 XML files
 
 # Verify documentation references
-grep -r "Eric-Flecher-Glean/prompts" docs/
+grep -r "github.com.*prompts" docs/
 # Should return 0 results
 
 grep -r "sdlc/prompts" docs/

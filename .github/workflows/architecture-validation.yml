@@ -1,0 +1,402 @@
+name: Architecture Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/architecture/**'
+      - 'output/**'
+      - 'sdlc/prompts/**'
+      - '**.yaml'
+      - '**.yml'
+      - '**.py'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/architecture/**'
+      - 'output/**'
+      - 'sdlc/prompts/**'
+      - '**.yaml'
+      - '**.yml'
+      - '**.py'
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  validate-core-principles:
+    name: Validate Core Principles Compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Validate Principle 1 - No API Keys
+        run: |
+          echo "🔍 Checking for prohibited API keys..."
+
+          # Search for API key violations (excluding documentation examples)
+          if grep -rn "ANTHROPIC_API_KEY\|OPENAI_API_KEY\|CLAUDE_API_KEY" \
+            --include="*.yaml" \
+            --include="*.yml" \
+            --include="*.py" \
+            --include="*.md" \
+            --exclude-dir=.git \
+            --exclude-dir=node_modules \
+            --exclude-dir=.logs \
+            --exclude-dir=venv \
+            --exclude-dir=.venv \
+            . 2>/dev/null | \
+            grep -v "# PROHIBITED\|# VIOLATION\|DO NOT USE\|WRONG\|Example Fix\|Anti-Pattern"; then
+            echo "❌ VIOLATION: Uncommented API keys found"
+            echo "   See: docs/architecture/CORE-PRINCIPLES.md#principle-1"
+            exit 1
+          else
+            echo "✅ No API key violations found"
+          fi
+
+      - name: Validate Principle 1 - No Client Libraries
+        run: |
+          echo "🔍 Checking for prohibited client library imports..."
+
+          if grep -rn "from anthropic import\|import anthropic\|from openai import\|import openai" \
+            --include="*.py" \
+            --exclude-dir=.git \
+            --exclude-dir=node_modules \
+            --exclude-dir=venv \
+            --exclude-dir=.venv \
+            --exclude-dir=.logs \
+            . 2>/dev/null | \
+            grep -v "# PROHIBITED\|Example Fix\|Anti-Pattern"; then
+            echo "❌ VIOLATION: Prohibited client library imports found"
+            echo "   See: docs/architecture/CORE-PRINCIPLES.md#prohibited-patterns"
+            exit 1
+          else
+            echo "✅ No client library violations found"
+          fi
+
+      - name: Validate Principle 1 - No Model Specifications
+        run: |
+          echo "🔍 Checking for model specifications in configs..."
+
+          if grep -rn "model[[:space:]]*:[[:space:]]*\(claude\|gpt\|opus\|sonnet\)" \
+            --include="*.yaml" \
+            --include="*.yml" \
+            --exclude-dir=.git \
+            --exclude-dir=node_modules \
+            . 2>/dev/null | \
+            grep -v "# PROHIBITED\|Example Fix\|Anti-Pattern\|metadata:\|glean_agent_version:"; then
+            echo "❌ VIOLATION: Model specifications found in configs"
+            echo "   See: docs/architecture/CORE-PRINCIPLES.md#approved-patterns"
+            exit 1
+          else
+            echo "✅ No model specification violations found"
+          fi
+
+      - name: Validate Principle 1 - Check Approved Patterns
+        run: |
+          echo "🔍 Verifying approved patterns are used..."
+
+          # Check that mcp__glean__chat is used for agent invocations
+          agent_files=$(find . -type f \( -name "*.py" -o -name "*.yaml" -o -name "*.yml" \) \
+            ! -path "./.git/*" \
+            ! -path "./node_modules/*" \
+            ! -path "./.venv/*" \
+            ! -path "./venv/*" \
+            ! -path "./.logs/*")
+
+          has_mcp_usage=false
+          for file in $agent_files; do
+            if grep -q "mcp__glean__chat\|claude-code" "$file" 2>/dev/null; then
+              has_mcp_usage=true
+              break
+            fi
+          done
+
+          if [ "$has_mcp_usage" = true ]; then
+            echo "✅ Approved patterns detected (mcp__glean__chat or claude-code)"
+          else
+            echo "⚠️  Warning: No MCP patterns detected (may be expected for non-agent code)"
+          fi
+
+  validate-xml-templates:
+    name: Validate XML Prompt Templates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+
+      - name: Validate XML Syntax
+        run: |
+          echo "🔍 Validating XML prompt templates..."
+
+          xml_files=$(find sdlc/prompts -type f -name "*.xml" 2>/dev/null || echo "")
+
+          if [ -z "$xml_files" ]; then
+            echo "ℹ️  No XML templates found in sdlc/prompts/"
+            exit 0
+          fi
+
+          failed=0
+          for xml_file in $xml_files; do
+            echo "Checking: $xml_file"
+            if xmllint --noout "$xml_file" 2>&1; then
+              echo "  ✅ Valid XML"
+            else
+              echo "  ❌ Invalid XML syntax"
+              failed=1
+            fi
+          done
+
+          if [ $failed -eq 1 ]; then
+            echo "❌ XML validation failed"
+            exit 1
+          else
+            echo "✅ All XML templates are valid"
+          fi
+
+      - name: Validate XML Template Structure
+        run: |
+          echo "🔍 Validating XML template structure..."
+
+          xml_files=$(find sdlc/prompts -type f -name "*.xml" 2>/dev/null || echo "")
+
+          if [ -z "$xml_files" ]; then
+            echo "ℹ️  No XML templates to validate"
+            exit 0
+          fi
+
+          failed=0
+          for xml_file in $xml_files; do
+            echo "Checking structure: $xml_file"
+
+            # Check required sections exist
+            if ! grep -q "<metadata>" "$xml_file"; then
+              echo "  ❌ Missing <metadata> section"
+              failed=1
+            fi
+
+            if ! grep -q "<role>" "$xml_file"; then
+              echo "  ❌ Missing <role> section"
+              failed=1
+            fi
+
+            if ! grep -q "<task>" "$xml_file"; then
+              echo "  ❌ Missing <task> section"
+              failed=1
+            fi
+
+            if [ $failed -eq 0 ]; then
+              echo "  ✅ Structure valid"
+            fi
+          done
+
+          if [ $failed -eq 1 ]; then
+            echo "❌ XML structure validation failed"
+            exit 1
+          else
+            echo "✅ All XML templates have valid structure"
+          fi
+
+  validate-agent-registry:
+    name: Validate Agent Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml jsonschema
+
+      - name: Validate AGENT-REGISTRY.yaml Syntax
+        run: |
+          echo "🔍 Validating AGENT-REGISTRY.yaml syntax..."
+
+          if [ ! -f "docs/glean/AGENT-REGISTRY.yaml" ]; then
+            echo "⚠️  AGENT-REGISTRY.yaml not found (may be expected)"
+            exit 0
+          fi
+
+          python3 << 'EOF'
+          import yaml
+          import sys
+
+          try:
+              with open('docs/glean/AGENT-REGISTRY.yaml', 'r') as f:
+                  registry = yaml.safe_load(f)
+
+              if not registry:
+                  print("❌ Registry is empty")
+                  sys.exit(1)
+
+              print("✅ AGENT-REGISTRY.yaml syntax is valid")
+
+          except yaml.YAMLError as e:
+              print(f"❌ YAML syntax error: {e}")
+              sys.exit(1)
+          except Exception as e:
+              print(f"❌ Validation error: {e}")
+              sys.exit(1)
+          EOF
+
+      - name: Validate Agent Schema Standardization
+        run: |
+          echo "🔍 Validating agent schemas are standardized..."
+
+          if [ ! -f "docs/glean/AGENT-REGISTRY.yaml" ]; then
+            echo "⚠️  AGENT-REGISTRY.yaml not found"
+            exit 0
+          fi
+
+          python3 << 'EOF'
+          import yaml
+          import sys
+
+          try:
+              with open('docs/glean/AGENT-REGISTRY.yaml', 'r') as f:
+                  registry = yaml.safe_load(f)
+
+              errors = []
+              checked_agents = 0
+
+              for domain_key in registry:
+                  if domain_key in ['metadata', 'statistics', 'usage_guidelines', 'references']:
+                      continue
+
+                  if 'agents' not in registry[domain_key]:
+                      continue
+
+                  for agent in registry[domain_key]['agents']:
+                      checked_agents += 1
+                      name = agent.get('name', 'Unknown')
+
+                      # Validate input_schema
+                      if 'input_schema' in agent:
+                          schema = agent['input_schema']
+
+                          if 'type' not in schema:
+                              errors.append(f"Agent '{name}': input_schema missing 'type' field")
+
+                          if 'properties' not in schema:
+                              errors.append(f"Agent '{name}': input_schema missing 'properties' field")
+
+                      # Validate output_schema
+                      if 'output_schema' in agent:
+                          schema = agent['output_schema']
+
+                          if 'type' not in schema:
+                              errors.append(f"Agent '{name}': output_schema missing 'type' field")
+
+              if errors:
+                  print(f"❌ Schema validation failed:")
+                  for error in errors:
+                      print(f"   {error}")
+                  sys.exit(1)
+              else:
+                  print(f"✅ All {checked_agents} agent schemas are standardized (JSON Schema Draft 7)")
+
+          except Exception as e:
+              print(f"❌ Schema validation error: {e}")
+              sys.exit(1)
+          EOF
+
+  validate-references:
+    name: Validate Documentation References
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate Prompt Repository References
+        run: |
+          echo "🔍 Checking for GitHub prompt repository references..."
+
+          # Should use local paths (sdlc/prompts), not GitHub repo
+          if grep -rn "Eric-Flecher-Glean/prompts\|github.com.*prompts" \
+            --include="*.md" \
+            --include="*.yaml" \
+            --include="*.yml" \
+            --exclude-dir=.git \
+            docs/ 2>/dev/null; then
+            echo "❌ Found GitHub prompt repository references"
+            echo "   Use local paths: sdlc/prompts"
+            exit 1
+          else
+            echo "✅ All references use local prompt paths"
+          fi
+
+      - name: Validate Internal Links
+        run: |
+          echo "🔍 Checking for broken internal links..."
+
+          # Check ADR-006 reference is correct
+          if grep -rn "#adr-006\"" docs/architecture/ 2>/dev/null | \
+             grep -v "#adr-006-glean-mcp-agent-integration-with-xml-prompt-templates"; then
+            echo "❌ Found incorrect ADR-006 anchor reference"
+            echo "   Use: #adr-006-glean-mcp-agent-integration-with-xml-prompt-templates"
+            exit 1
+          else
+            echo "✅ ADR-006 references are correct"
+          fi
+
+  summary:
+    name: Validation Summary
+    needs:
+      - validate-core-principles
+      - validate-xml-templates
+      - validate-agent-registry
+      - validate-references
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check All Jobs
+        run: |
+          echo "📊 Validation Summary"
+          echo "===================="
+
+          if [ "${{ needs.validate-core-principles.result }}" != "success" ]; then
+            echo "❌ Core Principles validation failed"
+            exit 1
+          fi
+
+          if [ "${{ needs.validate-xml-templates.result }}" != "success" ]; then
+            echo "❌ XML Templates validation failed"
+            exit 1
+          fi
+
+          if [ "${{ needs.validate-agent-registry.result }}" != "success" ]; then
+            echo "❌ Agent Registry validation failed"
+            exit 1
+          fi
+
+          if [ "${{ needs.validate-references.result }}" != "success" ]; then
+            echo "❌ References validation failed"
+            exit 1
+          fi
+
+          echo "✅ All validations passed!"
