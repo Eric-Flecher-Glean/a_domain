@@ -94,38 +94,42 @@ requirements:
 
   functional_requirements:
     FR-1:
-      title: Gong Transcript Extraction (Hybrid LLM + Rules)
-      description: Extract structured requirements from Gong call transcripts
+      title: Meeting Content Extraction via Glean MCP (Hybrid LLM + Rules)
+      description: Extract structured requirements from meeting transcripts using Glean MCP
       details:
-        - Use Claude Sonnet 4.5 for initial extraction
+        - Use Glean MCP meeting_lookup to search and retrieve Gong call transcripts
+        - Use Glean MCP chat for AI-powered extraction and analysis
         - Extract: requirement text, type, speaker, timestamp
         - Classify: integration, feature_request, pain_point, constraint
         - Identify priority signals (urgency words, timelines, executive mentions)
         - Extract entities (systems, features, metrics mentioned)
         - Calculate confidence score based on clarity and speaker authority
         - Apply rule-based validation for urgency keywords and timelines
+        - Leverage Glean's enterprise context for entity resolution
       acceptance_criteria:
-        - AC1: Extract requirements from 30-min Gong transcript in < 2 minutes
+        - AC1: Extract requirements from 30-min meeting transcript via Glean MCP in < 2 minutes
         - AC2: Confidence score accuracy >= 80% (validated against manual review)
         - AC3: Priority signal detection recall >= 90% (catch urgent items)
-        - AC4: Entity extraction precision >= 85% (correct systems identified)
+        - AC4: Entity extraction precision >= 85% (correct systems identified via Glean context)
         - AC5: Structured output matches requirements.yaml schema
       priority: P0
 
     FR-2:
-      title: Figma Design Spec Parsing
-      description: Parse Figma files into structured design specifications
+      title: Design Specification Extraction via Glean MCP
+      description: Extract design specifications from Figma files using Glean MCP and Figma API
       details:
-        - Use Figma REST API to fetch file metadata
+        - Use Glean MCP search to find and retrieve Figma design documents
+        - Use Glean MCP read_document to access Figma file metadata if indexed
+        - Fall back to Figma REST API for detailed component extraction
         - Extract components: buttons, inputs, cards, screens
         - Parse properties: dimensions, colors, typography, spacing
         - Extract design tokens: color palette, type scale, spacing system
         - Capture annotations and implementation notes
         - Build component hierarchy (parent-child relationships)
-        - Link to design system documentation
+        - Link to design system documentation via Glean search
         - Generate user story hints from component purpose
       acceptance_criteria:
-        - AC1: Parse Figma file with 50 components in < 30 seconds
+        - AC1: Locate and parse Figma file via Glean MCP with 50 components in < 30 seconds
         - AC2: Extract 100% of component properties (dimensions, colors, etc.)
         - AC3: Correctly identify parent-child relationships
         - AC4: Generate at least 1 user story hint per component
@@ -339,35 +343,39 @@ requirements:
 
   technical_requirements:
     TR-1:
-      title: Gong API Integration
-      description: Connect to Gong API for transcript retrieval
+      title: Glean MCP Integration (Primary)
+      description: Use Glean MCP for all search, context, and data retrieval
       details:
-        - OAuth 2.0 authentication
-        - Call listing API (filter by date, participants)
-        - Transcript retrieval API
-        - Speaker identification
-        - Rate limiting and pagination handling
+        - Glean MCP meeting_lookup: Search and retrieve Gong call transcripts
+        - Glean MCP chat: AI-powered analysis and extraction
+        - Glean MCP search: Find related documents, design files, requirements
+        - Glean MCP read_document: Access document content (Figma, Confluence, etc.)
+        - Glean MCP code_search: Search internal code for context (if needed)
+        - Enterprise context awareness: Glean enriches entities with company knowledge
+        - No direct Gong API calls needed (Glean provides meeting access)
 
     TR-2:
-      title: Figma API Integration
-      description: Connect to Figma REST API
+      title: Figma API Integration (Supplemental)
+      description: Direct Figma API for detailed component extraction
       details:
         - Personal access token authentication
         - File metadata retrieval
         - Node traversal (components, frames, groups)
         - Image export (thumbnails for UI)
         - API rate limiting (1000 calls/hour)
+        - Use only if Glean MCP doesn't provide sufficient Figma detail
 
     TR-3:
-      title: LLM Integration (Claude API)
-      description: Use Claude Sonnet 4.5 for extraction
+      title: LLM Integration via Glean MCP
+      description: Use Glean MCP chat for AI-powered extraction (primary)
       details:
-        - Anthropic API integration
+        - Glean MCP chat tool for extraction and analysis
+        - Leverages Glean's enterprise context automatically
+        - Fallback to direct Claude Sonnet 4.5 if needed
         - Prompt engineering for requirement extraction
         - Structured output (JSON mode)
         - Temperature: 0.3 (deterministic)
         - Max tokens: 4096
-        - Streaming for long responses
 
     TR-4:
       title: Storage and State Management
@@ -399,13 +407,16 @@ requirements:
         - Git commit with generated stories
 
     INT-2:
-      title: Glean MCP Integration (Optional)
-      description: Use Glean for meeting context
+      title: Glean MCP Integration (Primary - Required)
+      description: Use Glean MCP for all search, context, and data retrieval
       requirements:
-        - Search Gong calls via Glean
-        - Extract meeting transcripts
-        - Link to Glean knowledge graph
-        - Enrich requirements with company context
+        - Search Gong calls via Glean MCP meeting_lookup
+        - Extract meeting transcripts via Glean MCP
+        - Use Glean MCP chat for AI-powered requirement extraction
+        - Search for related documents via Glean MCP search
+        - Read document content via Glean MCP read_document
+        - Leverage Glean's enterprise knowledge graph for context enrichment
+        - All meeting and document access goes through Glean MCP (no direct API calls)
 
     INT-3:
       title: A2A Platform Integration
@@ -448,24 +459,25 @@ requirements:
   constraints:
     - Must use existing requirements.yaml and design-spec.yaml schemas
     - Cannot modify IMPLEMENTATION_BACKLOG.yaml schema (only append stories)
-    - Gong API rate limits: 100 calls/day
-    - Figma API rate limits: 1000 calls/hour
-    - LLM costs: optimize for token usage
+    - Glean MCP rate limits: Organization-level quotas
+    - Figma API rate limits: 1000 calls/hour (if direct access needed)
+    - LLM costs: Primarily via Glean MCP (optimized)
     - Human review is required (no fully automated story creation in Phase 1)
 
   assumptions:
-    - Gong calls are recorded and transcribed by Gong
-    - Figma files are accessible via API (proper permissions)
-    - Sales/CS team provides Gong call IDs for extraction
+    - Gong calls are indexed and accessible via Glean MCP
+    - Figma files are accessible via Glean MCP search or direct Figma API
+    - Sales/CS team provides meeting identifiers for extraction
     - Design team tags Figma files for extraction
     - Product team reviews all generated stories before approval
+    - Glean MCP is configured and connected to organization data
 
   dependencies:
-    - Gong API access and credentials
-    - Figma API access and personal access token
-    - Anthropic API key (Claude Sonnet 4.5)
+    - Glean MCP server access and authentication (PRIMARY)
+    - Figma API access and personal access token (supplemental)
     - Existing IMPLEMENTATION_BACKLOG.yaml structure
     - Review UI (can be CLI for MVP, web UI for Phase 2)
+    - Glean enterprise setup with Gong, Figma, and document indexing
 
   success_metrics:
     - 80% reduction in time from call → backlog story (6 hours → 1 hour)

@@ -98,31 +98,45 @@ design_specification:
         duration: < 1 second
 
   component_specifications:
-    gong_extraction_service:
-      component_id: GongExtractionService
+    meeting_extraction_service:
+      component_id: MeetingExtractionService
       type: microservice
       language: Python
 
       responsibilities:
-        - Authenticate with Gong API
-        - Retrieve call transcripts
-        - Extract requirements using hybrid LLM + rules
+        - Search meetings via Glean MCP meeting_lookup
+        - Retrieve call transcripts via Glean MCP
+        - Extract requirements using Glean MCP chat + hybrid rules
         - Calculate confidence scores
         - Output structured requirements
 
       apis:
-        - endpoint: POST /api/extract/gong
-          input: {call_id: string, options: object}
+        - endpoint: POST /api/extract/meeting
+          input: {meeting_query: string, options: object}
           output: {requirements: array, metadata: object}
           auth: API key
 
+      glean_mcp_integration:
+        tools_used:
+          - meeting_lookup: Search for meetings by participants, topic, date range
+          - chat: AI-powered extraction and analysis with enterprise context
+          - search: Find related documents and context
+
+        extraction_flow:
+          step_1: Use meeting_lookup to find relevant Gong calls
+          step_2: Extract transcript content from meeting results
+          step_3: Use Glean MCP chat for AI-powered requirement extraction
+          step_4: Leverage Glean's enterprise context for entity resolution
+          step_5: Apply rule-based validation
+
       llm_integration:
-        model: claude-sonnet-4-5
+        primary: Glean MCP chat tool
+        fallback_model: claude-sonnet-4-5
         temperature: 0.3
         max_tokens: 4096
 
         prompt_template: |
-          You are a requirements analyst. Extract structured requirements from this Gong sales call transcript.
+          You are a requirements analyst. Extract structured requirements from this meeting transcript.
 
           For each requirement mentioned, provide:
           1. Requirement text (verbatim quote)
@@ -193,41 +207,50 @@ design_specification:
           ambiguous: 0.3
 
       output_format:
-        file: output/requirements/requirements-{{call_id}}.yaml
+        file: output/requirements/requirements-{{meeting_id}}.yaml
         schema: requirements.yaml (existing)
 
       error_handling:
-        - Gong API errors → retry 3x with exponential backoff
+        - Glean MCP errors → retry 3x with exponential backoff
         - LLM errors → fallback to rule-based only
         - Invalid transcript → log error, notify user
         - Timeout (> 5 min) → abort, notify user
+        - Glean MCP unavailable → fail gracefully with clear error message
 
-    figma_parsing_service:
-      component_id: FigmaParsingService
+    design_parsing_service:
+      component_id: DesignParsingService
       type: microservice
       language: Python
 
       responsibilities:
-        - Authenticate with Figma API
-        - Fetch file metadata
+        - Search for design files via Glean MCP
+        - Fetch file metadata via Glean MCP or Figma API
         - Traverse component tree
         - Extract design tokens
         - Parse annotations
         - Generate user story hints
 
       apis:
-        - endpoint: POST /api/parse/figma
-          input: {file_id: string, options: object}
+        - endpoint: POST /api/parse/design
+          input: {design_query: string, options: object}
           output: {components: array, design_tokens: object}
-          auth: Personal access token
+          auth: API key
+
+      glean_mcp_integration:
+        primary_approach:
+          - Use Glean MCP search to find Figma files
+          - Use Glean MCP read_document if Figma files indexed
+          - Extract design metadata and annotations via Glean
 
       figma_api_integration:
+        fallback: true
         base_url: https://api.figma.com/v1
         auth: Bearer {{figma_token}}
         endpoints:
           - GET /files/{{file_id}}
           - GET /files/{{file_id}}/nodes
           - GET /images/{{file_id}}
+        note: Used for detailed component extraction if Glean MCP insufficient
 
       parsing_logic:
         component_types:
@@ -665,30 +688,45 @@ design_specification:
           - Allow manual resume
 
   api_specifications:
-    gong_api:
-      base_url: https://api.gong.io/v2
-      authentication: OAuth 2.0
-      endpoints:
-        list_calls:
-          method: GET
-          path: /calls
+    glean_mcp:
+      description: Primary integration for all search, context, and data
+      tools:
+        meeting_lookup:
+          description: Search and retrieve meeting transcripts from Gong
           params:
-            fromDateTime: ISO 8601
-            toDateTime: ISO 8601
-            participantEmailAddress: string
+            query: Search query with filters (after, before, participants, topic)
+            extract_transcript: true
           response:
-            calls: array of call objects
+            meetings: array with transcript content
 
-        get_transcript:
-          method: GET
-          path: /calls/{call_id}/transcript
+        chat:
+          description: AI-powered extraction and analysis with enterprise context
+          params:
+            message: Analysis request
+            context: Previous messages for context
           response:
-            transcript: string
-            speakers: array
+            AI response with structured extraction
+
+        search:
+          description: Find documents, designs, and related content
+          params:
+            query: Search query with filters
+            app: Filter by application (figma, confluence, etc.)
+          response:
+            documents: array with metadata and URLs
+
+        read_document:
+          description: Access full document content
+          params:
+            urls: Array of document URLs
+          response:
+            Full document content and structure
 
     figma_api:
+      description: Supplemental API for detailed component extraction
       base_url: https://api.figma.com/v1
       authentication: Bearer token
+      use_when: Glean MCP doesn't provide sufficient Figma component detail
       endpoints:
         get_file:
           method: GET
@@ -781,19 +819,20 @@ design_specification:
     architecture: containerized_microservices
 
     containers:
-      - name: gong-extraction-service
+      - name: meeting-extraction-service
         image: python:3.11-slim
         env:
-          - GONG_API_KEY
-          - ANTHROPIC_API_KEY
+          - GLEAN_MCP_CONFIG
+          - ANTHROPIC_API_KEY  # Fallback only
         resources:
           cpu: 1 core
           memory: 2GB
 
-      - name: figma-parsing-service
+      - name: design-parsing-service
         image: python:3.11-slim
         env:
-          - FIGMA_TOKEN
+          - GLEAN_MCP_CONFIG
+          - FIGMA_TOKEN  # Fallback only
         resources:
           cpu: 0.5 core
           memory: 1GB

@@ -53,18 +53,19 @@ Automate the requirements-to-implementation flow:
 ┌─────────────────────────────────────────────────────────────────┐
 │                     External Systems                            │
 ├─────────────────────────────────────────────────────────────────┤
-│  Gong API          Figma API          Claude API                │
-│  (Transcripts)     (Designs)          (Extraction)              │
-└──────┬─────────────────┬────────────────────┬────────────────────┘
-       │                 │                    │
-       ▼                 ▼                    ▼
+│  Glean MCP                           Figma API                  │
+│  (Meetings, Docs, Search, AI)        (Component Detail)         │
+└──────┬───────────────────────────────────────┬──────────────────┘
+       │                                       │
+       ▼                                       ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                     Ingestion Layer                             │
 ├─────────────────────────────────────────────────────────────────┤
-│  Gong Client      Figma Client       LLM Client                 │
-└──────┬─────────────────┬────────────────────┬────────────────────┘
-       │                 │                    │
-       ▼                 ▼                    ▼
+│  Glean MCP Client                    Figma Client (Fallback)    │
+│  (Primary for all data)                                         │
+└──────┬───────────────────────────────────────┬──────────────────┘
+       │                                       │
+       ▼                                       ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Processing Layer                             │
 ├─────────────────────────────────────────────────────────────────┤
@@ -107,8 +108,8 @@ Automate the requirements-to-implementation flow:
 
 | Component | Responsibility | Technology |
 |-----------|---------------|------------|
-| **Gong Extraction Service** | Extract requirements from calls | Python, Claude API |
-| **Figma Parsing Service** | Parse design specifications | Python, Figma API |
+| **Meeting Extraction Service** | Extract requirements from calls via Glean MCP | Python, Glean MCP |
+| **Design Parsing Service** | Parse design specifications via Glean MCP + Figma API | Python, Glean MCP, Figma API |
 | **Quality Scoring Engine** | Calculate priority scores | Python |
 | **Story Generation Engine** | Generate SDLC stories | Python |
 | **Review Queue** | Human approval workflow | FastAPI + React |
@@ -174,30 +175,30 @@ Extract → Score → [QUEUE FOR REVIEW]
 
 ## 3. Component Architecture
 
-### 3.1 Gong Extraction Service
+### 3.1 Meeting Extraction Service
 
 **Type:** Microservice
-**Input:** Gong call_id
+**Input:** Meeting query (participants, date, topic)
 **Output:** requirements.yaml
 
 #### Architecture
 
 ```
 ┌─────────────────────────────────────────┐
-│     Gong Extraction Service             │
+│   Meeting Extraction Service            │
 ├─────────────────────────────────────────┤
 │                                         │
 │  ┌─────────────────────────────────┐   │
-│  │   Gong API Client               │   │
-│  │   - OAuth 2.0 auth              │   │
+│  │   Glean MCP Client              │   │
+│  │   - meeting_lookup tool         │   │
 │  │   - Fetch transcript            │   │
 │  └────────┬────────────────────────┘   │
 │           │                             │
 │           ▼                             │
 │  ┌─────────────────────────────────┐   │
-│  │   LLM Extractor                 │   │
-│  │   - Claude Sonnet 4.5           │   │
-│  │   - Structured output (JSON)    │   │
+│  │   Glean MCP Chat Extractor      │   │
+│  │   - AI-powered extraction       │   │
+│  │   - Enterprise context aware    │   │
 │  │   - Extract: text, type,        │   │
 │  │     speaker, signals            │   │
 │  └────────┬────────────────────────┘   │
@@ -458,41 +459,57 @@ Pipeline States:
 
 ## 5. API Integrations
 
-### 5.1 Gong API
+### 5.1 Glean MCP (Primary)
 
-**Base URL:** `https://api.gong.io/v2`
-**Auth:** OAuth 2.0
+**Description:** Primary integration for all search, context, and data retrieval
+**Auth:** Glean MCP server authentication
 
-#### Key Endpoints
+#### Key Tools
 
 ```yaml
-list_calls:
-  method: GET
-  path: /calls
+meeting_lookup:
+  description: Search and retrieve meeting transcripts from Gong
   params:
-    fromDateTime: '2026-01-01T00:00:00Z'
-    toDateTime: '2026-02-01T00:00:00Z'
+    query: 'after:2026-01-01 participants:"John Smith" topic:"product"'
+    extract_transcript: true
   response:
-    calls:
-      - id: call_abc123
+    meetings:
+      - meeting_id: abc123
         title: Discovery Call
-        started: '2026-01-15T10:00:00Z'
+        transcript: "Full transcript..."
+        participants: [...]
 
-get_transcript:
-  method: GET
-  path: /calls/{call_id}/transcript
+chat:
+  description: AI-powered extraction with enterprise context
+  params:
+    message: "Extract requirements from this transcript..."
+    context: [previous messages]
   response:
-    transcript: "Full text transcript..."
-    speakers:
-      - id: speaker_1
-        name: John Smith
-        role: CTO
+    AI analysis with structured extraction
+
+search:
+  description: Find documents, designs, related content
+  params:
+    query: 'Figma design product'
+    app: figma
+  response:
+    documents: [{url, title, metadata}]
+
+read_document:
+  description: Access full document content
+  params:
+    urls: ['https://figma.com/file/...']
+  response:
+    Document content and structure
 ```
 
-**Rate Limits:** 100 calls/day
-**Error Handling:** Retry 3x with exponential backoff
+**Benefits:**
+- Unified API for all enterprise data
+- Enterprise context automatically included
+- No separate Gong/Confluence/etc. credentials needed
+- Glean handles permissions and access control
 
-### 5.2 Figma API
+### 5.2 Figma API (Supplemental)
 
 **Base URL:** `https://api.figma.com/v1`
 **Auth:** Bearer token
@@ -522,29 +539,9 @@ get_file_nodes:
 
 **Rate Limits:** 1000 calls/hour
 **Error Handling:** Retry with exponential backoff
+**Use When:** Glean MCP doesn't provide sufficient Figma component detail
 
-### 5.3 Claude API (Anthropic)
-
-**Base URL:** `https://api.anthropic.com/v1`
-**Auth:** API key
-
-```yaml
-create_message:
-  method: POST
-  path: /messages
-  body:
-    model: claude-sonnet-4-5
-    max_tokens: 4096
-    temperature: 0.3
-    messages:
-      - role: user
-        content: "Extract requirements from..."
-  response:
-    content: [text response]
-```
-
-**Rate Limits:** Tier-based (organization-level)
-**Cost:** ~$0.003/1K input tokens, ~$0.015/1K output tokens
+**Note:** Glean MCP search should be tried first to locate Figma files via enterprise search before falling back to direct Figma API calls.
 
 ---
 
@@ -953,23 +950,28 @@ services:
 
 ## 11. Design Rationale
 
-### 11.1 Why Hybrid LLM + Rules?
+### 11.1 Why Glean MCP as Primary Integration?
 
-**Decision:** Combine LLM extraction with rule-based validation
+**Decision:** Use Glean MCP for all search, context, and data retrieval
 
 **Rationale:**
-- **LLM strengths:** Natural language understanding, context awareness
-- **LLM weaknesses:** Non-deterministic, can hallucinate, expensive
-- **Rule strengths:** Fast, deterministic, free, transparent
-- **Rule weaknesses:** Brittle, misses nuance
+- **Unified access:** Single API for Gong, Figma, docs, code, etc.
+- **Enterprise context:** Glean enriches data with company knowledge graph
+- **Simplified auth:** No need to manage multiple API credentials
+- **Permission-aware:** Glean handles access control automatically
+- **AI-powered:** Built-in chat tool for extraction with context
+- **Scalability:** Glean handles rate limiting and optimization
 
 **Hybrid approach:**
-1. LLM extracts requirements (nuanced understanding)
-2. Rules validate urgency keywords (deterministic checks)
-3. Rules detect timelines (regex pattern matching)
-4. Confidence scoring combines both signals
+1. Glean MCP meeting_lookup retrieves Gong transcripts
+2. Glean MCP chat extracts requirements (with enterprise context)
+3. Rules validate urgency keywords (deterministic checks)
+4. Rules detect timelines (regex pattern matching)
+5. Confidence scoring combines all signals
 
-**Result:** Best of both worlds with quality gates
+**Fallback:** Direct Figma API if Glean doesn't provide component detail
+
+**Result:** Simplified architecture, richer context, fewer integrations
 
 ### 11.2 Why Human-in-the-Loop?
 
@@ -1023,25 +1025,38 @@ services:
 
 ## Appendix A: API Reference
 
-### Gong API Endpoints
+### Glean MCP Tools (Primary)
 
 ```yaml
-GET /v2/calls:
-  description: List calls by date range
-  params:
-    fromDateTime: ISO 8601
-    toDateTime: ISO 8601
+meeting_lookup:
+  description: Search meetings by filters
+  query_examples:
+    - "after:2026-01-01 before:2026-02-01"
+    - "participants:\"John Smith\" topic:\"integration\""
+    - "extract_transcript:\"true\""
   response:
-    calls: array
+    meetings: array with transcripts
 
-GET /v2/calls/{call_id}/transcript:
-  description: Get call transcript
+chat:
+  description: AI-powered analysis
+  message_example: "Extract requirements from this meeting transcript: {transcript}"
+  response: Structured extraction with enterprise context
+
+search:
+  description: Find documents across all apps
+  query_examples:
+    - "Figma product design"
+    - "app:figma updated:past_week"
   response:
-    transcript: string
-    speakers: array
+    documents: array with URLs and metadata
+
+read_document:
+  description: Get full document content
+  urls: ["https://figma.com/file/abc123"]
+  response: Document structure and content
 ```
 
-### Figma API Endpoints
+### Figma API Endpoints (Supplemental)
 
 ```yaml
 GET /v1/files/{file_id}:
