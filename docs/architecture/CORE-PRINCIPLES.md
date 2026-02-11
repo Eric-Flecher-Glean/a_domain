@@ -121,6 +121,54 @@ response = client.call_tool(
 )
 ```
 
+#### Two Invocation Modes
+
+Glean MCP supports two modes for agent invocation:
+
+**Mode 1: Explicit Agent Invocation** (Deterministic)
+
+Directly specify which Glean agent to use:
+
+```python
+response = client.call_tool(
+    "mcp__glean__chat",
+    {
+        "agent": "Extract Common Pain Points",  # Explicit agent name
+        "message": "Extract pain points from Q1 sales calls",
+        "context": ["industry: healthcare", "timeframe: Q1 2026"]
+    }
+)
+```
+
+**Use when:**
+- Building deterministic workflows with known agent sequences
+- Agent selection is part of orchestration logic
+- Need consistent, repeatable behavior
+- Implementing multi-step pipelines (Agent A → Agent B → Agent C)
+
+**Mode 2: Auto-Routing** (Intelligent)
+
+Let Glean's platform analyze the message and route to the best agent:
+
+```python
+response = client.call_tool(
+    "mcp__glean__chat",
+    {
+        "message": "Extract pain points from Q1 sales calls",
+        "context": ["industry: healthcare", "timeframe: Q1 2026"]
+    }
+    # No 'agent' parameter - Glean's AI routes automatically
+)
+```
+
+**Use when:**
+- Building conversational interfaces or user-driven queries
+- Want Glean's AI to select the most appropriate agent
+- Exploratory analysis with unpredictable requests
+- Simplifying implementation (fewer decisions in code)
+
+**Recommendation:** Start with Mode 2 (auto-routing) for simplicity. Use Mode 1 (explicit) when you need deterministic workflows or have identified the optimal agent sequence through experimentation.
+
 ### Approved Pattern 1B: Glean MCP with XML Prompt Templates
 
 **Use Case:** Structure repeatable invocations of Glean agents using version-controlled XML message templates.
