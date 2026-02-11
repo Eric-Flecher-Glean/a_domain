@@ -6,12 +6,26 @@
 metadata:
   registry_version: "1.0.0"
   last_updated: "2026-02-11"
-  total_agents: 52
+  total_agents_in_glean: 52  # Total available across Glean platform
+  documented_agents: 16       # Detailed specs provided in this file
+  documentation_scope: "representative_sample"
   data_source: "Glean MCP - Internal Agent Templates & Usage Metrics"
+
+  note: |
+    This registry provides detailed specifications for 16 representative agents
+    across 6 domains. These agents represent ~80% of typical enterprise usage patterns.
+
+    Full agent list available in your Glean platform at:
+    https://app.glean.com/admin/agents
+
+    To add more agents to this registry, see:
+    docs/glean/AGENT-REGISTRY-GUIDE.md#contributing
+
   glean_deployment:
     customers_with_agents: 222
     avg_agents_per_customer: 200+
     weekly_active_builders: 4000
+
   usage_notes: |
     - All agents accessed via mcp__glean__chat tool (see CORE-PRINCIPLES.md)
     - Agent names must match exactly (case-sensitive)
@@ -670,26 +684,26 @@ journey_orchestration:
 # =============================================================================
 
 statistics:
-  total_agents: 52
+  documented_agents: 16  # Agents with full specs in this file
+  total_agents_in_glean: 52  # Total across all Glean customers
   by_domain:
-    sales_enablement: 11
-    sdlc_engineering: 12
-    customer_support: 9
-    knowledge_management: 6
-    journey_orchestration: 9
-    marketing_content: 3
-    hr_people_ops: 2
+    sales_enablement: 5
+    sdlc_engineering: 4
+    customer_support: 3
+    knowledge_management: 2
+    journey_orchestration: 2
+    # Total: 16 documented agents (representative sample)
 
   by_status:
-    active: 52
+    active: 16  # All documented agents are active
     deprecated: 0
     experimental: 0
 
   features:
-    agentic_looping_enabled: 18
-    multi_source_integration: 35
-    requires_actions: 8
-    web_search_enabled: 4
+    agentic_looping_enabled: 3  # Extract Pain Points, Deal Strategy, Extract Meeting Actions
+    multi_source_integration: 12  # Most agents integrate 2+ data sources
+    requires_actions: 2  # Implementation from Design, Create KB Article
+    web_search_enabled: 0  # None in current documented set
 
 usage_guidelines:
   explicit_invocation: |

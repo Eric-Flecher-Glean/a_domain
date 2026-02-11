@@ -192,7 +192,7 @@ response = client.call_tool(
 agent_invocation:
   tool: mcp__glean__chat
   message_template:
-    repository: "Eric-Flecher-Glean/prompts"
+    repository: "sdlc/prompts"
     path: "sdlc/requirements/extract-acceptance-criteria.xml"
     version: "1.0.0"
   inputs:
@@ -249,7 +249,7 @@ agent_invocation:
 from xml_prompt_loader import XMLPromptLoader
 
 template = XMLPromptLoader.load_from_repository(
-    repo="Eric-Flecher-Glean/prompts",
+    repo="../../sdlc/prompts",
     path="sdlc/requirements/extract-acceptance-criteria.xml",
     version="1.0.0"
 )
@@ -277,7 +277,7 @@ response = client.call_tool(
 - **Rapid Iteration:** Edit XML, commit, re-run (no deployment needed)
 - **Documentation:** Self-documenting with metadata and examples
 
-**Template Repository:** https://github.com/Eric-Flecher-Glean/prompts
+**Template Repository:** ../../sdlc/prompts
 
 ### Approved Pattern 2: Claude Code Commands
 
@@ -450,7 +450,7 @@ Before submitting any architecture document or code for review:
 - [ ] **No model specifications** (`claude-sonnet-4-5`, `gpt-4`, etc.) in configs
 - [ ] **No fallback_model** configurations
 - [ ] **All LLM operations** use `mcp__glean__chat` or Claude Code Task tool
-- [ ] **XML prompt templates** (if used) stored in version-controlled repository (Eric-Flecher-Glean/prompts)
+- [ ] **XML prompt templates** (if used) stored in version-controlled repository (sdlc/prompts)
 - [ ] **Prompt templates** reference Glean agents via `mcp__glean__chat` (not standalone agents)
 - [ ] **Environment variables** use `GLEAN_MCP_CONFIG` (not API keys)
 
@@ -484,7 +484,7 @@ All LLM compute must flow through approved patterns. If a use case cannot be sat
 - [Agent Implementation Guide](../guides/agent-implementation-guide.md) - Master guide for agent patterns
 
 **Architecture Documents:**
-- [ADR-006: LLM Integration Architecture](./ddd-specification.md#adr-006) - Dual-mode agent implementation strategy
+- [ADR-006: Glean MCP Agent Integration](./ddd-specification.md#adr-006-glean-mcp-agent-integration-with-xml-prompt-templates) - Dual-mode agent implementation strategy
 - [Implementation Specification](../product/implementation-specification.md)
 - [Architecture Review Checklist](./ARCHITECTURE-REVIEW-CHECKLIST.md)
 

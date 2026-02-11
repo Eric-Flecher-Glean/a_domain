@@ -61,7 +61,7 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 6. **Agent Implementation Pattern:** Unified Glean MCP agent integration
    - **REQUIRED:** All LLM compute via `mcp__glean__chat` or Claude Code (see [CORE-PRINCIPLES.md](./CORE-PRINCIPLES.md))
    - **Glean MCP Agents:** All agent capabilities accessed via `mcp__glean__chat` tool
-   - **XML Prompt Templates:** Optional structured templates that format messages sent to Glean agents, stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository
+   - **XML Prompt Templates:** Optional structured templates that format messages sent to Glean agents, stored in [`sdlc/prompts`](../../sdlc/prompts) repository
    - **Prohibited:** Direct Anthropic API usage, ANTHROPIC_API_KEY environment variables, model specifications
 
 ### Domain Complexity Classification
@@ -84,7 +84,7 @@ The DDD Domain Registry & Unified Agent Interface Platform is a **meta-platform*
 | **Ubiquitous Language** | Shared vocabulary between domain experts and developers within a context |
 | **Domain Event** | An immutable record of something that happened in the domain |
 | **Glean MCP Agent** | An existing Glean agent invoked via Model Context Protocol using `mcp__glean__chat` tool |
-| **XML Prompt Template** | A structured XML template that formats messages sent to Glean agents via `mcp__glean__chat`, stored in `Eric-Flecher-Glean/prompts` repository |
+| **XML Prompt Template** | A structured XML template that formats messages sent to Glean agents via `mcp__glean__chat`, stored in `sdlc/prompts` repository |
 | **Message Template** | An XML template defining role, task, instructions, and constraints used to structure inputs to Glean agents |
 
 ### Platform.Orchestration Context
@@ -1577,7 +1577,7 @@ SLA Target: 95% resolved within 24 hours
 
 ### ADR-006: Glean MCP Agent Integration with XML Prompt Templates
 
-**Decision:** All agents in this system leverage existing Glean agents accessed via the `mcp__glean__chat` tool. XML prompts stored in [`Eric-Flecher-Glean/prompts`](https://github.com/Eric-Flecher-Glean/prompts) repository serve as templates to structure the messages sent to these Glean agents, enhancing consistency and enabling version-controlled prompt engineering.
+**Decision:** All agents in this system leverage existing Glean agents accessed via the `mcp__glean__chat` tool. XML prompts stored in [`sdlc/prompts`](../../sdlc/prompts) repository serve as templates to structure the messages sent to these Glean agents, enhancing consistency and enabling version-controlled prompt engineering.
 
 **Architecture:**
 There is ONE unified agent pattern:
@@ -1646,7 +1646,7 @@ agent_invocation:
 agent_invocation:
   tool: mcp__glean__chat
   message_template:
-    repository: Eric-Flecher-Glean/prompts
+    repository: sdlc/prompts
     path: sdlc/requirements/extract-acceptance-criteria.xml
     version: "1.2.0"
     variables:

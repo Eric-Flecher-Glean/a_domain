@@ -2,7 +2,7 @@
 
 **Pattern Type**: Message Template for Glean MCP Agents
 **Purpose**: Structure messages sent to Glean agents via `mcp__glean__chat` using version-controlled XML templates
-**Repository**: Eric-Flecher-Glean/prompts (https://github.com/Eric-Flecher-Glean/prompts)
+**Repository**: sdlc/prompts (https://github.com/sdlc/prompts)
 **Reference**: ADR-006 in `docs/architecture/ddd-specification.md`
 
 ---
@@ -42,7 +42,7 @@ XML Prompt Templates provide structured, version-controlled message formats for 
 │  │                                                    │  │
 │  │  # 1. Load XML template                           │  │
 │  │  template = load_xml_template(                    │  │
-│  │    repo="Eric-Flecher-Glean/prompts",            │  │
+│  │    repo="sdlc/prompts",            │  │
 │  │    path="sdlc/requirements/extract-ac.xml"       │  │
 │  │  )                                                │  │
 │  │                                                    │  │
@@ -59,7 +59,7 @@ XML Prompt Templates provide structured, version-controlled message formats for 
                       │
                       ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Eric-Flecher-Glean/prompts Repository                  │
+│  sdlc/prompts Repository                  │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │ Git Repository with Versioned XML Templates       │  │
 │  │ - sdlc/requirements/*.xml                         │  │
@@ -197,7 +197,7 @@ All XML prompts follow this standardized structure:
 
 ```bash
 # Clone prompts repository
-git clone https://github.com/Eric-Flecher-Glean/prompts.git
+git clone https://github.com/sdlc/prompts.git
 cd prompts
 
 # Create directory structure
@@ -225,7 +225,7 @@ from acceptance_criteria_extractor import AcceptanceCriteriaExtractor
 
 # Load prompt from repository
 prompt = XMLPromptLoader.load_from_repository(
-    repo="Eric-Flecher-Glean/prompts",
+    repo="sdlc/prompts",
     path="sdlc/requirements/extract-acceptance-criteria.xml",
     version="1.0.0"
 )
@@ -494,7 +494,7 @@ implementation:
   tool: "mcp__glean__chat"
   glean_agent: "Extract Requirements"  # Which Glean agent to invoke
   message_template:  # Optional: XML template structures the message
-    repository: "Eric-Flecher-Glean/prompts"
+    repository: "sdlc/prompts"
     path: "sdlc/requirements/extract-acceptance-criteria.xml"
     version: "1.0.0"
 supported_intents:
@@ -528,7 +528,7 @@ output_schema:
 - **Master Guide**: `docs/guides/agent-implementation-guide.md`
 - **Example Code**: `examples/xml_prompt_agent_example.py`
 - **Example Template**: `examples/prompts/extract-acceptance-criteria.xml`
-- **Template Repository**: https://github.com/Eric-Flecher-Glean/prompts
+- **Template Repository**: https://github.com/sdlc/prompts
 
 ---
 
@@ -538,7 +538,7 @@ output_schema:
 2. ✅ Run the example: `uv run examples/xml_prompt_agent_example.py`
 3. ✅ Review example prompt: `examples/prompts/extract-acceptance-criteria.xml`
 4. 🔄 Create your own XML prompt following the structure
-5. 🔄 Store in Eric-Flecher-Glean/prompts repository
+5. 🔄 Store in sdlc/prompts repository
 6. 🔄 Implement prompt loader and executor for your use case
 7. 🔄 Register agent capability in Domain Registry
 

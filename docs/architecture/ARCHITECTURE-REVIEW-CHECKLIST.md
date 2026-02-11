@@ -34,41 +34,79 @@ This checklist ensures all architecture documents and implementations comply wit
 
 ```bash
 # Command 1: Search for prohibited API keys
-grep -rn "ANTHROPIC_API_KEY\|OPENAI_API_KEY\|CLAUDE_API_KEY" \
+#!/bin/bash
+set -e
+
+echo "Checking for API key violations..."
+
+# Exclude documentation examples (marked with # PROHIBITED, etc.)
+if grep -rn "ANTHROPIC_API_KEY\|OPENAI_API_KEY\|CLAUDE_API_KEY" \
   --include="*.yaml" \
   --include="*.yml" \
   --include="*.py" \
   --include="*.md" \
   --exclude-dir=.git \
   --exclude-dir=node_modules \
-  .
-
-# Expected: NO MATCHES (exit code 1)
-# If matches found: VIOLATION - must remediate before proceeding
+  --exclude-dir=.logs \
+  --exclude-dir=venv \
+  --exclude-dir=.venv \
+  . 2>/dev/null | \
+  grep -v "# PROHIBITED\|# VIOLATION\|DO NOT USE\|WRONG\|Example Fix\|Anti-Pattern"; then
+  echo "❌ VIOLATION: Uncommented API keys found in code/config"
+  echo "   See: docs/architecture/CORE-PRINCIPLES.md#principle-1"
+  exit 1
+else
+  echo "✅ No API key violations found"
+  exit 0
+fi
 ```
 
 ```bash
 # Command 2: Search for prohibited client libraries
-grep -rn "from anthropic import\|import anthropic\|from openai import\|import openai" \
+#!/bin/bash
+set -e
+
+echo "Checking for prohibited client library imports..."
+
+if grep -rn "from anthropic import\|import anthropic\|from openai import\|import openai" \
   --include="*.py" \
   --exclude-dir=.git \
   --exclude-dir=node_modules \
-  .
-
-# Expected: NO MATCHES (exit code 1)
-# If matches found: VIOLATION - must remediate
+  --exclude-dir=venv \
+  --exclude-dir=.venv \
+  --exclude-dir=.logs \
+  . 2>/dev/null | \
+  grep -v "# PROHIBITED\|Example Fix\|Anti-Pattern"; then
+  echo "❌ VIOLATION: Prohibited client library imports found"
+  echo "   See: docs/architecture/CORE-PRINCIPLES.md#prohibited-patterns"
+  exit 1
+else
+  echo "✅ No client library violations found"
+  exit 0
+fi
 ```
 
 ```bash
 # Command 3: Search for model specifications in configs
-grep -rn "model.*claude-\|model.*gpt-\|model.*opus\|model.*sonnet" \
+#!/bin/bash
+set -e
+
+echo "Checking for model specifications in configs..."
+
+if grep -rn "model[[:space:]]*:[[:space:]]*\(claude\|gpt\|opus\|sonnet\)" \
   --include="*.yaml" \
   --include="*.yml" \
   --exclude-dir=.git \
-  .
-
-# Expected: NO MATCHES (exit code 1)
-# Exceptions: Documentation/examples marked with PROHIBITED comments
+  --exclude-dir=node_modules \
+  . 2>/dev/null | \
+  grep -v "# PROHIBITED\|# VIOLATION\|Example Fix\|Anti-Pattern"; then
+  echo "❌ VIOLATION: Model specifications found in configs"
+  echo "   See: docs/architecture/CORE-PRINCIPLES.md#anti-pattern-3"
+  exit 1
+else
+  echo "✅ No model specification violations found"
+  exit 0
+fi
 ```
 
 ```bash

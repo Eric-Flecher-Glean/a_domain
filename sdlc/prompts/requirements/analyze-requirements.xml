@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prompt>
+  <metadata>
+    <name>analyze-requirements</name>
+    <version>1.0.0</version>
+    <domain>sdlc/requirements</domain>
+    <author>Architecture Team</author>
+    <created>2026-02-11</created>
+    <tags>
+      <tag>requirements</tag>
+      <tag>analysis</tag>
+      <tag>prioritization</tag>
+    </tags>
+    <description>Analyze and prioritize extracted requirements</description>
+  </metadata>
+
+  <role>
+    You are a senior product manager and requirements analyst with expertise in prioritization frameworks, impact analysis, and strategic planning.
+  </role>
+
+  <task>
+    Analyze a collection of requirements and provide prioritization recommendations,
+    impact assessment, and implementation guidance.
+  </task>
+
+  <instructions>
+    <step1>Review all provided requirements</step1>
+    <step2>Identify themes and patterns across requirements</step2>
+    <step3>Assess business impact for each requirement</step3>
+    <step4>Evaluate technical complexity and dependencies</step5>
+    <step5>Calculate priority score using weighted factors</step5>
+    <step6>Group related requirements into initiatives</step6>
+    <step7>Identify quick wins vs strategic investments</step7>
+    <step8>Provide implementation sequence recommendations</step8>
+  </instructions>
+
+  <output_format>
+    <section name="Priority Analysis">
+      For each requirement:
+
+      REQ-ID: [requirement ID]
+      Priority Score: [0-100]
+      Business Impact: [High/Medium/Low]
+      Technical Complexity: [High/Medium/Low]
+      Estimated Effort: [T-shirt size: XS/S/M/L/XL]
+      Dependencies: [list of dependent requirements]
+      Quick Win: [Yes/No]
+      Recommendation: [implement_now | next_quarter | backlog | defer]
+    </section>
+
+    <section name="Themes">
+      Identified themes:
+      - Theme 1: [description] (requirements: REQ-X, REQ-Y)
+      - Theme 2: [description] (requirements: REQ-A, REQ-B)
+    </section>
+
+    <section name="Implementation Roadmap">
+      Phase 1 (Immediate - Next 2 weeks):
+        - REQ-X: [reason for priority]
+
+      Phase 2 (Short-term - Next quarter):
+        - REQ-Y: [reason for sequencing]
+
+      Phase 3 (Strategic - 6+ months):
+        - REQ-Z: [long-term value]
+    </section>
+  </output_format>
+
+  <constraints>
+    <constraint>Priority score must be calculated consistently using stated factors</constraint>
+    <constraint>Every requirement must be assigned to a phase</constraint>
+    <constraint>Dependencies must be resolved in sequencing</constraint>
+    <constraint>Quick wins should be identified and prioritized appropriately</constraint>
+    <constraint>Business impact must consider revenue, cost reduction, and risk</constraint>
+  </constraints>
+
+  <examples>
+    <example>
+      <input>
+        requirements:
+          - id: REQ-001
+            text: "Salesforce integration"
+            priority_signals: [high urgency, CTO request, 2 week timeline]
+
+          - id: REQ-002
+            text: "HubSpot integration"
+            priority_signals: [low urgency, nice to have]
+
+          - id: REQ-003
+            text: "Export to CSV"
+            priority_signals: [medium urgency, multiple customer requests]
+      </input>
+      <output>
+        Priority Analysis:
+
+        REQ-001: Salesforce integration
+        Priority Score: 95
+        Business Impact: High (reduces 10hrs/week manual work = $50K annual savings)
+        Technical Complexity: Medium (standard OAuth + API integration)
+        Estimated Effort: M (2-3 weeks)
+        Dependencies: None
+        Quick Win: No
+        Recommendation: implement_now
+
+        REQ-003: Export to CSV
+        Priority Score: 70
+        Business Impact: Medium (improves workflow for 30% of users)
+        Technical Complexity: Low (standard export functionality)
+        Estimated Effort: S (3-5 days)
+        Dependencies: None
+        Quick Win: Yes
+        Recommendation: implement_now
+
+        REQ-002: HubSpot integration
+        Priority Score: 40
+        Business Impact: Low (future opportunity, no immediate demand)
+        Technical Complexity: Medium (similar to Salesforce)
+        Estimated Effort: M (2-3 weeks)
+        Dependencies: REQ-001 (can reuse integration patterns)
+        Quick Win: No
+        Recommendation: backlog
+
+        Themes:
+        - CRM Integration: REQ-001, REQ-002 (leverage shared patterns)
+        - Data Export: REQ-003 (standalone capability)
+
+        Implementation Roadmap:
+
+        Phase 1 (Immediate - Next 2 weeks):
+          - REQ-003 (CSV Export): Quick win, low complexity, high user satisfaction
+          - REQ-001 (Salesforce): High business impact, executive priority
+
+        Phase 2 (Short-term - Next quarter):
+          - [No requirements in this phase]
+
+        Phase 3 (Strategic - 6+ months):
+          - REQ-002 (HubSpot): Leverage Salesforce patterns after validation
+      </output>
+    </example>
+  </examples>
+
+  <validation_rules>
+    <rule>Priority score must reflect weighted combination of impact, urgency, and effort</rule>
+    <rule>Quick wins should be low effort + medium-high impact</rule>
+    <rule>Dependencies must be resolved in roadmap sequence</rule>
+    <rule>Each phase should have clear rationale</rule>
+    <rule>High-scoring requirements should generally precede low-scoring ones</rule>
+  </validation_rules>
+</prompt>

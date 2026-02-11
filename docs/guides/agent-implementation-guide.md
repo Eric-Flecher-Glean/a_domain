@@ -176,7 +176,7 @@ See: `docs/guides/glean-mcp-agent-pattern.md`
    ```python
    # Load XML template
    template = load_xml_template(
-       repo="Eric-Flecher-Glean/prompts",
+       repo="../../sdlc/prompts",
        path="sdlc/requirements/extract-acceptance-criteria.xml"
    )
 
