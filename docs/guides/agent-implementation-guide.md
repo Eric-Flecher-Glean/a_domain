@@ -168,7 +168,7 @@ See: `docs/guides/glean-mcp-agent-pattern.md`
    ```
 
 2. **Store in Repository**
-   - Repository: `Eric-Flecher-Glean/prompts`
+   - Repository: `sdlc/prompts`
    - Path: `sdlc/requirements/extract-acceptance-criteria.xml`
    - Commit with semantic versioning
 
@@ -287,7 +287,7 @@ See: `docs/guides/xml-prompt-agent-pattern.md`
    - Specify output format and constraints
 
 2. **Version control best practices**
-   - Commit prompts to `Eric-Flecher-Glean/prompts`
+   - Commit prompts to `sdlc/prompts`
    - Use semantic versioning
    - Tag releases for stable versions
 
@@ -371,7 +371,7 @@ implementation:
   tool: "mcp__glean__chat"
   glean_agent_name: "Extract Requirements"  # Which Glean agent to use
   message_template:
-    repository: "Eric-Flecher-Glean/prompts"
+    repository: "sdlc/prompts"
     path: "sdlc/requirements/extract-acceptance-criteria.xml"
     version: "1.0.0"
 ```
