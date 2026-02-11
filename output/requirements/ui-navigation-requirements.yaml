@@ -1,0 +1,441 @@
+requirements:
+  metadata:
+    feature_id: P0-UI-F9000
+    title: Web Page Inventory & Navigation Hierarchy System
+    version: 1.0.0
+    status: requirements_complete
+    created: '2026-02-11T00:00:00Z'
+    last_updated: '2026-02-11T00:00:00Z'
+    stakeholders:
+      - role: Product Manager
+        needs: Clear roadmap visibility and planning tools
+      - role: Developer
+        needs: Quick access to testing, reports, and documentation
+      - role: Operations
+        needs: Real-time monitoring and system health
+      - role: Stakeholder
+        needs: High-level progress visibility
+
+  problem_statement:
+    current_situation: |
+      The a_domain platform has grown to include 7+ web-based interfaces with 71+
+      generated pages, but lacks a unified navigation system. Users must remember
+      different URLs, ports, and paths. No consistent information architecture exists,
+      and planned features have no clear integration path.
+
+    pain_points:
+      - Inconsistent URL patterns (/tests-dashboard vs /docs/roadmaps/roadmap.html)
+      - Multiple ports for different services (3000, 3001, 8000)
+      - No role-based navigation (all users see all features)
+      - Missing breadcrumbs and context indicators
+      - No progressive disclosure for planned features
+      - Poor mobile experience on some pages
+      - No common header/footer across pages
+
+    impact:
+      - Developers waste time finding the right dashboard
+      - PMs can't easily navigate between roadmap and stories
+      - New users overwhelmed by unorganized interface
+      - Planned A2A platform features have no navigation home
+      - Difficult to communicate what's available vs planned
+
+  goals:
+    primary:
+      - Create unified navigation system across all web pages
+      - Implement role-based views for different user types
+      - Establish clean, consistent URL structure
+      - Provide progressive disclosure for planned features
+      - Build foundation for A2A platform UI integration
+
+    secondary:
+      - Improve mobile experience for operational dashboards
+      - Add contextual breadcrumbs for deep navigation
+      - Implement system status indicators
+      - Create quick action menu for common tasks
+      - Document information architecture principles
+
+  user_stories:
+    - id: US-1
+      role: Developer
+      goal: Quickly access testing dashboard and latest reports
+      acceptance: Can reach testing dashboard in 1 click from any page
+      priority: P0
+
+    - id: US-2
+      role: Product Manager
+      goal: Navigate between roadmap and individual stories
+      acceptance: Breadcrumbs show path and allow quick navigation back
+      priority: P0
+
+    - id: US-3
+      role: Stakeholder
+      goal: See high-level progress without technical clutter
+      acceptance: Stakeholder view shows only planning and metrics
+      priority: P1
+
+    - id: US-4
+      role: Developer
+      goal: Know which planned features are coming and when
+      acceptance: Planned features visible in roadmap with "Coming Soon" badges
+      priority: P1
+
+    - id: US-5
+      role: Operations
+      goal: Monitor system health at a glance
+      acceptance: Status bar shows all service health indicators
+      priority: P0
+
+    - id: US-6
+      role: All Users
+      goal: Access help and documentation from any page
+      acceptance: Help link in header on every page
+      priority: P1
+
+  functional_requirements:
+    FR-1:
+      title: Role-Based Navigation System
+      description: Implement navigation that adapts based on user role
+      details:
+        - Support 4 roles: Developer, PM, Stakeholder, Ops
+        - Each role sees filtered navigation menu
+        - Role selector in header (default: Developer)
+        - Role preference persists in localStorage
+        - Navigation sections map to role permissions
+      acceptance_criteria:
+        - AC1: Developer role shows Ops, Docs, API sections
+        - AC2: PM role shows Planning, Metrics sections
+        - AC3: Stakeholder role shows Planning, Metrics only
+        - AC4: Ops role shows Ops, Metrics sections
+        - AC5: Role selection persists across page loads
+      priority: P0
+
+    FR-2:
+      title: Clean URL Structure
+      description: Implement service-based clean URL pattern
+      details:
+        - Pattern: /{category}/{feature}/{detail?}
+        - Categories: ops, planning, metrics, docs, api, a2a
+        - URL rewrites/redirects from old paths
+        - No .html extensions in URLs
+        - Support for :id parameters in routes
+      acceptance_criteria:
+        - AC1: All pages accessible via clean URLs
+        - AC2: Old URLs redirect to new URLs
+        - AC3: URL pattern documented
+        - AC4: Routing configuration validated
+      priority: P0
+
+    FR-3:
+      title: Progressive Feature Disclosure
+      description: Show/hide features based on implementation status
+      details:
+        - not_started: Roadmap only, no nav link
+        - p0_completed: Nav link with "Beta" badge
+        - implemented: Full access, no badge
+        - Feature visibility controlled by story status
+        - Feature flags for manual override
+      acceptance_criteria:
+        - AC1: P0-A2A-F8000 shows "Coming Soon" badge
+        - AC2: Completed features have no badge
+        - AC3: Not-started features not in nav
+        - AC4: Clicking "Coming Soon" shows roadmap
+      priority: P0
+
+    FR-4:
+      title: Common Header Component
+      description: Unified header across all pages
+      details:
+        - Logo and site title
+        - Role selector dropdown
+        - Primary navigation tabs
+        - Quick actions menu
+        - Help/docs link
+        - Consistent styling
+      acceptance_criteria:
+        - AC1: Header appears on all pages
+        - AC2: Navigation tabs highlight active section
+        - AC3: Quick actions menu shows 4-6 common tasks
+        - AC4: Header responsive on mobile
+      priority: P0
+
+    FR-5:
+      title: Contextual Breadcrumbs
+      description: Show navigation path and enable quick backtracking
+      details:
+        - Format: Home > Category > Page > Detail
+        - Maximum 5 levels deep
+        - Each level clickable for navigation
+        - Current page not clickable
+        - Auto-generated from URL structure
+      acceptance_criteria:
+        - AC1: Breadcrumbs show on all pages except home
+        - AC2: Clicking breadcrumb navigates correctly
+        - AC3: Current page shown but not clickable
+        - AC4: Breadcrumbs collapse on mobile
+      priority: P0
+
+    FR-6:
+      title: System Status Bar
+      description: Real-time service health indicators
+      details:
+        - Monitor: Testing (3001), Reports (3000), API (8000)
+        - Status: 🟢 Live, 🔴 Down, 🟡 Degraded
+        - Auto-refresh every 10 seconds
+        - Clicking status opens service page
+        - Unobtrusive placement (sub-header)
+      acceptance_criteria:
+        - AC1: Status bar shows 3 service indicators
+        - AC2: Status updates every 10 seconds
+        - AC3: Clicking status navigates to service
+        - AC4: Status bar visible to Ops and Dev roles
+      priority: P1
+
+    FR-7:
+      title: Quick Actions Menu
+      description: Context-sensitive quick actions
+      details:
+        - Actions: Run Tests, View Roadmap, Check Backlog, Latest Report
+        - Role-based action filtering
+        - Keyboard shortcuts (optional)
+        - Icon-based menu
+      acceptance_criteria:
+        - AC1: Quick actions menu accessible from header
+        - AC2: Actions filtered by role
+        - AC3: Actions execute correctly
+        - AC4: Visual feedback on action execution
+      priority: P1
+
+    FR-8:
+      title: Responsive Layout System
+      description: Adaptive layouts for mobile, tablet, desktop
+      details:
+        - Breakpoints: 768px (mobile), 1024px (tablet), 1280px (desktop)
+        - Mobile: Hamburger menu, stacked cards
+        - Tablet: Sidebar nav, 2-column grids
+        - Desktop: Full nav bar, multi-column
+        - Mobile-friendly priority: Portal, Testing, Health
+        - Desktop-only: Roadmap viz, Timeline reports
+      acceptance_criteria:
+        - AC1: Portal and Testing work on mobile
+        - AC2: Roadmap shows "View on Desktop" on mobile
+        - AC3: Navigation collapses to hamburger < 768px
+        - AC4: All pages usable on tablet
+      priority: P1
+
+    FR-9:
+      title: URL Migration and Redirects
+      description: Preserve old URLs with automatic redirects
+      details:
+        - Map old paths to new clean URLs
+        - 301 redirects for SEO
+        - Preserve query parameters
+        - Log redirects for analytics
+      acceptance_criteria:
+        - AC1: /tests-dashboard redirects to /ops/testing
+        - AC2: /docs/roadmaps/roadmap.html redirects to /planning/roadmap
+        - AC3: All old URLs mapped and tested
+        - AC4: No 404 errors from old bookmarks
+      priority: P0
+
+    FR-10:
+      title: Navigation State Management
+      description: Persist navigation preferences and state
+      details:
+        - Role selection in localStorage
+        - Last visited page tracking
+        - Expanded/collapsed nav state
+        - Preferences sync across tabs
+      acceptance_criteria:
+        - AC1: Role persists across sessions
+        - AC2: Opening new tab uses same role
+        - AC3: Back button works correctly
+        - AC4: Nav state survives page refresh
+      priority: P2
+
+  non_functional_requirements:
+    NFR-1:
+      title: Performance
+      description: Navigation must be fast and responsive
+      metrics:
+        - Header render: < 100ms
+        - Role switch: < 50ms
+        - Page navigation: < 200ms
+        - Status update: < 1s
+
+    NFR-2:
+      title: Accessibility
+      description: WCAG 2.1 AA compliance
+      requirements:
+        - Keyboard navigation support
+        - ARIA labels for screen readers
+        - Sufficient color contrast
+        - Focus indicators visible
+
+    NFR-3:
+      title: Browser Compatibility
+      description: Support modern browsers
+      requirements:
+        - Chrome 90+
+        - Firefox 88+
+        - Safari 14+
+        - Edge 90+
+
+    NFR-4:
+      title: Maintainability
+      description: Navigation system easy to extend
+      requirements:
+        - Component-based architecture
+        - Configuration-driven menus
+        - Clear documentation
+        - Automated testing
+
+  technical_requirements:
+    TR-1:
+      title: Navigation Configuration
+      description: Central configuration for all navigation
+      details:
+        - navigation-config.yaml with all routes
+        - Role-to-section mappings
+        - Feature flags integration
+        - URL rewrite rules
+
+    TR-2:
+      title: Routing Implementation
+      description: Client-side routing for SPA behavior
+      details:
+        - Use History API for clean URLs
+        - Route matching and parameter extraction
+        - 404 handling
+        - Loading states
+
+    TR-3:
+      title: Component Architecture
+      description: Reusable navigation components
+      components:
+        - NavHeader (role tabs, logo, actions)
+        - Breadcrumbs (auto-generated path)
+        - StatusBar (service health)
+        - QuickActions (context menu)
+        - MobileNav (hamburger menu)
+
+    TR-4:
+      title: State Management
+      description: Centralized state for navigation
+      details:
+        - Current role
+        - Active section/page
+        - Service health status
+        - Feature flags
+        - User preferences
+
+  integration_requirements:
+    INT-1:
+      title: Integration with Existing Pages
+      description: Retrofit existing pages with new navigation
+      pages_to_update:
+        - Developer Portal (add header, role selector)
+        - Testing Dashboard (add breadcrumbs, status bar)
+        - Roadmap Viewer (add header, role filter)
+        - Story Pages (add breadcrumbs, quick actions)
+        - Coverage Reports (add header, navigation)
+
+    INT-2:
+      title: Integration with Planned Features
+      description: Navigation ready for A2A platform UIs
+      planned_integrations:
+        - P0-A2A-F8000: SDLC Control Plane
+        - P0-DOCS-005: Document Registry UI
+        - P0-A2A-F1001+: Journey, Dataset, Flow UIs
+
+    INT-3:
+      title: API Integration
+      description: Status checks and service discovery
+      apis:
+        - GET /health (Testing Dashboard, port 3001)
+        - GET /health (Report Explorer, port 3000)
+        - GET /health (DataOps API, port 8000)
+
+  data_requirements:
+    DR-1:
+      title: Page Registry
+      description: YAML registry of all pages
+      schema: output/ui/page-inventory.yaml
+      fields:
+        - page_id, title, url, status
+        - features, technologies, role_access
+        - responsive strategy, port
+
+    DR-2:
+      title: Navigation Configuration
+      description: Navigation structure and rules
+      schema: config/navigation-config.yaml
+      fields:
+        - routes, role_mappings
+        - feature_visibility_rules
+        - url_redirects
+
+  constraints:
+    - Must maintain backwards compatibility with existing URLs
+    - Cannot require authentication (future enhancement)
+    - Must work without JavaScript for basic navigation
+    - Cannot exceed 100KB total navigation asset size
+    - Must support offline fallback (cache navigation config)
+
+  assumptions:
+    - Users access from desktop primarily (70%+ traffic)
+    - Single-user mode (no concurrent role switching)
+    - Services run on localhost (no multi-host routing)
+    - Page generation happens server-side (static files)
+    - Role selection manual (no auto-detection)
+
+  dependencies:
+    - Existing web pages remain functional during rollout
+    - Page inventory document completed (output/ui/page-inventory.yaml)
+    - URL rewrite capability in web server
+    - LocalStorage available in all browsers
+
+  success_metrics:
+    - 90%+ reduction in navigation time (from 3+ clicks to 1 click)
+    - Zero 404 errors from old URLs (migration complete)
+    - 100% of roles have appropriate navigation views
+    - All planned features have navigation placeholders
+    - Mobile-friendly pages pass Google Mobile Test
+    - Navigation component reused on all new pages
+
+  risks:
+    - risk: Breaking existing bookmarks
+      mitigation: Implement comprehensive URL redirects
+      impact: High
+      probability: Medium
+
+    - risk: Performance degradation on status checks
+      mitigation: Cache status, longer polling intervals
+      impact: Medium
+      probability: Low
+
+    - risk: Role confusion (wrong view selected)
+      mitigation: Clear role indicator, easy switching
+      impact: Low
+      probability: Medium
+
+    - risk: Mobile UX not meeting expectations
+      mitigation: User testing, iterative improvements
+      impact: Medium
+      probability: Medium
+
+  out_of_scope:
+    - User authentication and authorization
+    - Search functionality (Phase 2)
+    - Settings and preferences UI (Phase 2)
+    - Multi-language support
+    - Theme customization
+    - Analytics and tracking
+    - A/B testing infrastructure
+    - Real-time collaboration features
+
+  future_enhancements:
+    - Phase 2: Search across all pages and documentation
+    - Phase 2: User preferences and customization
+    - Phase 3: Analytics dashboard for navigation patterns
+    - Phase 3: AI-powered recommendation engine
+    - Phase 4: Multi-tenancy and workspace support

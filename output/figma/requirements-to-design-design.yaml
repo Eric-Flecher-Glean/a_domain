@@ -1,0 +1,909 @@
+design_specification:
+  metadata:
+    feature_id: P0-A2A-F4000
+    title: Requirements-to-Design Pipeline - Technical Design
+    version: 1.0.0
+    status: design_complete
+    created: '2026-02-11T00:00:00Z'
+    design_type: system_architecture
+
+  system_overview:
+    description: |
+      End-to-end pipeline for extracting requirements from Gong sales calls,
+      parsing Figma design specifications, and automatically generating SDLC
+      implementation stories. Hybrid approach using LLM + rule-based extraction
+      with human review gates.
+
+    components:
+      - Gong Extraction Service (LLM + Rules)
+      - Figma Parsing Service (REST API)
+      - Quality Scoring Engine
+      - Story Generation Engine
+      - Human Review Queue (UI/API)
+      - Pipeline Orchestrator
+      - Notification Service
+
+  architecture:
+    pattern: event-driven_pipeline
+    style: microservices
+    deployment: containerized
+
+    layers:
+      - layer: ingestion
+        components: [Gong API Client, Figma API Client]
+        responsibility: Fetch raw data from external APIs
+
+      - layer: processing
+        components: [Requirement Extractor, Design Parser, Quality Scorer]
+        responsibility: Transform raw data into structured formats
+
+      - layer: generation
+        components: [Story Generator, Epic Builder, Task Creator]
+        responsibility: Create SDLC stories from processed data
+
+      - layer: review
+        components: [Review Queue API, Approval Engine]
+        responsibility: Human review and approval workflow
+
+      - layer: persistence
+        components: [Database, File Storage, Artifact Registry]
+        responsibility: Store pipeline state and outputs
+
+      - layer: orchestration
+        components: [Pipeline Coordinator, Event Bus, Worker Queue]
+        responsibility: Coordinate multi-step workflow
+
+  data_flow:
+    pipeline_stages:
+      - stage: 1_extraction
+        input: Gong call_id or Figma file_id
+        process: Fetch transcript/design, extract structured data
+        output: raw_requirements.json, design-spec.yaml
+        duration: 1-2 minutes
+
+      - stage: 2_scoring
+        input: raw_requirements.json
+        process: Calculate quality and priority scores
+        output: scored_requirements.json
+        duration: < 1 second
+
+      - stage: 3_review
+        input: scored_requirements.json
+        process: Human review, edit, approve/reject
+        output: approved_requirements.json
+        duration: variable (human)
+
+      - stage: 4_generation
+        input: approved_requirements.json + design-spec.yaml
+        process: Generate Epic, Stories, Tasks
+        output: generated_stories.yaml
+        duration: 10-30 seconds
+
+      - stage: 5_validation
+        input: generated_stories.yaml
+        process: Schema validation, dependency check
+        output: validated_stories.yaml
+        duration: < 1 second
+
+      - stage: 6_commit
+        input: validated_stories.yaml
+        process: Append to IMPLEMENTATION_BACKLOG.yaml
+        output: backlog updated, changelog entry
+        duration: < 1 second
+
+      - stage: 7_notification
+        input: commit_result
+        process: Send Slack/email notifications
+        output: notification sent
+        duration: < 1 second
+
+  component_specifications:
+    gong_extraction_service:
+      component_id: GongExtractionService
+      type: microservice
+      language: Python
+
+      responsibilities:
+        - Authenticate with Gong API
+        - Retrieve call transcripts
+        - Extract requirements using hybrid LLM + rules
+        - Calculate confidence scores
+        - Output structured requirements
+
+      apis:
+        - endpoint: POST /api/extract/gong
+          input: {call_id: string, options: object}
+          output: {requirements: array, metadata: object}
+          auth: API key
+
+      llm_integration:
+        model: claude-sonnet-4-5
+        temperature: 0.3
+        max_tokens: 4096
+
+        prompt_template: |
+          You are a requirements analyst. Extract structured requirements from this Gong sales call transcript.
+
+          For each requirement mentioned, provide:
+          1. Requirement text (verbatim quote)
+          2. Type: integration | feature_request | pain_point | constraint
+          3. Speaker name and role
+          4. Timestamp in call
+          5. Priority signals (urgency words, timelines, executive mentions)
+          6. Entities (systems, features, metrics mentioned)
+
+          Transcript:
+          {{transcript}}
+
+          Output JSON schema:
+          {{schema}}
+
+        output_schema:
+          type: object
+          properties:
+            requirements:
+              type: array
+              items:
+                type: object
+                required: [id, text, type, speaker, timestamp]
+
+      rule_engine:
+        urgency_keywords:
+          high: [critical, urgent, asap, immediately, blocker]
+          medium: [need, must, should, important]
+          low: [want, would like, nice to have]
+
+        timeline_patterns:
+          - pattern: within (\d+) (weeks|days|months)
+            urgency: high
+          - pattern: by (end of|Q\d)
+            urgency: high
+          - pattern: soon|quickly
+            urgency: medium
+
+        executive_roles:
+          - CTO
+          - CEO
+          - VP
+          - SVP
+          - Director
+          - Head of
+          - Chief
+
+      confidence_scoring:
+        formula: |
+          confidence = (
+            speaker_authority * 0.4 +
+            clarity_score * 0.3 +
+            corroboration * 0.2 +
+            source_quality * 0.1
+          )
+
+        speaker_authority:
+          executive: 0.9
+          director: 0.8
+          manager: 0.7
+          ic: 0.5
+          unknown: 0.3
+
+        clarity_score:
+          specific_and_detailed: 1.0
+          clear_but_generic: 0.8
+          vague: 0.5
+          ambiguous: 0.3
+
+      output_format:
+        file: output/requirements/requirements-{{call_id}}.yaml
+        schema: requirements.yaml (existing)
+
+      error_handling:
+        - Gong API errors → retry 3x with exponential backoff
+        - LLM errors → fallback to rule-based only
+        - Invalid transcript → log error, notify user
+        - Timeout (> 5 min) → abort, notify user
+
+    figma_parsing_service:
+      component_id: FigmaParsingService
+      type: microservice
+      language: Python
+
+      responsibilities:
+        - Authenticate with Figma API
+        - Fetch file metadata
+        - Traverse component tree
+        - Extract design tokens
+        - Parse annotations
+        - Generate user story hints
+
+      apis:
+        - endpoint: POST /api/parse/figma
+          input: {file_id: string, options: object}
+          output: {components: array, design_tokens: object}
+          auth: Personal access token
+
+      figma_api_integration:
+        base_url: https://api.figma.com/v1
+        auth: Bearer {{figma_token}}
+        endpoints:
+          - GET /files/{{file_id}}
+          - GET /files/{{file_id}}/nodes
+          - GET /images/{{file_id}}
+
+      parsing_logic:
+        component_types:
+          - COMPONENT: Design component (reusable)
+          - FRAME: Screen or section
+          - GROUP: Grouped elements
+          - INSTANCE: Component instance
+          - TEXT: Text node
+          - RECTANGLE: Shape
+
+        property_extraction:
+          dimensions:
+            - width: node.absoluteBoundingBox.width
+            - height: node.absoluteBoundingBox.height
+          colors:
+            - background: node.backgroundColor
+            - border: node.strokes[0].color
+          typography:
+            - font_family: node.style.fontFamily
+            - font_size: node.style.fontSize
+            - font_weight: node.style.fontWeight
+          spacing:
+            - padding: node.paddingLeft, paddingTop, etc.
+            - gap: node.itemSpacing
+          effects:
+            - border_radius: node.cornerRadius
+            - shadow: node.effects
+            - opacity: node.opacity
+
+      design_token_extraction:
+        colors:
+          - Extract unique colors from fills and strokes
+          - Group by usage (text, background, border)
+          - Name by semantic meaning if possible
+
+        typography:
+          - Extract font families, sizes, weights
+          - Build type scale
+          - Identify heading/body/caption styles
+
+        spacing:
+          - Extract padding and margin values
+          - Identify spacing scale (8px, 16px, 24px)
+          - Build spacing system
+
+      annotation_parsing:
+        sources:
+          - Component descriptions
+          - Frame names
+          - Layer names
+          - Comments on nodes
+
+        extraction:
+          - user_story_hints: Look for "As a user..." patterns
+          - implementation_notes: Look for "Implement using..." patterns
+          - accessibility_notes: Look for "ARIA", "WCAG", "a11y" mentions
+          - behavior_notes: Look for interaction descriptions
+
+      user_story_generation:
+        templates:
+          - "As a user, I want to interact with {{component_name}}"
+          - "{{component_name}} should provide visual feedback on interaction"
+          - "Input should validate data and show errors" (for inputs)
+          - "Button should have accessible label and keyboard support" (for buttons)
+
+      output_format:
+        file: output/figma/design-spec-{{file_id}}.yaml
+        schema: design-spec.yaml (existing)
+
+      error_handling:
+        - Figma API errors → retry 3x
+        - Rate limiting → exponential backoff
+        - Missing components → log warning, continue
+        - Malformed node → skip, log error
+
+    quality_scoring_engine:
+      component_id: QualityScoringEngine
+      type: service
+      language: Python
+
+      responsibilities:
+        - Calculate completeness score
+        - Calculate confidence score (from extractor)
+        - Calculate business impact score
+        - Calculate urgency score
+        - Compute composite priority score
+        - Map to P0/P1/P2
+
+      scoring_functions:
+        completeness_score:
+          formula: |
+            completeness = sum([
+              has_acceptance_criteria ? 25 : 0,
+              has_timeline ? 25 : 0,
+              has_success_metrics ? 25 : 0,
+              has_dependencies ? 25 : 0
+            ])
+          range: 0-100
+
+        business_impact_score:
+          inputs:
+            - revenue_at_risk (0-10)
+            - customer_tier (enterprise=10, mid-market=5, smb=2)
+            - strategic_value (0-10)
+          formula: |
+            impact = (
+              revenue_at_risk * 0.4 +
+              customer_tier * 0.3 +
+              strategic_value * 0.3
+            )
+          range: 0-10
+
+        urgency_score:
+          inputs:
+            - timeline_days (30=10, 90=5, 365=1)
+            - urgency_keywords_count
+            - pain_level (high=10, medium=5, low=1)
+          formula: |
+            urgency = (
+              timeline_score * 0.5 +
+              keyword_score * 0.3 +
+              pain_level * 0.2
+            )
+          range: 0-10
+
+        composite_priority_score:
+          inputs:
+            - business_impact (0-10)
+            - urgency (0-10)
+            - confidence (0-1.0)
+            - completeness (0-100)
+          weights:
+            business_impact: 0.4
+            urgency: 0.3
+            confidence: 0.2
+            completeness: 0.1
+          executive_multiplier: 2.0
+          formula: |
+            score = (
+              business_impact * 0.4 +
+              urgency * 0.3 +
+              confidence * 10 * 0.2 +
+              completeness / 10 * 0.1
+            )
+            if speaker.is_executive:
+              score *= 2.0
+            return min(score, 10.0)
+
+      priority_mapping:
+        P0: score >= 8.0
+        P1: score >= 5.0 and < 8.0
+        P2: score < 5.0
+
+      output_format:
+        field_additions_to_requirements:
+          - completeness_score: float
+          - business_impact_score: float
+          - urgency_score: float
+          - composite_priority_score: float
+          - suggested_priority: string (P0/P1/P2)
+
+    story_generation_engine:
+      component_id: StoryGenerationEngine
+      type: service
+      language: Python
+
+      responsibilities:
+        - Group requirements into Epics
+        - Generate Stories from requirements + designs
+        - Generate Tasks from implementation notes
+        - Auto-generate acceptance criteria
+        - Estimate effort
+        - Link Figma components
+        - Create functional test plan template
+
+      epic_generation:
+        grouping_criteria:
+          - Same business goal
+          - Related systems/integrations
+          - Same Figma design flow
+          - Similar priority level
+
+        epic_structure:
+          story_id: P0-EPIC-{{name}}
+          priority: Highest priority of children
+          title: "{{feature_name}} Epic"
+          description: Summary of grouped requirements
+          stories: [child_story_ids]
+
+      story_generation:
+        granularity: one_per_screen_or_api
+
+        story_structure:
+          story_id: P0-{{CATEGORY}}-{{NUMBER}}
+          priority: From composite score
+          title: "{{action_verb}} {{component_name}}"
+          description: |
+            {{requirement_text}}
+
+            Design: {{figma_url}}
+            Source: {{gong_call_url}}
+
+          tasks: Generated from implementation_notes
+          acceptance_criteria: Generated from annotations
+          functional_test_plan: Template
+          source_metadata:
+            gong_calls: [{call_id, url, timestamp}]
+            figma_files: [{file_id, url, component_ids}]
+          artifact_registry:
+            - path: output/figma/design-spec-{{file_id}}.yaml
+              type: design_specification
+
+      task_generation:
+        sources:
+          - Figma implementation_notes
+          - Component hierarchy (implement parent before children)
+          - Design tokens (set up color/typography system)
+
+        task_templates:
+          - "Set up {{design_system}} color tokens"
+          - "Implement {{component_name}} component"
+          - "Add {{variant_name}} variant to {{component}}"
+          - "Integrate with {{system_name}} API"
+          - "Add validation for {{field_name}}"
+
+      acceptance_criteria_generation:
+        sources:
+          - Figma annotations
+          - Requirement text
+          - Design specifications
+
+        ac_templates:
+          - "{{component_name}} matches Figma design specifications"
+          - "{{interaction}} provides visual feedback"
+          - "Validation shows error for invalid {{field}}"
+          - "Component passes accessibility audit (WCAG AA)"
+          - "Integration with {{system}} completes successfully"
+
+      effort_estimation:
+        complexity_factors:
+          - num_components (1=2pts, 3=5pts, 5+=8pts)
+          - num_variants (1=1pt, 3=2pts, 5+=3pts)
+          - has_api_integration (+5pts)
+          - has_complex_validation (+3pts)
+          - has_animations (+2pts)
+
+        formula: |
+          effort = (
+            num_components * 2 +
+            num_variants * 1 +
+            integration_penalty +
+            validation_penalty +
+            animation_penalty
+          )
+          effort = max(3, min(effort, 21))  # 3-21 point range
+
+      output_format:
+        file: output/stories/generated-stories-{{timestamp}}.yaml
+        schema: matches IMPLEMENTATION_BACKLOG.yaml story schema
+
+    human_review_queue:
+      component_id: HumanReviewQueue
+      type: web_service
+      language: Python (FastAPI) + React
+
+      responsibilities:
+        - Display extracted requirements for review
+        - Show confidence scores and priority signals
+        - Allow editing of requirement text
+        - Track approval/rejection decisions
+        - Queue pending reviews
+        - Batch review support
+
+      ui_components:
+        review_list:
+          display:
+            - Requirement text
+            - Confidence score (color-coded)
+            - Priority signals (badges)
+            - Speaker info
+            - Gong call link
+          actions:
+            - Approve
+            - Edit
+            - Reject
+            - Flag for discussion
+
+        requirement_editor:
+          fields:
+            - requirement_text (editable textarea)
+            - requirement_type (dropdown)
+            - priority (P0/P1/P2 selector)
+            - notes (reviewer comments)
+          actions:
+            - Save draft
+            - Approve
+            - Cancel
+
+        batch_review:
+          features:
+            - Select multiple requirements
+            - Bulk approve
+            - Bulk reject
+            - Bulk change priority
+
+      api_endpoints:
+        - GET /api/review/queue
+          response: List of pending requirements
+
+        - GET /api/review/:id
+          response: Single requirement detail
+
+        - PUT /api/review/:id
+          body: Updated requirement
+          response: Saved requirement
+
+        - POST /api/review/:id/approve
+          response: Triggers story generation
+
+        - POST /api/review/:id/reject
+          body: {reason: string}
+          response: Archived requirement
+
+      state_management:
+        states:
+          - pending_review: Initial state
+          - in_review: Being edited
+          - approved: Ready for story generation
+          - rejected: Archived
+
+        transitions:
+          - pending → in_review (user clicks edit)
+          - in_review → pending (user cancels)
+          - in_review → approved (user approves)
+          - pending → rejected (user rejects)
+
+      confidence_highlighting:
+        high_confidence: >0.9 (green badge)
+        medium_confidence: 0.7-0.9 (yellow badge)
+        low_confidence: <0.7 (red badge, mandatory review)
+
+    pipeline_orchestrator:
+      component_id: PipelineOrchestrator
+      type: service
+      language: Python (Celery)
+
+      responsibilities:
+        - Coordinate multi-step pipeline
+        - Manage async task queue
+        - Handle errors and retries
+        - Persist pipeline state
+        - Send notifications
+
+      workflow_definition:
+        tasks:
+          - task: extract_gong
+            input: call_id
+            service: GongExtractionService
+            output: requirements.yaml
+            retry: 3
+            timeout: 300s
+
+          - task: score_requirements
+            input: requirements.yaml
+            service: QualityScoringEngine
+            output: scored_requirements.yaml
+            retry: 3
+            timeout: 10s
+
+          - task: queue_review
+            input: scored_requirements.yaml
+            service: HumanReviewQueue
+            output: review_id
+            blocking: true  # Wait for human
+
+          - task: generate_stories
+            input: approved_requirements.yaml + figma_spec.yaml
+            service: StoryGenerationEngine
+            output: generated_stories.yaml
+            retry: 3
+            timeout: 60s
+
+          - task: validate_stories
+            input: generated_stories.yaml
+            service: SchemaValidator
+            output: validated_stories.yaml
+            retry: 1
+
+          - task: commit_stories
+            input: validated_stories.yaml
+            service: BacklogWriter
+            output: commit_sha
+            retry: 1
+
+          - task: notify
+            input: commit_result
+            service: NotificationService
+            output: notification_sent
+
+      state_persistence:
+        storage: PostgreSQL
+        schema:
+          pipeline_runs:
+            - id (uuid)
+            - call_id
+            - status (running, waiting_review, completed, failed)
+            - current_step
+            - created_at
+            - updated_at
+            - error_message
+
+          pipeline_steps:
+            - id (uuid)
+            - pipeline_run_id
+            - step_name
+            - status (pending, running, completed, failed)
+            - input_data (jsonb)
+            - output_data (jsonb)
+            - started_at
+            - completed_at
+            - error
+
+      error_handling:
+        retry_strategy:
+          - Exponential backoff: 1s, 2s, 4s, 8s
+          - Max retries: 3
+          - Retry on: API errors, timeouts
+          - No retry on: Validation errors, auth errors
+
+        failure_actions:
+          - Log error to database
+          - Send alert notification
+          - Mark pipeline as failed
+          - Preserve state for debugging
+          - Allow manual resume
+
+  api_specifications:
+    gong_api:
+      base_url: https://api.gong.io/v2
+      authentication: OAuth 2.0
+      endpoints:
+        list_calls:
+          method: GET
+          path: /calls
+          params:
+            fromDateTime: ISO 8601
+            toDateTime: ISO 8601
+            participantEmailAddress: string
+          response:
+            calls: array of call objects
+
+        get_transcript:
+          method: GET
+          path: /calls/{call_id}/transcript
+          response:
+            transcript: string
+            speakers: array
+
+    figma_api:
+      base_url: https://api.figma.com/v1
+      authentication: Bearer token
+      endpoints:
+        get_file:
+          method: GET
+          path: /files/{file_id}
+          response:
+            document: node tree
+
+        get_file_nodes:
+          method: GET
+          path: /files/{file_id}/nodes
+          params:
+            ids: comma-separated node IDs
+          response:
+            nodes: object
+
+        get_images:
+          method: GET
+          path: /images/{file_id}
+          params:
+            ids: node IDs
+            format: png|jpg|svg
+          response:
+            images: object (node_id → url)
+
+  database_schema:
+    requirements:
+      table: requirements
+      columns:
+        - id (uuid, primary key)
+        - call_id (string)
+        - requirement_text (text)
+        - requirement_type (enum)
+        - speaker_name (string)
+        - speaker_role (string)
+        - timestamp (string)
+        - confidence_score (float)
+        - completeness_score (float)
+        - business_impact_score (float)
+        - urgency_score (float)
+        - composite_priority_score (float)
+        - suggested_priority (enum: P0, P1, P2)
+        - status (enum: pending, approved, rejected)
+        - reviewed_by (string, nullable)
+        - reviewed_at (timestamp, nullable)
+        - created_at (timestamp)
+        - updated_at (timestamp)
+      indexes:
+        - call_id
+        - status
+        - suggested_priority
+
+    design_components:
+      table: design_components
+      columns:
+        - id (uuid, primary key)
+        - figma_file_id (string)
+        - figma_node_id (string)
+        - component_type (string)
+        - component_name (string)
+        - properties (jsonb)
+        - annotations (jsonb)
+        - user_story_hints (text array)
+        - implementation_notes (text array)
+        - created_at (timestamp)
+      indexes:
+        - figma_file_id
+        - component_type
+
+    generated_stories:
+      table: generated_stories
+      columns:
+        - id (uuid, primary key)
+        - story_id (string, unique)
+        - priority (enum: P0, P1, P2)
+        - title (string)
+        - description (text)
+        - tasks (jsonb)
+        - acceptance_criteria (jsonb)
+        - source_requirements (uuid array, references requirements)
+        - source_figma_files (string array)
+        - status (enum: draft, approved, committed)
+        - generated_at (timestamp)
+        - committed_at (timestamp, nullable)
+      indexes:
+        - story_id
+        - status
+        - priority
+
+  deployment:
+    architecture: containerized_microservices
+
+    containers:
+      - name: gong-extraction-service
+        image: python:3.11-slim
+        env:
+          - GONG_API_KEY
+          - ANTHROPIC_API_KEY
+        resources:
+          cpu: 1 core
+          memory: 2GB
+
+      - name: figma-parsing-service
+        image: python:3.11-slim
+        env:
+          - FIGMA_TOKEN
+        resources:
+          cpu: 0.5 core
+          memory: 1GB
+
+      - name: pipeline-orchestrator
+        image: python:3.11-slim
+        env:
+          - DATABASE_URL
+          - REDIS_URL
+        resources:
+          cpu: 1 core
+          memory: 2GB
+
+      - name: review-queue-api
+        image: python:3.11-slim
+        ports:
+          - 8001:8000
+        resources:
+          cpu: 0.5 core
+          memory: 1GB
+
+      - name: review-queue-ui
+        image: node:18-alpine
+        ports:
+          - 3002:3000
+        resources:
+          cpu: 0.5 core
+          memory: 512MB
+
+    infrastructure:
+      - PostgreSQL 15
+      - Redis 7
+      - S3 (or local file storage)
+      - Celery worker pool
+
+  monitoring:
+    metrics:
+      - extraction_time_seconds (histogram)
+      - scoring_time_seconds (histogram)
+      - generation_time_seconds (histogram)
+      - pipeline_success_rate (counter)
+      - pipeline_failure_rate (counter)
+      - review_queue_size (gauge)
+      - confidence_score_distribution (histogram)
+
+    logging:
+      - Pipeline execution logs
+      - API request/response logs
+      - Error logs with stack traces
+      - Audit trail for approvals
+
+    alerts:
+      - Pipeline failure (> 10% failure rate)
+      - Extraction timeout (> 5 minutes)
+      - Review queue overflow (> 50 pending)
+      - API rate limit approaching
+
+  testing_strategy:
+    unit_tests:
+      - Test extraction prompt templates
+      - Test scoring formulas
+      - Test story generation logic
+      - Test validation schemas
+
+    integration_tests:
+      - Test Gong API integration (mocked)
+      - Test Figma API integration (mocked)
+      - Test LLM integration (mocked)
+      - Test database operations
+
+    end_to_end_tests:
+      - Test full pipeline (Gong → Stories)
+      - Test human review workflow
+      - Test error handling and retries
+      - Test notification delivery
+
+    performance_tests:
+      - Load test: 100 concurrent extractions
+      - Stress test: 1000 requirements in queue
+      - Latency test: < 2 min extraction time
+
+  security:
+    authentication:
+      - Gong: OAuth 2.0
+      - Figma: Personal access token (encrypted)
+      - Review UI: JWT tokens
+
+    authorization:
+      - Role-based access (reviewer, admin)
+      - API key for service-to-service
+
+    data_protection:
+      - Encrypt API tokens at rest
+      - HTTPS for all external API calls
+      - Sanitize PII from logs
+      - Audit log for all approvals
+
+  implementation_notes:
+    tech_stack:
+      backend: Python 3.11 (FastAPI, Celery)
+      frontend: React 18 (review UI)
+      database: PostgreSQL 15
+      cache: Redis 7
+      queue: Celery with Redis broker
+      storage: S3 or local filesystem
+
+    libraries:
+      - anthropic: Claude API client
+      - pydantic: Data validation
+      - sqlalchemy: ORM
+      - celery: Task queue
+      - fastapi: REST API
+      - pytest: Testing

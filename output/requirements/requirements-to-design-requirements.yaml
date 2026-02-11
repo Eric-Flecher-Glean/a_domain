@@ -1,0 +1,521 @@
+requirements:
+  metadata:
+    feature_id: P0-A2A-F4000
+    title: Requirements-to-Design Pipeline
+    version: 1.0.0
+    status: requirements_complete
+    created: '2026-02-11T00:00:00Z'
+    last_updated: '2026-02-11T00:00:00Z'
+    stakeholders:
+      - role: Product Manager
+        needs: Automated story generation from customer conversations
+      - role: Developer
+        needs: Clear requirements and design specs for implementation
+      - role: Sales/CS
+        needs: Customer feedback translated to features quickly
+      - role: Design
+        needs: Figma designs automatically linked to implementation
+
+  problem_statement:
+    current_situation: |
+      Customer requirements are captured in Gong sales calls and design mockups
+      in Figma, but the translation to SDLC implementation stories is manual,
+      time-consuming, and error-prone. Product managers spend hours extracting
+      requirements from call transcripts, designers manually document specs, and
+      developers wait for properly formatted stories.
+
+    pain_points:
+      - Manual extraction of requirements from Gong transcripts (4-6 hours/call)
+      - Inconsistent requirement quality and prioritization
+      - Figma designs not linked to implementation stories
+      - Lost context between customer conversation → design → implementation
+      - No systematic way to prioritize based on urgency/impact
+      - Slow time-to-implementation (weeks between call → story → dev)
+      - Requirements drift as details lost in translation
+
+    impact:
+      - Sales deals delayed waiting for product confirmation
+      - Engineering builds wrong features due to incomplete requirements
+      - Design rework due to misunderstood requirements
+      - Customer expectations not met (gap between promise → delivery)
+      - Product team bottleneck (manual extraction doesn't scale)
+
+  goals:
+    primary:
+      - Automate extraction of requirements from Gong call transcripts
+      - Parse Figma design files into structured specifications
+      - Generate SDLC stories automatically from requirements + designs
+      - Implement quality scoring and priority assignment
+      - Create end-to-end pipeline with human review gates
+
+    secondary:
+      - Reduce time from customer conversation to backlog story (hours not days)
+      - Improve requirement quality and completeness
+      - Maintain traceability (Gong → Figma → Story → Implementation)
+      - Enable data-driven prioritization
+      - Create feedback loop to improve extraction over time
+
+  user_stories:
+    - id: US-1
+      role: Product Manager
+      goal: Extract requirements from Gong call automatically
+      acceptance: Upload Gong transcript, receive structured requirements in < 2 min
+      priority: P0
+
+    - id: US-2
+      role: Product Manager
+      goal: Review extracted requirements before story generation
+      acceptance: Review UI shows confidence scores, can edit/approve/reject
+      priority: P0
+
+    - id: US-3
+      role: Developer
+      goal: Get implementation stories with clear Figma design references
+      acceptance: Story includes Figma component specs and implementation notes
+      priority: P0
+
+    - id: US-4
+      role: Product Manager
+      goal: Prioritize requirements based on business impact
+      acceptance: System calculates priority score and suggests P0/P1/P2
+      priority: P1
+
+    - id: US-5
+      role: Designer
+      goal: Link Figma designs to generated stories automatically
+      acceptance: Figma URL in story, design-spec.yaml attached as artifact
+      priority: P1
+
+    - id: US-6
+      role: Sales/CS
+      goal: See customer requests translated to stories quickly
+      acceptance: Submit Gong call, see backlog stories within 24 hours
+      priority: P2
+
+  functional_requirements:
+    FR-1:
+      title: Gong Transcript Extraction (Hybrid LLM + Rules)
+      description: Extract structured requirements from Gong call transcripts
+      details:
+        - Use Claude Sonnet 4.5 for initial extraction
+        - Extract: requirement text, type, speaker, timestamp
+        - Classify: integration, feature_request, pain_point, constraint
+        - Identify priority signals (urgency words, timelines, executive mentions)
+        - Extract entities (systems, features, metrics mentioned)
+        - Calculate confidence score based on clarity and speaker authority
+        - Apply rule-based validation for urgency keywords and timelines
+      acceptance_criteria:
+        - AC1: Extract requirements from 30-min Gong transcript in < 2 minutes
+        - AC2: Confidence score accuracy >= 80% (validated against manual review)
+        - AC3: Priority signal detection recall >= 90% (catch urgent items)
+        - AC4: Entity extraction precision >= 85% (correct systems identified)
+        - AC5: Structured output matches requirements.yaml schema
+      priority: P0
+
+    FR-2:
+      title: Figma Design Spec Parsing
+      description: Parse Figma files into structured design specifications
+      details:
+        - Use Figma REST API to fetch file metadata
+        - Extract components: buttons, inputs, cards, screens
+        - Parse properties: dimensions, colors, typography, spacing
+        - Extract design tokens: color palette, type scale, spacing system
+        - Capture annotations and implementation notes
+        - Build component hierarchy (parent-child relationships)
+        - Link to design system documentation
+        - Generate user story hints from component purpose
+      acceptance_criteria:
+        - AC1: Parse Figma file with 50 components in < 30 seconds
+        - AC2: Extract 100% of component properties (dimensions, colors, etc.)
+        - AC3: Correctly identify parent-child relationships
+        - AC4: Generate at least 1 user story hint per component
+        - AC5: Output matches design-spec.yaml schema
+      priority: P0
+
+    FR-3:
+      title: Requirement Quality Scoring
+      description: Calculate quality and priority scores for requirements
+      details:
+        - Completeness score (0-100): Has AC, timeline, success metrics?
+        - Confidence score (0-1.0): Speaker authority, clarity, corroboration
+        - Business impact score (0-10): Revenue risk, customer tier, strategic value
+        - Urgency score (0-10): Timeline pressure, urgency keywords
+        - Composite priority score with weighted formula
+        - Executive weight multiplier (2x for C-level)
+        - Map to P0/P1/P2 based on thresholds (8.0, 5.0)
+      acceptance_criteria:
+        - AC1: Score calculation completes in < 1 second per requirement
+        - AC2: Priority mapping matches PM manual review >= 85% of time
+        - AC3: Executive requirements always flagged P0/P1
+        - AC4: All scores stored in requirements.yaml
+        - AC5: Scoring formula configurable via YAML config
+      priority: P0
+
+    FR-4:
+      title: Epic and Story Generation
+      description: Generate SDLC stories from requirements and designs
+      details:
+        - Group related requirements into feature-level Epic
+        - Create one story per screen or API endpoint
+        - Generate tasks from Figma implementation notes
+        - Auto-generate acceptance criteria from design annotations
+        - Estimate effort based on component complexity
+        - Link Figma components to story tasks
+        - Include functional test plan template
+        - Validate against IMPLEMENTATION_BACKLOG schema
+      acceptance_criteria:
+        - AC1: Generate Epic + 3-5 stories from requirement set in < 30 seconds
+        - AC2: Generated stories pass backlog schema validation
+        - AC3: Each story includes >= 3 acceptance criteria
+        - AC4: Task breakdown maps to Figma components 1:1
+        - AC5: Effort estimation within 20% of manual estimate
+      priority: P0
+
+    FR-5:
+      title: Human Review Queue
+      description: Review extracted requirements before story generation
+      details:
+        - Present extracted requirements in review UI
+        - Show confidence scores and priority signals
+        - Allow edit of requirement text, type, priority
+        - Flag low-confidence items (< 0.7) for mandatory review
+        - Track approval/rejection decisions
+        - Store feedback for model improvement
+        - Batch review multiple requirements
+        - Save draft edits before final approval
+      acceptance_criteria:
+        - AC1: Review UI loads in < 2 seconds
+        - AC2: Can edit and save requirement without page reload
+        - AC3: Low-confidence items highlighted in UI
+        - AC4: Approval decision persisted to database
+        - AC5: Approved requirements trigger story generation
+      priority: P0
+
+    FR-6:
+      title: Pipeline Orchestration
+      description: End-to-end pipeline from Gong → Figma → Stories
+      details:
+        - Step 1: Extract requirements from Gong transcript
+        - Step 2: Calculate quality scores
+        - Step 3: Queue for human review
+        - Step 4: On approval, fetch Figma design specs
+        - Step 5: Generate Epic + Stories + Tasks
+        - Step 6: Validate generated stories
+        - Step 7: Commit to IMPLEMENTATION_BACKLOG.yaml
+        - Step 8: Send notification (Slack/email)
+        - Error handling and retry logic at each step
+        - Pipeline state persisted for resume
+      acceptance_criteria:
+        - AC1: Complete pipeline (Gong → Backlog) in < 5 minutes
+        - AC2: Pipeline state saved at each step for debugging
+        - AC3: Failed steps retry automatically (3 attempts)
+        - AC4: Human review blocks automatic progression
+        - AC5: Success notification includes story IDs and Figma links
+      priority: P0
+
+    FR-7:
+      title: Traceability and Audit Trail
+      description: Maintain full traceability from source to story
+      details:
+        - Link story to source Gong call (call_id, timestamp)
+        - Link story to Figma file (file_id, component_ids)
+        - Store extraction metadata (model version, confidence)
+        - Track human review decisions (approved, edited, rejected)
+        - Version extracted requirements (before/after review)
+        - Audit log for all pipeline actions
+        - Enable "View Source" from story page
+      acceptance_criteria:
+        - AC1: Every generated story has source_metadata field
+        - AC2: Can navigate from story → Gong call → specific timestamp
+        - AC3: Can navigate from story → Figma component
+        - AC4: Audit log captures all pipeline steps with timestamps
+        - AC5: Review decisions stored with reviewer ID and reason
+      priority: P1
+
+    FR-8:
+      title: Figma-to-Story Component Linking
+      description: Automatically link Figma components to story tasks
+      details:
+        - Match Figma component names to story task descriptions
+        - Include Figma URL with node_id for direct component access
+        - Attach design-spec.yaml as story artifact
+        - Generate implementation checklist from design annotations
+        - Flag design-dev mismatches (missing components, spec drift)
+        - Support multiple Figma files per story
+      acceptance_criteria:
+        - AC1: Generated story tasks include Figma component references
+        - AC2: Figma URLs open directly to specific component in file
+        - AC3: design-spec.yaml attached to story artifact_registry
+        - AC4: Implementation checklist >= 80% complete from annotations
+        - AC5: Design drift detection runs on story creation
+      priority: P1
+
+    FR-9:
+      title: Requirement Deduplication
+      description: Detect and merge duplicate requirements
+      details:
+        - Semantic similarity detection using embeddings
+        - Flag requirements with >80% similarity
+        - Present duplicates for human merge decision
+        - Track requirement versions (original, merged)
+        - Link duplicate Gong calls to same Epic
+        - Prevent duplicate story generation
+      acceptance_criteria:
+        - AC1: Detect duplicates with >= 90% precision
+        - AC2: Duplicate detection completes in < 5 seconds
+        - AC3: UI shows similarity score and original sources
+        - AC4: Merged requirements preserve all source links
+        - AC5: No duplicate stories created for same requirement
+      priority: P2
+
+    FR-10:
+      title: Feedback Loop and Model Improvement
+      description: Track outcomes to improve extraction over time
+      details:
+        - Track approval rate per Gong call
+        - Track edit distance (how much humans change requirements)
+        - Track priority accuracy (P0/P1/P2 correct?)
+        - Store feedback annotations from reviewers
+        - Generate training data for model fine-tuning
+        - A/B test prompt variations
+        - Report extraction quality metrics
+      acceptance_criteria:
+        - AC1: Approval rate tracked per extraction run
+        - AC2: Edit distance calculated and stored
+        - AC3: Priority accuracy >= 85% after 100 reviews
+        - AC4: Quality metrics dashboard available
+        - AC5: Training data exported in JSONL format
+      priority: P2
+
+  non_functional_requirements:
+    NFR-1:
+      title: Performance
+      description: Pipeline must be fast enough for real-time use
+      metrics:
+        - Gong extraction: < 2 minutes for 30-min call
+        - Figma parsing: < 30 seconds for 50 components
+        - Story generation: < 30 seconds for 5 stories
+        - End-to-end pipeline: < 5 minutes (excluding human review)
+
+    NFR-2:
+      title: Accuracy
+      description: Extraction and classification must be highly accurate
+      metrics:
+        - Requirement extraction recall: >= 95%
+        - Type classification accuracy: >= 85%
+        - Priority scoring accuracy: >= 85%
+        - Entity extraction precision: >= 85%
+        - Story schema validation: 100% (all pass)
+
+    NFR-3:
+      title: Reliability
+      description: Pipeline must handle errors gracefully
+      requirements:
+        - Retry failed API calls (3 attempts with exponential backoff)
+        - Persist pipeline state for debugging
+        - Rollback on validation failure
+        - Notification on error
+        - Graceful degradation (continue with partial results)
+
+    NFR-4:
+      title: Scalability
+      description: Support increasing volume of calls and designs
+      requirements:
+        - Handle 100 Gong calls per day
+        - Process Figma files with 500+ components
+        - Support batch processing (10+ calls at once)
+        - Queue-based architecture for async processing
+        - Horizontal scaling for workers
+
+    NFR-5:
+      title: Maintainability
+      description: Easy to update prompts, rules, and configurations
+      requirements:
+        - Prompts stored in separate files (not hardcoded)
+        - Scoring formula configurable via YAML
+        - Rule sets externalized (urgency keywords, etc.)
+        - Model versioning and A/B testing support
+        - Comprehensive logging for debugging
+
+  technical_requirements:
+    TR-1:
+      title: Gong API Integration
+      description: Connect to Gong API for transcript retrieval
+      details:
+        - OAuth 2.0 authentication
+        - Call listing API (filter by date, participants)
+        - Transcript retrieval API
+        - Speaker identification
+        - Rate limiting and pagination handling
+
+    TR-2:
+      title: Figma API Integration
+      description: Connect to Figma REST API
+      details:
+        - Personal access token authentication
+        - File metadata retrieval
+        - Node traversal (components, frames, groups)
+        - Image export (thumbnails for UI)
+        - API rate limiting (1000 calls/hour)
+
+    TR-3:
+      title: LLM Integration (Claude API)
+      description: Use Claude Sonnet 4.5 for extraction
+      details:
+        - Anthropic API integration
+        - Prompt engineering for requirement extraction
+        - Structured output (JSON mode)
+        - Temperature: 0.3 (deterministic)
+        - Max tokens: 4096
+        - Streaming for long responses
+
+    TR-4:
+      title: Storage and State Management
+      description: Persist pipeline state and artifacts
+      components:
+        - PostgreSQL: requirements, reviews, audit log
+        - File storage: Gong transcripts, Figma specs (YAML)
+        - Redis: pipeline state, queue management
+        - S3/local: artifact storage (design-spec.yaml files)
+
+    TR-5:
+      title: Notification System
+      description: Alert users of pipeline events
+      channels:
+        - Slack: webhook for story generation events
+        - Email: digest of pending reviews
+        - In-app: notification badge on review queue
+        - Webhook: custom integrations
+
+  integration_requirements:
+    INT-1:
+      title: IMPLEMENTATION_BACKLOG.yaml Integration
+      description: Append generated stories to backlog
+      requirements:
+        - Validate story schema before commit
+        - Atomic append (all stories or none)
+        - Increment backlog version
+        - Add changelog entry
+        - Git commit with generated stories
+
+    INT-2:
+      title: Glean MCP Integration (Optional)
+      description: Use Glean for meeting context
+      requirements:
+        - Search Gong calls via Glean
+        - Extract meeting transcripts
+        - Link to Glean knowledge graph
+        - Enrich requirements with company context
+
+    INT-3:
+      title: A2A Platform Integration
+      description: Use existing A2A agents where applicable
+      agents:
+        - ProtocolBrokerAgent: message routing
+        - DatasetDiscoveryAgent: if data requirements detected
+        - JourneyCoordinatorAgent: link to customer journey stage
+
+  data_requirements:
+    DR-1:
+      title: Requirements Schema
+      description: Structured format for extracted requirements
+      schema: output/requirements/requirements.yaml
+      fields:
+        - id, source_type, requirement_text, requirement_type
+        - source_metadata (call_id, timestamp, speaker)
+        - priority_signals, entities, sentiment, context
+        - extracted_at, confidence
+
+    DR-2:
+      title: Design Spec Schema
+      description: Structured format for Figma components
+      schema: output/figma/design-spec.yaml
+      fields:
+        - file_id, file_name, components
+        - component_type, name, properties, annotations
+        - user_story_hints, implementation_notes
+        - parent_id, children, extracted_at
+
+    DR-3:
+      title: Story Metadata Schema
+      description: Source tracking for generated stories
+      fields:
+        - source_gong_calls: [call_id, call_url, timestamp]
+        - source_figma_files: [file_id, file_url, component_ids]
+        - extraction_metadata: [model, version, confidence]
+        - review_metadata: [reviewer, approved_at, edits_made]
+
+  constraints:
+    - Must use existing requirements.yaml and design-spec.yaml schemas
+    - Cannot modify IMPLEMENTATION_BACKLOG.yaml schema (only append stories)
+    - Gong API rate limits: 100 calls/day
+    - Figma API rate limits: 1000 calls/hour
+    - LLM costs: optimize for token usage
+    - Human review is required (no fully automated story creation in Phase 1)
+
+  assumptions:
+    - Gong calls are recorded and transcribed by Gong
+    - Figma files are accessible via API (proper permissions)
+    - Sales/CS team provides Gong call IDs for extraction
+    - Design team tags Figma files for extraction
+    - Product team reviews all generated stories before approval
+
+  dependencies:
+    - Gong API access and credentials
+    - Figma API access and personal access token
+    - Anthropic API key (Claude Sonnet 4.5)
+    - Existing IMPLEMENTATION_BACKLOG.yaml structure
+    - Review UI (can be CLI for MVP, web UI for Phase 2)
+
+  success_metrics:
+    - 80% reduction in time from call → backlog story (6 hours → 1 hour)
+    - 90%+ requirement extraction accuracy (vs manual review)
+    - 85%+ priority scoring accuracy (P0/P1/P2 correct)
+    - 95%+ story schema validation pass rate
+    - 100% traceability (every story links to Gong/Figma sources)
+    - < 2 minutes extraction time per 30-min call
+    - Review approval rate >= 90% (high-quality extractions)
+
+  risks:
+    - risk: LLM hallucinations creating invalid requirements
+      mitigation: Confidence scoring, human review, rule-based validation
+      impact: High
+      probability: Medium
+
+    - risk: Gong API changes breaking extraction
+      mitigation: Version API calls, abstraction layer, monitoring
+      impact: High
+      probability: Low
+
+    - risk: Figma design drift (designs change after story created)
+      mitigation: Version design specs, drift detection, re-extraction
+      impact: Medium
+      probability: High
+
+    - risk: Poor priority scoring leading to wrong P0/P1/P2
+      mitigation: Calibration with historical data, PM override
+      impact: High
+      probability: Medium
+
+    - risk: Human review bottleneck slowing pipeline
+      mitigation: Batch review UI, auto-approve high-confidence (Phase 2)
+      impact: Medium
+      probability: Medium
+
+  out_of_scope:
+    - Automated story implementation (still manual)
+    - Real-time Gong call extraction during call
+    - Figma design generation from requirements
+    - Automated testing of generated stories
+    - Multi-language support (English only for Phase 1)
+    - Integration with Jira, Linear, or other PM tools
+    - Automated design-dev handoff workflow
+    - Requirements validation against existing backlog
+
+  future_enhancements:
+    - Phase 2: Auto-approve high-confidence requirements (>0.9)
+    - Phase 2: Real-time extraction during Gong call
+    - Phase 3: Bi-directional sync (update Figma from code)
+    - Phase 3: ML model fine-tuning on feedback data
+    - Phase 4: Cross-call requirement aggregation
+    - Phase 4: Automated story refinement based on implementation feedback

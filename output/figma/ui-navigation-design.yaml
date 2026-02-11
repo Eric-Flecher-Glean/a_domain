@@ -1,0 +1,796 @@
+design_specification:
+  metadata:
+    feature_id: P0-UI-F9000
+    title: Web Navigation & Information Hierarchy - UX Design
+    version: 1.0.0
+    status: design_complete
+    created: '2026-02-11T00:00:00Z'
+    design_system: a_domain Design System v1.0
+    figma_url: null  # Placeholder for future Figma integration
+
+  design_principles:
+    - principle: Role-First Navigation
+      description: Navigation adapts to user role, showing only relevant features
+      rationale: Reduces cognitive load and improves task efficiency
+
+    - principle: Progressive Disclosure
+      description: Show features when ready, hide what's not implemented
+      rationale: Manages expectations and prevents broken experiences
+
+    - principle: Consistent Navigation Model
+      description: Same header, breadcrumbs, and patterns across all pages
+      rationale: Builds muscle memory and reduces learning curve
+
+    - principle: Mobile-Aware Design
+      description: Prioritize mobile for operational tasks, desktop for complex analysis
+      rationale: Matches actual usage patterns (monitoring on-the-go, analysis at desk)
+
+    - principle: Context-Preserving Navigation
+      description: Breadcrumbs and state management help users understand location
+      rationale: Deep navigation in stories/reports requires wayfinding
+
+  color_palette:
+    primary:
+      purple_gradient:
+        start: '#667eea'
+        end: '#764ba2'
+        usage: Headers, primary CTAs, brand elements
+
+    semantic:
+      success: '#10b981'  # Green - live status, success states
+      warning: '#f59e0b'  # Amber - beta badges, warnings
+      error: '#ef4444'    # Red - down status, errors
+      info: '#3b82f6'     # Blue - informational elements
+
+    neutral:
+      gray_50: '#f9fafb'   # Page background
+      gray_100: '#f3f4f6'  # Card backgrounds
+      gray_300: '#d1d5db'  # Borders
+      gray_600: '#4b5563'  # Secondary text
+      gray_900: '#111827'  # Primary text
+      white: '#ffffff'     # Card surfaces
+
+  typography:
+    font_family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+
+    scale:
+      h1:
+        size: 32px
+        weight: 700
+        line_height: 1.2
+        usage: Page titles
+
+      h2:
+        size: 24px
+        weight: 600
+        line_height: 1.3
+        usage: Section headers
+
+      h3:
+        size: 18px
+        weight: 600
+        line_height: 1.4
+        usage: Card titles
+
+      body:
+        size: 16px
+        weight: 400
+        line_height: 1.6
+        usage: Body text
+
+      small:
+        size: 14px
+        weight: 400
+        line_height: 1.5
+        usage: Metadata, labels
+
+  spacing_system:
+    base_unit: 8px
+    scale:
+      xs: 4px    # Tight spacing
+      sm: 8px    # Component padding
+      md: 16px   # Card padding
+      lg: 24px   # Section spacing
+      xl: 32px   # Page margins
+      xxl: 48px  # Large gaps
+
+  component_specifications:
+    nav_header:
+      component_id: NavHeader
+      description: Primary navigation header with role selector and quick actions
+
+      layout:
+        height: 64px
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+        position: sticky top
+        z_index: 1000
+
+      sections:
+        - section: logo_area
+          width: 200px
+          elements:
+            - type: logo
+              content: "🚀 a_domain"
+              font_size: 20px
+              color: white
+              font_weight: 700
+
+        - section: role_tabs
+          flex: 1
+          elements:
+            - type: tab_group
+              tabs: [Dev, Planning, Ops, Metrics, Docs]
+              active_indicator: white underline (3px)
+              inactive_opacity: 0.7
+              spacing: 24px
+
+        - section: actions_area
+          width: 200px
+          justify: flex-end
+          elements:
+            - type: quick_actions_button
+              icon: ⚡
+              tooltip: Quick Actions
+            - type: help_button
+              icon: ❓
+              tooltip: Help & Docs
+            - type: role_selector
+              icon: 👤
+              options: [Developer, PM, Stakeholder, Ops]
+              width: 140px
+
+      responsive:
+        mobile:
+          hamburger_menu: true
+          collapse_tabs: true
+          hide_role_selector: move to menu
+        tablet:
+          show_all: true
+          compact_spacing: true
+
+      states:
+        default: tabs visible, actions visible
+        mobile: hamburger icon only
+        scrolled: add shadow (0 2px 8px rgba(0,0,0,0.1))
+
+      wireframe: |
+        ┌─────────────────────────────────────────────────────────────┐
+        │ [🚀 a_domain]  Dev | Planning | Ops | Metrics | Docs  [⚡][?][👤▼] │
+        └─────────────────────────────────────────────────────────────┘
+
+    status_bar:
+      component_id: StatusBar
+      description: System health indicators for all services
+
+      layout:
+        height: 36px
+        background: white
+        border_bottom: 1px solid #e5e7eb
+        padding: 8px 32px
+
+      elements:
+        - type: status_group
+          items:
+            - service: Testing
+              port: 3001
+              indicator: 🟢/🔴/🟡
+              label: Testing
+            - service: Reports
+              port: 3000
+              indicator: 🟢/🔴/🟡
+              label: Reports
+            - service: API
+              port: 8000
+              indicator: 🟢/🔴/🟡
+              label: API
+
+        - type: summary_text
+          position: right
+          content: "All Systems Operational" | "X Services Down"
+          color: green | red
+
+      behavior:
+        update_interval: 10s
+        click_action: navigate to service page
+        hover: show last check time
+
+      visibility:
+        roles: [Developer, Ops]
+        hide_for: [PM, Stakeholder]
+
+      wireframe: |
+        ┌─────────────────────────────────────────────────────────────┐
+        │ 🟢 Testing  🟢 Reports  🟢 API     All Systems Operational │
+        └─────────────────────────────────────────────────────────────┘
+
+    breadcrumbs:
+      component_id: Breadcrumbs
+      description: Navigation path showing current location
+
+      layout:
+        height: auto
+        background: transparent
+        padding: 12px 32px
+        font_size: 14px
+
+      format:
+        separator: " > "
+        max_levels: 5
+        truncation: middle ellipsis if > 5
+
+      styling:
+        link_color: '#667eea'
+        current_color: '#6b7280'
+        hover_underline: true
+        current_no_underline: true
+
+      examples:
+        - Home > Planning > Roadmap
+        - Home > Planning > Stories > P0-UI-F9000
+        - Home > Ops > Testing
+        - Home > Metrics > Coverage
+
+      responsive:
+        mobile: Collapse to "< Back" button
+        tablet: Show full breadcrumbs
+
+      wireframe: |
+        Home > Planning > Stories > P0-UI-F9000
+
+    quick_actions_menu:
+      component_id: QuickActionsMenu
+      description: Dropdown menu with common actions
+
+      trigger:
+        button: ⚡ icon in header
+        position: right side of header
+
+      menu:
+        width: 240px
+        background: white
+        border_radius: 8px
+        shadow: 0 4px 12px rgba(0,0,0,0.15)
+        position: absolute (dropdown)
+
+      actions:
+        developer:
+          - icon: 🧪
+            label: Run Tests
+            action: navigate /ops/testing
+          - icon: 📊
+            label: Latest Report
+            action: navigate /ops/monitoring
+          - icon: 🗺️
+            label: View Roadmap
+            action: navigate /planning/roadmap
+          - icon: 📖
+            label: Documentation
+            action: navigate /docs
+
+        pm:
+          - icon: 🗺️
+            label: View Roadmap
+            action: navigate /planning/roadmap
+          - icon: 📊
+            label: Coverage Report
+            action: navigate /metrics/coverage
+          - icon: 📋
+            label: Backlog
+            action: open IMPLEMENTATION_BACKLOG.yaml
+          - icon: ➕
+            label: New Story
+            action: run /sdlc.new-feature-chat
+
+        ops:
+          - icon: 🧪
+            label: Run Tests
+            action: navigate /ops/testing
+          - icon: 🔍
+            label: System Health
+            action: show status detail
+          - icon: 📊
+            label: Monitoring
+            action: navigate /ops/monitoring
+
+      wireframe: |
+        ┌─────────────────────┐
+        │ ⚡ Quick Actions     │
+        ├─────────────────────┤
+        │ 🧪 Run Tests        │
+        │ 📊 Latest Report    │
+        │ 🗺️ View Roadmap     │
+        │ 📖 Documentation    │
+        └─────────────────────┘
+
+    role_selector:
+      component_id: RoleSelector
+      description: Dropdown to switch user role
+
+      trigger:
+        button: 👤 Developer ▼
+        position: top-right header
+
+      menu:
+        width: 180px
+        options:
+          - value: developer
+            label: Developer
+            icon: 💻
+            description: Ops, Docs, API
+          - value: pm
+            label: Product Manager
+            icon: 📋
+            description: Planning, Metrics
+          - value: stakeholder
+            label: Stakeholder
+            icon: 📊
+            description: Planning, Metrics
+          - value: ops
+            label: Operations
+            icon: 🔧
+            description: Ops, Metrics
+
+      behavior:
+        selection: Updates nav immediately
+        persistence: Save to localStorage
+        default: developer
+
+      wireframe: |
+        ┌──────────────────────┐
+        │ 👤 Select Role       │
+        ├──────────────────────┤
+        │ ✓ 💻 Developer       │
+        │   📋 Product Manager │
+        │   📊 Stakeholder     │
+        │   🔧 Operations      │
+        └──────────────────────┘
+
+    page_card:
+      component_id: PageCard
+      description: Service/page card used in portal
+
+      layout:
+        width: auto (grid responsive)
+        min_width: 300px
+        padding: 32px
+        background: white
+        border_radius: 12px
+        shadow: 0 1px 3px rgba(0,0,0,0.1)
+        hover_shadow: 0 8px 24px rgba(0,0,0,0.15)
+        transition: all 0.3s ease
+
+      elements:
+        - type: icon
+          size: 48px
+          margin_bottom: 16px
+        - type: title
+          font_size: 24px
+          font_weight: 600
+          margin_bottom: 8px
+        - type: description
+          font_size: 14px
+          color: gray_600
+          line_height: 1.6
+          margin_bottom: 16px
+        - type: metadata_row
+          border_top: 1px solid gray_200
+          padding_top: 16px
+          display: flex
+          justify_content: space-between
+        - type: tech_badges
+          display: inline-flex
+          gap: 8px
+          badge_style: pill, small
+        - type: status_indicator
+          dot: 8px circle
+          animation: pulse 2s infinite
+
+      states:
+        default: Shadow subtle
+        hover: Shadow elevated, translateY(-4px)
+        disabled: Opacity 0.5, cursor not-allowed
+
+      wireframe: |
+        ┌───────────────────────────┐
+        │         🧪                │
+        │                           │
+        │   Testing Dashboard       │
+        │                           │
+        │   Run tests with real-    │
+        │   time output streaming   │
+        │                           │
+        │ ─────────────────────── │
+        │ WebSocket Port:3001       │
+        │                    🟢 Live │
+        └───────────────────────────┘
+
+    mobile_nav:
+      component_id: MobileNavMenu
+      description: Hamburger menu for mobile devices
+
+      trigger:
+        icon: ☰ (hamburger)
+        position: top-left header
+        visible: < 768px only
+
+      menu:
+        width: 280px
+        height: 100vh
+        background: white
+        position: fixed left
+        animation: slide-in 0.3s
+        z_index: 2000
+
+      sections:
+        - section: role_selector
+          position: top
+          padding: 24px
+          background: gray_50
+
+        - section: navigation_links
+          flex: 1
+          items:
+            - label: Operations
+              icon: 🔧
+              submenu: [Testing, Monitoring]
+            - label: Planning
+              icon: 📋
+              submenu: [Roadmap, Stories, Backlog]
+            - label: Metrics
+              icon: 📊
+              submenu: [Coverage, Timeline]
+            - label: Documentation
+              icon: 📖
+              submenu: [Guides, API Docs]
+
+        - section: quick_actions
+          position: bottom
+          padding: 24px
+          border_top: 1px solid gray_200
+
+      overlay:
+        background: rgba(0,0,0,0.5)
+        click_to_close: true
+
+      wireframe: |
+        ┌─────────────────────┐
+        │  👤 Developer ▼     │
+        ├─────────────────────┤
+        │                     │
+        │ 🔧 Operations    >  │
+        │ 📋 Planning      >  │
+        │ 📊 Metrics       >  │
+        │ 📖 Documentation >  │
+        │                     │
+        ├─────────────────────┤
+        │ ⚡ Quick Actions    │
+        └─────────────────────┘
+
+    beta_badge:
+      component_id: BetaBadge
+      description: Badge for features in development
+
+      variants:
+        coming_soon:
+          text: Coming Soon
+          background: '#f59e0b'
+          color: white
+          icon: 🚧
+
+        beta:
+          text: Beta
+          background: '#3b82f6'
+          color: white
+          icon: 🧪
+
+        new:
+          text: New
+          background: '#10b981'
+          color: white
+          icon: ✨
+
+      styling:
+        padding: 4px 12px
+        border_radius: 12px
+        font_size: 12px
+        font_weight: 600
+        display: inline-flex
+        align_items: center
+        gap: 4px
+
+      placement:
+        nav_items: right side of label
+        page_titles: after title
+        cards: top-right corner
+
+      wireframe: |
+        SDLC Control Plane [🚧 Coming Soon]
+
+  page_layouts:
+    developer_portal:
+      page_id: /
+      layout_type: grid_portal
+
+      structure:
+        - component: NavHeader
+          role: all
+        - component: StatusBar
+          role: [developer, ops]
+        - component: hero_section
+          content:
+            title: "🚀 a_domain Developer Portal"
+            subtitle: "DDD Domain Registry & Unified Agent Interface"
+        - component: service_grid
+          columns: 3
+          gap: 24px
+          cards:
+            - Testing Dashboard (primary card)
+            - Report Explorer
+            - DataOps API
+            - Product Roadmap
+        - component: docs_section
+          grid_columns: 4
+          links: [Roadmap, Architecture, System Overview, Docs Index]
+        - component: footer
+
+      responsive:
+        mobile: 1 column grid
+        tablet: 2 column grid
+        desktop: 3 column grid
+
+    testing_dashboard:
+      page_id: /ops/testing
+      layout_type: dashboard
+
+      structure:
+        - component: NavHeader
+        - component: StatusBar
+        - component: Breadcrumbs
+          path: Home > Ops > Testing
+        - component: controls_panel
+          sections:
+            - Test suite selector
+            - Run controls
+            - Filter options
+        - component: output_viewer
+          features:
+            - Real-time streaming
+            - Syntax highlighting
+            - Auto-scroll
+        - component: test_history
+          display: sidebar
+          width: 300px
+
+    roadmap_viewer:
+      page_id: /planning/roadmap
+      layout_type: full_width
+
+      structure:
+        - component: NavHeader
+        - component: Breadcrumbs
+          path: Home > Planning > Roadmap
+        - component: roadmap_controls
+          position: sticky
+          features: [Zoom, Pan, Filter by Priority]
+        - component: timeline_svg
+          width: 100%
+          height: dynamic
+        - component: sidebar
+          position: right
+          width: 320px
+          content: [Stats, Filters, Legend]
+
+      responsive:
+        mobile: Show "View on Desktop" message
+        desktop: Full interactive timeline
+
+    story_detail:
+      page_id: /planning/stories/:story_id
+      layout_type: document
+
+      structure:
+        - component: NavHeader
+        - component: Breadcrumbs
+          path: Home > Planning > Stories > {story_id}
+        - component: QuickActions
+          context_actions: [Edit Story, Run Tests, View in Roadmap]
+        - component: story_header
+          elements: [ID, Title, Priority, Status]
+        - component: story_content
+          sections:
+            - Description
+            - Tasks
+            - Acceptance Criteria
+            - Functional Test Plan
+            - Dependencies
+            - Artifacts
+        - component: sidebar
+          content: [Metadata, Related Stories, Progress]
+
+  user_flows:
+    flow_1:
+      name: Developer checking test results
+      steps:
+        - action: Land on developer portal (/)
+          screen: Grid of service cards
+        - action: Click "Testing Dashboard" card
+          navigation: /ops/testing
+        - action: See breadcrumb "Home > Ops > Testing"
+          context: Know current location
+        - action: Click "Run Tests" button
+          result: Tests execute, output streams
+        - action: View real-time results
+          completion: Test pass/fail visible
+
+    flow_2:
+      name: PM navigating from roadmap to story
+      steps:
+        - action: Switch role to "Product Manager"
+          nav_update: Shows Planning, Metrics tabs only
+        - action: Click "Planning" tab
+          dropdown: Shows Roadmap, Stories, Backlog
+        - action: Navigate to /planning/roadmap
+          screen: Interactive timeline
+        - action: Click story box in timeline
+          navigation: /planning/stories/P0-UI-F9000
+        - action: See breadcrumb "Home > Planning > Stories > P0-UI-F9000"
+          context: Understand navigation path
+        - action: Review story details
+          completion: Read ACs, tasks, test plan
+
+    flow_3:
+      name: Stakeholder viewing high-level progress
+      steps:
+        - action: Switch role to "Stakeholder"
+          nav_update: Shows Planning, Metrics only (ops hidden)
+        - action: Navigate to /planning/roadmap
+          screen: See feature progress and timeline
+        - action: Notice "Coming Soon" badges on planned features
+          understanding: Know what's planned vs live
+        - action: Click /metrics/coverage
+          screen: See documentation coverage metrics
+        - action: View progress bars and stats
+          completion: Understand overall progress
+
+  wireframes:
+    full_page_layout:
+      description: Complete page structure with all components
+      wireframe: |
+        ┌────────────────────────────────────────────────────────────────┐
+        │ [🚀 a_domain]  Dev | Planning | Ops | Metrics  [⚡][?][👤▼]   │
+        ├────────────────────────────────────────────────────────────────┤
+        │ 🟢 Testing  🟢 Reports  🟢 API     All Systems Operational    │
+        ├────────────────────────────────────────────────────────────────┤
+        │ Home > Planning > Roadmap                                      │
+        ├────────────────────────────────────────────────────────────────┤
+        │                                                                │
+        │                      Page Content                              │
+        │                                                                │
+        │  ┌──────────┐  ┌──────────┐  ┌──────────┐                    │
+        │  │  Card 1  │  │  Card 2  │  │  Card 3  │                    │
+        │  └──────────┘  └──────────┘  └──────────┘                    │
+        │                                                                │
+        ├────────────────────────────────────────────────────────────────┤
+        │ © 2026 a_domain | Documentation | Report Issue                │
+        └────────────────────────────────────────────────────────────────┘
+
+    mobile_layout:
+      description: Mobile responsive layout
+      wireframe: |
+        ┌──────────────────┐
+        │ ☰ [🚀 a_domain]  │
+        ├──────────────────┤
+        │ < Back           │
+        ├──────────────────┤
+        │                  │
+        │   Page Content   │
+        │                  │
+        │  ┌────────────┐  │
+        │  │   Card 1   │  │
+        │  └────────────┘  │
+        │  ┌────────────┐  │
+        │  │   Card 2   │  │
+        │  └────────────┘  │
+        │                  │
+        └──────────────────┘
+
+  interaction_patterns:
+    navigation_tabs:
+      interaction: Click tab to switch section
+      feedback: Active tab underline, immediate nav update
+      keyboard: Arrow keys to navigate tabs
+
+    role_switching:
+      interaction: Click role selector, choose role
+      feedback: Nav updates immediately, role displayed in header
+      persistence: Choice saved to localStorage
+
+    breadcrumb_navigation:
+      interaction: Click any breadcrumb segment
+      feedback: Navigate to that level
+      keyboard: Tab to focus, Enter to activate
+
+    status_indicators:
+      interaction: Auto-update every 10s
+      hover: Show last check timestamp
+      click: Navigate to service page
+
+    quick_actions:
+      interaction: Click ⚡ icon to open menu
+      feedback: Dropdown slides down
+      click_outside: Menu closes
+      keyboard: Escape to close
+
+  accessibility:
+    keyboard_navigation:
+      - Tab: Move focus through interactive elements
+      - Enter/Space: Activate links and buttons
+      - Escape: Close modals and dropdowns
+      - Arrow keys: Navigate tabs and menus
+
+    aria_labels:
+      - nav: "Main navigation"
+      - breadcrumbs: "Breadcrumb navigation"
+      - status_bar: "System status indicators"
+      - quick_actions: "Quick actions menu"
+
+    focus_indicators:
+      - Visible focus ring on all interactive elements
+      - Color: #667eea (primary)
+      - Width: 2px
+      - Offset: 2px
+
+    color_contrast:
+      - All text meets WCAG AA (4.5:1 for body, 3:1 for large text)
+      - Status indicators include text labels, not just colors
+      - Beta badges have sufficient contrast
+
+  responsive_breakpoints:
+    mobile:
+      max_width: 767px
+      nav: Hamburger menu
+      grid_columns: 1
+      breadcrumbs: "< Back" button
+      status_bar: Hidden
+
+    tablet:
+      min_width: 768px
+      max_width: 1023px
+      nav: Compact tabs
+      grid_columns: 2
+      breadcrumbs: Full path
+      status_bar: Visible
+
+    desktop:
+      min_width: 1024px
+      nav: Full navigation
+      grid_columns: 3
+      breadcrumbs: Full path
+      status_bar: Visible
+
+  design_tokens:
+    export_format: CSS variables
+    tokens:
+      --color-primary: '#667eea'
+      --color-primary-dark: '#764ba2'
+      --color-success: '#10b981'
+      --color-warning: '#f59e0b'
+      --color-error: '#ef4444'
+      --color-text: '#111827'
+      --color-text-secondary: '#6b7280'
+      --color-bg: '#f9fafb'
+      --color-surface: '#ffffff'
+      --spacing-unit: 8px
+      --border-radius: 8px
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1)
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.15)
+      --transition-fast: 0.2s ease
+      --transition-normal: 0.3s ease
+
+  implementation_notes:
+    component_library: Vanilla JS + CSS (no framework dependency)
+    state_management: localStorage for preferences, URL for navigation state
+    routing: History API for clean URLs
+    progressive_enhancement: Works without JS (basic navigation)
+    bundle_size_budget: 100KB total for all navigation components
+    browser_support: Modern evergreen browsers (last 2 versions)

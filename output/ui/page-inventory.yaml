@@ -1,0 +1,301 @@
+page_inventory:
+  metadata:
+    version: 1.0.0
+    last_updated: '2026-02-11T00:00:00Z'
+    total_pages: 7
+    total_generated_pages: 71
+    status: current
+
+  categories:
+    - id: operations
+      name: Operations & Testing
+      description: Real-time operational dashboards and testing tools
+      pages:
+        - id: testing-dashboard
+          title: Testing Dashboard
+          url: /ops/testing
+          current_path: /web-portal/tests-dashboard.html
+          port: 3001
+          status: live
+          description: Test execution controls with real-time output streaming via WebSocket
+          features:
+            - Test suite selection
+            - Real-time output streaming
+            - Test history
+            - Pass/fail filtering
+            - Run controls
+          technologies:
+            - WebSocket
+            - HTML/CSS/JS
+          responsive: mobile-friendly
+          role_access: [developer, ops]
+
+        - id: report-explorer
+          title: Report Explorer
+          url: /ops/monitoring
+          current_path: /observability/reports/explorer/index.html
+          port: 3000
+          status: live
+          description: Browse, search, and explore workflow timeline reports
+          features:
+            - Report browsing
+            - Search functionality
+            - Real-time monitoring
+            - Metrics and statistics
+          technologies:
+            - Express.js
+            - Node.js
+          responsive: desktop-primary
+          role_access: [developer, ops, pm]
+
+    - id: planning
+      name: Planning & Roadmap
+      description: Product planning, roadmap visualization, and story management
+      pages:
+        - id: roadmap-viewer
+          title: Product Roadmap
+          url: /planning/roadmap
+          current_path: /docs/roadmaps/roadmap.html
+          port: null
+          status: live
+          description: Interactive timeline visualization of features and epics
+          features:
+            - Timeline visualization
+            - Zoom/pan controls
+            - Story dependencies
+            - Phase tracking
+            - Milestone view
+          technologies:
+            - SVG visualization
+            - JavaScript
+          responsive: desktop-only
+          role_access: [developer, pm, stakeholder]
+
+        - id: story-pages
+          title: Story Detail Pages
+          url: /planning/stories/:story_id
+          current_path: /docs/roadmaps/stories/*.html
+          port: null
+          status: live
+          count: 71
+          description: Individual story pages with tasks, acceptance criteria, and test plans
+          features:
+            - Story details
+            - Tasks breakdown
+            - Acceptance criteria
+            - Functional test plan
+            - Dependencies
+          technologies:
+            - Static HTML
+            - Auto-generated
+          responsive: desktop-primary
+          role_access: [developer, pm]
+          generation_rule: Auto-generated from IMPLEMENTATION_BACKLOG.yaml
+
+    - id: metrics
+      name: Metrics & Reports
+      description: Coverage reports, documentation metrics, and performance tracking
+      pages:
+        - id: documentation-coverage
+          title: Documentation Coverage Report
+          url: /metrics/coverage
+          current_path: /docs/reports/documentation-coverage.html
+          port: null
+          status: live
+          description: Documentation coverage metrics and gap analysis
+          features:
+            - Coverage percentage
+            - Priority breakdown
+            - Gap analysis
+            - Progress bars
+          technologies:
+            - Static HTML
+            - Auto-generated
+          responsive: desktop-primary
+          role_access: [pm, stakeholder, developer]
+
+        - id: timeline-reports
+          title: Workflow Timeline Reports
+          url: /metrics/timeline/:report_id
+          current_path: /observability/reports-output/*.html
+          port: null
+          status: live
+          count: multiple
+          description: Detailed workflow execution visualizations
+          features:
+            - Timeline visualization
+            - Execution traces
+            - Performance metrics
+          technologies:
+            - SVG/Canvas
+            - Auto-generated
+          responsive: desktop-only
+          role_access: [developer, ops]
+          generation_rule: Auto-generated per workflow execution
+
+    - id: entry
+      name: Entry & Portal
+      description: Main entry points and landing pages
+      pages:
+        - id: developer-portal
+          title: Developer Portal
+          url: /
+          current_path: /web-portal/index.html
+          port: root
+          status: live
+          description: Main landing page with service cards and documentation links
+          features:
+            - Service status indicators
+            - Quick access cards
+            - Documentation links
+            - Auto-refresh health checks
+          technologies:
+            - HTML/CSS/JS
+            - Service discovery
+          responsive: mobile-friendly
+          role_access: [developer, pm, ops, stakeholder]
+
+  planned_features:
+    - id: sdlc-control-plane
+      title: SDLC Control Plane
+      url: /planning/control-plane
+      story_id: P0-A2A-F8000
+      status: in_progress
+      description: Interactive roadmap with browser-based workflow execution
+      features:
+        - Interactive roadmap
+        - Workflow execution via Textual
+        - Smart action recommendations
+        - Terminal integration
+      role_access: [developer, pm]
+      visibility_rule: Show when P0-A2A-F8000 completed
+
+    - id: document-registry-browser
+      title: Document Registry Browser
+      url: /docs/registry
+      story_id: P0-DOCS-001
+      status: in_progress
+      description: Browse and search document registry
+      features:
+        - Document search
+        - Registry browser
+        - Coverage dashboard
+      role_access: [developer, pm]
+      visibility_rule: Show when P0-DOCS-005 completed
+
+    - id: journey-dashboard
+      title: Journey Orchestration Dashboard
+      url: /a2a/journey
+      story_id: P0-A2A-F1001
+      status: not_started
+      description: Client journey progression tracking and stage management
+      features:
+        - Journey state visualization
+        - Stage transitions
+        - Exit criteria tracking
+      role_access: [pm, ops]
+      visibility_rule: Show when P0-A2A-F1001 completed
+
+    - id: dataset-discovery
+      title: Dataset Discovery Interface
+      url: /a2a/datasets
+      story_id: P0-A2A-F2001
+      status: not_started
+      description: Browse available datasets and schemas
+      features:
+        - Dataset catalog
+        - Schema viewer
+        - Sample data preview
+      role_access: [developer]
+      visibility_rule: Show when P0-A2A-F2001 completed
+
+    - id: flow-builder
+      title: Visual Flow Builder
+      url: /a2a/flow-builder
+      story_id: P0-A2A-F3001
+      status: not_started
+      description: Visual workflow and value stream designer
+      features:
+        - Drag-and-drop flow design
+        - Value stream mapping
+        - Workflow templates
+      role_access: [pm, developer]
+      visibility_rule: Show when P0-A2A-F3001 completed
+
+    - id: knowledge-workspace
+      title: Personal Knowledge Workspace
+      url: /a2a/workspace
+      story_id: P0-A2A-F5001
+      status: not_started
+      description: Personal notes, bookmarks, and context management
+      features:
+        - Note-taking
+        - Bookmark management
+        - Context switching
+      role_access: [developer, pm]
+      visibility_rule: Show when P0-A2A-F5001 completed
+
+    - id: ceremony-scheduler
+      title: Team Ceremony Orchestrator
+      url: /a2a/ceremonies
+      story_id: P0-A2A-F6001
+      status: not_started
+      description: Schedule and manage team ceremonies
+      features:
+        - Ceremony scheduling
+        - Agenda management
+        - Participant tracking
+      role_access: [pm]
+      visibility_rule: Show when P0-A2A-F6001 completed
+
+  api_endpoints:
+    - id: dataops-api
+      title: DataOps API
+      url: http://localhost:8000/docs
+      type: swagger
+      status: live
+      description: REST API for dataset lifecycle management
+      role_access: [developer]
+
+    - id: dataops-redoc
+      title: DataOps API (ReDoc)
+      url: http://localhost:8000/redoc
+      type: redoc
+      status: live
+      description: Alternative API documentation
+      role_access: [developer]
+
+  url_migration_map:
+    # Maps old URLs to new clean URLs
+    /tests-dashboard: /ops/testing
+    /web-portal/tests-dashboard.html: /ops/testing
+    /observability/reports/explorer/index.html: /ops/monitoring
+    /docs/roadmaps/roadmap.html: /planning/roadmap
+    /docs/reports/documentation-coverage.html: /metrics/coverage
+    /web-portal/index.html: /
+    /docs/roadmaps/stories/: /planning/stories/
+
+  navigation_rules:
+    progressive_disclosure:
+      not_started: roadmap_only
+      p0_completed: show_with_beta_badge
+      implemented: full_access
+
+    role_based_filtering:
+      developer: [operations, planning, metrics, entry]
+      pm: [planning, metrics, entry]
+      stakeholder: [planning, metrics]
+      ops: [operations, metrics, entry]
+
+    responsive_behavior:
+      mobile_friendly: [developer-portal, testing-dashboard]
+      desktop_primary: [roadmap-viewer, story-pages, documentation-coverage]
+      desktop_only: [timeline-reports]
+
+  statistics:
+    live_pages: 7
+    generated_pages: 71
+    planned_pages: 7
+    total_coverage: 85
+    categories: 4
+    roles: 4
