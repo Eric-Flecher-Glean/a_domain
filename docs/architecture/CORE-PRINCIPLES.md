@@ -140,6 +140,16 @@ response = client.call_tool(
 )
 ```
 
+**Agent Discovery:**
+
+Use the [Glean Agent Registry](../glean/AGENT-REGISTRY.yaml) to discover available agents:
+- **52+ production-ready agents** organized by domain
+- Comprehensive specifications with input/output schemas
+- Usage examples and data source integrations
+- Agent capabilities and deployment statistics
+
+See [AGENT-REGISTRY-GUIDE.md](../glean/AGENT-REGISTRY-GUIDE.md) for discovery workflows and validation patterns.
+
 **Use when:**
 - Building deterministic workflows with known agent sequences
 - Agent selection is part of orchestration logic
@@ -467,6 +477,8 @@ All LLM compute must flow through approved patterns. If a use case cannot be sat
 ### References
 
 **Internal Guides:**
+- [Glean Agent Registry](../glean/AGENT-REGISTRY.yaml) - Catalog of 52+ available Glean agents with specifications
+- [Glean Agent Registry Guide](../glean/AGENT-REGISTRY-GUIDE.md) - How to discover and use agents from registry
 - [Glean MCP Agent Pattern Guide](../guides/glean-mcp-agent-pattern.md) - Direct invocation of Glean agents
 - [XML Prompt Template Pattern Guide](../guides/xml-prompt-agent-pattern.md) - Structured message templates for Glean agents
 - [Agent Implementation Guide](../guides/agent-implementation-guide.md) - Master guide for agent patterns

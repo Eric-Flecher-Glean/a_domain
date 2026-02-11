@@ -82,6 +82,23 @@ grep -rn "fallback_model\|fallback.*claude\|fallback.*gpt" \
 # Expected: NO MATCHES (exit code 1)
 ```
 
+```bash
+# Command 5: Validate explicit agent names against registry
+# Extract agent names from code and check against registry
+grep -rn '"agent":\s*"' --include="*.py" --include="*.yaml" --include="*.yml" . | \
+  sed -E 's/.*"agent":\s*"([^"]+)".*/\1/' | \
+  sort -u | \
+  while read agent_name; do
+    if ! grep -q "name: \"$agent_name\"" docs/glean/AGENT-REGISTRY.yaml 2>/dev/null; then
+      echo "⚠️  Agent '$agent_name' not found in registry"
+    else
+      echo "✅ Agent '$agent_name' validated"
+    fi
+  done
+
+# Expected: All agents validated (✅) with no warnings
+```
+
 **Manual Checklist:**
 
 Architecture Documents:
@@ -93,6 +110,8 @@ Architecture Documents:
 - [ ] All LLM operations use `mcp__glean__chat` tool
 - [ ] All agent workflows use Claude Code Task tool
 - [ ] Prompt templates stored in `sdlc/` directory structure
+- [ ] Explicit agent names validated against [Glean Agent Registry](../glean/AGENT-REGISTRY.yaml)
+- [ ] Agent invocations use correct input/output schemas from registry
 
 Implementation Code:
 - [ ] No `import anthropic` statements
@@ -273,6 +292,70 @@ grep -i "ANTHROPIC_API_KEY\|OPENAI_API_KEY" .env.template
 
 # Expected: NO OUTPUT for both
 ```
+
+### Agent Name Validation
+
+**Purpose:** Ensure explicit agent names match entries in [Glean Agent Registry](../glean/AGENT-REGISTRY.yaml)
+
+**Files to Check:**
+- `src/**/*.py` (Python code with `mcp__glean__chat` calls)
+- `docs/**/*.yaml` (Architecture specifications)
+- `output/**/*.yaml` (Design specifications)
+
+**Validation Script:**
+
+```bash
+# Extract all explicit agent names from code/config
+echo "Validating agent names against registry..."
+
+# Find all agent invocations
+grep -rn '"agent":\s*"' \
+  --include="*.py" \
+  --include="*.yaml" \
+  --include="*.yml" \
+  --exclude-dir=.git \
+  --exclude-dir=node_modules \
+  . | \
+  sed -E 's/.*"agent":\s*"([^"]+)".*/\1/' | \
+  sort -u > /tmp/used_agents.txt
+
+# Load registry agent names
+grep -E '^\s+- name:' docs/glean/AGENT-REGISTRY.yaml | \
+  sed -E 's/.*name:\s*"?([^"]+)"?.*/\1/' | \
+  sort -u > /tmp/registry_agents.txt
+
+# Compare
+echo ""
+echo "Agent Name Validation Results:"
+echo "==============================="
+
+while read agent_name; do
+  if grep -qF "$agent_name" /tmp/registry_agents.txt; then
+    echo "✅ '$agent_name' - Valid (found in registry)"
+  else
+    echo "❌ '$agent_name' - INVALID (not in registry)"
+    echo "   Fix: Check spelling or update registry at docs/glean/AGENT-REGISTRY.yaml"
+  fi
+done < /tmp/used_agents.txt
+
+# Cleanup
+rm -f /tmp/used_agents.txt /tmp/registry_agents.txt
+```
+
+**Expected Output:**
+All agent names should show ✅ Valid. Any ❌ INVALID indicates:
+- Typo in agent name (fix code)
+- Missing agent in registry (update registry)
+- Deprecated agent (update code to use active agent)
+
+**Common Issues:**
+
+| Issue | Example | Fix |
+|-------|---------|-----|
+| Case mismatch | `"extract common pain points"` | `"Extract Common Pain Points"` (match registry) |
+| Typo | `"Extract Pain Point"` | `"Extract Common Pain Points"` (add 's') |
+| Truncated name | `"Deal Strategy Agent"` | `"Deal Strategy"` (remove "Agent") |
+| Not in registry | `"Custom Agent Name"` | Add to registry or use auto-routing |
 
 ---
 
